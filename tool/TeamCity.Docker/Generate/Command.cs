@@ -56,21 +56,18 @@ namespace TeamCity.Docker.Generate
                 }
             }
 
-            using (_logger.CreateBlock("Save docker files"))
+            _logger.Log("Save docker files");
+            foreach (var dockerFile in dockerFiles)
             {
-                foreach (var dockerFile in dockerFiles)
-                {
-                    _fileSystem.WriteFile(Path.Combine(_options.TargetPath, dockerFile.Path), dockerFile.Content);
-                }
+                _fileSystem.WriteFile(Path.Combine(_options.TargetPath, dockerFile.Path), dockerFile.Content);
             }
-
-            using (_logger.CreateBlock("Save readme files"))
+            
+            _logger.Log("Save readme files");
+            foreach (var readmeFile in readmeFiles)
             {
-                foreach (var readmeFile in readmeFiles)
-                {
-                    _fileSystem.WriteFile(Path.Combine(_options.TargetPath, readmeFile.Path), readmeFile.Content);
-                }
+                _fileSystem.WriteFile(Path.Combine(_options.TargetPath, readmeFile.Path), readmeFile.Content);
             }
+            
 
             return Task.FromResult(Result.Success);
         }

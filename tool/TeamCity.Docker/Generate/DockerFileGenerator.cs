@@ -27,7 +27,6 @@ namespace TeamCity.Docker.Generate
             var dockerFileContent = _variableReplacer.Replace(template, values);
             var dockerFilePath = Path.Combine(buildPath, "Dockerfile");
             var metadata = _metadataProvider.GetMetadata(dockerFileContent);
-            _logger.Log($"The docker file \"{dockerFilePath}\" with values {string.Join(", ", values.Select(i => $"{i.Key}={i.Value}"))} was generated.");
             return new DockerFile(dockerFilePath, metadata, dockerFileContent);
         }
     }
