@@ -43,12 +43,12 @@ namespace TeamCity.Docker.Build
                 if (!string.IsNullOrWhiteSpace(_options.ContextPath))
                 {
                     var path = Path.GetFullPath(_options.ContextPath);
+                    _logger.Log($"The context path is \"{path}\" (\"{_options.ContextPath}\")");
                     if (!_fileSystem.IsDirectoryExists(path))
                     {
                         throw new InvalidOperationException($"The context directory \"{path}\" does not exist.");
                     }
 
-                    _logger.Log($"The context path is \"{path}\"");
                     _logger.Log($"The docker files root path in the context is \"{dockerFilesRootPath}\"");
 
                     foreach (var file in _fileSystem.EnumerateFileSystemEntries(path, "*.*"))

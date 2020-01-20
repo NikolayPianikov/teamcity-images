@@ -19,7 +19,7 @@ namespace TeamCity.Docker.Generate
 
         public IEnumerable<DockerFileConfiguration> Explore(string sourcePath)
         {
-            _logger.Log($"The configuration path is \"{sourcePath}\"");
+            _logger.Log($"The configuration path is \"{sourcePath}\" (\"{Path.GetFullPath(sourcePath)}\")");
             var templateCounter = 0;
             foreach (var dockerfileTemplate in _fileSystem.EnumerateFileSystemEntries(sourcePath, "*.Dockerfile"))
             {
