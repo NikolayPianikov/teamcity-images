@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Build": {
+      "commandName": "Project",
+      "commandLineArgs": "push -u nikolayp -p 88e7198e-433d-4035-9e8a-956f9a3bdeae -i 39",
+      "workingDirectory": "C:\\Projects\\TeamCity.Docker.Images"
+    }
+  }
+}

@@ -1,0 +1,1 @@
+dotnet run -p tool\TeamCity.Docker\TeamCity.Docker.csproj generate -s configs -t generated

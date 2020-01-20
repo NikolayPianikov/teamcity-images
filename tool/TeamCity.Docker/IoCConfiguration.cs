@@ -1,0 +1,60 @@
+﻿using System;
+using System.Collections.Generic;
+using Docker.DotNet;
+using IoC;
+using JetBrains.TeamCity.ServiceMessages.Write;
+using JetBrains.TeamCity.ServiceMessages.Write.Special;
+using JetBrains.TeamCity.ServiceMessages.Write.Special.Impl.Updater;
+using static IoC.Lifetime;
+
+namespace TeamCity.Docker
+{
+    internal class IoCConfiguration: IConfiguration
+    {
+        public IEnumerable<IToken> Apply(IContainer container)
+        {
+            yield return container
+                .Bind<IFileSystem>().As(Singleton).To<FileSystem>()
+                .Bind<IEnvironment>().As(Singleton).To<Environment>()
+                .Bind<ILogger>().As(Singleton).Tag("Console").To<ConsoleLogger>()
+                .Bind<ILogger>().As(Singleton).Tag("TeamCity").To<TeamCityLogger>()
+                .Bind<ILogger>().As(Singleton).To<Logger>(ctx => new Logger(ctx.Container.Inject<IEnvironment>(), ctx.Container.Inject<ILogger>("Console"), ctx.Container.Inject<ILogger>("TeamCity")))
+                .Bind<IDockerClientFactory>().As(Singleton).To<DockerClientFactory>()
+                .Bind<IDockerClient>().As(Singleton).To(ctx => ctx.Container.Inject<IDockerClientFactory>().Create().Result)
+                .Bind<IStreamService>().As(Singleton).To<StreamService>()
+                .Bind<IMessageLogger>().As(Singleton).To<MessageLogger>()
+                .Bind<IDockerConverter>().As(Singleton).To<DockerConverter>()
+                // TeamCity messages
+                .Bind<IServiceMessageFormatter>().As(Singleton).To<ServiceMessageFormatter>()
+                .Bind<IFlowIdGenerator>().As(Singleton).To<FlowIdGenerator>()
+                .Bind<IServiceMessageUpdater>().As(Singleton).To(ctx => new TimestampUpdater(() => DateTime.Now) )
+                .Bind<ITeamCityServiceMessages>().As(Singleton).To<TeamCityServiceMessages>()
+                .Bind<ITeamCityWriter, ITeamCityMessageWriter>().As(Singleton).To(ctx => ctx.Container.Inject<ITeamCityServiceMessages>().CreateWriter());
+
+            // Generate command
+            yield return container
+                .Bind<ICommand<Generate.IOptions>>().As(Singleton).To<Generate.Command>()
+                .Bind<Generate.IResources>().As(Singleton).To<Generate.Resources>()
+                .Bind<Generate.IDockerVariableReplacer>().As(Singleton).To<Generate.DockerVariableReplacer>()
+                .Bind<Generate.IDockerMetadataProvider>().As(Singleton).To<Generate.DockerMetadataProvider>()
+                .Bind<Generate.IDockerFileGenerator>().As(Singleton).To<Generate.DockerFileGenerator>()
+                .Bind<Generate.IReadmeGenerator>().As(Singleton).To<Generate.ReadmeGenerator>()
+                .Bind<Generate.IDockerFileConfigurationExplorer>().As(Singleton).To<Generate.DockerFileConfigurationExplorer>()
+                .Bind<Generate.IGenerator>().Tag("").As(Singleton).To<Generate.GeneratorFromConfigurations>();
+
+            // Build command
+            yield return container
+                .Bind<ICommand<Build.IOptions>>().As(Singleton).To<Build.Command>()
+                .Bind<Build.IImageBuilder>().As(Singleton).To<Build.ImageBuilder>()
+                .Bind<Build.IContextFactory>().As(Singleton).To<Build.ContextFactory>()
+                .Bind<Build.IPathService>().As(Singleton).To<Build.PathService>();
+
+            // Push command
+            yield return container
+                .Bind<ICommand<Push.IOptions>>().As(Singleton).To<Push.Command>()
+                .Bind<Push.IImageFetcher>().As(Singleton).To<Push.ImageFetcher>()
+                .Bind<Push.IImagePublisher>().As(Singleton).To<Push.ImagePublisher>()
+                .Bind<Push.IImageCleaner>().As(Singleton).To<Push.ImageCleaner>();
+        }
+    }
+}
