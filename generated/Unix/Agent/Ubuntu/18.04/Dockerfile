@@ -1,13 +1,25 @@
+# Default arguments
+ARG dotnetCoreLinuxComponent='https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-linux-x64.tar.gz'
+ARG dotnetCoreLinuxComponentVersion='3.1.100'
+ARG teamcityMinimalAgentImage='teamcity-minimal-agent:18.04'
+
+# The list of required arguments
+# ARG dotnetCoreLinuxComponentVersion
+# ARG dotnetCoreLinuxComponent
+# ARG teamcityMinimalAgentImage
+
 # Priority 2
 # Id teamcity-agent
 # Tag 18.04
 # Tag linux
 
 # Based on teamcity-minimal-agent:18.04
-FROM teamcity-minimal-agent:18.04
+FROM ${teamcityMinimalAgentImage}
 
 LABEL dockerImage.teamcity.version="latest" \
       dockerImage.teamcity.buildNumber="latest"
+
+ARG dotnetCoreLinuxComponentVersion
 
     # Opt out of the telemetry feature
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=true \
@@ -22,11 +34,12 @@ ENV DOTNET_CLI_TELEMETRY_OPTOUT=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps perfomance
     NUGET_XMLDOC_MODE=skip \
     GIT_SSH_VARIANT=ssh \
-# Install .NET Core SDK x64 v.3.1.100
-    DOTNET_SDK_VERSION=3.1.100
+    DOTNET_SDK_VERSION=${dotnetCoreLinuxComponentVersion}
 
 # Install Git
 # Install Mercurial
+ARG dotnetCoreLinuxComponent
+
 RUN apt-get update && \
     apt-get install -y git mercurial apt-transport-https ca-certificates software-properties-common && \
     \
@@ -55,7 +68,7 @@ RUN apt-get update && \
         && rm -rf /var/lib/apt/lists/* && \
     \
 # Install [.NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-linux-x64.tar.gz)
-    curl -SL https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-linux-x64.tar.gz --output dotnet.tar.gz \
+    curl -SL ${dotnetCoreLinuxComponent} --output dotnet.tar.gz \
         && mkdir -p /usr/share/dotnet \
         && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \
         && rm dotnet.tar.gz \

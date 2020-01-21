@@ -1,7 +1,9 @@
-﻿namespace TeamCity.Docker.Generate
+﻿using System.Collections.Generic;
+
+namespace TeamCity.Docker.Generate
 {
     internal interface IDockerMetadataProvider
     {
-        Metadata GetMetadata(string dockerFileContent);
+        Metadata GetMetadata(IEnumerable<DockerLine> dockerFileContent);
     }
 }

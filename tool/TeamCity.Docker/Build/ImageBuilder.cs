@@ -45,7 +45,13 @@ namespace TeamCity.Docker.Build
         public async Task<Result> Build(IReadOnlyCollection<DockerFile> dockerFiles)
         {
             var dockerFilesRootPath = _fileSystem.UniqueName;
-            await using var contextStream = await _contextFactory.Create(dockerFilesRootPath, dockerFiles);
+            var contextStreamResult = await _contextFactory.Create(dockerFilesRootPath, dockerFiles);
+            if (contextStreamResult.State == Result.Error)
+            {
+                return Result.Error;
+            }
+
+            await using var contextStream = contextStreamResult.Value;
             var labels = new Dictionary<string, string>();
             if (!string.IsNullOrWhiteSpace(_options.SessionId))
             {

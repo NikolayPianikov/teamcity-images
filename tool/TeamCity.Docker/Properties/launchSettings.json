@@ -2,8 +2,8 @@
   "profiles": {
     "Build": {
       "commandName": "Project",
-      "commandLineArgs": "build -s configs\\Windows -c context -i 39",
-      "workingDirectory": "C:\\Projects\\TeamCity.Docker.Images"
+      "commandLineArgs": "build -s configs\\Unix -c configs\\Unix.config -x context -i 38",
+      "workingDirectory": "C:\\Projects\\teamcity-images"
     }
   }
 }

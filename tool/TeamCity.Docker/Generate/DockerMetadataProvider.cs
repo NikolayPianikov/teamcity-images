@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace TeamCity.Docker.Generate
@@ -12,18 +14,18 @@ namespace TeamCity.Docker.Generate
         private const string BaseImagePrefix = "# Based on ";
         private const string ComponentsPrefix = "# Install ";
 
-        public Metadata GetMetadata(string dockerFileContent)
+        public Metadata GetMetadata(IEnumerable<DockerLine> dockerFileContent)
         {
             var priority = int.MaxValue;
             var imageId = "unknown";
             var tags = new List<string>();
             var baseImages = new List<string>();
             var components = new List<string>();
-            foreach (var line in dockerFileContent.Split("\n"))
+            foreach (var comment in dockerFileContent.Where(line => line.Type == DockerLineType.Comment))
             {
                 if (
                     TrySetByPrefix(
-                        line,
+                        comment.Text,
                         PriorityPrefix, 
                         value =>
                         {
@@ -32,10 +34,10 @@ namespace TeamCity.Docker.Generate
                                 priority = curPriority;
                             }
                         }) ||
-                    TrySetByPrefix(line, IdPrefix, value => imageId = value) ||
-                    TrySetByPrefix(line, TagPrefix, value => tags.Add(value)) ||
-                    TrySetByPrefix(line, BaseImagePrefix, value => baseImages.Add(value)) ||
-                    TrySetByPrefix(line, ComponentsPrefix, value => components.Add(value)))
+                    TrySetByPrefix(comment.Text, IdPrefix, value => imageId = value) ||
+                    TrySetByPrefix(comment.Text, TagPrefix, value => tags.Add(value)) ||
+                    TrySetByPrefix(comment.Text, BaseImagePrefix, value => baseImages.Add(value)) ||
+                    TrySetByPrefix(comment.Text, ComponentsPrefix, value => components.Add(value)))
                 { }
             }
 

@@ -1,4 +1,6 @@
-﻿using CommandLine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using CommandLine;
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
 
@@ -13,8 +15,8 @@ namespace TeamCity.Docker.Build
         [Option('i', "id", Required = false, HelpText = "Session Id.")]
         public string SessionId { get; set; } = "";
 
-        [Option('c', "configurations", Required = false, HelpText = "Comma separated configuration file.")]
-        public string ConfigurationFiles { get; set; } = "";
+        [Option('f', "files", Separator = ';', Required = false, HelpText = "Comma separated configuration file.")]
+        public IEnumerable<string> ConfigurationFiles { get; set; } = Enumerable.Empty<string>();
 
         [Option('c', "context", Required = false, HelpText = "Path to the context directory.")]
         public string ContextPath { get; set; } = "";

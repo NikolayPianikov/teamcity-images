@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.Tar;
@@ -32,7 +33,7 @@ namespace TeamCity.Docker.Build
             _streamService = streamService;
         }
 
-        public async Task<Stream> Create(string dockerFilesRootPath, IEnumerable<DockerFile> dockerFiles)
+        public async Task<Result<Stream>> Create(string dockerFilesRootPath, IEnumerable<DockerFile> dockerFiles)
         {
             using (_logger.CreateBlock("Create docker context"))
             {
@@ -53,9 +54,18 @@ namespace TeamCity.Docker.Build
 
                     foreach (var file in _fileSystem.EnumerateFileSystemEntries(path, "*.*"))
                     {
+                        if (!_fileSystem.IsFileExist(file))
+                        {
+                            continue;
+                        }
+
                         await using var fileStream = _fileSystem.OpenRead(file);
                         var filePathInArchive = _pathService.Normalize(Path.GetRelativePath(path, file));
-                        await AddEntry(++number, archive, filePathInArchive, fileStream);
+                        var result = await AddEntry(++number, archive, filePathInArchive, fileStream);
+                        if (result == Result.Error)
+                        {
+                            return new Result<Stream>(new MemoryStream(), Result.Error);
+                        }
                     }
                 }
                 else
@@ -65,26 +75,33 @@ namespace TeamCity.Docker.Build
 
                 foreach (var dockerFile in dockerFiles)
                 {
-                    await using var dockerFileStream = new MemoryStream(Encoding.UTF8.GetBytes(dockerFile.Content));
+                    var content = string.Join(System.Environment.NewLine, dockerFile.Content.Select(line => line.Text));
+                    var contentBytes=Encoding.UTF8.GetBytes(content);
+                    await using var dockerFileStream = new MemoryStream(contentBytes);
                     var dockerFilePathInArchive = _pathService.Normalize(Path.Combine(dockerFilesRootPath, dockerFile.Path));
-                    await AddEntry(++number, archive, dockerFilePathInArchive, dockerFileStream);
+                    var result = await AddEntry(++number, archive, dockerFilePathInArchive, dockerFileStream);
+                    if (result == Result.Error)
+                    {
+                        return new Result<Stream>(new MemoryStream(), Result.Error);
+                    }
                 }
 
                 archive.Close();
                 context.Position = 0;
-                return context;
+                return new Result<Stream>(context);
             }
         }
 
-        private async Task AddEntry(int number, TarOutputStream archive, string filePathInArchive, Stream contentStream)
+        private async Task<Result> AddEntry(int number, TarOutputStream archive, string filePathInArchive, Stream contentStream)
         {
             var entry = TarEntry.CreateTarEntry(filePathInArchive);
             entry.Size = contentStream.Length;
             entry.TarHeader.Mode = Chmod; //chmod 755
             archive.PutNextEntry(entry);
-            await _streamService.Copy(contentStream, archive);
+            var result = await _streamService.Copy(contentStream, archive, $"Adding {filePathInArchive}");
             archive.CloseEntry();
             _logger.Log($"{number:000000} \"{filePathInArchive}\" was added ({contentStream.Length} bytes).");
+            return result;
         }
     }
 }

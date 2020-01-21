@@ -1,3 +1,8 @@
+# The list of required arguments
+# ARG dotnetCoreLinuxComponentVersion
+# ARG dotnetCoreLinuxComponent
+# ARG teamcityMinimalAgentImage
+
 # Priority 2
 # Id teamcity-agent
 # Tag ${tag}
@@ -8,6 +13,8 @@ FROM ${teamcityMinimalAgentImage}
 
 LABEL dockerImage.teamcity.version="latest" \
       dockerImage.teamcity.buildNumber="latest"
+
+ARG dotnetCoreLinuxComponentVersion
 
     # Opt out of the telemetry feature
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=true \
@@ -22,11 +29,12 @@ ENV DOTNET_CLI_TELEMETRY_OPTOUT=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps perfomance
     NUGET_XMLDOC_MODE=skip \
     GIT_SSH_VARIANT=ssh \
-# Install ${dotnetCoreLinuxComponentName}
     DOTNET_SDK_VERSION=${dotnetCoreLinuxComponentVersion}
 
 # Install Git
 # Install Mercurial
+ARG dotnetCoreLinuxComponent
+
 RUN apt-get update && \
     apt-get install -y git mercurial apt-transport-https ca-certificates software-properties-common && \
     \

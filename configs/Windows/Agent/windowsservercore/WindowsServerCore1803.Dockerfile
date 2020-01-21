@@ -1,3 +1,11 @@
+# The list of required arguments
+# ARG windowsservercoreImage
+# ARG dotnetCoreWindowsComponentVersion
+# ARG jdkWindowsComponent
+# ARG gitWindowsComponent
+# ARG mercurialWindowsComponentName
+# ARG teamcityMinimalAgentImage
+
 # Priority 2
 # Id teamcity-agent
 # Tag ${tag}
@@ -8,8 +16,10 @@ FROM ${windowsservercoreImage} AS tools
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install [${jdkWindowsComponentName}](${jdkWindowsComponent})
+ARG jdkWindowsComponent
+
 RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
-    Invoke-WebRequest ${jdkWindowsComponent} -OutFile jdk.zip; \
+    Invoke-WebRequest $Env:jdkWindowsComponent -OutFile jdk.zip; \
     Expand-Archive jdk.zip -DestinationPath $Env:ProgramFiles\Java ; \
     Get-ChildItem $Env:ProgramFiles\Java | Rename-Item -NewName "OpenJDK" ; \
     Remove-Item $Env:ProgramFiles\Java\OpenJDK\demo -Force -Recurse ; \
@@ -18,19 +28,27 @@ RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
     Remove-Item -Force jdk.zip
 
 # Install [${gitWindowsComponentName}](${gitWindowsComponent})
+ARG gitWindowsComponent
+
 RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
-    Invoke-WebRequest ${gitWindowsComponent} -OutFile git.zip; \
+    Invoke-WebRequest $Env:gitWindowsComponent -OutFile git.zip; \
     Expand-Archive git.zip -DestinationPath $Env:ProgramFiles\Git ; \
     Remove-Item -Force git.zip
 
 # Install [${mercurialWindowsComponentName}](${mercurialWindowsComponent})
+ARG mercurialWindowsComponentName
+
 RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
-    Invoke-WebRequest ${mercurialWindowsComponent} -OutFile hg.msi; \
+    Invoke-WebRequest $Env:mercurialWindowsComponent -OutFile hg.msi; \
     Start-Process msiexec -Wait -ArgumentList /q, /i, hg.msi ; \
     Remove-Item -Force hg.msi
 
 # Based on ${teamcityMinimalAgentImage}
+ARG teamcityMinimalAgentImage
+
 FROM ${teamcityMinimalAgentImage} AS buildagent
+
+ARG windowsservercoreImage
 
 FROM ${windowsservercoreImage}
 

@@ -7,6 +7,6 @@ namespace TeamCity.Docker.Build
 {
     internal interface IContextFactory
     {
-        Task<Stream> Create(string dockerFilesRootPath, IEnumerable<DockerFile> dockerFiles);
+        Task<Result<Stream>> Create(string dockerFilesRootPath, IEnumerable<DockerFile> dockerFiles);
     }
 }

@@ -35,7 +35,7 @@ namespace TeamCity.Docker
             yield return container
                 .Bind<ICommand<Generate.IOptions>>().As(Singleton).To<Generate.Command>()
                 .Bind<Generate.IResources>().As(Singleton).To<Generate.Resources>()
-                .Bind<Generate.IDockerVariableReplacer>().As(Singleton).To<Generate.DockerVariableReplacer>()
+                .Bind<Generate.IDockerFileContentParser>().As(Singleton).To<Generate.DockerFileContentParser>()
                 .Bind<Generate.IDockerMetadataProvider>().As(Singleton).To<Generate.DockerMetadataProvider>()
                 .Bind<Generate.IDockerFileGenerator>().As(Singleton).To<Generate.DockerFileGenerator>()
                 .Bind<Generate.IReadmeGenerator>().As(Singleton).To<Generate.ReadmeGenerator>()

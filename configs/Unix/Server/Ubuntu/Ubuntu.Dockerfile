@@ -1,3 +1,8 @@
+# The list of required arguments
+# ARG jdkLinuxComponent
+# ARG jdkLinuxMD5SUM
+# ARG ubuntuImage
+
 # Priority 1
 # Id teamcity-server
 # Tag ${tag}
@@ -17,12 +22,12 @@ RUN apt-get update \
 # JDK preparation start
 
 # Install [${jdkLinuxComponentName}](${jdkLinuxComponent})
-ARG MD5SUM='${jdkLinuxMD5SUM}'
-ARG JDK_URL='${jdkLinuxComponent}'
+ARG jdkLinuxComponent
+ARG jdkLinuxMD5SUM
 
 RUN set -eux; \
-    curl -LfsSo /tmp/openjdk.tar.gz ${JDK_URL}; \
-    echo "${MD5SUM} */tmp/openjdk.tar.gz" | md5sum -c -; \
+    curl -LfsSo /tmp/openjdk.tar.gz ${jdkLinuxComponent}; \
+    echo "${jdkLinuxMD5SUM} */tmp/openjdk.tar.gz" | md5sum -c -; \
     mkdir -p /opt/java/openjdk; \
     cd /opt/java/openjdk; \
     tar -xf /tmp/openjdk.tar.gz --strip-components=1; \
@@ -39,7 +44,6 @@ RUN update-alternatives --install /usr/bin/java java ${JRE_HOME}/bin/java 1 && \
 
 # JDK preparation end
 ##################################
-
 
 ENV TEAMCITY_DATA_PATH=/data/teamcity_server/datadir \
     TEAMCITY_DIST=/opt/teamcity \
@@ -64,7 +68,7 @@ RUN chmod +x /welcome.sh /run-server.sh /run-services.sh && sync && \
     useradd -r -u 1000 -g tcuser tcuser && \
     echo '[ ! -z "$TERM" -a -x /welcome.sh -a -x /welcome.sh ] && /welcome.sh' >> /etc/bash.bashrc
 
-COPY --chown=tcuser:tcuser dist/teamcity $TEAMCITY_DIST
+COPY --chown=tcuser:tcuser TeamCity $TEAMCITY_DIST
 
 
 VOLUME $TEAMCITY_DATA_PATH \

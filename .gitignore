@@ -1,5 +1,4 @@
 **/obj/
 **/bin/
-**/*.zip
-**/*.gz
 **/.vs/
+context/TeamCity/

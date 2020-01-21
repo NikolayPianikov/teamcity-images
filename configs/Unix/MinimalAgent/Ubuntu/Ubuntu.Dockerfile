@@ -1,3 +1,8 @@
+# The list of required arguments
+# ARG jdkLinuxComponent
+# ARG jdkLinuxMD5SUM
+# ARG ubuntuImage
+
 # Priority 1
 # Id teamcity-minimal-agent
 # Tag ${tag}
@@ -15,12 +20,12 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install [${jdkLinuxComponentName}](${jdkLinuxComponent})
-ARG MD5SUM='${jdkLinuxMD5SUM}'
-ARG JDK_URL='${jdkLinuxComponent}'
+ARG jdkLinuxComponent
+ARG jdkLinuxMD5SUM
 
 RUN set -eux; \
-    curl -LfsSo /tmp/openjdk.tar.gz ${JDK_URL}; \
-    echo "${MD5SUM} */tmp/openjdk.tar.gz" | md5sum -c -; \
+    curl -LfsSo /tmp/openjdk.tar.gz ${jdkLinuxComponent}; \
+    echo "${jdkLinuxMD5SUM} */tmp/openjdk.tar.gz" | md5sum -c -; \
     mkdir -p /opt/java/openjdk; \
     cd /opt/java/openjdk; \
     tar -xf /tmp/openjdk.tar.gz --strip-components=1; \
@@ -38,7 +43,6 @@ RUN update-alternatives --install /usr/bin/java java ${JRE_HOME}/bin/java 1 && \
 # JDK preparation end
 ##################################
 
-
 VOLUME /data/teamcity_agent/conf
 
 ENV CONFIG_FILE=/data/teamcity_agent/conf/buildAgent.properties \
@@ -49,7 +53,7 @@ LABEL dockerImage.teamcity.version="latest" \
 
 COPY run-agent.sh /run-agent.sh
 COPY run-agent-services.sh /run-services.sh
-COPY dist/buildagent /opt/buildagent
+COPY TeamCity/buildAgent /opt/buildagent
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends sudo && \

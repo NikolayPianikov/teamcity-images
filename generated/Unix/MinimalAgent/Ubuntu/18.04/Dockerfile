@@ -1,10 +1,20 @@
+# Default arguments
+ARG jdkLinuxComponent='https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-linux-x64.tar.gz'
+ARG jdkLinuxMD5SUM='3511152bd52c867f8b550d7c8d7764aa'
+ARG ubuntuImage='ubuntu:18.04'
+
+# The list of required arguments
+# ARG jdkLinuxComponent
+# ARG jdkLinuxMD5SUM
+# ARG ubuntuImage
+
 # Priority 1
 # Id teamcity-minimal-agent
 # Tag 18.04
 # Tag linux
 
 # Based on ubuntu:18.04
-FROM ubuntu:18.04
+FROM ${ubuntuImage}
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
@@ -15,12 +25,12 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install [JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-linux-x64.tar.gz)
-ARG MD5SUM='3511152bd52c867f8b550d7c8d7764aa'
-ARG JDK_URL='https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-linux-x64.tar.gz'
+ARG jdkLinuxComponent
+ARG jdkLinuxMD5SUM
 
 RUN set -eux; \
-    curl -LfsSo /tmp/openjdk.tar.gz ${JDK_URL}; \
-    echo "${MD5SUM} */tmp/openjdk.tar.gz" | md5sum -c -; \
+    curl -LfsSo /tmp/openjdk.tar.gz ${jdkLinuxComponent}; \
+    echo "${jdkLinuxMD5SUM} */tmp/openjdk.tar.gz" | md5sum -c -; \
     mkdir -p /opt/java/openjdk; \
     cd /opt/java/openjdk; \
     tar -xf /tmp/openjdk.tar.gz --strip-components=1; \
@@ -38,7 +48,6 @@ RUN update-alternatives --install /usr/bin/java java ${JRE_HOME}/bin/java 1 && \
 # JDK preparation end
 ##################################
 
-
 VOLUME /data/teamcity_agent/conf
 
 ENV CONFIG_FILE=/data/teamcity_agent/conf/buildAgent.properties \
@@ -49,7 +58,7 @@ LABEL dockerImage.teamcity.version="latest" \
 
 COPY run-agent.sh /run-agent.sh
 COPY run-agent-services.sh /run-services.sh
-COPY dist/buildagent /opt/buildagent
+COPY TeamCity/buildAgent /opt/buildagent
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends sudo && \

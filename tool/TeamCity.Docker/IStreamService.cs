@@ -6,7 +6,7 @@ namespace TeamCity.Docker
 {
     internal interface IStreamService
     {
-        Task Copy(Stream sourceStream, Stream targetStream);
+        Task<Result> Copy(Stream sourceStream, Stream targetStream, string description = "");
 
         void ProcessLines(Stream source, Action<string> handler);
     }

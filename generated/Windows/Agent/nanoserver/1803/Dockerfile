@@ -1,23 +1,46 @@
+# Default arguments
+ARG dotnetCoreWindowsComponent='https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-win-x64.zip'
+ARG dotnetCoreWindowsComponentVersion='3.1.100'
+ARG powershellImage='mcr.microsoft.com/powershell:nanoserver-1803'
+ARG teamcityWindowsservercoreImage='teamcity-agent:latest-windowsservercore-1803'
+
+# The list of required arguments
+# ARG dotnetCoreWindowsComponentVersion
+# ARG jreWindowsComponent
+# ARG jdkWindowsComponent
+# ARG nanoserverImage
+# ARG powershellImage
+# ARG teamcityWindowsservercoreImage
+
 # Priority 3
 # Id teamcity-agent
 # Tag latest-nanoserver-1803
 
 # Based on mcr.microsoft.com/powershell:nanoserver-1803
-FROM mcr.microsoft.com/powershell:nanoserver-1803 AS dotnet
+FROM ${powershellImage} AS dotnet
+
 SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install [.NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-win-x64.zip)
-ENV DOTNET_SDK_VERSION 3.1.100
+ARG dotnetCoreWindowsComponentVersion
 
-RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-win-x64.zip; \
+ENV DOTNET_SDK_VERSION ${dotnetCoreWindowsComponentVersion}
+
+ARG dotnetCoreWindowsComponent
+
+RUN Invoke-WebRequest -OutFile dotnet.zip $Env:dotnetCoreWindowsComponent; \
     Expand-Archive dotnet.zip -DestinationPath $Env:ProgramFiles\dotnet; \
     Remove-Item -Force dotnet.zip; \
     Get-ChildItem -Path $Env:ProgramFiles\dotnet -Include *.lzma -File -Recurse | foreach { $_.Delete()}
 
 # Based on teamcity-agent:latest-windowsservercore-1803
-FROM teamcity-agent:latest-windowsservercore-1803 AS tools
+ARG teamcityWindowsservercoreImage
 
-FROM mcr.microsoft.com/powershell:nanoserver-1803
+FROM ${teamcityWindowsservercoreImage} AS tools
+
+ARG powershellImage
+
+FROM ${powershellImage}
 
 COPY --from=tools ["C:/Program Files/Java/OpenJDK", "C:/Program Files/Java/OpenJDK"]
 COPY --from=tools ["C:/Program Files/Git", "C:/Program Files/Git"]

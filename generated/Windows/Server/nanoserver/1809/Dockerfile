@@ -1,23 +1,43 @@
+# Default arguments
+ARG gitWindowsComponent='https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip'
+ARG jdkWindowsComponent='https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip'
+ARG jreWindowsComponent='https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip'
+ARG nanoserverImage='mcr.microsoft.com/windows/nanoserver:1809'
+ARG powershellImage='mcr.microsoft.com/powershell:nanoserver-1809'
+ARG windowsBuild='1809'
+
+# The list of required arguments
+# ARG powershellImage
+# ARG jreWindowsComponent
+# ARG jdkWindowsComponent
+# ARG gitWindowsComponent
+# ARG windowsBuild
+# ARG powershellImage
+
 # Priority 1
 # Id teamcity-server
 # Tag latest-nanoserver-1809
 
 # Based on mcr.microsoft.com/powershell:nanoserver-1809
 # Install PowerShell
-FROM mcr.microsoft.com/powershell:nanoserver-1809 AS base
+FROM ${powershellImage} AS base
 
 SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install [JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
+ARG jreWindowsComponent
+
 RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
-    Invoke-WebRequest https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip -OutFile jre.zip; \
+    Invoke-WebRequest $Env:jreWindowsComponent -OutFile jre.zip; \
     Expand-Archive jre.zip -DestinationPath $Env:ProgramFiles\Java ; \
     Get-ChildItem $Env:ProgramFiles\Java | Rename-Item -NewName "OpenJDK" ; \
     Remove-Item -Force jre.zip
 
 # Install [JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
+ARG jdkWindowsComponent
+
 RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
-    Invoke-WebRequest https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip -OutFile jdk.zip; \
+    Invoke-WebRequest $Env:jdkWindowsComponent -OutFile jdk.zip; \
     Expand-Archive jdk.zip -DestinationPath $Env:Temp\JDK ; \
     Get-ChildItem $Env:Temp\JDK | Rename-Item -NewName "OpenJDK" ; \
     ('jar.exe', 'jcmd.exe', 'jconsole.exe', 'jmap.exe', 'jstack.exe', 'jps.exe') | foreach { \
@@ -27,18 +47,24 @@ RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
     Remove-Item -Force jdk.zip
 
 # Install [Git x64 v.2.19.1](https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip)
+ARG gitWindowsComponent
+
 RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
-    Invoke-WebRequest https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip -OutFile git.zip; \
+    Invoke-WebRequest $Env:gitWindowsComponent -OutFile git.zip; \
     Expand-Archive git.zip -DestinationPath $Env:ProgramFiles\Git ; \
     Remove-Item -Force git.zip
 
 # Prepare TeamCity server distribution
-ADD TeamCity-*.tar.gz /
-RUN New-Item C:/TeamCity/webapps/ROOT/WEB-INF/DistributionType.txt -type file -force -value "docker-windows-1809" | Out-Null
+ARG windowsBuild
+
+COPY TeamCity /
+RUN New-Item C:/TeamCity/webapps/ROOT/WEB-INF/DistributionType.txt -type file -force -value "docker-windows-$Env:windowsBuild" | Out-Null
 COPY run-server.ps1 /TeamCity/run-server.ps1
 
 # Workaround for https://github.com/PowerShell/PowerShell-Docker/issues/164
-FROM mcr.microsoft.com/windows/nanoserver:1809
+ARG nanoserverImage
+
+FROM ${nanoserverImage}
 
 ENV ProgramFiles="C:\Program Files" \
     # set a fixed location for the Module analysis cache

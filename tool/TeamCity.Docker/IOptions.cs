@@ -1,4 +1,6 @@
-﻿namespace TeamCity.Docker
+﻿using System.Collections.Generic;
+
+namespace TeamCity.Docker
 {
     internal interface IOptions
     {
@@ -8,6 +10,6 @@
 
         string SessionId { get; }
 
-        string ConfigurationFiles { get; }
+        IEnumerable<string> ConfigurationFiles { get; }
     }
 }

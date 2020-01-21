@@ -65,7 +65,8 @@ namespace TeamCity.Docker.Generate
             _logger.Log("Save docker files");
             foreach (var dockerFile in dockerFiles)
             {
-                _fileSystem.WriteFile(Path.Combine(_options.TargetPath, dockerFile.Path), dockerFile.Content);
+                var content = string.Join(System.Environment.NewLine, dockerFile.Content.Select(line => line.Text));
+                _fileSystem.WriteFile(Path.Combine(_options.TargetPath, dockerFile.Path), content);
             }
             
             _logger.Log("Save readme files");

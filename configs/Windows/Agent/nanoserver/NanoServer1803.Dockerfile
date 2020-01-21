@@ -1,21 +1,38 @@
+# The list of required arguments
+# ARG dotnetCoreWindowsComponentVersion
+# ARG jreWindowsComponent
+# ARG jdkWindowsComponent
+# ARG nanoserverImage
+# ARG powershellImage
+# ARG teamcityWindowsservercoreImage
+
 # Priority 3
 # Id teamcity-agent
 # Tag ${tag}
 
 # Based on ${powershellImage}
 FROM ${powershellImage} AS dotnet
+
 SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install [${dotnetCoreWindowsComponentName}](${dotnetCoreWindowsComponent})
+ARG dotnetCoreWindowsComponentVersion
+
 ENV DOTNET_SDK_VERSION ${dotnetCoreWindowsComponentVersion}
 
-RUN Invoke-WebRequest -OutFile dotnet.zip ${dotnetCoreWindowsComponent}; \
+ARG dotnetCoreWindowsComponent
+
+RUN Invoke-WebRequest -OutFile dotnet.zip $Env:dotnetCoreWindowsComponent; \
     Expand-Archive dotnet.zip -DestinationPath $Env:ProgramFiles\dotnet; \
     Remove-Item -Force dotnet.zip; \
     Get-ChildItem -Path $Env:ProgramFiles\dotnet -Include *.lzma -File -Recurse | foreach { $_.Delete()}
 
 # Based on ${teamcityWindowsservercoreImage}
+ARG teamcityWindowsservercoreImage
+
 FROM ${teamcityWindowsservercoreImage} AS tools
+
+ARG powershellImage
 
 FROM ${powershellImage}
 

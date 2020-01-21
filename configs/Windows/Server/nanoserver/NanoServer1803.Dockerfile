@@ -1,3 +1,11 @@
+# The list of required arguments
+# ARG powershellImage
+# ARG jreWindowsComponent
+# ARG jdkWindowsComponent
+# ARG gitWindowsComponent
+# ARG windowsBuild
+# ARG powershellImage
+
 # Priority 1
 # Id teamcity-server
 # Tag ${tag}
@@ -9,15 +17,19 @@ FROM ${powershellImage} AS base
 SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install [${jreWindowsComponentName}](${jreWindowsComponent})
+ARG jreWindowsComponent
+
 RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
-    Invoke-WebRequest ${jreWindowsComponent} -OutFile jre.zip; \
+    Invoke-WebRequest $Env:jreWindowsComponent -OutFile jre.zip; \
     Expand-Archive jre.zip -DestinationPath $Env:ProgramFiles\Java ; \
     Get-ChildItem $Env:ProgramFiles\Java | Rename-Item -NewName "OpenJDK" ; \
     Remove-Item -Force jre.zip
 
 # Install [${jdkWindowsComponentName}](${jdkWindowsComponent})
+ARG jdkWindowsComponent
+
 RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
-    Invoke-WebRequest ${jdkWindowsComponent} -OutFile jdk.zip; \
+    Invoke-WebRequest $Env:jdkWindowsComponent -OutFile jdk.zip; \
     Expand-Archive jdk.zip -DestinationPath $Env:Temp\JDK ; \
     Get-ChildItem $Env:Temp\JDK | Rename-Item -NewName "OpenJDK" ; \
     ('jar.exe', 'jcmd.exe', 'jconsole.exe', 'jmap.exe', 'jstack.exe', 'jps.exe') | foreach { \
@@ -27,15 +39,21 @@ RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
     Remove-Item -Force jdk.zip
 
 # Install [${gitWindowsComponentName}](${gitWindowsComponent})
+ARG gitWindowsComponent
+
 RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
-    Invoke-WebRequest ${gitWindowsComponent} -OutFile git.zip; \
+    Invoke-WebRequest $Env:gitWindowsComponent -OutFile git.zip; \
     Expand-Archive git.zip -DestinationPath $Env:ProgramFiles\Git ; \
     Remove-Item -Force git.zip
 
 # Prepare TeamCity server distribution
-ADD TeamCity-*.tar.gz /
-RUN New-Item C:/TeamCity/webapps/ROOT/WEB-INF/DistributionType.txt -type file -force -value "docker-windows-${windowsBuild}" | Out-Null
+ARG windowsBuild
+
+COPY TeamCity /
+RUN New-Item C:/TeamCity/webapps/ROOT/WEB-INF/DistributionType.txt -type file -force -value "docker-windows-$Env:windowsBuild" | Out-Null
 COPY run-server.ps1 /TeamCity/run-server.ps1
+
+ARG powershellImage
 
 FROM ${powershellImage}
 

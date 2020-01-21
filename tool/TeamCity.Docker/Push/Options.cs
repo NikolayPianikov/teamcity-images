@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CommandLine;
 // ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
 // ReSharper disable ClassNeverInstantiated.Global
@@ -11,7 +12,7 @@ namespace TeamCity.Docker.Push
         [Option('i', "id", Required = true, HelpText = "Session Id.")]
         public string SessionId { get; set; } = "";
 
-        public string ConfigurationFiles => throw new NotImplementedException();
+        public IEnumerable<string> ConfigurationFiles => throw new NotImplementedException();
 
         [Option('a', "address", Required = false, HelpText = "Docker server address (default: docker.io).")]
         public string ServerAddress { get; set; } = "docker.io";

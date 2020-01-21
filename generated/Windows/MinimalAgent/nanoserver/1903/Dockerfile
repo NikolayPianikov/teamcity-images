@@ -1,22 +1,38 @@
+# Default arguments
+ARG jdkWindowsComponent='https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip'
+ARG jreWindowsComponent='https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip'
+ARG nanoserverImage='mcr.microsoft.com/windows/nanoserver:1903'
+ARG powershellImage='mcr.microsoft.com/powershell:nanoserver-1903'
+
+# The list of required arguments
+# ARG jreWindowsComponent
+# ARG jdkWindowsComponent
+# ARG nanoserverImage
+# ARG powershellImage
+
 # Priority 1
 # Id teamcity-minimal-agent
 # Tag latest-nanoserver-1903
 
 # Based on mcr.microsoft.com/powershell:nanoserver-1903
-FROM mcr.microsoft.com/powershell:nanoserver-1903 AS base
+FROM ${powershellImage} AS base
 
 SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install [JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
+ARG jreWindowsComponent
+
 RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
-    Invoke-WebRequest https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip -OutFile jre.zip; \
+    Invoke-WebRequest $Env:jreWindowsComponent -OutFile jre.zip; \
     Expand-Archive jre.zip -DestinationPath $Env:ProgramFiles\Java ; \
     Get-ChildItem $Env:ProgramFiles\Java | Rename-Item -NewName "OpenJDK" ; \
     Remove-Item -Force jre.zip
 
 # Install [JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
+ARG jdkWindowsComponent
+
 RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
-    Invoke-WebRequest https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip -OutFile jdk.zip; \
+    Invoke-WebRequest $Env:jdkWindowsComponent -OutFile jdk.zip; \
     Expand-Archive jdk.zip -DestinationPath $Env:Temp\JDK ; \
     Get-ChildItem $Env:Temp\JDK | Rename-Item -NewName "OpenJDK" ; \
     ('jar.exe', 'jcmd.exe', 'jconsole.exe', 'jmap.exe', 'jstack.exe', 'jps.exe') | foreach { \
@@ -26,13 +42,13 @@ RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
     Remove-Item -Force jdk.zip
 
 # Prepare build agent distribution
-COPY buildAgent.zip /
-RUN Expand-Archive buildAgent.zip -DestinationPath C:/BuildAgent ; \
-    Move-Item -Path C:/BuildAgent/conf -Destination C:/BuildAgent/conf_dist
+COPY TeamCity/buildAgent C:/BuildAgent
 COPY run-agent.ps1 /BuildAgent/run-agent.ps1
 
 # Workaround for https://github.com/PowerShell/PowerShell-Docker/issues/164
-FROM mcr.microsoft.com/windows/nanoserver:1903
+ARG nanoserverImage
+
+FROM ${nanoserverImage}
 
 ENV ProgramFiles="C:\Program Files" \
     # set a fixed location for the Module analysis cache

@@ -1,12 +1,14 @@
-﻿namespace TeamCity.Docker.Generate
+﻿using System.Collections.Generic;
+
+namespace TeamCity.Docker.Generate
 {
     internal struct DockerFile
     {
         public readonly string Path;
         public readonly Metadata Metadata;
-        public readonly string Content;
+        public readonly IReadOnlyCollection<DockerLine> Content;
 
-        public DockerFile(string path, Metadata metadata, string content)
+        public DockerFile(string path, Metadata metadata, IReadOnlyCollection<DockerLine> content)
         {
             Path = path;
             Metadata = metadata;

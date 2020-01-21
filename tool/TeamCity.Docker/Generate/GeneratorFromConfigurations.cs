@@ -32,8 +32,7 @@ namespace TeamCity.Docker.Generate
                 return new Result<IEnumerable<DockerFile>>(Enumerable.Empty<DockerFile>(), Result.Error);
             }
 
-            var configurationFiles = _options.ConfigurationFiles.Split(',');
-            var configurationsResult = _dockerFileConfigurationExplorer.Explore(_options.SourcePath, configurationFiles);
+            var configurationsResult = _dockerFileConfigurationExplorer.Explore(_options.SourcePath, _options.ConfigurationFiles);
             if (configurationsResult.State == Result.Error)
             {
                 return new Result<IEnumerable<DockerFile>>(Enumerable.Empty<DockerFile>(), Result.Error);
@@ -42,12 +41,9 @@ namespace TeamCity.Docker.Generate
             return new Result<IEnumerable<DockerFile>>(GetDockerFiles(configurationsResult.Value));
         }
 
-        private IEnumerable<DockerFile> GetDockerFiles(IEnumerable<DockerFileConfiguration> configurations)
-        {
-            return
-                from dockerFileConfiguration in configurations
-                from dockerFileVariant in dockerFileConfiguration.Variants
-                select _dockerFileGenerator.Generate(dockerFileVariant.BuildPath, dockerFileConfiguration.DockerfileTemplateContent, dockerFileVariant.Variables);
-        }
+        private IEnumerable<DockerFile> GetDockerFiles(IEnumerable<DockerFileConfiguration> configurations) =>
+            from dockerFileConfiguration in configurations
+            from dockerFileVariant in dockerFileConfiguration.Variants
+            select _dockerFileGenerator.Generate(dockerFileVariant.BuildPath, dockerFileConfiguration.DockerfileTemplateContent, dockerFileVariant.Variables);
     }
 }

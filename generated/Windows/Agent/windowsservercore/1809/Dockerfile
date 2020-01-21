@@ -1,15 +1,33 @@
+# Default arguments
+ARG gitWindowsComponent='https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip'
+ARG jdkWindowsComponent='https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip'
+ARG mercurialWindowsComponent='https://bitbucket.org/tortoisehg/files/downloads/mercurial-4.7.2-x64.msi'
+ARG mercurialWindowsComponentName='Mercurial x64 v.4.7.2'
+ARG teamcityMinimalAgentImage='teamcity-minimal-agent:latest-nanoserver-1809'
+ARG windowsservercoreImage='mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019'
+
+# The list of required arguments
+# ARG windowsservercoreImage
+# ARG dotnetCoreWindowsComponentVersion
+# ARG jdkWindowsComponent
+# ARG gitWindowsComponent
+# ARG mercurialWindowsComponentName
+# ARG teamcityMinimalAgentImage
+
 # Priority 2
 # Id teamcity-agent
 # Tag latest-windowsservercore-1809
 
 # Based on mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019
-FROM mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019 AS tools
+FROM ${windowsservercoreImage} AS tools
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install [JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
+ARG jdkWindowsComponent
+
 RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
-    Invoke-WebRequest https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip -OutFile jdk.zip; \
+    Invoke-WebRequest $Env:jdkWindowsComponent -OutFile jdk.zip; \
     Expand-Archive jdk.zip -DestinationPath $Env:ProgramFiles\Java ; \
     Get-ChildItem $Env:ProgramFiles\Java | Rename-Item -NewName "OpenJDK" ; \
     Remove-Item $Env:ProgramFiles\Java\OpenJDK\demo -Force -Recurse ; \
@@ -18,21 +36,29 @@ RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
     Remove-Item -Force jdk.zip
 
 # Install [Git x64 v.2.19.1](https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip)
+ARG gitWindowsComponent
+
 RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
-    Invoke-WebRequest https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip -OutFile git.zip; \
+    Invoke-WebRequest $Env:gitWindowsComponent -OutFile git.zip; \
     Expand-Archive git.zip -DestinationPath $Env:ProgramFiles\Git ; \
     Remove-Item -Force git.zip
 
 # Install [Mercurial x64 v.4.7.2](https://bitbucket.org/tortoisehg/files/downloads/mercurial-4.7.2-x64.msi)
+ARG mercurialWindowsComponentName
+
 RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
-    Invoke-WebRequest https://bitbucket.org/tortoisehg/files/downloads/mercurial-4.7.2-x64.msi -OutFile hg.msi; \
+    Invoke-WebRequest $Env:mercurialWindowsComponent -OutFile hg.msi; \
     Start-Process msiexec -Wait -ArgumentList /q, /i, hg.msi ; \
     Remove-Item -Force hg.msi
 
 # Based on teamcity-minimal-agent:latest-nanoserver-1809
-FROM teamcity-minimal-agent:latest-nanoserver-1809 AS buildagent
+ARG teamcityMinimalAgentImage
 
-FROM mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019
+FROM ${teamcityMinimalAgentImage} AS buildagent
+
+ARG windowsservercoreImage
+
+FROM ${windowsservercoreImage}
 
 COPY --from=tools ["C:/Program Files/Java/OpenJDK", "C:/Program Files/Java/OpenJDK"]
 COPY --from=tools ["C:/Program Files/Git", "C:/Program Files/Git"]

@@ -1,1 +1,1 @@
-dotnet run -p tool\TeamCity.Docker\TeamCity.Docker.csproj -- build -s configs\Unix -c context -i 39
+dotnet run -p tool\TeamCity.Docker\TeamCity.Docker.csproj -- build -s configs\Unix -f configs\Unix.config -c context -i 38
