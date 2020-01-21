@@ -34,6 +34,10 @@ namespace TeamCity.Docker.Push
                 var images = await _dockerClient.Images.ListImagesAsync(new ImagesListParameters { Filters = filters });
                 foreach (var image in images)
                 {
+                    if (image.RepoTags == null)
+                    {
+                        continue;
+                    }
                     foreach (var repoTag in image.RepoTags)
                     {
                         _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.ID)} {image.Created} {repoTag}");

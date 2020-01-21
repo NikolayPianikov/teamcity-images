@@ -23,7 +23,7 @@ namespace TeamCity.Docker
         public async Task<IDockerClient> Create()
         {
             var client = new DockerClientConfiguration(new Uri(_options.DockerEngineEndpoint)).CreateClient();
-            using (_logger.CreateBlock("Connecting to docker"))
+            using (_logger.CreateBlock("Connect to docker"))
             {
                 _logger.Log($"The docker engine endpoint is \"{_options.DockerEngineEndpoint}\".");
                 try

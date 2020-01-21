@@ -36,7 +36,7 @@ RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
     Remove-Item -Force git.zip
 
 # Install [${mercurialWindowsComponentName}](${mercurialWindowsComponent})
-ARG mercurialWindowsComponentName
+ARG mercurialWindowsComponent
 
 RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
     Invoke-WebRequest $Env:mercurialWindowsComponent -OutFile hg.msi; \
