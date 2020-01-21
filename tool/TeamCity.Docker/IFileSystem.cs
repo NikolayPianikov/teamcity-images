@@ -7,7 +7,9 @@ namespace TeamCity.Docker
     {
         string UniqueName { get; }
 
-        bool IsDirectoryExists(string path);
+        bool IsDirectoryExist(string path);
+
+        bool IsFileExist(string path);
 
         IEnumerable<string> EnumerateFileSystemEntries(string path, string searchPattern);
 

@@ -13,6 +13,9 @@ namespace TeamCity.Docker.Build
         [Option('i', "id", Required = false, HelpText = "Session Id.")]
         public string SessionId { get; set; } = "";
 
+        [Option('c', "configurations", Required = false, HelpText = "Comma separated configuration file.")]
+        public string ConfigurationFiles { get; set; } = "";
+
         [Option('c', "context", Required = false, HelpText = "Path to the context directory.")]
         public string ContextPath { get; set; } = "";
 

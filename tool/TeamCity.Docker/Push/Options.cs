@@ -11,6 +11,8 @@ namespace TeamCity.Docker.Push
         [Option('i', "id", Required = true, HelpText = "Session Id.")]
         public string SessionId { get; set; } = "";
 
+        public string ConfigurationFiles => throw new NotImplementedException();
+
         [Option('a', "address", Required = false, HelpText = "Docker server address (default: docker.io).")]
         public string ServerAddress { get; set; } = "docker.io";
 

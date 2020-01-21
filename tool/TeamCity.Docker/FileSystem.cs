@@ -10,7 +10,9 @@ namespace TeamCity.Docker
         public string UniqueName =>
             Guid.NewGuid().ToString().Replace("-", string.Empty).Replace("{", string.Empty);
 
-        public bool IsDirectoryExists(string path) => Directory.Exists(path);
+        public bool IsDirectoryExist(string path) => Directory.Exists(path);
+
+        public bool IsFileExist(string path) => File.Exists(path);
 
         public IEnumerable<string> EnumerateFileSystemEntries(string path, string searchPattern) =>
             Directory.EnumerateFileSystemEntries(path, searchPattern, SearchOption.AllDirectories);

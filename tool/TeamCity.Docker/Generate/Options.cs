@@ -14,6 +14,9 @@ namespace TeamCity.Docker.Generate
         [Option('i', "id", Required = false, HelpText = "Session Id.")]
         public string SessionId { get; set; } = "";
 
+        [Option('c', "configurations", Required = false, HelpText = "Comma separated configuration file.")]
+        public string ConfigurationFiles { get; set; } = "";
+
         [Option('t', "target", Required = true, HelpText = "Path to directory for generating docker files.")]
         public string TargetPath { get; set; } = "";
 

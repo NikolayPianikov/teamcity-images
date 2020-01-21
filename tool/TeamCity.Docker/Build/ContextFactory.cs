@@ -44,7 +44,7 @@ namespace TeamCity.Docker.Build
                 {
                     var path = Path.GetFullPath(_options.ContextPath);
                     _logger.Log($"The context path is \"{path}\" (\"{_options.ContextPath}\")");
-                    if (!_fileSystem.IsDirectoryExists(path))
+                    if (!_fileSystem.IsDirectoryExist(path))
                     {
                         throw new InvalidOperationException($"The context directory \"{path}\" does not exist.");
                     }

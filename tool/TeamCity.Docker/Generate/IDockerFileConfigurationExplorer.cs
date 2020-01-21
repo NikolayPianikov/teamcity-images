@@ -4,6 +4,6 @@ namespace TeamCity.Docker.Generate
 {
     internal interface IDockerFileConfigurationExplorer
     {
-        IEnumerable<DockerFileConfiguration> Explore(string sourcePath);
+        Result<IEnumerable<DockerFileConfiguration>> Explore(string sourcePath, IEnumerable<string> configurationFiles);
     }
 }

@@ -1,8 +1,8 @@
 ﻿// ReSharper disable ClassNeverInstantiated.Global
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using TeamCity.Docker.Generate;
 
 namespace TeamCity.Docker.Build
 {
@@ -24,10 +24,20 @@ namespace TeamCity.Docker.Build
 
         public async Task<Result> Run()
         {
-            List<Generate.DockerFile> dockerFiles;
+            var dockerFiles = new List<DockerFile>();
             using (_logger.CreateBlock("Generate docker files"))
             {
-                dockerFiles = _dockerFileGenerators.SelectMany(generator => generator.Generate()).ToList();
+                foreach (var generator in _dockerFileGenerators)
+                {
+                    var newDockerFiles = generator.Generate();
+                    if (newDockerFiles.State == Result.Error)
+                    {
+                        return Result.Error;
+                    }
+
+                    dockerFiles.AddRange(newDockerFiles.Value);
+                }
+
                 if (dockerFiles.Count == 0)
                 {
                     _logger.Log("Docker files were not generated.", Result.Error);

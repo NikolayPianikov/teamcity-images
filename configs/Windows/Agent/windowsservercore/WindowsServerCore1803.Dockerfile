@@ -7,9 +7,9 @@ FROM ${windowsservercoreImage} AS tools
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
-# Install JDK Amazon Corretto v.8.232.09.1
+# Install [${jdkWindowsComponentName}](${jdkWindowsComponent})
 RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
-    Invoke-WebRequest https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip -OutFile jdk.zip; \
+    Invoke-WebRequest ${jdkWindowsComponent} -OutFile jdk.zip; \
     Expand-Archive jdk.zip -DestinationPath $Env:ProgramFiles\Java ; \
     Get-ChildItem $Env:ProgramFiles\Java | Rename-Item -NewName "OpenJDK" ; \
     Remove-Item $Env:ProgramFiles\Java\OpenJDK\demo -Force -Recurse ; \
@@ -17,15 +17,15 @@ RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
     Remove-Item $Env:ProgramFiles\Java\OpenJDK\src.zip -Force ; \
     Remove-Item -Force jdk.zip
 
-# Install Git v.2.19.1
+# Install [${gitWindowsComponentName}](${gitWindowsComponent})
 RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
-    Invoke-WebRequest https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip -OutFile git.zip; \
+    Invoke-WebRequest ${gitWindowsComponent} -OutFile git.zip; \
     Expand-Archive git.zip -DestinationPath $Env:ProgramFiles\Git ; \
     Remove-Item -Force git.zip
 
-# Install Mercurial v.4.7.2
+# Install [${mercurialWindowsComponentName}](${mercurialWindowsComponent})
 RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
-    Invoke-WebRequest https://bitbucket.org/tortoisehg/files/downloads/mercurial-4.7.2-x64.msi -OutFile hg.msi; \
+    Invoke-WebRequest ${mercurialWindowsComponent} -OutFile hg.msi; \
     Start-Process msiexec -Wait -ArgumentList /q, /i, hg.msi ; \
     Remove-Item -Force hg.msi
 

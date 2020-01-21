@@ -39,6 +39,7 @@ namespace TeamCity.Docker.Generate
                 sb.AppendLine("| ---- | ----------- | ---------- | ---------- |");
 
                 var files = dockerFileGroup.ToList();
+                var counter = 0;
                 foreach (var dockerFile in files)
                 {
                     sb.Append('|');
@@ -51,9 +52,10 @@ namespace TeamCity.Docker.Generate
                     sb.Append(_pathService.Normalize(dockerFile.Path));
                     sb.Append('|');
                     sb.AppendLine();
+                    counter++;
                 }
 
-                _logger.Log($"The readme \"{readmeFilePath}\" file was generated.");
+                _logger.Log($"The readme \"{readmeFilePath}\" file was generated for {counter} docker files.");
                 yield return new ReadmeFile(readmeFilePath, sb.ToString(), files);
             }
         }

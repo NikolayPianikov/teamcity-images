@@ -36,7 +36,13 @@ namespace TeamCity.Docker.Generate
             {
                 foreach (var generator in _dockerFileGenerators)
                 {
-                    dockerFiles.AddRange(generator.Generate());
+                    var newDockerFiles = generator.Generate();
+                    if (newDockerFiles.State == Result.Error)
+                    {
+                        return Task.FromResult(Result.Error);
+                    }
+
+                    dockerFiles.AddRange(newDockerFiles.Value);
                 }
 
                 if (dockerFiles.Count == 0)
