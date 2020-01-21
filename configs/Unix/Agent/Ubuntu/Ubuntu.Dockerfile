@@ -22,8 +22,8 @@ ENV DOTNET_CLI_TELEMETRY_OPTOUT=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps perfomance
     NUGET_XMLDOC_MODE=skip \
     GIT_SSH_VARIANT=ssh \
-# Install .NET Core SDK v.3.1.100
-    DOTNET_SDK_VERSION=3.1.000
+# Install ${dotnetCoreLinuxComponentName}
+    DOTNET_SDK_VERSION=${dotnetCoreLinuxComponentVersion}
 
 # Install Git
 # Install Mercurial
@@ -54,7 +54,8 @@ RUN apt-get update && \
             zlib1g \
         && rm -rf /var/lib/apt/lists/* && \
     \
-    curl -SL https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-x64.tar.gz --output dotnet.tar.gz \
+# Install [${dotnetCoreLinuxComponentName}](${dotnetCoreLinuxComponent})
+    curl -SL ${dotnetCoreLinuxComponent} --output dotnet.tar.gz \
         && mkdir -p /usr/share/dotnet \
         && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \
         && rm dotnet.tar.gz \

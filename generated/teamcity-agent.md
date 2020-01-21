@@ -3,9 +3,10 @@
 Dockerfile: Unix/Agent/Ubuntu/18.04/Dockerfile
 
 Installed components:
-- .NET Core SDK v.3.1.100
+- .NET Core SDK x64 v.3.1.100
 - Git
 - Mercurial
+- [.NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-linux-x64.tar.gz)
 
 Base images:
 - teamcity-minimal-agent:18.04

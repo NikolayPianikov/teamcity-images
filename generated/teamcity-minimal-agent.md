@@ -3,7 +3,7 @@
 Dockerfile: Unix/MinimalAgent/Ubuntu/18.04/Dockerfile
 
 Installed components:
-- JDK Amazon Corretto x64 v.8.232.09.1
+- [JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-linux-x64.tar.gz)
 
 Base images:
 - ubuntu:18.04
