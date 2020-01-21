@@ -15,7 +15,7 @@ RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
     Get-ChildItem $Env:ProgramFiles\Java | Rename-Item -NewName "OpenJDK" ; \
     Remove-Item -Force jre.zip
 
-# Install JDK [${jdkWindowsComponentName}](${jdkWindowsComponent})
+# Install [${jdkWindowsComponentName}](${jdkWindowsComponent})
 RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
     Invoke-WebRequest ${jdkWindowsComponent} -OutFile jdk.zip; \
     Expand-Archive jdk.zip -DestinationPath $Env:Temp\JDK ; \

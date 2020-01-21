@@ -35,22 +35,28 @@ namespace TeamCity.Docker.Generate
                 var readmeFilePath = imageId + ".md";
 
                 var sb = new StringBuilder();
-                sb.AppendLine("| Tags | Base images | Components | Dockerfile |");
-                sb.AppendLine("| ---- | ----------- | ---------- | ---------- |");
-
                 var files = dockerFileGroup.ToList();
                 var counter = 0;
                 foreach (var dockerFile in files)
                 {
-                    sb.Append('|');
-                    sb.Append(string.Join(":", dockerFile.Metadata.Tags.Select(tag => _dockerConverter.TryConvertRepoTagToTag(tag))));
-                    sb.Append('|');
-                    sb.Append(string.Join(", ", dockerFile.Metadata.BaseImages));
-                    sb.Append('|');
-                    sb.Append(string.Join(", ", dockerFile.Metadata.Components));
-                    sb.Append('|');
-                    sb.Append(_pathService.Normalize(dockerFile.Path));
-                    sb.Append('|');
+                    var tags = string.Join(", ", dockerFile.Metadata.Tags.Select(tag => _dockerConverter.TryConvertRepoTagToTag(tag)));
+                    sb.AppendLine($"### {tags}");
+                    sb.AppendLine();
+                    sb.AppendLine($"Dockerfile: {_pathService.Normalize(dockerFile.Path)}");
+                    sb.AppendLine();
+                    sb.AppendLine("Installed components:");
+                    foreach (var component in dockerFile.Metadata.Components)
+                    {
+                        sb.AppendLine($"- {component}");
+                    }
+
+                    sb.AppendLine();
+                    sb.AppendLine("Base images:");
+                    foreach (var image in dockerFile.Metadata.BaseImages)
+                    {
+                        sb.AppendLine($"- {image}");
+                    }
+
                     sb.AppendLine();
                     counter++;
                 }
