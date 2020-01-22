@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
+using IoC;
 
 namespace TeamCity.Docker
 {
     internal interface IOptions
     {
-        string SourcePath { get; }
+        [NotNull] string SourcePath { get; }
 
-        string DockerEngineEndpoint { get; }
+        [NotNull] string DockerEngineEndpoint { get; }
 
-        string SessionId { get; }
+        [NotNull] string SessionId { get; }
 
-        IEnumerable<string> ConfigurationFiles { get; }
+        [NotNull] IEnumerable<string> ConfigurationFiles { get; }
     }
 }

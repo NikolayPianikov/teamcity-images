@@ -1,12 +1,19 @@
 ﻿using System;
+using IoC;
+
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace TeamCity.Docker
 {
     internal class DockerConverter : IDockerConverter
     {
-        public string? TryConvertRepoTagToTag(string repoTag)
+        public string TryConvertRepoTagToTag([NotNull] string repoTag)
         {
+            if (repoTag == null)
+            {
+                throw new ArgumentNullException(nameof(repoTag));
+            }
+
             var ind = repoTag.IndexOf(":", StringComparison.Ordinal);
             if (ind > 2)
             {
@@ -16,8 +23,13 @@ namespace TeamCity.Docker
             return null;
         }
 
-        public string? TryConvertRepoTagToRepositoryName(string repoTag)
+        public string TryConvertRepoTagToRepositoryName([NotNull] string repoTag)
         {
+            if (repoTag == null)
+            {
+                throw new ArgumentNullException(nameof(repoTag));
+            }
+
             var ind = repoTag.IndexOf(":", StringComparison.Ordinal);
             if (ind > 2)
             {
@@ -27,8 +39,13 @@ namespace TeamCity.Docker
             return null;
         }
 
-        public string? TryConvertConvertHashToImageId(string hash)
+        public string TryConvertConvertHashToImageId([NotNull] string hash)
         {
+            if (hash == null)
+            {
+                throw new ArgumentNullException(nameof(hash));
+            }
+
             var ind = hash.IndexOf(":", StringComparison.Ordinal);
             if (ind > 2)
             {

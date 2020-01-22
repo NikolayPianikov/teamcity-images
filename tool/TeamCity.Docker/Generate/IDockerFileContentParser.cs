@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using IoC;
 
 namespace TeamCity.Docker.Generate
 {
     internal interface IDockerFileContentParser
     {
-        IEnumerable<DockerLine> Parse(string text, IReadOnlyDictionary<string, string> values);
+        [NotNull] IEnumerable<DockerLine> Parse([NotNull] string text, [NotNull] IReadOnlyDictionary<string, string> values);
     }
 }

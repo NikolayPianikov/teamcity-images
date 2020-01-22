@@ -1,18 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using IoC;
 
 namespace TeamCity.Docker.Generate
 {
     internal struct DockerLine
     {
-        public readonly string Text;
+        [NotNull] public readonly string Text;
         public readonly DockerLineType Type;
-        public readonly IEnumerable<DockerVariable> Variables;
+        [NotNull] public readonly IEnumerable<DockerVariable> Variables;
 
-        public DockerLine(string text, DockerLineType type, IReadOnlyCollection<DockerVariable> variables)
+        public DockerLine([NotNull] string text, DockerLineType type, [NotNull] IReadOnlyCollection<DockerVariable> variables)
         {
-            Text = text;
+            Text = text ?? throw new ArgumentNullException(nameof(text));
             Type = type;
-            Variables = variables;
+            Variables = variables ?? throw new ArgumentNullException(nameof(variables));
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using IoC;
 
 // ReSharper disable ClassNeverInstantiated.Global
 
@@ -13,17 +15,17 @@ namespace TeamCity.Docker.Push
         private readonly IImageCleaner _imageCleaner;
 
         public Command(
-            ILogger logger,
-            IOptions options,
-            IImageFetcher imageFetcher,
-            IImagePublisher imagePublisher,
-            IImageCleaner imageCleaner)
+            [NotNull] ILogger logger,
+            [NotNull] IOptions options,
+            [NotNull] IImageFetcher imageFetcher,
+            [NotNull] IImagePublisher imagePublisher,
+            [NotNull] IImageCleaner imageCleaner)
         {
-            _logger = logger;
-            _options = options;
-            _imageFetcher = imageFetcher;
-            _imagePublisher = imagePublisher;
-            _imageCleaner = imageCleaner;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _options = options ?? throw new ArgumentNullException(nameof(options));
+            _imageFetcher = imageFetcher ?? throw new ArgumentNullException(nameof(imageFetcher));
+            _imagePublisher = imagePublisher ?? throw new ArgumentNullException(nameof(imagePublisher));
+            _imageCleaner = imageCleaner ?? throw new ArgumentNullException(nameof(imageCleaner));
         }
 
         public async Task<Result> Run()

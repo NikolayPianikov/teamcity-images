@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using IoC;
+
 // ReSharper disable ConvertIfStatementToConditionalTernaryExpression
 
 // ReSharper disable ClassNeverInstantiated.Global
@@ -13,10 +16,20 @@ namespace TeamCity.Docker.Generate
         private static readonly DockerVariable[] EmptyVars = new DockerVariable[0];
         private readonly ILogger _logger;
 
-        public DockerFileContentParser(ILogger logger) => _logger = logger;
+        public DockerFileContentParser([NotNull] ILogger logger) => _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
         public IEnumerable<DockerLine> Parse(string text, IReadOnlyDictionary<string, string> values)
         {
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
+
+            if (values == null)
+            {
+                throw new ArgumentNullException(nameof(values));
+            }
+
             var rawLines = text.Split(System.Environment.NewLine);
             var lines = new List<DockerLine>();
             var localVars = new List<DockerVariable>();
@@ -77,7 +90,19 @@ namespace TeamCity.Docker.Generate
             return lines;
         }
 
-        private static string ApplyVariables(string text, IEnumerable<DockerVariable> vars) =>
-            vars.Aggregate(text, (current, value) => current.Replace("${" + value.Name + "}", value.Value));
+        private static string ApplyVariables([NotNull] string text, [NotNull] IEnumerable<DockerVariable> vars)
+        {
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
+
+            if (vars == null)
+            {
+                throw new ArgumentNullException(nameof(vars));
+            }
+
+            return vars.Aggregate(text, (current, value) => current.Replace("${" + value.Name + "}", value.Value));
+        }
     }
 }

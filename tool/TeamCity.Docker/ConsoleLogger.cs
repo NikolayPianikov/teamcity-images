@@ -11,6 +11,11 @@ namespace TeamCity.Docker
 
         public void Log(string text, Result result = Result.Success)
         {
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
+
             lock (_lockObject)
             {
                 var foregroundColor = Console.ForegroundColor;
@@ -45,6 +50,11 @@ namespace TeamCity.Docker
 
         public IDisposable CreateBlock(string blockName)
         {
+            if (blockName == null)
+            {
+                throw new ArgumentNullException(nameof(blockName));
+            }
+
             lock (_lockObject)
             {
                 Log(blockName);

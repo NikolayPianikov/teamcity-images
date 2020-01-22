@@ -13,6 +13,11 @@ namespace TeamCity.Docker
     {
         public IEnumerable<IToken> Apply(IContainer container)
         {
+            if (container == null)
+            {
+                throw new ArgumentNullException(nameof(container));
+            }
+
             yield return container
                 .Bind<IFileSystem>().As(Singleton).To<FileSystem>()
                 .Bind<IEnvironment>().As(Singleton).To<Environment>()

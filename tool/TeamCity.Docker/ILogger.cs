@@ -1,11 +1,12 @@
 ﻿using System;
+using IoC;
 
 namespace TeamCity.Docker
 {
     internal interface ILogger
     {
-        void Log(string text, Result result = Result.Success);
+        void Log([NotNull] string text, Result result = Result.Success);
 
-        IDisposable CreateBlock(string blockName);
+        [NotNull] IDisposable CreateBlock([NotNull] string blockName);
     }
 }

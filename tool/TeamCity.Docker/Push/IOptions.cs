@@ -1,12 +1,14 @@
-﻿namespace TeamCity.Docker.Push
+﻿using IoC;
+
+namespace TeamCity.Docker.Push
 {
     internal interface IOptions: Docker.IOptions
     {
-        string ServerAddress { get; }
+        [NotNull] string ServerAddress { get; }
 
-        string Username { get; }
+        [NotNull] string Username { get; }
 
-        string Password { get; }
+        [NotNull] string Password { get; }
 
         bool Clean { get; }
     }

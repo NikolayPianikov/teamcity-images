@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using IoC;
+
 // ReSharper disable ParameterTypeCanBeEnumerable.Local
 
 namespace TeamCity.Docker.Generate
@@ -7,23 +10,23 @@ namespace TeamCity.Docker.Generate
     internal struct Metadata
     {
         public readonly int Priority;
-        public readonly string ImageId;
-        public readonly IEnumerable<string> Tags;
-        public readonly IEnumerable<string> BaseImages;
-        public readonly IEnumerable<string> Components;
+        [NotNull] public readonly string ImageId;
+        [NotNull] public readonly IEnumerable<string> Tags;
+        [NotNull] public readonly IEnumerable<string> BaseImages;
+        [NotNull] public readonly IEnumerable<string> Components;
 
         public Metadata(
             int priority,
-            string imageId,
-            IReadOnlyCollection<string> tags,
-            IReadOnlyCollection<string> baseImages,
-            IReadOnlyCollection<string> components)
+            [NotNull] string imageId,
+            [NotNull] IReadOnlyCollection<string> tags,
+            [NotNull] IReadOnlyCollection<string> baseImages,
+            [NotNull] IReadOnlyCollection<string> components)
         {
             Priority = priority;
-            ImageId = imageId;
-            Tags = tags.Select(tag => $"{imageId}:{tag}");
-            BaseImages = baseImages;
-            Components = components;
+            ImageId = imageId ?? throw new ArgumentNullException(nameof(imageId));
+            Tags = (tags ?? throw new ArgumentNullException(nameof(tags))).Select(tag => $"{imageId}:{tag}");
+            BaseImages = baseImages ?? throw new ArgumentNullException(nameof(baseImages));
+            Components = components ?? throw new ArgumentNullException(nameof(components));
         }
     }
 }

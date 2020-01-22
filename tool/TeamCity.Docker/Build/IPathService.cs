@@ -1,7 +1,9 @@
-﻿namespace TeamCity.Docker.Build
+﻿using IoC;
+
+namespace TeamCity.Docker.Build
 {
     internal interface IPathService
     {
-        string Normalize(string path);
+        [NotNull] string Normalize([NotNull] string path);
     }
 }

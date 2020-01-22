@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using IoC;
 using JetBrains.TeamCity.ServiceMessages.Write.Special;
 
 // ReSharper disable ClassNeverInstantiated.Global
@@ -10,12 +11,25 @@ namespace TeamCity.Docker
     {
         private readonly Stack<ITeamCityWriter>_teamCityWriters = new Stack<ITeamCityWriter>();
 
-        public TeamCityLogger(ITeamCityWriter teamCityWriter) => _teamCityWriters.Push(teamCityWriter);
+        public TeamCityLogger([NotNull] ITeamCityWriter teamCityWriter)
+        {
+            if (teamCityWriter == null)
+            {
+                throw new ArgumentNullException(nameof(teamCityWriter));
+            }
+
+            _teamCityWriters.Push(teamCityWriter);
+        }
 
         private ITeamCityWriter TeamCityWriter => _teamCityWriters.Peek();
 
         public void Log(string text, Result result = Result.Success)
         {
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
+
             switch (result)
             {
                 case Result.Success:
@@ -37,6 +51,11 @@ namespace TeamCity.Docker
 
         public IDisposable CreateBlock(string blockName)
         {
+            if (blockName == null)
+            {
+                throw new ArgumentNullException(nameof(blockName));
+            }
+
             _teamCityWriters.Push(TeamCityWriter.OpenBlock(blockName));
             return this;
         }

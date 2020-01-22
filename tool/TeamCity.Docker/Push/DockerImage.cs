@@ -1,16 +1,18 @@
-﻿using Docker.DotNet.Models;
+﻿using System;
+using Docker.DotNet.Models;
+using IoC;
 
 namespace TeamCity.Docker.Push
 {
     internal struct DockerImage
     {
-        public readonly ImagesListResponse Info;
-        public readonly string RepoTag;
+        [NotNull] public readonly ImagesListResponse Info;
+        [NotNull] public readonly string RepoTag;
 
-        public DockerImage(ImagesListResponse info, string repoTag)
+        public DockerImage([NotNull] ImagesListResponse info, [NotNull] string repoTag)
         {
-            Info = info;
-            RepoTag = repoTag;
+            Info = info ?? throw new ArgumentNullException(nameof(info));
+            RepoTag = repoTag ?? throw new ArgumentNullException(nameof(repoTag));
         }
     }
 }

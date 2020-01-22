@@ -1,7 +1,9 @@
 ﻿// ReSharper disable ClassNeverInstantiated.Global
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using IoC;
 
 namespace TeamCity.Docker.Build
 {
@@ -12,13 +14,13 @@ namespace TeamCity.Docker.Build
         private readonly IImageBuilder _imageBuilder;
 
         public Command(
-            ILogger logger,
-            IEnumerable<Generate.IGenerator> dockerFileGenerators,
-            IImageBuilder imageBuilder)
+            [NotNull] ILogger logger,
+            [NotNull] IEnumerable<Generate.IGenerator> dockerFileGenerators,
+            [NotNull] IImageBuilder imageBuilder)
         {
-            _logger = logger;
-            _dockerFileGenerators = dockerFileGenerators;
-            _imageBuilder = imageBuilder;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _dockerFileGenerators = dockerFileGenerators ?? throw new ArgumentNullException(nameof(dockerFileGenerators));
+            _imageBuilder = imageBuilder ?? throw new ArgumentNullException(nameof(imageBuilder));
         }
 
         public async Task<Result> Run()

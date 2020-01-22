@@ -18,23 +18,29 @@ namespace TeamCity.Docker
                     (Push.Options options) => Run<Push.IOptions>(options),
                     error => Task.FromResult(Result.Error));
 
-        private static async Task<Result> Run<TOptions>(TOptions options)
+        private static async Task<Result> Run<TOptions>([NotNull] TOptions options)
             where TOptions: IOptions
         {
-            using var container = Container
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
+            using (var container = Container
                 .Create()
                 .Using<IoCConfiguration>()
                 .Bind<TOptions, IOptions>().As(Lifetime.Singleton).To(ctx => options)
-                .Container;
-
-            try
+                .Container)
             {
-                return await container.Resolve<ICommand<TOptions>>().Run();
-            }
-            catch (Exception ex)
-            {
-                container.Resolve<ILogger>().Log(ex.Message, Result.Error);
-                return Result.Error;
+                try
+                {
+                    return await container.Resolve<ICommand<TOptions>>().Run();
+                }
+                catch (Exception ex)
+                {
+                    container.Resolve<ILogger>().Log(ex.Message, Result.Error);
+                    return Result.Error;
+                }
             }
         }
     }

@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using IoC;
 
 // ReSharper disable ClassNeverInstantiated.Global
 
@@ -12,15 +14,25 @@ namespace TeamCity.Docker.Generate
         private readonly IFileSystem _fileSystem;
 
         public DockerFileConfigurationExplorer(
-            ILogger logger,
-            IFileSystem fileSystem)
+            [NotNull] ILogger logger,
+            [NotNull] IFileSystem fileSystem)
         {
-            _logger = logger;
-            _fileSystem = fileSystem;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
         }
 
         public Result<IEnumerable<DockerFileConfiguration>> Explore(string sourcePath, IEnumerable<string> configurationFiles)
         {
+            if (sourcePath == null)
+            {
+                throw new ArgumentNullException(nameof(sourcePath));
+            }
+
+            if (configurationFiles == null)
+            {
+                throw new ArgumentNullException(nameof(configurationFiles));
+            }
+
             var additionalVars = new Dictionary<string, string>();
             using (_logger.CreateBlock("Explore"))
             {
@@ -44,8 +56,18 @@ namespace TeamCity.Docker.Generate
             return new Result<IEnumerable<DockerFileConfiguration>>(GetConfigurations(sourcePath, additionalVars));
         }
 
-        private IEnumerable<DockerFileConfiguration> GetConfigurations(string sourcePath, IDictionary<string, string> additionalVars)
+        private IEnumerable<DockerFileConfiguration> GetConfigurations([NotNull] string sourcePath, [NotNull] IDictionary<string, string> additionalVars)
         {
+            if (sourcePath == null)
+            {
+                throw new ArgumentNullException(nameof(sourcePath));
+            }
+
+            if (additionalVars == null)
+            {
+                throw new ArgumentNullException(nameof(additionalVars));
+            }
+
             var templateCounter = 0;
             foreach (var dockerfileTemplate in _fileSystem.EnumerateFileSystemEntries(sourcePath, "*.Dockerfile"))
             {
@@ -72,8 +94,13 @@ namespace TeamCity.Docker.Generate
             }
         }
 
-        private IDictionary<string, string> GetVariables(string configFile)
+        private IDictionary<string, string> GetVariables([NotNull] string configFile)
         {
+            if (configFile == null)
+            {
+                throw new ArgumentNullException(nameof(configFile));
+            }
+
             var vars = new Dictionary<string, string>();
             foreach (var line in _fileSystem.ReadLines(configFile))
             {
@@ -98,8 +125,18 @@ namespace TeamCity.Docker.Generate
             return vars;
         }
 
-        private Dictionary<string, string> UpdateVariables(IDictionary<string, string> variables, IDictionary<string, string> newVariables)
+        private Dictionary<string, string> UpdateVariables([NotNull] IDictionary<string, string> variables, [NotNull] IDictionary<string, string> newVariables)
         {
+            if (variables == null)
+            {
+                throw new ArgumentNullException(nameof(variables));
+            }
+
+            if (newVariables == null)
+            {
+                throw new ArgumentNullException(nameof(newVariables));
+            }
+
             var result = new Dictionary<string, string>(variables);
             foreach (var (key, value) in newVariables)
             {

@@ -1,13 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using IoC;
 
 namespace TeamCity.Docker
 {
     internal interface IStreamService
     {
-        Task<Result> Copy(Stream sourceStream, Stream targetStream, string description = "");
+        [NotNull] Task<Result> Copy([NotNull] Stream sourceStream, [NotNull] Stream targetStream, [NotNull] string description = "");
 
-        void ProcessLines(Stream source, Action<string> handler);
+        void ProcessLines([NotNull] Stream source, [NotNull] Action<string> handler);
     }
 }

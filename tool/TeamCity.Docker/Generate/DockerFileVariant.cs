@@ -1,16 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using IoC;
 
 namespace TeamCity.Docker.Generate
 {
     internal struct DockerFileVariant
     {
-        public readonly string BuildPath;
-        public readonly IReadOnlyDictionary<string, string> Variables;
+        [NotNull] public readonly string BuildPath;
+        [NotNull] public readonly IReadOnlyDictionary<string, string> Variables;
 
-        public DockerFileVariant(string buildPath, IReadOnlyDictionary<string, string> variables)
+        public DockerFileVariant([NotNull] string buildPath, [NotNull] IReadOnlyDictionary<string, string> variables)
         {
-            BuildPath = buildPath;
-            Variables = variables;
+            BuildPath = buildPath ?? throw new ArgumentNullException(nameof(buildPath));
+            Variables = variables ?? throw new ArgumentNullException(nameof(variables));
         }
     }
 }

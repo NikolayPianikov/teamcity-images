@@ -1,9 +1,11 @@
 ﻿// ReSharper disable ClassNeverInstantiated.Global
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using IoC;
 
 namespace TeamCity.Docker.Generate
 {
@@ -16,17 +18,17 @@ namespace TeamCity.Docker.Generate
         private readonly IReadmeGenerator _readmeGenerator;
 
         public Command(
-            IOptions options,
-            ILogger logger,
-            IFileSystem fileSystem,
-            IEnumerable<IGenerator> dockerFileGenerators,
-            IReadmeGenerator readmeGenerator)
+            [NotNull] IOptions options,
+            [NotNull] ILogger logger,
+            [NotNull] IFileSystem fileSystem,
+            [NotNull] IEnumerable<IGenerator> dockerFileGenerators,
+            [NotNull] IReadmeGenerator readmeGenerator)
         {
-            _options = options;
-            _logger = logger;
-            _fileSystem = fileSystem;
-            _dockerFileGenerators = dockerFileGenerators;
-            _readmeGenerator = readmeGenerator;
+            _options = options ?? throw new ArgumentNullException(nameof(options));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
+            _dockerFileGenerators = dockerFileGenerators ?? throw new ArgumentNullException(nameof(dockerFileGenerators));
+            _readmeGenerator = readmeGenerator ?? throw new ArgumentNullException(nameof(readmeGenerator));
         }
 
         public Task<Result> Run()

@@ -1,11 +1,12 @@
 ﻿using Docker.DotNet.Models;
+using IoC;
 
 namespace TeamCity.Docker
 {
     internal interface IMessageLogger
     {
-        Result Log(JSONMessage message);
+        Result Log([NotNull] JSONMessage message);
 
-        Result Log(string jsonMessage);
+        Result Log([NotNull] string jsonMessage);
     }
 }

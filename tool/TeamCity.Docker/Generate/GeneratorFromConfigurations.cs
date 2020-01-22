@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using IoC;
 
 // ReSharper disable ClassNeverInstantiated.Global
 
@@ -13,15 +15,15 @@ namespace TeamCity.Docker.Generate
         private readonly IDockerFileGenerator _dockerFileGenerator;
 
         public GeneratorFromConfigurations(
-            Docker.IOptions options,
-            ILogger logger,
-            IDockerFileConfigurationExplorer dockerFileConfigurationExplorer,
-            IDockerFileGenerator dockerFileGenerator)
+            [NotNull] Docker.IOptions options,
+            [NotNull] ILogger logger,
+            [NotNull] IDockerFileConfigurationExplorer dockerFileConfigurationExplorer,
+            [NotNull] IDockerFileGenerator dockerFileGenerator)
         {
-            _options = options;
-            _logger = logger;
-            _dockerFileConfigurationExplorer = dockerFileConfigurationExplorer;
-            _dockerFileGenerator = dockerFileGenerator;
+            _options = options ?? throw new ArgumentNullException(nameof(options));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _dockerFileConfigurationExplorer = dockerFileConfigurationExplorer ?? throw new ArgumentNullException(nameof(dockerFileConfigurationExplorer));
+            _dockerFileGenerator = dockerFileGenerator ?? throw new ArgumentNullException(nameof(dockerFileGenerator));
         }
 
         public Result<IEnumerable<DockerFile>> Generate()
@@ -41,9 +43,16 @@ namespace TeamCity.Docker.Generate
             return new Result<IEnumerable<DockerFile>>(GetDockerFiles(configurationsResult.Value));
         }
 
-        private IEnumerable<DockerFile> GetDockerFiles(IEnumerable<DockerFileConfiguration> configurations) =>
-            from dockerFileConfiguration in configurations
-            from dockerFileVariant in dockerFileConfiguration.Variants
-            select _dockerFileGenerator.Generate(dockerFileVariant.BuildPath, dockerFileConfiguration.DockerfileTemplateContent, dockerFileVariant.Variables);
+        private IEnumerable<DockerFile> GetDockerFiles([NotNull] IEnumerable<DockerFileConfiguration> configurations)
+        {
+            if (configurations == null)
+            {
+                throw new ArgumentNullException(nameof(configurations));
+            }
+
+            return from dockerFileConfiguration in configurations
+                from dockerFileVariant in dockerFileConfiguration.Variants
+                select _dockerFileGenerator.Generate(dockerFileVariant.BuildPath, dockerFileConfiguration.DockerfileTemplateContent, dockerFileVariant.Variables);
+        }
     }
 }

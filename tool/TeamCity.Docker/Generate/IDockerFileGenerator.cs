@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using IoC;
 
 namespace TeamCity.Docker.Generate
 {
     internal interface IDockerFileGenerator
     {
-        DockerFile Generate(string buildPath, string template, IReadOnlyDictionary<string, string> values);
+        DockerFile Generate([NotNull] string buildPath, [NotNull] string template, [NotNull] IReadOnlyDictionary<string, string> values);
     }
 }

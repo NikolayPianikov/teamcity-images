@@ -1,16 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using IoC;
 
 namespace TeamCity.Docker.Generate
 {
     internal struct DockerFileConfiguration
     {
-        public readonly string DockerfileTemplateContent;
-        public readonly IReadOnlyList<DockerFileVariant> Variants;
+        [NotNull] public readonly string DockerfileTemplateContent;
+        [NotNull] public readonly IReadOnlyList<DockerFileVariant> Variants;
 
-        public DockerFileConfiguration(string dockerfileTemplateContent, IReadOnlyList<DockerFileVariant> variants)
+        public DockerFileConfiguration([NotNull] string dockerfileTemplateContent, [NotNull] IReadOnlyList<DockerFileVariant> variants)
         {
-            DockerfileTemplateContent = dockerfileTemplateContent;
-            Variants = variants;
+            DockerfileTemplateContent = dockerfileTemplateContent ?? throw new ArgumentNullException(nameof(dockerfileTemplateContent));
+            Variants = variants ?? throw new ArgumentNullException(nameof(variants));
         }
     }
 }

@@ -8,9 +8,16 @@ namespace TeamCity.Docker.Generate
     {
         public string GetResource(string resourceName)
         {
-            using var stream = GetType().Assembly.GetManifestResourceStream(resourceName) ?? throw new InvalidOperationException($"Cannot find resource \"{resourceName}\".");
-            using var reader = new StreamReader(stream);
-            return reader.ReadToEnd();
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+
+            using(var stream = GetType().Assembly.GetManifestResourceStream(resourceName) ?? throw new InvalidOperationException($"Cannot find resource \"{resourceName}\"."))
+            using (var reader = new StreamReader(stream))
+            {
+                return reader.ReadToEnd();
+            }
         }
     }
 }

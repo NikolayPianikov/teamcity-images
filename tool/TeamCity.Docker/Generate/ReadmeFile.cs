@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using IoC;
+
 // ReSharper disable ParameterTypeCanBeEnumerable.Local
 // ReSharper disable MemberCanBePrivate.Global
 
@@ -6,15 +9,15 @@ namespace TeamCity.Docker.Generate
 {
     internal struct ReadmeFile
     {
-        public readonly string Path;
-        public readonly string Content;
-        public readonly IEnumerable<DockerFile> DockerFiles;
+        [NotNull] public readonly string Path;
+        [NotNull] public readonly string Content;
+        [NotNull] public readonly IEnumerable<DockerFile> DockerFiles;
 
-        public ReadmeFile(string path, string content, IReadOnlyCollection<DockerFile> dockerFiles)
+        public ReadmeFile([NotNull] string path, [NotNull] string content, [NotNull] IReadOnlyCollection<DockerFile> dockerFiles)
         {
-            Path = path;
-            Content = content;
-            DockerFiles = dockerFiles;
+            Path = path ?? throw new ArgumentNullException(nameof(path));
+            Content = content ?? throw new ArgumentNullException(nameof(content));
+            DockerFiles = dockerFiles ?? throw new ArgumentNullException(nameof(dockerFiles));
         }
     }
 }

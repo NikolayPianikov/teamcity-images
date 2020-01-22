@@ -1,10 +1,12 @@
 ﻿using System.Threading.Tasks;
+using IoC;
+
 // ReSharper disable UnusedTypeParameter
 
 namespace TeamCity.Docker
 {
     internal interface ICommand<in TOptions>
     {
-        Task<Result> Run();
+        [NotNull] Task<Result> Run();
     }
 }

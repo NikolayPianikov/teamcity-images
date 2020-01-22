@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using IoC;
 using TeamCity.Docker.Generate;
 
 namespace TeamCity.Docker.Build
 {
     internal interface IImageBuilder
     {
-        Task<Result> Build(IReadOnlyCollection<DockerFile> dockerFiles);
+        [NotNull] Task<Result> Build([NotNull] IReadOnlyCollection<DockerFile> dockerFiles);
     }
 }

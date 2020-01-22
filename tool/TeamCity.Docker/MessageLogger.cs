@@ -1,5 +1,7 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using Docker.DotNet.Models;
+using IoC;
 using Newtonsoft.Json;
 
 // ReSharper disable ClassNeverInstantiated.Global
@@ -10,10 +12,15 @@ namespace TeamCity.Docker
     {
         private readonly ILogger _logger;
 
-        public MessageLogger(ILogger logger) => _logger = logger;
+        public MessageLogger([NotNull] ILogger logger) => _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
         public Result Log(JSONMessage message)
         {
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
+
             if (message.Error != null && !string.IsNullOrWhiteSpace(message.Error.Message))
             {
                 _logger.Log(message.Error.Message.Trim(), Result.Error);
@@ -78,6 +85,11 @@ namespace TeamCity.Docker
 
         public Result Log(string jsonMessage)
         {
+            if (jsonMessage == null)
+            {
+                throw new ArgumentNullException(nameof(jsonMessage));
+            }
+
             var message = JsonConvert.DeserializeObject<JSONMessage>(jsonMessage);
             return Log(message);
         }

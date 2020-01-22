@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.Tar;
+using IoC;
 using TeamCity.Docker.Generate;
 // ReSharper disable ClassNeverInstantiated.Global
 
@@ -20,80 +21,111 @@ namespace TeamCity.Docker.Build
         private static readonly int Chmod = Convert.ToInt32("100755", 8);
 
         public ContextFactory(
-            IOptions options,
-            ILogger logger,
-            IPathService pathService,
-            IFileSystem fileSystem,
-            IStreamService streamService)
+            [NotNull] IOptions options,
+            [NotNull] ILogger logger,
+            [NotNull] IPathService pathService,
+            [NotNull] IFileSystem fileSystem,
+            [NotNull] IStreamService streamService)
         {
-            _options = options;
-            _logger = logger;
-            _pathService = pathService;
-            _fileSystem = fileSystem;
-            _streamService = streamService;
+            _options = options ?? throw new ArgumentNullException(nameof(options));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _pathService = pathService ?? throw new ArgumentNullException(nameof(pathService));
+            _fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
+            _streamService = streamService ?? throw new ArgumentNullException(nameof(streamService));
         }
 
         public async Task<Result<Stream>> Create(string dockerFilesRootPath, IEnumerable<DockerFile> dockerFiles)
         {
+            if (dockerFilesRootPath == null)
+            {
+                throw new ArgumentNullException(nameof(dockerFilesRootPath));
+            }
+
+            if (dockerFiles == null)
+            {
+                throw new ArgumentNullException(nameof(dockerFiles));
+            }
+
             using (_logger.CreateBlock("Create docker context"))
             {
                 var context = new MemoryStream();
-                await using var archive = new TarOutputStream(context) { IsStreamOwner = false };
-                var number = 0;
-
-                if (!string.IsNullOrWhiteSpace(_options.ContextPath))
+                using (var archive = new TarOutputStream(context) {IsStreamOwner = false})
                 {
-                    var path = Path.GetFullPath(_options.ContextPath);
-                    _logger.Log($"The context path is \"{path}\" (\"{_options.ContextPath}\")");
-                    if (!_fileSystem.IsDirectoryExist(path))
-                    {
-                        throw new InvalidOperationException($"The context directory \"{path}\" does not exist.");
-                    }
+                    var number = 0;
 
-                    _logger.Log($"The docker files root path in the context is \"{dockerFilesRootPath}\"");
-
-                    foreach (var file in _fileSystem.EnumerateFileSystemEntries(path, "*.*"))
+                    if (!string.IsNullOrWhiteSpace(_options.ContextPath))
                     {
-                        if (!_fileSystem.IsFileExist(file))
+                        var path = Path.GetFullPath(_options.ContextPath);
+                        _logger.Log($"The context path is \"{path}\" (\"{_options.ContextPath}\")");
+                        if (!_fileSystem.IsDirectoryExist(path))
                         {
-                            continue;
+                            throw new InvalidOperationException($"The context directory \"{path}\" does not exist.");
                         }
 
-                        await using var fileStream = _fileSystem.OpenRead(file);
-                        var filePathInArchive = _pathService.Normalize(Path.GetRelativePath(path, file));
-                        var result = await AddEntry(++number, archive, filePathInArchive, fileStream);
-                        if (result == Result.Error)
+                        _logger.Log($"The docker files root path in the context is \"{dockerFilesRootPath}\"");
+
+                        foreach (var file in _fileSystem.EnumerateFileSystemEntries(path, "*.*"))
                         {
-                            return new Result<Stream>(new MemoryStream(), Result.Error);
+                            if (!_fileSystem.IsFileExist(file))
+                            {
+                                continue;
+                            }
+
+                            using (var fileStream = _fileSystem.OpenRead(file))
+                            {
+                                var filePathInArchive = _pathService.Normalize(Path.GetRelativePath(path, file));
+                                var result = await AddEntry(++number, archive, filePathInArchive, fileStream);
+                                if (result == Result.Error)
+                                {
+                                    return new Result<Stream>(new MemoryStream(), Result.Error);
+                                }
+                            }
                         }
                     }
-                }
-                else
-                {
-                    _logger.Log("The context was not defined.", Result.Warning);
-                }
-
-                foreach (var dockerFile in dockerFiles)
-                {
-                    var content = string.Join(System.Environment.NewLine, dockerFile.Content.Select(line => line.Text));
-                    var contentBytes=Encoding.UTF8.GetBytes(content);
-                    await using var dockerFileStream = new MemoryStream(contentBytes);
-                    var dockerFilePathInArchive = _pathService.Normalize(Path.Combine(dockerFilesRootPath, dockerFile.Path));
-                    var result = await AddEntry(++number, archive, dockerFilePathInArchive, dockerFileStream);
-                    if (result == Result.Error)
+                    else
                     {
-                        return new Result<Stream>(new MemoryStream(), Result.Error);
+                        _logger.Log("The context was not defined.", Result.Warning);
                     }
-                }
 
-                archive.Close();
-                context.Position = 0;
-                return new Result<Stream>(context);
+                    foreach (var dockerFile in dockerFiles)
+                    {
+                        var content = string.Join(System.Environment.NewLine, dockerFile.Content.Select(line => line.Text));
+                        var contentBytes = Encoding.UTF8.GetBytes(content);
+                        using (var dockerFileStream = new MemoryStream(contentBytes))
+                        {
+                            var dockerFilePathInArchive = _pathService.Normalize(Path.Combine(dockerFilesRootPath, dockerFile.Path));
+                            var result = await AddEntry(++number, archive, dockerFilePathInArchive, dockerFileStream);
+                            if (result == Result.Error)
+                            {
+                                return new Result<Stream>(new MemoryStream(), Result.Error);
+                            }
+                        }
+                    }
+
+                    archive.Close();
+                    context.Position = 0;
+                    return new Result<Stream>(context);
+                }
             }
         }
 
-        private async Task<Result> AddEntry(int number, TarOutputStream archive, string filePathInArchive, Stream contentStream)
+        private async Task<Result> AddEntry(int number, [NotNull] TarOutputStream archive, [NotNull] string filePathInArchive, [NotNull] Stream contentStream)
         {
+            if (archive == null)
+            {
+                throw new ArgumentNullException(nameof(archive));
+            }
+
+            if (filePathInArchive == null)
+            {
+                throw new ArgumentNullException(nameof(filePathInArchive));
+            }
+
+            if (contentStream == null)
+            {
+                throw new ArgumentNullException(nameof(contentStream));
+            }
+
             var entry = TarEntry.CreateTarEntry(filePathInArchive);
             entry.Size = contentStream.Length;
             entry.TarHeader.Mode = Chmod; //chmod 755

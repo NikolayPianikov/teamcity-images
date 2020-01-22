@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using IoC;
 
 namespace TeamCity.Docker.Generate
 {
     internal interface IReadmeGenerator
     {
-        IEnumerable<ReadmeFile> Generate(IEnumerable<DockerFile> dockerFiles);
+        [NotNull] IEnumerable<ReadmeFile> Generate([NotNull] IEnumerable<DockerFile> dockerFiles);
     }
 }

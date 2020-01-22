@@ -1,11 +1,13 @@
-﻿namespace TeamCity.Docker
+﻿using IoC;
+
+namespace TeamCity.Docker
 {
     internal interface IDockerConverter
     {
-        string? TryConvertRepoTagToTag(string repoTag);
+        [CanBeNull] string TryConvertRepoTagToTag(string repoTag);
 
-        string? TryConvertRepoTagToRepositoryName(string repoTag);
+        [CanBeNull] string TryConvertRepoTagToRepositoryName(string repoTag);
 
-        string? TryConvertConvertHashToImageId(string hash);
+        [CanBeNull] string TryConvertConvertHashToImageId(string hash);
     }
 }

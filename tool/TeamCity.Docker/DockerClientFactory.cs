@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Docker.DotNet;
+using IoC;
 
 // ReSharper disable ClassNeverInstantiated.Global
 
@@ -13,11 +14,11 @@ namespace TeamCity.Docker
         private readonly IOptions _options;
 
         public DockerClientFactory(
-            ILogger logger,
-            IOptions options)
+            [NotNull] ILogger logger,
+            [NotNull] IOptions options)
         {
-            _logger = logger;
-            _options = options;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
         public async Task<IDockerClient> Create()

@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Docker.DotNet;
 using Docker.DotNet.Models;
+using IoC;
+
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace TeamCity.Docker.Push
@@ -12,15 +15,20 @@ namespace TeamCity.Docker.Push
         private readonly IDockerClient _dockerClient;
 
         public ImageCleaner(
-            ILogger logger,
-            IDockerClient dockerClient)
+            [NotNull] ILogger logger,
+            [NotNull] IDockerClient dockerClient)
         {
-            _logger = logger;
-            _dockerClient = dockerClient;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _dockerClient = dockerClient ?? throw new ArgumentNullException(nameof(dockerClient));
         }
 
         public async Task<Result> CleanImages(IEnumerable<DockerImage> images)
         {
+            if (images == null)
+            {
+                throw new ArgumentNullException(nameof(images));
+            }
+
             using (_logger.CreateBlock("Clean docker images"))
             {
                 foreach (var image in images)

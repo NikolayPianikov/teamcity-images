@@ -1,18 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using IoC;
 
 namespace TeamCity.Docker.Generate
 {
     internal struct DockerFile
     {
-        public readonly string Path;
+        [NotNull] public readonly string Path;
         public readonly Metadata Metadata;
-        public readonly IReadOnlyCollection<DockerLine> Content;
+        [NotNull] public readonly IReadOnlyCollection<DockerLine> Content;
 
-        public DockerFile(string path, Metadata metadata, IReadOnlyCollection<DockerLine> content)
+        public DockerFile([NotNull] string path, Metadata metadata, [NotNull] IReadOnlyCollection<DockerLine> content)
         {
-            Path = path;
+            Path = path ?? throw new ArgumentNullException(nameof(path));
             Metadata = metadata;
-            Content = content;
+            Content = content ?? throw new ArgumentNullException(nameof(content));
         }
 
         public override string ToString() => $"{string.Join(", ", Metadata.Tags)}";

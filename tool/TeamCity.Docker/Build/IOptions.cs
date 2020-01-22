@@ -1,7 +1,9 @@
-﻿namespace TeamCity.Docker.Build
+﻿using IoC;
+
+namespace TeamCity.Docker.Build
 {
     internal interface IOptions: Docker.IOptions
     {
-        string ContextPath { get; }
+        [NotNull] string ContextPath { get; }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Docker.DotNet;
 using Docker.DotNet.Models;
+using IoC;
 using TeamCity.Docker.Generate;
 // ReSharper disable ClassNeverInstantiated.Global
 
@@ -23,27 +24,32 @@ namespace TeamCity.Docker.Build
         private readonly IContextFactory _contextFactory;
 
         public ImageBuilder(
-            IOptions options,
-            ILogger logger,
-            IDockerClient dockerClient,
-            IMessageLogger messageLogger,
-            IFileSystem fileSystem,
-            IStreamService streamService,
-            IPathService pathService,
-            IContextFactory contextFactory)
+            [NotNull] IOptions options,
+            [NotNull] ILogger logger,
+            [NotNull] IDockerClient dockerClient,
+            [NotNull] IMessageLogger messageLogger,
+            [NotNull] IFileSystem fileSystem,
+            [NotNull] IStreamService streamService,
+            [NotNull] IPathService pathService,
+            [NotNull] IContextFactory contextFactory)
         {
-            _options = options;
-            _logger = logger;
-            _dockerClient = dockerClient;
-            _messageLogger = messageLogger;
-            _fileSystem = fileSystem;
-            _streamService = streamService;
-            _pathService = pathService;
-            _contextFactory = contextFactory;
+            _options = options ?? throw new ArgumentNullException(nameof(options));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _dockerClient = dockerClient ?? throw new ArgumentNullException(nameof(dockerClient));
+            _messageLogger = messageLogger ?? throw new ArgumentNullException(nameof(messageLogger));
+            _fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
+            _streamService = streamService ?? throw new ArgumentNullException(nameof(streamService));
+            _pathService = pathService ?? throw new ArgumentNullException(nameof(pathService));
+            _contextFactory = contextFactory ?? throw new ArgumentNullException(nameof(contextFactory));
         }
 
         public async Task<Result> Build(IReadOnlyCollection<DockerFile> dockerFiles)
         {
+            if (dockerFiles == null)
+            {
+                throw new ArgumentNullException(nameof(dockerFiles));
+            }
+
             var dockerFilesRootPath = _fileSystem.UniqueName;
             var contextStreamResult = await _contextFactory.Create(dockerFilesRootPath, dockerFiles);
             if (contextStreamResult.State == Result.Error)
@@ -51,57 +57,61 @@ namespace TeamCity.Docker.Build
                 return Result.Error;
             }
 
-            await using var contextStream = contextStreamResult.Value;
-            var labels = new Dictionary<string, string>();
-            if (!string.IsNullOrWhiteSpace(_options.SessionId))
+            using (var contextStream = contextStreamResult.Value)
             {
-                labels.Add("SessionId", _options.SessionId);
-            }
-
-            var hasError = false;
-            foreach (var dockerFile in dockerFiles.OrderBy(dockerFile => dockerFile.Metadata.Priority))
-            {
-                using (_logger.CreateBlock(dockerFile.ToString()))
+                var labels = new Dictionary<string, string>();
+                if (!string.IsNullOrWhiteSpace(_options.SessionId))
                 {
-                    _logger.Log($"The dockerfile is \"{dockerFile.Path}\"");
-                    contextStream.Position = 0;
-                    var dockerFilePathInContext = _pathService.Normalize(Path.Combine(dockerFilesRootPath, dockerFile.Path));
-                    try
+                    labels.Add("SessionId", _options.SessionId);
+                }
+
+                var hasError = false;
+                foreach (var dockerFile in dockerFiles.OrderBy(dockerFile => dockerFile.Metadata.Priority))
+                {
+                    using (_logger.CreateBlock(dockerFile.ToString()))
                     {
-                        await using var buildEventStream = await _dockerClient.Images.BuildImageFromDockerfileAsync(
-                            contextStream,
-                            new ImageBuildParameters
-                            {
-                                Dockerfile = dockerFilePathInContext,
-                                Tags = dockerFile.Metadata.Tags.ToList(),
-                                Labels = labels
-                            },
-                            CancellationToken.None);
-
-                        _streamService.ProcessLines(
-                            buildEventStream,
-                            line =>
-                            {
-                                if (_messageLogger.Log(line) == Result.Error)
-                                {
-                                    hasError = true;
-                                }
-                            });
-
-                        if (hasError)
+                        _logger.Log($"The dockerfile is \"{dockerFile.Path}\"");
+                        contextStream.Position = 0;
+                        var dockerFilePathInContext = _pathService.Normalize(Path.Combine(dockerFilesRootPath, dockerFile.Path));
+                        try
                         {
+                            using (var buildEventStream = await _dockerClient.Images.BuildImageFromDockerfileAsync(
+                                contextStream,
+                                new ImageBuildParameters
+                                {
+                                    Dockerfile = dockerFilePathInContext,
+                                    Tags = dockerFile.Metadata.Tags.ToList(),
+                                    Labels = labels
+                                },
+                                CancellationToken.None))
+                            {
+
+                                _streamService.ProcessLines(
+                                    buildEventStream,
+                                    line =>
+                                    {
+                                        if (_messageLogger.Log(line) == Result.Error)
+                                        {
+                                            hasError = true;
+                                        }
+                                    });
+                            }
+
+                            if (hasError)
+                            {
+                                return Result.Error;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.Log($"Error: {ex.Message}", Result.Error);
                             return Result.Error;
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        _logger.Log($"Error: {ex.Message}", Result.Error);
-                        return Result.Error;
-                    }
                 }
-            }
 
-            return Result.Success;
+                return Result.Success;
+            }
         }
     }
 }

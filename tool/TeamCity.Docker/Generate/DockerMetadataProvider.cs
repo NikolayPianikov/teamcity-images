@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using IoC;
 
 // ReSharper disable ClassNeverInstantiated.Global
 
@@ -16,6 +17,11 @@ namespace TeamCity.Docker.Generate
 
         public Metadata GetMetadata(IEnumerable<DockerLine> dockerFileContent)
         {
+            if (dockerFileContent == null)
+            {
+                throw new ArgumentNullException(nameof(dockerFileContent));
+            }
+
             var priority = int.MaxValue;
             var imageId = "unknown";
             var tags = new List<string>();
@@ -44,8 +50,18 @@ namespace TeamCity.Docker.Generate
             return new Metadata(priority, imageId, tags, baseImages, components);
         }
 
-        private static bool TrySetByPrefix(string text, string prefix, Action<string> setter)
+        private static bool TrySetByPrefix([NotNull] string text, [NotNull] string prefix, Action<string> setter)
         {
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
+
+            if (prefix == null)
+            {
+                throw new ArgumentNullException(nameof(prefix));
+            }
+
             if (text.StartsWith(prefix))
             {
                 var value = text.Substring(prefix.Length).Trim();

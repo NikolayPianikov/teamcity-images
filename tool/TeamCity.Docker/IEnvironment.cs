@@ -1,4 +1,6 @@
 ﻿using System.Runtime.InteropServices;
+using IoC;
+
 // ReSharper disable InconsistentNaming
 
 namespace TeamCity.Docker
@@ -7,6 +9,6 @@ namespace TeamCity.Docker
     {
         bool IsOSPlatform(OSPlatform platform);
 
-        bool HasEnvironmentVariable(string name);
+        bool HasEnvironmentVariable([NotNull] string name);
     }
 }

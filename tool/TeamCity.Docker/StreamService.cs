@@ -3,6 +3,8 @@ using System.Buffers;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using IoC;
+
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace TeamCity.Docker
@@ -11,10 +13,25 @@ namespace TeamCity.Docker
     {
         private readonly ILogger _logger;
 
-        public StreamService(ILogger logger) => _logger = logger;
+        public StreamService([NotNull] ILogger logger) => _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
         public async Task<Result> Copy(Stream sourceStream, Stream targetStream, string description)
         {
+            if (sourceStream == null)
+            {
+                throw new ArgumentNullException(nameof(sourceStream));
+            }
+
+            if (targetStream == null)
+            {
+                throw new ArgumentNullException(nameof(targetStream));
+            }
+
+            if (description == null)
+            {
+                throw new ArgumentNullException(nameof(description));
+            }
+
             var buffer = ArrayPool<byte>.Shared.Rent(0xffff);
             while (true)
             {
@@ -40,16 +57,27 @@ namespace TeamCity.Docker
 
         public void ProcessLines(Stream source, Action<string> handler)
         {
-            using var streamReader = new StreamReader(source, Encoding.UTF8);
-            do
+            if (source == null)
             {
-                var line = streamReader.ReadLine();
-                if (line != null)
-                {
-                    handler(line);
-                }
+                throw new ArgumentNullException(nameof(source));
             }
-            while (!streamReader.EndOfStream);
+
+            if (handler == null)
+            {
+                throw new ArgumentNullException(nameof(handler));
+            }
+
+            using (var streamReader = new StreamReader(source, Encoding.UTF8))
+            {
+                do
+                {
+                    var line = streamReader.ReadLine();
+                    if (line != null)
+                    {
+                        handler(line);
+                    }
+                } while (!streamReader.EndOfStream);
+            }
         }
     }
 }

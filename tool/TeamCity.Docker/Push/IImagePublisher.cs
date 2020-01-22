@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using IoC;
 
 namespace TeamCity.Docker.Push
 {
     internal interface IImagePublisher
     {
-        Task<Result> PushImages(IEnumerable<DockerImage> images);
+        [NotNull] Task<Result> PushImages([NotNull] IEnumerable<DockerImage> images);
     }
 }

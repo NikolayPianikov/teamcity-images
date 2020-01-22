@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Docker.DotNet;
 using Docker.DotNet.Models;
+using IoC;
 
 // ReSharper disable ClassNeverInstantiated.Global
 
@@ -16,15 +18,15 @@ namespace TeamCity.Docker.Push
         private readonly IDockerConverter _dockerConverter;
 
         public ImageFetcher(
-            ILogger logger,
-            IOptions options,
-            IDockerClient dockerClient,
-            IDockerConverter dockerConverter)
+            [NotNull] ILogger logger,
+            [NotNull] IOptions options,
+            [NotNull] IDockerClient dockerClient,
+            [NotNull] IDockerConverter dockerConverter)
         {
-            _logger = logger;
-            _options = options;
-            _dockerClient = dockerClient;
-            _dockerConverter = dockerConverter;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _options = options ?? throw new ArgumentNullException(nameof(options));
+            _dockerClient = dockerClient ?? throw new ArgumentNullException(nameof(dockerClient));
+            _dockerConverter = dockerConverter ?? throw new ArgumentNullException(nameof(dockerConverter));
         }
 
         public async Task<Result<IReadOnlyList<DockerImage>>> GetImages()

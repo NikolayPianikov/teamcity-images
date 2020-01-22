@@ -1,27 +1,29 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using IoC;
+
 // ReSharper disable UnusedMember.Global
 
 namespace TeamCity.Docker
 {
     internal interface IFileSystem
     {
-        string UniqueName { get; }
+        [NotNull] string UniqueName { get; }
 
-        bool IsDirectoryExist(string path);
+        bool IsDirectoryExist([NotNull] string path);
 
-        bool IsFileExist(string path);
+        bool IsFileExist([NotNull] string path);
 
-        IEnumerable<string> EnumerateFileSystemEntries(string path, string searchPattern);
+        [NotNull] IEnumerable<string> EnumerateFileSystemEntries([NotNull] string path, [NotNull] string searchPattern = "*.*");
 
-        IEnumerable<string> ReadLines(string path);
+        [NotNull] IEnumerable<string> ReadLines([NotNull] string path);
 
-        string ReadFile(string path);
+        [NotNull] string ReadFile([NotNull] string path);
 
-        void WriteFile(string path, string content);
+        void WriteFile([NotNull] string path, [NotNull] string content);
 
-        Stream OpenRead(string path);
+        [NotNull] Stream OpenRead([NotNull] string path);
 
-        Stream OpenWrite(string path);
+        [NotNull] Stream OpenWrite([NotNull] string path);
     }
 }
