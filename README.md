@@ -4,13 +4,13 @@ TeamCity team uses `TeamCity.Docker` tool for TeamCity docker images. It require
 
 ## Generate
 
-You can generate docker and readme files to directory `generated` running the command `dotnet run -p tool\TeamCity.Docker\TeamCity.Docker.csproj -- generate -s configs -f configs\Windows.config;configs\Unix.config -t generated`
+You can generate docker and readme files to directory `generated` running the command `dotnet run -p tool\TeamCity.Docker\TeamCity.Docker.csproj -- generate -s configs -f configs\windows.config;configs\linux.config -t generated`
 
 ## Build
 
 To build docker images run commands
-- for Windows `dotnet run -p tool\TeamCity.Docker\TeamCity.Docker.csproj -- build -s configs\Windows -f configs\Windows.config -c context -i <sessionId>`
-- for Linux `dotnet run -p tool\TeamCity.Docker\TeamCity.Docker.csproj -- build -s configs\Linux -f configs\Linux.config -c context -i <sessionId>`,
+- for Windows `dotnet run -p tool\TeamCity.Docker\TeamCity.Docker.csproj -- build -s configs\windows -f configs\windows.config -c context -i <sessionId>`
+- for Linux `dotnet run -p tool\TeamCity.Docker\TeamCity.Docker.csproj -- build -s configs\linux -f configs\linux.config -c context -i <sessionId>`,
 where <sessionId> is a docker label `SessionId` to combine all created docker images for the next command:
 
 ## Push

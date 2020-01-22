@@ -1,6 +1,6 @@
 ### 18.04, linux
 
-Dockerfile: Linux/Agent/Ubuntu/18.04/Dockerfile
+Dockerfile: linux/Agent/Ubuntu/18.04/Dockerfile
 
 Installed components:
 - Git
@@ -12,7 +12,7 @@ Base images:
 
 ### latest-nanoserver-1803
 
-Dockerfile: Windows/Agent/nanoserver/1803/Dockerfile
+Dockerfile: windows/Agent/nanoserver/1803/Dockerfile
 
 Installed components:
 - [.NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-win-x64.zip)
@@ -23,7 +23,7 @@ Base images:
 
 ### latest-nanoserver-1809
 
-Dockerfile: Windows/Agent/nanoserver/1809/Dockerfile
+Dockerfile: windows/Agent/nanoserver/1809/Dockerfile
 
 Installed components:
 - [.NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-win-x64.zip)
@@ -34,7 +34,7 @@ Base images:
 
 ### latest-nanoserver-1903
 
-Dockerfile: Windows/Agent/nanoserver/1903/Dockerfile
+Dockerfile: windows/Agent/nanoserver/1903/Dockerfile
 
 Installed components:
 - [.NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-win-x64.zip)
@@ -45,7 +45,7 @@ Base images:
 
 ### latest-windowsservercore-1803
 
-Dockerfile: Windows/Agent/windowsservercore/1803/Dockerfile
+Dockerfile: windows/Agent/windowsservercore/1803/Dockerfile
 
 Installed components:
 - [JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
@@ -58,7 +58,7 @@ Base images:
 
 ### latest-windowsservercore-1809
 
-Dockerfile: Windows/Agent/windowsservercore/1809/Dockerfile
+Dockerfile: windows/Agent/windowsservercore/1809/Dockerfile
 
 Installed components:
 - [JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
@@ -71,7 +71,7 @@ Base images:
 
 ### latest-windowsservercore-1903
 
-Dockerfile: Windows/Agent/windowsservercore/1903/Dockerfile
+Dockerfile: windows/Agent/windowsservercore/1903/Dockerfile
 
 Installed components:
 - [JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)

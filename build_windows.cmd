@@ -1,1 +1,1 @@
-dotnet run -p tool\TeamCity.Docker\TeamCity.Docker.csproj -- build -s configs\Windows -f configs\WindowsInternalRes.config -c context -i 39
+dotnet run -p tool\TeamCity.Docker\TeamCity.Docker.csproj -- build -s configs\windows -f configs\windows.config -c context -i 39
