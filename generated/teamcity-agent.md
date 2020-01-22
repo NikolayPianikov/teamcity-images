@@ -1,6 +1,6 @@
 ### 18.04, linux
 
-Dockerfile: Unix/Agent/Ubuntu/18.04/Dockerfile
+Dockerfile: Linux/Agent/Ubuntu/18.04/Dockerfile
 
 Installed components:
 - Git

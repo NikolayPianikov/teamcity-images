@@ -1,0 +1,1 @@
+dotnet run -p tool\TeamCity.Docker\TeamCity.Docker.csproj -- build -s configs\Linux -f configs\Linux.config -c context -i 39
