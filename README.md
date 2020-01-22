@@ -1,6 +1,6 @@
 # Building of TeamCity docker images
 
-TeamCity team uses `TeamCity.Docker` tool for TeamCity docker images. It requires [.NET Core 3.1 runtime](https://dotnet.microsoft.com/download/dotnet-core/3.1) installed.
+TeamCity team uses `TeamCity.Docker` tool for TeamCity docker images. It requires [.NET Core 2.0+ runtime](https://dotnet.microsoft.com/download/dotnet-core/3.1) installed.
 
 ## Generate
 
