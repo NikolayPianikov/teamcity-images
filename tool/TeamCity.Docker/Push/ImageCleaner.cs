@@ -19,16 +19,13 @@ namespace TeamCity.Docker.Push
             _dockerClient = dockerClient;
         }
 
-        public async Task<Result> CleanImages(IEnumerable<ImagesListResponse> images)
+        public async Task<Result> CleanImages(IEnumerable<DockerImage> images)
         {
             using (_logger.CreateBlock("Clean docker images"))
             {
                 foreach (var image in images)
                 {
-                    foreach (var repoTag in image.RepoTags)
-                    {
-                        await _dockerClient.Images.DeleteImageAsync(repoTag, new ImageDeleteParameters { Force = true, PruneChildren = true });
-                    }
+                    await _dockerClient.Images.DeleteImageAsync(image.RepoTag, new ImageDeleteParameters { Force = true, PruneChildren = true });
                 }
             }
 
