@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 // ReSharper disable ParameterTypeCanBeEnumerable.Local
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace TeamCity.Docker.Generate
 {

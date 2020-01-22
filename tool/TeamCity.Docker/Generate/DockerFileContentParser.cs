@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+// ReSharper disable ConvertIfStatementToConditionalTernaryExpression
 
 // ReSharper disable ClassNeverInstantiated.Global
 
@@ -70,7 +71,7 @@ namespace TeamCity.Docker.Generate
                     lines.Insert(0, new DockerLine($"ARG {variable.Name}='{variable.Value}'", DockerLineType.Text, new[] {variable}));
                 }
 
-                lines.Insert(0, new DockerLine($"# Default arguments", DockerLineType.Comment, EmptyVars));
+                lines.Insert(0, new DockerLine("# Default arguments", DockerLineType.Comment, EmptyVars));
             }
 
             return lines;

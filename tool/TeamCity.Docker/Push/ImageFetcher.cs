@@ -1,12 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net.Sockets;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 using Docker.DotNet;
 using Docker.DotNet.Models;
-using Microsoft.VisualBasic;
 
 // ReSharper disable ClassNeverInstantiated.Global
 

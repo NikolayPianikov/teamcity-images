@@ -1,4 +1,5 @@
 ﻿using System;
+// ReSharper disable ClassNeverInstantiated.Global
 
 namespace TeamCity.Docker
 {

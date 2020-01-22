@@ -1,4 +1,5 @@
-﻿namespace TeamCity.Docker.Generate
+﻿// ReSharper disable UnusedMember.Global
+namespace TeamCity.Docker.Generate
 {
     internal interface IResources
     {

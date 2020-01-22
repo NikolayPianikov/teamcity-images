@@ -33,7 +33,7 @@ namespace TeamCity.Docker
                 }
                 catch (Exception ex)
                 {
-                    throw new InvalidOperationException($"The docker engine connection error.", ex);
+                    throw new InvalidOperationException("The docker engine connection error.", ex);
                 }
             }
 

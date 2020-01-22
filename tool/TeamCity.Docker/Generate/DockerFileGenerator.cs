@@ -10,16 +10,13 @@ namespace TeamCity.Docker.Generate
     {
         private readonly IDockerFileContentParser _fileContentParser;
         private readonly IDockerMetadataProvider _metadataProvider;
-        private readonly ILogger _logger;
 
         public DockerFileGenerator(
             IDockerFileContentParser fileContentParser,
-            IDockerMetadataProvider metadataProvider,
-            ILogger logger)
+            IDockerMetadataProvider metadataProvider)
         {
             _fileContentParser = fileContentParser;
             _metadataProvider = metadataProvider;
-            _logger = logger;
         }
 
         public DockerFile Generate(string buildPath, string template, IReadOnlyDictionary<string, string> values)

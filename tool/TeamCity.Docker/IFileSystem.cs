@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+// ReSharper disable UnusedMember.Global
 
 namespace TeamCity.Docker
 {

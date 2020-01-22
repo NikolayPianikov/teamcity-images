@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TeamCity.Docker.Generate;
 
 namespace TeamCity.Docker.Build
 {
@@ -24,7 +23,7 @@ namespace TeamCity.Docker.Build
 
         public async Task<Result> Run()
         {
-            var dockerFiles = new List<DockerFile>();
+            var dockerFiles = new List<Generate.DockerFile>();
             using (_logger.CreateBlock("Generate docker files"))
             {
                 foreach (var generator in _dockerFileGenerators)
