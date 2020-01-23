@@ -5,7 +5,6 @@ using System.Text.RegularExpressions;
 using IoC;
 
 // ReSharper disable ConvertIfStatementToConditionalTernaryExpression
-
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace TeamCity.Docker.Generate
@@ -56,7 +55,7 @@ namespace TeamCity.Docker.Generate
                 var lineWithLocalVars = ApplyVariables(lineWithVars, localVars);
                 if (lineWithLocalVars.Contains("${") && lineWithLocalVars.Contains("}"))
                 {
-                    _logger.Log($"The line \"{line.Trim()}\" may still contain unresolved variables. The resulting line is \"{lineWithVars}\".", Result.Warning);
+                    _logger.Log($"The line \"{line.Trim()}\" may still contain some unresolved variables. May be these variables will be resolved by environment variables.", Result.Warning);
                 }
 
                 if (line.TrimStart().StartsWith("#"))
