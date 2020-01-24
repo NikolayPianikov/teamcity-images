@@ -1,3 +1,9 @@
+### Tags
+- [18.04, linux](#1804-linux)
+- [latest-nanoserver-1803](#latest-nanoserver-1803)
+- [latest-nanoserver-1809](#latest-nanoserver-1809)
+- [latest-nanoserver-1903](#latest-nanoserver-1903)
+
 ### 18.04, linux
 
 [Dockerfile](linux/MinimalAgent/Ubuntu/18.04/Dockerfile)

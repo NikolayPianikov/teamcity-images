@@ -1,3 +1,12 @@
+### Tags
+- [18.04, linux](#1804-linux)
+- [latest-nanoserver-1803](#latest-nanoserver-1803)
+- [latest-nanoserver-1809](#latest-nanoserver-1809)
+- [latest-nanoserver-1903](#latest-nanoserver-1903)
+- [latest-windowsservercore-1803](#latest-windowsservercore-1803)
+- [latest-windowsservercore-1809](#latest-windowsservercore-1809)
+- [latest-windowsservercore-1903](#latest-windowsservercore-1903)
+
 ### 18.04, linux
 
 [Dockerfile](linux/Agent/Ubuntu/18.04/Dockerfile)
@@ -14,7 +23,7 @@ Installed components:
 - [.NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-linux-x64.tar.gz)
 
 Base images:
-- [teamcity-minimal-agent:18.04](linux/MinimalAgent/Ubuntu/18.04/Dockerfile)
+- [teamcity-minimal-agent:18.04](teamcity-agent.md#1804-linux)
 
 ### latest-nanoserver-1803
 
@@ -32,7 +41,7 @@ Installed components:
 
 Base images:
 - mcr.microsoft.com/powershell:nanoserver-1803
-- [teamcity-agent:latest-windowsservercore-1803](windows/Agent/windowsservercore/1803/Dockerfile)
+- [teamcity-agent:latest-windowsservercore-1803](teamcity-agent.md#latest-windowsservercore-1803)
 
 ### latest-nanoserver-1809
 
@@ -50,7 +59,7 @@ Installed components:
 
 Base images:
 - mcr.microsoft.com/powershell:nanoserver-1809
-- [teamcity-agent:latest-windowsservercore-1809](windows/Agent/windowsservercore/1809/Dockerfile)
+- [teamcity-agent:latest-windowsservercore-1809](teamcity-agent.md#latest-windowsservercore-1809)
 
 ### latest-nanoserver-1903
 
@@ -68,7 +77,7 @@ Installed components:
 
 Base images:
 - mcr.microsoft.com/powershell:nanoserver-1903
-- [teamcity-agent:latest-windowsservercore-1903](windows/Agent/windowsservercore/1903/Dockerfile)
+- [teamcity-agent:latest-windowsservercore-1903](teamcity-agent.md#latest-windowsservercore-1903)
 
 ### latest-windowsservercore-1803
 
@@ -87,7 +96,7 @@ Installed components:
 
 Base images:
 - mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1803
-- [teamcity-minimal-agent:latest-nanoserver-1803](windows/MinimalAgent/nanoserver/1803/Dockerfile)
+- [teamcity-minimal-agent:latest-nanoserver-1803](teamcity-agent.md#latest-nanoserver-1803)
 
 ### latest-windowsservercore-1809
 
@@ -106,7 +115,7 @@ Installed components:
 
 Base images:
 - mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019
-- [teamcity-minimal-agent:latest-nanoserver-1809](windows/MinimalAgent/nanoserver/1809/Dockerfile)
+- [teamcity-minimal-agent:latest-nanoserver-1809](teamcity-agent.md#latest-nanoserver-1809)
 
 ### latest-windowsservercore-1903
 
@@ -125,5 +134,5 @@ Installed components:
 
 Base images:
 - mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1903
-- [teamcity-minimal-agent:latest-nanoserver-1903](windows/MinimalAgent/nanoserver/1903/Dockerfile)
+- [teamcity-minimal-agent:latest-nanoserver-1903](teamcity-agent.md#latest-nanoserver-1903)
 

@@ -56,15 +56,23 @@ namespace TeamCity.Docker.Generate
             foreach (var dockerFileGroup in dockerFileGroups)
             {
                 var imageId = dockerFileGroup.Key.ImageId;
-                var readmeFilePath = imageId + ".md";
+                var readmeFilePath = GetReadmeFilePath(imageId);
 
                 var sb = new StringBuilder();
                 var files = dockerFileGroup.ToList();
+
+                sb.AppendLine("### Tags");
+                foreach (var dockerFile in files)
+                {
+                    sb.AppendLine($"- [{GetReadmeTagName(dockerFile)}](#{GetTagLink(dockerFile)})");
+                }
+
+                sb.AppendLine();
+
                 var counter = 0;
                 foreach (var dockerFile in files)
                 {
-                    var tags = string.Join(", ", dockerFile.Metadata.Tags.Select(tag => _dockerConverter.TryConvertRepoTagToTag(tag)));
-                    sb.AppendLine($"### {tags}");
+                    sb.AppendLine($"### {GetReadmeTagName(dockerFile)}");
 
                     sb.AppendLine();
                     sb.AppendLine($"[{Path.GetFileName(dockerFile.Path)}]({_pathService.Normalize(dockerFile.Path)})");
@@ -113,8 +121,7 @@ namespace TeamCity.Docker.Generate
                     {
                         if (dockerFileDictionary.TryGetValue(image, out var imageDockerFile))
                         {
-                            var dockerFilePath = _pathService.Normalize(imageDockerFile.Path);
-                            sb.AppendLine($"- [{image}]({dockerFilePath})");
+                            sb.AppendLine($"- [{image}]({GetReadmeFilePath(imageId)}#{GetTagLink(imageDockerFile)})");
                         }
                         else
                         {
@@ -130,6 +137,14 @@ namespace TeamCity.Docker.Generate
                 yield return new ReadmeFile(readmeFilePath, sb.ToString(), files);
             }
         }
+
+        private string GetTagLink(DockerFile dockerFile) =>
+            string.Join("-", dockerFile.Metadata.Tags.Select(tag => (_dockerConverter.TryConvertRepoTagToTag(tag) ?? string.Empty).Replace(".", string.Empty)));
+
+        private string GetReadmeTagName(DockerFile dockerFile) =>
+            string.Join(", ", dockerFile.Metadata.Tags.Select(tag => _dockerConverter.TryConvertRepoTagToTag(tag) ?? string.Empty));
+
+        private static string GetReadmeFilePath(string imageId) => imageId + ".md";
 
         private string GeneratedDockerBuildCommand(DockerFile dockerFile)
         {
