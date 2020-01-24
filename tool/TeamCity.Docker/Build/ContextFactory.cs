@@ -81,7 +81,7 @@ namespace TeamCity.Docker.Build
                             number++;
                         }
 
-                        _logger.Log($"{number} files was added to docker build context from the directory \"{_options.ContextPath}\" (\"{path}\").");
+                        _logger.Log($"{number} files were added to docker build context from the directory \"{_options.ContextPath}\" (\"{path}\").");
                     }
                     else
                     {

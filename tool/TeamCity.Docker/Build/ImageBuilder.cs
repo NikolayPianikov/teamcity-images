@@ -85,7 +85,6 @@ namespace TeamCity.Docker.Build
                                 },
                                 CancellationToken.None))
                             {
-
                                 _streamService.ProcessLines(
                                     buildEventStream,
                                     line =>
