@@ -68,6 +68,11 @@ namespace TeamCity.Docker.Build
                 var hasError = false;
                 foreach (var dockerFile in dockerFiles.OrderBy(dockerFile => dockerFile.Metadata.Priority))
                 {
+                    if (!dockerFile.Metadata.Repos.Any())
+                    {
+                        _logger.Log($"Skip {dockerFile} because of it has no any repo tag.");
+                    }
+
                     using (_logger.CreateBlock(dockerFile.ToString()))
                     {
                         _logger.Log($"The dockerfile is \"{dockerFile.Path}\"");

@@ -9,6 +9,7 @@
 # Priority 2
 # Id teamcity-agent
 # Tag ${tag}
+# Repo ${repo}
 
 # Based on ${windowsservercoreImage}
 FROM ${windowsservercoreImage} AS tools

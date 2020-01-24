@@ -12,6 +12,7 @@ ARG ubuntuImage='ubuntu:18.04'
 # Id teamcity-minimal-agent
 # Tag 18.04
 # Tag linux
+# Repo https://hub.docker.com/r/jetbrains/
 
 # Based on ubuntu:18.04
 FROM ${ubuntuImage}

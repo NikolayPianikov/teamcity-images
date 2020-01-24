@@ -14,6 +14,7 @@ namespace TeamCity.Docker.Generate
         private const string TagPrefix = "# Tag ";
         private const string BaseImagePrefix = "# Based on ";
         private const string ComponentsPrefix = "# Install ";
+        private const string RepoPrefix = "# Repo ";
 
         public Metadata GetMetadata(IEnumerable<DockerLine> dockerFileContent)
         {
@@ -27,6 +28,7 @@ namespace TeamCity.Docker.Generate
             var tags = new List<string>();
             var baseImages = new List<string>();
             var components = new List<string>();
+            var repos = new List<string>();
             foreach (var comment in dockerFileContent.Where(line => line.Type == DockerLineType.Comment))
             {
                 if (
@@ -43,11 +45,12 @@ namespace TeamCity.Docker.Generate
                     TrySetByPrefix(comment.Text, IdPrefix, value => imageId = value) ||
                     TrySetByPrefix(comment.Text, TagPrefix, value => tags.Add(value)) ||
                     TrySetByPrefix(comment.Text, BaseImagePrefix, value => baseImages.Add(value)) ||
-                    TrySetByPrefix(comment.Text, ComponentsPrefix, value => components.Add(value)))
+                    TrySetByPrefix(comment.Text, ComponentsPrefix, value => components.Add(value)) ||
+                    TrySetByPrefix(comment.Text, RepoPrefix, value => repos.Add(value)))
                 { }
             }
 
-            return new Metadata(priority, imageId, tags, baseImages, components);
+            return new Metadata(priority, imageId, tags, baseImages, components, repos);
         }
 
         private static bool TrySetByPrefix([NotNull] string text, [NotNull] string prefix, Action<string> setter)

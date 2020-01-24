@@ -7,6 +7,7 @@
 # Id teamcity-agent
 # Tag ${tag}
 # Tag linux
+# Repo ${repo}
 
 # Based on ${teamcityMinimalAgentImage}
 FROM ${teamcityMinimalAgentImage}

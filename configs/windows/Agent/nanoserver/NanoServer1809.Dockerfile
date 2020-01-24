@@ -9,6 +9,7 @@
 # Priority 3
 # Id teamcity-agent
 # Tag ${tag}
+# Repo ${repo}
 
 # Based on ${powershellImage}
 FROM ${powershellImage} AS dotnet

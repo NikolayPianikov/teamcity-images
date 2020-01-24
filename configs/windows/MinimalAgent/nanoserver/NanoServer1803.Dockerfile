@@ -7,6 +7,7 @@
 # Priority 1
 # Id teamcity-minimal-agent
 # Tag ${tag}
+# Repo ${repo}
 
 # Based on ${powershellImage}
 # Install PowerShell

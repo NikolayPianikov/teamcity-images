@@ -16,6 +16,7 @@ ARG teamcityWindowsservercoreImage='teamcity-agent:latest-windowsservercore-1809
 # Priority 3
 # Id teamcity-agent
 # Tag latest-nanoserver-1809
+# Repo https://hub.docker.com/r/jetbrains/
 
 # Based on mcr.microsoft.com/powershell:nanoserver-1809
 FROM ${powershellImage} AS dotnet

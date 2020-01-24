@@ -7,6 +7,7 @@
 # Id teamcity-server
 # Tag ${tag}
 # Tag linux
+# Repo ${repo}
 
 # Based on ${ubuntuImage}
 FROM ${ubuntuImage}

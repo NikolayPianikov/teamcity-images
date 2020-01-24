@@ -9,6 +9,7 @@
 # Priority 1
 # Id teamcity-server
 # Tag ${tag}
+# Repo ${repo}
 
 # Based on ${powershellImage}
 # Install PowerShell

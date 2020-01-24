@@ -16,6 +16,7 @@ ARG windowsservercoreImage='mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsse
 # Priority 2
 # Id teamcity-agent
 # Tag latest-windowsservercore-1809
+# Repo https://hub.docker.com/r/jetbrains/
 
 # Based on mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019
 FROM ${windowsservercoreImage} AS tools

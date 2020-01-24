@@ -13,6 +13,7 @@ ARG powershellImage='mcr.microsoft.com/powershell:nanoserver-1903'
 # Priority 1
 # Id teamcity-minimal-agent
 # Tag latest-nanoserver-1903
+# Repo https://hub.docker.com/r/jetbrains/
 
 # Based on mcr.microsoft.com/powershell:nanoserver-1903
 FROM ${powershellImage} AS base

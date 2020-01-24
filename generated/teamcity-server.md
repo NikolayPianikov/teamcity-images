@@ -8,6 +8,9 @@
 
 [Dockerfile](linux/Server/Ubuntu/18.04/Dockerfile)
 
+The docker image is available on:
+- [https://hub.docker.com/r/jetbrains/](https://hub.docker.com/r/jetbrains/teamcity-server)
+
 Docker build commands:
 ```
 docker build -f "generated/linux/Server/Ubuntu/18.04/Dockerfile" -t teamcity-server:18.04 -t teamcity-server:linux "context"
@@ -41,6 +44,9 @@ Base images:
 
 [Dockerfile](windows/Server/nanoserver/1809/Dockerfile)
 
+The docker image is available on:
+- [https://hub.docker.com/r/jetbrains/](https://hub.docker.com/r/jetbrains/teamcity-server)
+
 Docker build commands:
 ```
 docker build -f "generated/windows/Server/nanoserver/1809/Dockerfile" -t teamcity-server:latest-nanoserver-1809 "context"
@@ -58,6 +64,9 @@ Base images:
 ### latest-nanoserver-1903
 
 [Dockerfile](windows/Server/nanoserver/1903/Dockerfile)
+
+The docker image is available on:
+- [https://hub.docker.com/r/jetbrains/](https://hub.docker.com/r/jetbrains/teamcity-server)
 
 Docker build commands:
 ```

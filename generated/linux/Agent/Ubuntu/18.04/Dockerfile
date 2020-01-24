@@ -1,6 +1,7 @@
 # Default arguments
 ARG dotnetCoreLinuxComponent='https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-linux-x64.tar.gz'
 ARG dotnetCoreLinuxComponentVersion='3.1.100'
+ARG repo='https://hub.docker.com/r/jetbrains/'
 ARG teamcityMinimalAgentImage='teamcity-minimal-agent:18.04'
 
 # The list of required arguments
@@ -12,6 +13,7 @@ ARG teamcityMinimalAgentImage='teamcity-minimal-agent:18.04'
 # Id teamcity-agent
 # Tag 18.04
 # Tag linux
+# Repo https://hub.docker.com/r/jetbrains/
 
 # Based on teamcity-minimal-agent:18.04
 FROM ${teamcityMinimalAgentImage}

@@ -76,7 +76,17 @@ namespace TeamCity.Docker.Generate
 
                     sb.AppendLine();
                     sb.AppendLine($"[{Path.GetFileName(dockerFile.Path)}]({_pathService.Normalize(dockerFile.Path)})");
-                    
+
+                    if (dockerFile.Metadata.Repos.Any())
+                    {
+                        sb.AppendLine();
+                        sb.AppendLine("The docker image is available on:");
+                        foreach (var repo in dockerFile.Metadata.Repos)
+                        {
+                            sb.AppendLine($"- [{repo}]({repo}{dockerFile.Metadata.ImageId})");
+                        }
+                    }
+
                     sb.AppendLine();
                     var dependencies = new Queue<DockerFile>();
                     var targetDockerFiles = new List<DockerFile>();
