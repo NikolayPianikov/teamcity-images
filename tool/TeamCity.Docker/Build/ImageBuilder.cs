@@ -80,7 +80,7 @@ namespace TeamCity.Docker.Build
                                 new ImageBuildParameters
                                 {
                                     Dockerfile = dockerFilePathInContext,
-                                    Tags = dockerFile.Metadata.Tags.ToList(),
+                                    Tags = dockerFile.Metadata.Tags.Concat(_options.Tags).Distinct().ToList(),
                                     Labels = labels
                                 },
                                 CancellationToken.None))

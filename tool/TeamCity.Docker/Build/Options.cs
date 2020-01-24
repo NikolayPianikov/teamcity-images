@@ -23,5 +23,8 @@ namespace TeamCity.Docker.Build
 
         [Option('d', "docker", Required = false, HelpText = "The Docker Engine endpoint like tcp://localhost:2375 (default: npipe://./pipe/docker_engine).")]
         public string DockerEngineEndpoint { get; set; } = "npipe://./pipe/docker_engine";
+
+        [Option('t', "tags", Separator = ';', Required = false, HelpText = "Comma separated docker image tags.")]
+        public IEnumerable<string> Tags { get; set; } = Enumerable.Empty<string>();
     }
 }

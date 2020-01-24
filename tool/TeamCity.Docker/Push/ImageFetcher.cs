@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Docker.DotNet;
 using Docker.DotNet.Models;
@@ -13,13 +14,13 @@ namespace TeamCity.Docker.Push
     internal class ImageFetcher : IImageFetcher
     {
         private readonly ILogger _logger;
-        private readonly IOptions _options;
+        private readonly Docker.IOptions _options;
         private readonly IDockerClient _dockerClient;
         private readonly IDockerConverter _dockerConverter;
 
         public ImageFetcher(
             [NotNull] ILogger logger,
-            [NotNull] IOptions options,
+            [NotNull] Docker.IOptions options,
             [NotNull] IDockerClient dockerClient,
             [NotNull] IDockerConverter dockerConverter)
         {
@@ -48,7 +49,15 @@ namespace TeamCity.Docker.Push
 
                 foreach (var image in images)
                 {
-                    _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.Info.ID)} {image.Info.Created} {image.RepoTag}");
+                    using (_logger.CreateBlock(image.RepoTag))
+                    {
+                        _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.Info.ID)} {image.Info.Created}");
+                        var historyEntries = await _dockerClient.Images.GetImageHistoryAsync(image.RepoTag, CancellationToken.None);
+                        foreach (var historyEntry in historyEntries)
+                        {
+                            _logger.Log($"{historyEntry.ID} {historyEntry.Created} {historyEntry.Size:D10} {historyEntry.CreatedBy}");
+                        }
+                    }
                 }
 
                 return new Result<IReadOnlyList<DockerImage>>(images);

@@ -12,15 +12,18 @@ namespace TeamCity.Docker.Build
         private readonly ILogger _logger;
         private readonly IEnumerable<Generate.IGenerator> _dockerFileGenerators;
         private readonly IImageBuilder _imageBuilder;
+        private readonly Push.IImageFetcher _imageFetcher;
 
         public Command(
             [NotNull] ILogger logger,
             [NotNull] IEnumerable<Generate.IGenerator> dockerFileGenerators,
-            [NotNull] IImageBuilder imageBuilder)
+            [NotNull] IImageBuilder imageBuilder,
+            [NotNull] Push.IImageFetcher imageFetcher)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _dockerFileGenerators = dockerFileGenerators ?? throw new ArgumentNullException(nameof(dockerFileGenerators));
             _imageBuilder = imageBuilder ?? throw new ArgumentNullException(nameof(imageBuilder));
+            _imageFetcher = imageFetcher ?? throw new ArgumentNullException(nameof(imageFetcher));
         }
 
         public async Task<Result> Run()
@@ -46,10 +49,18 @@ namespace TeamCity.Docker.Build
                 }
             }
 
+            Result result;
             using (_logger.CreateBlock("Build docker images"))
             {
-                return await _imageBuilder.Build(dockerFiles);
+                result = await _imageBuilder.Build(dockerFiles);
             }
+
+            using (_logger.CreateBlock("Result"))
+            {
+                await _imageFetcher.GetImages();
+            }
+
+            return result;
         }
     }
 }

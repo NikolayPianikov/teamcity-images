@@ -46,7 +46,7 @@ namespace TeamCity.Docker.Build
                 throw new ArgumentNullException(nameof(dockerFiles));
             }
 
-            using (_logger.CreateBlock("Create docker context"))
+            using (_logger.CreateBlock("Docker build context"))
             {
                 var context = new MemoryStream();
                 using (var archive = new TarOutputStream(context) {IsStreamOwner = false})
@@ -56,15 +56,12 @@ namespace TeamCity.Docker.Build
                     if (!string.IsNullOrWhiteSpace(_options.ContextPath))
                     {
                         var path = Path.GetFullPath(_options.ContextPath);
-                        _logger.Log($"The context path is \"{path}\" (\"{_options.ContextPath}\")");
                         if (!_fileSystem.IsDirectoryExist(path))
                         {
-                            throw new InvalidOperationException($"The context directory \"{path}\" does not exist.");
+                            throw new InvalidOperationException($"The docker build context directory \"{path}\" does not exist.");
                         }
 
-                        _logger.Log($"The docker files root path in the context is \"{dockerFilesRootPath}\"");
-
-                        foreach (var file in _fileSystem.EnumerateFileSystemEntries(path, "*.*"))
+                        foreach (var file in _fileSystem.EnumerateFileSystemEntries(path))
                         {
                             if (!_fileSystem.IsFileExist(file))
                             {
@@ -74,19 +71,24 @@ namespace TeamCity.Docker.Build
                             using (var fileStream = _fileSystem.OpenRead(file))
                             {
                                 var filePathInArchive = _pathService.Normalize(Path.GetRelativePath(path, file));
-                                var result = await AddEntry(++number, archive, filePathInArchive, fileStream);
+                                var result = await AddEntry(archive, filePathInArchive, fileStream);
                                 if (result == Result.Error)
                                 {
                                     return new Result<Stream>(new MemoryStream(), Result.Error);
                                 }
                             }
+
+                            number++;
                         }
+
+                        _logger.Log($"{number} files was added to docker build context from the directory \"{_options.ContextPath}\" (\"{path}\").");
                     }
                     else
                     {
-                        _logger.Log("The context was not defined.", Result.Warning);
+                        _logger.Log("The path for docker build context was not defined.", Result.Warning);
                     }
 
+                    _logger.Log($"The docker files root path in the docker build context is \"{dockerFilesRootPath}\"");
                     foreach (var dockerFile in dockerFiles)
                     {
                         var content = string.Join(System.Environment.NewLine, dockerFile.Content.Select(line => line.Text));
@@ -94,11 +96,13 @@ namespace TeamCity.Docker.Build
                         using (var dockerFileStream = new MemoryStream(contentBytes))
                         {
                             var dockerFilePathInArchive = _pathService.Normalize(Path.Combine(dockerFilesRootPath, dockerFile.Path));
-                            var result = await AddEntry(++number, archive, dockerFilePathInArchive, dockerFileStream);
+                            var result = await AddEntry(archive, dockerFilePathInArchive, dockerFileStream);
                             if (result == Result.Error)
                             {
                                 return new Result<Stream>(new MemoryStream(), Result.Error);
                             }
+
+                            _logger.Log($"\"{dockerFilePathInArchive}\" was added ({contentBytes.Length} bytes).");
                         }
                     }
 
@@ -109,7 +113,7 @@ namespace TeamCity.Docker.Build
             }
         }
 
-        private async Task<Result> AddEntry(int number, [NotNull] TarOutputStream archive, [NotNull] string filePathInArchive, [NotNull] Stream contentStream)
+        private async Task<Result> AddEntry([NotNull] TarOutputStream archive, [NotNull] string filePathInArchive, [NotNull] Stream contentStream)
         {
             if (archive == null)
             {
@@ -132,7 +136,6 @@ namespace TeamCity.Docker.Build
             archive.PutNextEntry(entry);
             var result = await _streamService.Copy(contentStream, archive, $"Adding {filePathInArchive}");
             archive.CloseEntry();
-            _logger.Log($"{number:000000} \"{filePathInArchive}\" was added ({contentStream.Length} bytes).");
             return result;
         }
     }
