@@ -30,10 +30,6 @@ To build docker images for Linux run the command line:
 ```
 dotnet run -p tool\TeamCity.Docker\TeamCity.Docker.csproj -- build -s configs\linux -f configs\linux.config -c context -i <sessionId>
 ```
-
-`dotnet run -p tool\TeamCity.Docker\TeamCity.Docker.csproj -- build -s configs\windows -f configs\windows.config -c context -i <sessionId>`
-- for Linux `dotnet run -p tool\TeamCity.Docker\TeamCity.Docker.csproj -- build -s configs\linux -f configs\linux.config -c context -i <sessionId>`,
-
 ### Push
 
 To push docker images for the specific _sessionId_ run the command line:
@@ -42,6 +38,6 @@ To push docker images for the specific _sessionId_ run the command line:
 dotnet run -p tool\TeamCity.Docker\TeamCity.Docker.csproj -- push -u <username> -p <password> -i <sessionId>
 ```
 
-where _username_ and _password_ - credentials to [docker.com](https://hub.docker.com/). Also you can specify your custom docker repo by the optional argument `-a`.
+where _username_ and _password_ - credentials to [hub.docker.com](https://hub.docker.com/). Also you can specify your custom docker repo by the optional argument `-a`.
 
 For more information run `dotnet run -p tool\TeamCity.Docker\TeamCity.Docker.csproj -- --help`.
