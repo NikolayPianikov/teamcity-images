@@ -67,7 +67,7 @@ namespace TeamCity.Docker.Generate
                     sb.AppendLine($"### {tags}");
 
                     sb.AppendLine();
-                    sb.AppendLine($"[{Path.GetFileName(dockerFile.Path)}](./{_pathService.Normalize(dockerFile.Path)})");
+                    sb.AppendLine($"[{Path.GetFileName(dockerFile.Path)}]({_pathService.Normalize(dockerFile.Path)})");
                     
                     sb.AppendLine();
                     var dependencies = new Queue<DockerFile>();
@@ -114,7 +114,7 @@ namespace TeamCity.Docker.Generate
                         if (dockerFileDictionary.TryGetValue(image, out var imageDockerFile))
                         {
                             var dockerFilePath = _pathService.Normalize(imageDockerFile.Path);
-                            sb.AppendLine($"- [{image}](./{dockerFilePath})");
+                            sb.AppendLine($"- [{image}]({dockerFilePath})");
                         }
                         else
                         {
