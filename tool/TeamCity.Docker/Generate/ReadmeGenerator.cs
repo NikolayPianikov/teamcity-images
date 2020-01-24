@@ -83,7 +83,7 @@ namespace TeamCity.Docker.Generate
                         sb.AppendLine("The docker image is available on:");
                         foreach (var repo in dockerFile.Metadata.Repos)
                         {
-                            sb.AppendLine($"- [{repo}]({repo}{dockerFile.Metadata.ImageId})");
+                            sb.AppendLine($"- [{repo}{dockerFile.Metadata.ImageId}]({repo}{dockerFile.Metadata.ImageId})");
                         }
                     }
 

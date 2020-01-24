@@ -9,7 +9,7 @@
 [Dockerfile](linux/MinimalAgent/Ubuntu/18.04/Dockerfile)
 
 The docker image is available on:
-- [https://hub.docker.com/r/jetbrains/](https://hub.docker.com/r/jetbrains/teamcity-minimal-agent)
+- [https://hub.docker.com/r/jetbrains/teamcity-minimal-agent](https://hub.docker.com/r/jetbrains/teamcity-minimal-agent)
 
 Docker build commands:
 ```
@@ -44,7 +44,7 @@ Base images:
 [Dockerfile](windows/MinimalAgent/nanoserver/1809/Dockerfile)
 
 The docker image is available on:
-- [https://hub.docker.com/r/jetbrains/](https://hub.docker.com/r/jetbrains/teamcity-minimal-agent)
+- [https://hub.docker.com/r/jetbrains/teamcity-minimal-agent](https://hub.docker.com/r/jetbrains/teamcity-minimal-agent)
 
 Docker build commands:
 ```
@@ -64,7 +64,7 @@ Base images:
 [Dockerfile](windows/MinimalAgent/nanoserver/1903/Dockerfile)
 
 The docker image is available on:
-- [https://hub.docker.com/r/jetbrains/](https://hub.docker.com/r/jetbrains/teamcity-minimal-agent)
+- [https://hub.docker.com/r/jetbrains/teamcity-minimal-agent](https://hub.docker.com/r/jetbrains/teamcity-minimal-agent)
 
 Docker build commands:
 ```

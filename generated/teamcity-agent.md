@@ -12,7 +12,7 @@
 [Dockerfile](linux/Agent/Ubuntu/18.04/Dockerfile)
 
 The docker image is available on:
-- [https://hub.docker.com/r/jetbrains/](https://hub.docker.com/r/jetbrains/teamcity-agent)
+- [https://hub.docker.com/r/jetbrains/teamcity-agent](https://hub.docker.com/r/jetbrains/teamcity-agent)
 
 Docker build commands:
 ```
@@ -51,7 +51,7 @@ Base images:
 [Dockerfile](windows/Agent/nanoserver/1809/Dockerfile)
 
 The docker image is available on:
-- [https://hub.docker.com/r/jetbrains/](https://hub.docker.com/r/jetbrains/teamcity-agent)
+- [https://hub.docker.com/r/jetbrains/teamcity-agent](https://hub.docker.com/r/jetbrains/teamcity-agent)
 
 Docker build commands:
 ```
@@ -72,7 +72,7 @@ Base images:
 [Dockerfile](windows/Agent/nanoserver/1903/Dockerfile)
 
 The docker image is available on:
-- [https://hub.docker.com/r/jetbrains/](https://hub.docker.com/r/jetbrains/teamcity-agent)
+- [https://hub.docker.com/r/jetbrains/teamcity-agent](https://hub.docker.com/r/jetbrains/teamcity-agent)
 
 Docker build commands:
 ```
@@ -112,7 +112,7 @@ Base images:
 [Dockerfile](windows/Agent/windowsservercore/1809/Dockerfile)
 
 The docker image is available on:
-- [https://hub.docker.com/r/jetbrains/](https://hub.docker.com/r/jetbrains/teamcity-agent)
+- [https://hub.docker.com/r/jetbrains/teamcity-agent](https://hub.docker.com/r/jetbrains/teamcity-agent)
 
 Docker build commands:
 ```
@@ -134,7 +134,7 @@ Base images:
 [Dockerfile](windows/Agent/windowsservercore/1903/Dockerfile)
 
 The docker image is available on:
-- [https://hub.docker.com/r/jetbrains/](https://hub.docker.com/r/jetbrains/teamcity-agent)
+- [https://hub.docker.com/r/jetbrains/teamcity-agent](https://hub.docker.com/r/jetbrains/teamcity-agent)
 
 Docker build commands:
 ```

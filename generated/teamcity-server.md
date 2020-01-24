@@ -9,7 +9,7 @@
 [Dockerfile](linux/Server/Ubuntu/18.04/Dockerfile)
 
 The docker image is available on:
-- [https://hub.docker.com/r/jetbrains/](https://hub.docker.com/r/jetbrains/teamcity-server)
+- [https://hub.docker.com/r/jetbrains/teamcity-server](https://hub.docker.com/r/jetbrains/teamcity-server)
 
 Docker build commands:
 ```
@@ -45,7 +45,7 @@ Base images:
 [Dockerfile](windows/Server/nanoserver/1809/Dockerfile)
 
 The docker image is available on:
-- [https://hub.docker.com/r/jetbrains/](https://hub.docker.com/r/jetbrains/teamcity-server)
+- [https://hub.docker.com/r/jetbrains/teamcity-server](https://hub.docker.com/r/jetbrains/teamcity-server)
 
 Docker build commands:
 ```
@@ -66,7 +66,7 @@ Base images:
 [Dockerfile](windows/Server/nanoserver/1903/Dockerfile)
 
 The docker image is available on:
-- [https://hub.docker.com/r/jetbrains/](https://hub.docker.com/r/jetbrains/teamcity-server)
+- [https://hub.docker.com/r/jetbrains/teamcity-server](https://hub.docker.com/r/jetbrains/teamcity-server)
 
 Docker build commands:
 ```
