@@ -121,7 +121,7 @@ namespace TeamCity.Docker.Generate
                     {
                         if (dockerFileDictionary.TryGetValue(image, out var imageDockerFile))
                         {
-                            sb.AppendLine($"- [{image}]({GetReadmeFilePath(imageId)}#{GetTagLink(imageDockerFile)})");
+                            sb.AppendLine($"- [{image}]({GetReadmeFilePath(imageDockerFile.Metadata.ImageId)}#{GetTagLink(imageDockerFile)})");
                         }
                         else
                         {
