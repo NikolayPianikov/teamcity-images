@@ -1,6 +1,6 @@
 ### 18.04, linux
 
-Dockerfile: [Dockerfile](linux/Server/Ubuntu/18.04/Dockerfile)
+[Dockerfile](./linux/Server/Ubuntu/18.04/Dockerfile)
 
 Docker build commands:
 ```
@@ -15,7 +15,7 @@ Base images:
 
 ### latest-nanoserver-1803
 
-Dockerfile: [Dockerfile](windows/Server/nanoserver/1803/Dockerfile)
+[Dockerfile](./windows/Server/nanoserver/1803/Dockerfile)
 
 Docker build commands:
 ```
@@ -33,7 +33,7 @@ Base images:
 
 ### latest-nanoserver-1809
 
-Dockerfile: [Dockerfile](windows/Server/nanoserver/1809/Dockerfile)
+[Dockerfile](./windows/Server/nanoserver/1809/Dockerfile)
 
 Docker build commands:
 ```
@@ -51,7 +51,7 @@ Base images:
 
 ### latest-nanoserver-1903
 
-Dockerfile: [Dockerfile](windows/Server/nanoserver/1903/Dockerfile)
+[Dockerfile](./windows/Server/nanoserver/1903/Dockerfile)
 
 Docker build commands:
 ```
