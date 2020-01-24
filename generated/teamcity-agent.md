@@ -1,6 +1,6 @@
 ### 18.04, linux
 
-[Dockerfile](./linux/Agent/Ubuntu/18.04/Dockerfile)
+[Dockerfile](./configuration/linux/Agent/Ubuntu/18.04/Dockerfile)
 
 Docker build commands:
 ```
