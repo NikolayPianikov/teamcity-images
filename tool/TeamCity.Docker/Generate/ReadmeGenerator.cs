@@ -67,7 +67,7 @@ namespace TeamCity.Docker.Generate
                     sb.AppendLine($"### {tags}");
 
                     sb.AppendLine();
-                    sb.AppendLine($"Dockerfile: [{Path.GetFileName(dockerFile.Path)}]({_pathService.Normalize(Path.Combine(_options.TargetPath, dockerFile.Path))})");
+                    sb.AppendLine($"Dockerfile: [{Path.GetFileName(dockerFile.Path)}]({_pathService.Normalize(dockerFile.Path)})");
                     
                     sb.AppendLine();
                     var dependencies = new Queue<DockerFile>();
@@ -93,10 +93,12 @@ namespace TeamCity.Docker.Generate
 
                     targetDockerFiles.Reverse();
                     sb.AppendLine("Docker build commands:");
+                    sb.AppendLine("```");
                     foreach (var dependency in targetDockerFiles.Distinct())
                     {
-                        sb.AppendLine($"- ```{GeneratedDockerBuildCommand(dependency)}```");
+                        sb.AppendLine(GeneratedDockerBuildCommand(dependency));
                     }
+                    sb.AppendLine("```");
 
                     sb.AppendLine();
                     sb.AppendLine("Installed components:");
@@ -111,7 +113,7 @@ namespace TeamCity.Docker.Generate
                     {
                         if (dockerFileDictionary.TryGetValue(image, out var imageDockerFile))
                         {
-                            var dockerFilePath = _pathService.Normalize(Path.Combine(_options.TargetPath, imageDockerFile.Path));
+                            var dockerFilePath = _pathService.Normalize(imageDockerFile.Path);
                             sb.AppendLine($"- [{image}]({dockerFilePath})");
                         }
                         else
