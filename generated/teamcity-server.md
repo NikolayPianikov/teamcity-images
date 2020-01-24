@@ -1,6 +1,6 @@
 ### 18.04, linux
 
-Dockerfile: linux/Server/Ubuntu/18.04/Dockerfile
+Dockerfile: [Dockerfile](generated/linux/Server/Ubuntu/18.04/Dockerfile)
 
 Docker build commands:
 - ```docker build -f "generated/linux/Server/Ubuntu/18.04/Dockerfile" -t teamcity-server:18.04 -t teamcity-server:linux "context"```
@@ -13,7 +13,7 @@ Base images:
 
 ### latest-nanoserver-1803
 
-Dockerfile: windows/Server/nanoserver/1803/Dockerfile
+Dockerfile: [Dockerfile](generated/windows/Server/nanoserver/1803/Dockerfile)
 
 Docker build commands:
 - ```docker build -f "generated/windows/Server/nanoserver/1803/Dockerfile" -t teamcity-server:latest-nanoserver-1803 "context"```
@@ -29,7 +29,7 @@ Base images:
 
 ### latest-nanoserver-1809
 
-Dockerfile: windows/Server/nanoserver/1809/Dockerfile
+Dockerfile: [Dockerfile](generated/windows/Server/nanoserver/1809/Dockerfile)
 
 Docker build commands:
 - ```docker build -f "generated/windows/Server/nanoserver/1809/Dockerfile" -t teamcity-server:latest-nanoserver-1809 "context"```
@@ -45,7 +45,7 @@ Base images:
 
 ### latest-nanoserver-1903
 
-Dockerfile: windows/Server/nanoserver/1903/Dockerfile
+Dockerfile: [Dockerfile](generated/windows/Server/nanoserver/1903/Dockerfile)
 
 Docker build commands:
 - ```docker build -f "generated/windows/Server/nanoserver/1903/Dockerfile" -t teamcity-server:latest-nanoserver-1903 "context"```

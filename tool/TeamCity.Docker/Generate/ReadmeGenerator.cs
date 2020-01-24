@@ -65,8 +65,9 @@ namespace TeamCity.Docker.Generate
                 {
                     var tags = string.Join(", ", dockerFile.Metadata.Tags.Select(tag => _dockerConverter.TryConvertRepoTagToTag(tag)));
                     sb.AppendLine($"### {tags}");
+
                     sb.AppendLine();
-                    sb.AppendLine($"Dockerfile: {_pathService.Normalize(dockerFile.Path)}");
+                    sb.AppendLine($"Dockerfile: [{Path.GetFileName(dockerFile.Path)}]({_pathService.Normalize(Path.Combine(_options.TargetPath, dockerFile.Path))})");
                     
                     sb.AppendLine();
                     var dependencies = new Queue<DockerFile>();
@@ -108,7 +109,15 @@ namespace TeamCity.Docker.Generate
                     sb.AppendLine("Base images:");
                     foreach (var image in dockerFile.Metadata.BaseImages)
                     {
-                        sb.AppendLine($"- {image}");
+                        if (dockerFileDictionary.TryGetValue(image, out var imageDockerFile))
+                        {
+                            var dockerFilePath = _pathService.Normalize(Path.Combine(_options.TargetPath, imageDockerFile.Path));
+                            sb.AppendLine($"- [{image}]({dockerFilePath})");
+                        }
+                        else
+                        {
+                            sb.AppendLine($"- {image}");
+                        }
                     }
 
                     sb.AppendLine();

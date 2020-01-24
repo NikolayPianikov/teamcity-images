@@ -1,6 +1,6 @@
 ### 18.04, linux
 
-Dockerfile: linux/MinimalAgent/Ubuntu/18.04/Dockerfile
+Dockerfile: [Dockerfile](generated/linux/MinimalAgent/Ubuntu/18.04/Dockerfile)
 
 Docker build commands:
 - ```docker build -f "generated/linux/MinimalAgent/Ubuntu/18.04/Dockerfile" -t teamcity-minimal-agent:18.04 -t teamcity-minimal-agent:linux "context"```
@@ -13,7 +13,7 @@ Base images:
 
 ### latest-nanoserver-1803
 
-Dockerfile: windows/MinimalAgent/nanoserver/1803/Dockerfile
+Dockerfile: [Dockerfile](generated/windows/MinimalAgent/nanoserver/1803/Dockerfile)
 
 Docker build commands:
 - ```docker build -f "generated/windows/MinimalAgent/nanoserver/1803/Dockerfile" -t teamcity-minimal-agent:latest-nanoserver-1803 "context"```
@@ -28,7 +28,7 @@ Base images:
 
 ### latest-nanoserver-1809
 
-Dockerfile: windows/MinimalAgent/nanoserver/1809/Dockerfile
+Dockerfile: [Dockerfile](generated/windows/MinimalAgent/nanoserver/1809/Dockerfile)
 
 Docker build commands:
 - ```docker build -f "generated/windows/MinimalAgent/nanoserver/1809/Dockerfile" -t teamcity-minimal-agent:latest-nanoserver-1809 "context"```
@@ -43,7 +43,7 @@ Base images:
 
 ### latest-nanoserver-1903
 
-Dockerfile: windows/MinimalAgent/nanoserver/1903/Dockerfile
+Dockerfile: [Dockerfile](generated/windows/MinimalAgent/nanoserver/1903/Dockerfile)
 
 Docker build commands:
 - ```docker build -f "generated/windows/MinimalAgent/nanoserver/1903/Dockerfile" -t teamcity-minimal-agent:latest-nanoserver-1903 "context"```
