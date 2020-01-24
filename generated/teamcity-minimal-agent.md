@@ -1,6 +1,6 @@
 ### 18.04, linux
 
-[Dockerfile](./linux/MinimalAgent/Ubuntu/18.04/Dockerfile)
+[Dockerfile](linux/MinimalAgent/Ubuntu/18.04/Dockerfile)
 
 Docker build commands:
 ```
@@ -15,7 +15,7 @@ Base images:
 
 ### latest-nanoserver-1803
 
-[Dockerfile](./windows/MinimalAgent/nanoserver/1803/Dockerfile)
+[Dockerfile](windows/MinimalAgent/nanoserver/1803/Dockerfile)
 
 Docker build commands:
 ```
@@ -32,7 +32,7 @@ Base images:
 
 ### latest-nanoserver-1809
 
-[Dockerfile](./windows/MinimalAgent/nanoserver/1809/Dockerfile)
+[Dockerfile](windows/MinimalAgent/nanoserver/1809/Dockerfile)
 
 Docker build commands:
 ```
@@ -49,7 +49,7 @@ Base images:
 
 ### latest-nanoserver-1903
 
-[Dockerfile](./windows/MinimalAgent/nanoserver/1903/Dockerfile)
+[Dockerfile](windows/MinimalAgent/nanoserver/1903/Dockerfile)
 
 Docker build commands:
 ```
