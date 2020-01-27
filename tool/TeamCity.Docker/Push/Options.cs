@@ -10,7 +10,7 @@ namespace TeamCity.Docker.Push
     internal class Options: IOptions
     {
         [Option('i', "id", Required = true, HelpText = "Session Id.")]
-        public string SessionId { get; set; } = "";
+        public string SessionId { get; set; } = string.Empty;
 
         public IEnumerable<string> ConfigurationFiles => throw new NotImplementedException();
 
@@ -27,7 +27,7 @@ namespace TeamCity.Docker.Push
         public bool Clean { get; set; } = false;
 
         [Option('d', "docker", Required = false, HelpText = "The Docker Engine endpoint like tcp://localhost:2375 (defaults: npipe://./pipe/docker_engine fo windows and unix:///var/run/docker.sock for others).")]
-        public string DockerEngineEndpoint { get; set; } = "npipe://./pipe/docker_engine";
+        public string DockerEngineEndpoint { get; set; } = string.Empty;
 
         public string SourcePath => throw new NotImplementedException();
     }

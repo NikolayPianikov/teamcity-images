@@ -52,7 +52,6 @@ namespace TeamCity.Docker.Build
                 using (var archive = new TarOutputStream(context) {IsStreamOwner = false})
                 {
                     var number = 0;
-
                     if (!string.IsNullOrWhiteSpace(_options.ContextPath))
                     {
                         var path = Path.GetFullPath(_options.ContextPath);
@@ -88,21 +87,25 @@ namespace TeamCity.Docker.Build
                         _logger.Log("The path for docker build context was not defined.", Result.Warning);
                     }
 
-                    _logger.Log($"The docker files root path in the docker build context is \"{dockerFilesRootPath}\"");
-                    foreach (var dockerFile in dockerFiles)
+                    number = 0;
+                    using (_logger.CreateBlock("Docker files"))
                     {
-                        var content = string.Join(System.Environment.NewLine, dockerFile.Content.Select(line => line.Text));
-                        var contentBytes = Encoding.UTF8.GetBytes(content);
-                        using (var dockerFileStream = new MemoryStream(contentBytes))
+                        foreach (var dockerFile in dockerFiles)
                         {
-                            var dockerFilePathInArchive = _pathService.Normalize(Path.Combine(dockerFilesRootPath, dockerFile.Path));
-                            var result = await AddEntry(archive, dockerFilePathInArchive, dockerFileStream);
-                            if (result == Result.Error)
+                            number++;
+                            var content = string.Join(System.Environment.NewLine, dockerFile.Content.Select(line => line.Text));
+                            var contentBytes = Encoding.UTF8.GetBytes(content);
+                            using (var dockerFileStream = new MemoryStream(contentBytes))
                             {
-                                return new Result<Stream>(new MemoryStream(), Result.Error);
-                            }
+                                var dockerFilePathInArchive = _pathService.Normalize(Path.Combine(dockerFilesRootPath, dockerFile.Path));
+                                var result = await AddEntry(archive, dockerFilePathInArchive, dockerFileStream);
+                                if (result == Result.Error)
+                                {
+                                    return new Result<Stream>(new MemoryStream(), Result.Error);
+                                }
 
-                            _logger.Log($"\"{dockerFilePathInArchive}\" was added ({contentBytes.Length} bytes).");
+                                _logger.Log($"{number:0000} \"{dockerFilePathInArchive}\" was added ({contentBytes.Length} bytes).");
+                            }
                         }
                     }
 
