@@ -10,15 +10,15 @@ namespace TeamCity.Docker
 {
     public class Program
     {
-        public static async Task<int> Main(string[] args) =>
-            (int)await Parser.Default.ParseArguments<Generate.Options, Build.Options, Push.Options>(args)
+        public static int Main(string[] args) =>
+            (int)Parser.Default.ParseArguments<Generate.Options, Build.Options, Push.Options>(args)
                 .MapResult(
                     (Generate.Options options) => Run<Generate.IOptions>(options),
                     (Build.Options options) => Run<Build.IOptions>(options),
                     (Push.Options options) => Run<Push.IOptions>(options),
-                    error => Task.FromResult(Result.Error));
+                    error => Result.Error);
 
-        private static async Task<Result> Run<TOptions>([NotNull] TOptions options)
+        private static Result Run<TOptions>([NotNull] TOptions options)
             where TOptions: IOptions
         {
             if (options == null)
@@ -34,7 +34,9 @@ namespace TeamCity.Docker
             {
                 try
                 {
-                    return await container.Resolve<ICommand<TOptions>>().Run();
+                    var runTask = container.Resolve<ICommand<TOptions>>().Run();
+                    runTask.Wait();
+                    return runTask.Result;
                 }
                 catch (Exception ex)
                 {
