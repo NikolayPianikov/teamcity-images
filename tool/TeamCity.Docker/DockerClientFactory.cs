@@ -62,7 +62,6 @@ namespace TeamCity.Docker
                     catch (Exception ex)
                     {
                         errors.Add(ex);
-                        _logger.Log(ex);
                     }
                 }
 
