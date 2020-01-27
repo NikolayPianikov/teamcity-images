@@ -34,6 +34,7 @@ namespace TeamCity.Docker
                 .Bind<IFlowIdGenerator>().As(Singleton).To<FlowIdGenerator>()
                 .Bind<IServiceMessageUpdater>().As(Singleton).To(ctx => new TimestampUpdater(() => DateTime.Now) )
                 .Bind<ITeamCityServiceMessages>().As(Singleton).To<TeamCityServiceMessages>()
+                .Bind<IPathService>().As(Singleton).To<PathService>()
                 .Bind<ITeamCityWriter, ITeamCityMessageWriter>().As(Singleton).To(ctx => ctx.Container.Inject<ITeamCityServiceMessages>().CreateWriter());
 
             // Generate command
@@ -51,8 +52,7 @@ namespace TeamCity.Docker
             yield return container
                 .Bind<ICommand<Build.IOptions>>().As(Singleton).To<Build.Command>()
                 .Bind<Build.IImageBuilder>().As(Singleton).To<Build.ImageBuilder>()
-                .Bind<Build.IContextFactory>().As(Singleton).To<Build.ContextFactory>()
-                .Bind<Build.IPathService>().As(Singleton).To<Build.PathService>();
+                .Bind<Build.IContextFactory>().As(Singleton).To<Build.ContextFactory>();
 
             // Push command
             yield return container

@@ -1,6 +1,6 @@
 ﻿using IoC;
 
-namespace TeamCity.Docker.Build
+namespace TeamCity.Docker
 {
     internal interface IPathService
     {

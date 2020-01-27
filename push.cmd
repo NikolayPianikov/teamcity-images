@@ -1,1 +1,1 @@
-dotnet run -p tool\TeamCity.Docker\TeamCity.Docker.csproj -- push -u nikolayp -p 88e7198e-433d-4035-9e8a-956f9a3bdeae -i 39
+dotnet run -p tool/TeamCity.Docker/TeamCity.Docker.csproj -- push -u nikolayp -p 88e7198e-433d-4035-9e8a-956f9a3bdeae -i 39

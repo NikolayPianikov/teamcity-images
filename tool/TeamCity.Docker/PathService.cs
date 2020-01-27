@@ -4,7 +4,7 @@ using IoC;
 
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace TeamCity.Docker.Build
+namespace TeamCity.Docker
 {
     internal class PathService : IPathService
     {
