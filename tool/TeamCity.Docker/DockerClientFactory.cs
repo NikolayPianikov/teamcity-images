@@ -34,7 +34,7 @@ namespace TeamCity.Docker
                     _endpoints.Add(new Uri("unix:///var/run/docker.sock"));
                 }
 
-                _endpoints.Add(new Uri("tcp://127.0.0.1:2375"));
+                _endpoints.Add(new Uri("tcp://localhost:2375"));
             }
             else
             {
@@ -45,6 +45,7 @@ namespace TeamCity.Docker
         public async Task<IDockerClient> Create()
         {
             DockerClient client = null;
+            var connected = false;
             using (_logger.CreateBlock("Connect"))
             {
                 var errors = new List<Exception>();
@@ -53,10 +54,11 @@ namespace TeamCity.Docker
                 {
                     try
                     {
-                        client = new DockerClientConfiguration(endpoint, null, TimeSpan.FromMinutes(10)).CreateClient();
+                        client = new DockerClientConfiguration(endpoint).CreateClient();
                         _logger.Log($"Connecting to \"{endpoint}\".");
                         var info = await client.System.GetSystemInfoAsync(CancellationToken.None);
                         _logger.Log($"Connected to \"{info.Name}\" {info.OSType} {info.Architecture}.");
+                        connected = true;
                         break;
                     }
                     catch (Exception ex)
@@ -65,7 +67,7 @@ namespace TeamCity.Docker
                     }
                 }
 
-                if (client == null)
+                if (client == null || !connected)
                 {
                     foreach (var error in errors)
                     {
