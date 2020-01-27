@@ -21,7 +21,7 @@ namespace TeamCity.Docker.Build
         [Option('c', "context", Required = false, HelpText = "Path to the context directory.")]
         public string ContextPath { get; set; } = "";
 
-        [Option('d', "docker", Required = false, HelpText = "The Docker Engine endpoint like tcp://localhost:2375 (default: npipe://./pipe/docker_engine).")]
+        [Option('d', "docker", Required = false, HelpText = "The Docker Engine endpoint like tcp://localhost:2375 (defaults: npipe://./pipe/docker_engine fo windows and unix:///var/run/docker.sock for others).")]
         public string DockerEngineEndpoint { get; set; } = "";
 
         [Option('t', "tags", Separator = ';', Required = false, HelpText = "Semicolon separated docker image tags.")]

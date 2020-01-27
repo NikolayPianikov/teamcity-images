@@ -15,9 +15,15 @@ You can generate docker and readme files to `generated` directory running the co
 dotnet run -p tool/TeamCity.Docker/TeamCity.Docker.csproj -- generate -s configs -f configs/windows.config;configs/linux.config -c context -t generated
 ```
 
+### Prepare a docker build context
+
+Download [TeamCity-*.tar.gz file](https://www.jetbrains.com/teamcity/download/#section=section-get) and unpack it into the build context directory `context` to have `context\TeamCity`
+
 ### Build
 
-To build docker images for Windows run the command line:
+To build docker image based on the specific dockerfile see the list of command lines for required docker tag.
+
+To build latest TeamCity docker images for Windows run the command line:
 
 ```
 dotnet run -p tool/TeamCity.Docker/TeamCity.Docker.csproj -- build -s configs/windows -f configs/windows.config -c context -i <sessionId>
@@ -25,7 +31,7 @@ dotnet run -p tool/TeamCity.Docker/TeamCity.Docker.csproj -- build -s configs/wi
 
 where _sessionId_ is a docker label _SessionId_ to combine all created docker images for the [command](#push).
 
-To build docker images for Linux run the command line:
+To build build latest TeamCity docker images for Linux run the command line:
 
 ```
 dotnet run -p tool/TeamCity.Docker/TeamCity.Docker.csproj -- build -s configs/linux -f configs/linux.config -c context -i <sessionId>

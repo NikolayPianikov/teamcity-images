@@ -26,7 +26,7 @@ namespace TeamCity.Docker.Push
         [Option('c', "clean", Required = false, HelpText = "Clean session docker images.")]
         public bool Clean { get; set; } = false;
 
-        [Option('d', "docker", Required = false, HelpText = "The Docker Engine endpoint like tcp://localhost:2375 (default: npipe://./pipe/docker_engine).")]
+        [Option('d', "docker", Required = false, HelpText = "The Docker Engine endpoint like tcp://localhost:2375 (defaults: npipe://./pipe/docker_engine fo windows and unix:///var/run/docker.sock for others).")]
         public string DockerEngineEndpoint { get; set; } = "npipe://./pipe/docker_engine";
 
         public string SourcePath => throw new NotImplementedException();

@@ -68,17 +68,17 @@ namespace TeamCity.Docker.Build
                                 continue;
                             }
 
+                            number++;
                             using (var fileStream = _fileSystem.OpenRead(file))
                             {
                                 var filePathInArchive = _pathService.Normalize(Path.GetRelativePath(path, file));
                                 var result = await AddEntry(archive, filePathInArchive, fileStream);
+                                _logger.Log($"{number:0000} \"{filePathInArchive}\" was added."); 
                                 if (result == Result.Error)
                                 {
                                     return new Result<Stream>(new MemoryStream(), Result.Error);
                                 }
                             }
-
-                            number++;
                         }
 
                         _logger.Log($"{number} files were added to docker build context from the directory \"{_options.ContextPath}\" (\"{path}\").");
