@@ -40,7 +40,7 @@ namespace TeamCity.Docker
                 }
                 catch (Exception ex)
                 {
-                    container.Resolve<ILogger>().Log(ex.Message, Result.Error);
+                    container.Resolve<ILogger>().Log(ex);
                     return Result.Error;
                 }
             }

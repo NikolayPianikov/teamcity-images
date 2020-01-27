@@ -108,7 +108,7 @@ namespace TeamCity.Docker.Build
                         }
                         catch (Exception ex)
                         {
-                            _logger.Log($"Error: {ex.Message}", Result.Error);
+                            _logger.Log(ex);
                             return Result.Error;
                         }
                     }
