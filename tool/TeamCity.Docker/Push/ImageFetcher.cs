@@ -32,7 +32,7 @@ namespace TeamCity.Docker.Push
 
         public async Task<Result<IReadOnlyList<DockerImage>>> GetImages()
         {
-            using (_logger.CreateBlock("List docker images"))
+            using (_logger.CreateBlock("List"))
             {
                 var filters = new Dictionary<string, IDictionary<string, bool>> { { "label", new Dictionary<string, bool> { { $"SessionId={_options.SessionId}", true } } } };
                 var dockerImages = await _dockerClient.Images.ListImagesAsync(new ImagesListParameters { Filters = filters });

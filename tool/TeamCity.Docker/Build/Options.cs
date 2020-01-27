@@ -6,7 +6,7 @@ using CommandLine;
 
 namespace TeamCity.Docker.Build
 {
-    [Verb("build", HelpText = "Build docker images to session.")]
+    [Verb("build", HelpText = "Build docker images for session.")]
     internal class Options: IOptions
     {
         [Option('s', "source", Required = false, HelpText = "Path to configuration directory.")]

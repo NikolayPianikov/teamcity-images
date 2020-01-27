@@ -34,7 +34,7 @@ namespace TeamCity.Docker.Generate
         public Task<Result> Run()
         {
             var dockerFiles = new List<DockerFile>();
-            using (_logger.CreateBlock("Generate docker files"))
+            using (_logger.CreateBlock("Generate"))
             {
                 foreach (var generator in _dockerFileGenerators)
                 {

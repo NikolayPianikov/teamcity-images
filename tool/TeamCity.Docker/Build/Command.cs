@@ -29,7 +29,7 @@ namespace TeamCity.Docker.Build
         public async Task<Result> Run()
         {
             var dockerFiles = new List<Generate.DockerFile>();
-            using (_logger.CreateBlock("Generate docker files"))
+            using (_logger.CreateBlock("Generate"))
             {
                 foreach (var generator in _dockerFileGenerators)
                 {
@@ -50,16 +50,12 @@ namespace TeamCity.Docker.Build
             }
 
             Result result;
-            using (_logger.CreateBlock("Build docker images"))
+            using (_logger.CreateBlock("Build"))
             {
                 result = await _imageBuilder.Build(dockerFiles);
             }
 
-            using (_logger.CreateBlock("Result"))
-            {
-                await _imageFetcher.GetImages();
-            }
-
+            await _imageFetcher.GetImages();
             return result;
         }
     }
