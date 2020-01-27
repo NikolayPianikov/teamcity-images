@@ -53,7 +53,7 @@ namespace TeamCity.Docker
                 {
                     try
                     {
-                        client = new DockerClientConfiguration(endpoint).CreateClient();
+                        client = new DockerClientConfiguration(endpoint, null, TimeSpan.FromMinutes(10)).CreateClient();
                         _logger.Log($"Connecting to \"{endpoint}\".");
                         var info = await client.System.GetSystemInfoAsync(CancellationToken.None);
                         _logger.Log($"Connected to \"{info.Name}\" {info.OSType} {info.Architecture}.");
