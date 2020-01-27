@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Text;
 using IoC;
 
@@ -34,7 +33,7 @@ namespace TeamCity.Docker
 
             do
             {
-                sb.AppendLine($"{Enumerable.Repeat(' ', tab)}{error.Message} from {error.Source}");
+                sb.AppendLine($"{new string(' ', tab)}{error.Message} from {error.Source}");
                 error = error.InnerException;
                 tab += 2;
             } while (error != null);
