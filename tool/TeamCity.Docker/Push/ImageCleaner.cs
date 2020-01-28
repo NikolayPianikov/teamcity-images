@@ -31,12 +31,9 @@ namespace TeamCity.Docker.Push
                 throw new ArgumentNullException(nameof(images));
             }
 
-            using (_logger.CreateBlock("Clean docker images"))
+            foreach (var image in images)
             {
-                foreach (var image in images)
-                {
-                    await dockerClient.Images.DeleteImageAsync(image.RepoTag, new ImageDeleteParameters { Force = true, PruneChildren = true });
-                }
+                await dockerClient.Images.DeleteImageAsync(image.RepoTag, new ImageDeleteParameters {Force = true, PruneChildren = true});
             }
 
             return Result.Success;

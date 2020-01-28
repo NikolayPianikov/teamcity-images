@@ -67,15 +67,17 @@ namespace TeamCity.Docker.Build
             }
 
             Result result;
+            using (_logger.CreateBlock("Build"))
             using (contextStreamResult.Value)
             {
-                using (_logger.CreateBlock("Build"))
-                {
-                    result = await _gate.Run(client => _imageBuilder.Build(client, dockerFiles, dockerFilesRootPath, contextStreamResult.Value));
-                }
+                result = await _gate.Run(client => _imageBuilder.Build(client, dockerFiles, dockerFilesRootPath, contextStreamResult.Value));
             }
 
-            await _gate.Run(client => _imageFetcher.GetImages(client));
+            using (_logger.CreateBlock("List"))
+            {
+                await _gate.Run(client => _imageFetcher.GetImages(client));
+            }
+
             return result;
         }
     }

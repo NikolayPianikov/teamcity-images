@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Docker.DotNet;
 using IoC;
@@ -34,35 +35,50 @@ namespace TeamCity.Docker.Push
 
         public async Task<Result> Run()
         {
-            var imagesResult = await _gate.Run(client => _imageFetcher.GetImages(client));
-            if (imagesResult.State == Result.Error)
+            Result<IReadOnlyList<DockerImage>> imagesResult;
+            using (_logger.CreateBlock("List"))
             {
-                _logger.Log("Cannot get docker images to push for session \"{_options.SessionId}\".", Result.Error);
-                return Result.Error;
+                imagesResult = await _gate.Run(client => _imageFetcher.GetImages(client));
+                if (imagesResult.State == Result.Error)
+                {
+                    _logger.Log("Cannot get docker images to push for session \"{_options.SessionId}\".", Result.Error);
+                    return Result.Error;
+                }
+
+                if (imagesResult.Value.Count == 0)
+                {
+                    _logger.Log($"Docker images were not found for session \"{_options.SessionId}\". Make sure you've made a build before and check the session id.", Result.Error);
+                    return Result.Error;
+                }
             }
 
-            if (imagesResult.Value.Count == 0)
+            Result pushResult;
+            using (_logger.CreateBlock("Push"))
             {
-                _logger.Log($"Docker images were not found for session \"{_options.SessionId}\". Make sure you've made a build before and check the session id.", Result.Error);
-                return Result.Error;
+                pushResult = await _gate.Run(client => _imagePublisher.PushImages(client, imagesResult.Value));
             }
-
-            var pushResult = await _gate.Run(client => _imagePublisher.PushImages(client, imagesResult.Value));
 
             if (_options.Clean)
             {
-                imagesResult = await _gate.Run(client => _imageFetcher.GetImages(client));
-                if (imagesResult.State != Result.Error)
+                using (_logger.CreateBlock("List"))
                 {
-                    var cleanResult = await _gate.Run(client => _imageCleaner.CleanImages(client, imagesResult.Value));
-                    if (cleanResult == Result.Error)
+                    imagesResult = await _gate.Run(client => _imageFetcher.GetImages(client));
+                    if (imagesResult.State == Result.Error)
                     {
-                        _logger.Log("Cannot clean images for session \"{_options.SessionId}\".", Result.Warning);
+                        _logger.Log("Cannot get docker images to clean for session \"{_options.SessionId}\".", Result.Warning);
                     }
                 }
-                else
+
+                if (imagesResult.State != Result.Error)
                 {
-                    _logger.Log("Cannot get docker images to clean for session \"{_options.SessionId}\".", Result.Warning);
+                    using (_logger.CreateBlock("Clean"))
+                    {
+                        var cleanResult = await _gate.Run(client => _imageCleaner.CleanImages(client, imagesResult.Value));
+                        if (cleanResult == Result.Error)
+                        {
+                            _logger.Log("Cannot clean images for session \"{_options.SessionId}\".", Result.Warning);
+                        }
+                    }
                 }
             }
 

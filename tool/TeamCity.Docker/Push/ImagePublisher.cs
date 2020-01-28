@@ -41,40 +41,37 @@ namespace TeamCity.Docker.Push
                 throw new ArgumentNullException(nameof(images));
             }
 
-            using (_logger.CreateBlock("Push docker images"))
+            var authConfig = new AuthConfig {ServerAddress = _options.ServerAddress, Username = _options.Username, Password = _options.Password};
+            foreach (var image in images)
             {
-                var authConfig = new AuthConfig { ServerAddress = _options.ServerAddress, Username = _options.Username, Password = _options.Password };
-                foreach (var image in images)
-                {
-                    var tag = _dockerConverter.TryConvertRepoTagToTag(image.RepoTag);
-                    var repositoryName = _options.Username + "/" + _dockerConverter.TryConvertRepoTagToRepositoryName(image.RepoTag);
-                    var newRepoTag = $"{repositoryName}:{tag}";
-                    _logger.Log($"Add tag {newRepoTag} for {image.RepoTag}.");
-                    await dockerClient.Images.TagImageAsync(
-                        image.RepoTag,
-                        new ImageTagParameters {RepositoryName = repositoryName, Tag = tag, Force = true});
+                var tag = _dockerConverter.TryConvertRepoTagToTag(image.RepoTag);
+                var repositoryName = _options.Username + "/" + _dockerConverter.TryConvertRepoTagToRepositoryName(image.RepoTag);
+                var newRepoTag = $"{repositoryName}:{tag}";
+                _logger.Log($"Add tag {newRepoTag} for {image.RepoTag}.");
+                await dockerClient.Images.TagImageAsync(
+                    image.RepoTag,
+                    new ImageTagParameters {RepositoryName = repositoryName, Tag = tag, Force = true});
 
-                    _logger.Log($"Push {newRepoTag}.");
-                    var hasError = false;
-                    await dockerClient.Images.PushImageAsync(
-                        newRepoTag,
-                        new ImagePushParameters {ImageID = image.Info.ID},
-                        authConfig,
-                        new Progress<JSONMessage>(message =>
-                        {
-                            if (_messageLogger.Log(message) == Result.Error)
-                            {
-                                hasError = true;
-                            }
-                        }));
-
-                    _logger.Log($"Delete tag {newRepoTag}.");
-                    await dockerClient.Images.DeleteImageAsync(newRepoTag, new ImageDeleteParameters {Force = true, PruneChildren = false});
-
-                    if (hasError)
+                _logger.Log($"Push {newRepoTag}.");
+                var hasError = false;
+                await dockerClient.Images.PushImageAsync(
+                    newRepoTag,
+                    new ImagePushParameters {ImageID = image.Info.ID},
+                    authConfig,
+                    new Progress<JSONMessage>(message =>
                     {
-                        return Result.Error;
-                    }
+                        if (_messageLogger.Log(message) == Result.Error)
+                        {
+                            hasError = true;
+                        }
+                    }));
+
+                _logger.Log($"Delete tag {newRepoTag}.");
+                await dockerClient.Images.DeleteImageAsync(newRepoTag, new ImageDeleteParameters {Force = true, PruneChildren = false});
+
+                if (hasError)
+                {
+                    return Result.Error;
                 }
             }
 

@@ -109,7 +109,7 @@ namespace TeamCity.Docker
 
         private class EmptyResult
         {
-            public static EmptyResult Shared = new EmptyResult();
+            public static readonly EmptyResult Shared = new EmptyResult();
         }
     }
 }

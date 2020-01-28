@@ -30,7 +30,7 @@ namespace TeamCity.Docker
                 .Bind<IStreamService>().As(Singleton).To<StreamService>()
                 .Bind<IMessageLogger>().As(Singleton).To<MessageLogger>()
                 .Bind<IDockerConverter>().As(Singleton).To<DockerConverter>()
-                .Bind<IGate<TDisposable>, ILogger, IDisposable>().As(Singleton).To<Gate<TDisposable>>(ctx => new Gate<TDisposable>(ctx.Container.Inject<IOptions>(), ctx.Container.Inject<ILogger>("Common"), ctx.Container.Inject<Func<TDisposable>>()))
+                .Bind<IGate<TTDisposable>, ILogger, IDisposable>().As(Singleton).To<Gate<TTDisposable>>(ctx => new Gate<TTDisposable>(ctx.Container.Inject<IOptions>(), ctx.Container.Inject<ILogger>("Common"), ctx.Container.Inject<Func<TTDisposable>>()))
                 // TeamCity messages
                 .Bind<IServiceMessageFormatter>().As(Singleton).To<ServiceMessageFormatter>()
                 .Bind<IFlowIdGenerator>().As(Singleton).To<FlowIdGenerator>()
@@ -65,9 +65,6 @@ namespace TeamCity.Docker
         }
 
         [GenericTypeArgument]
-        private abstract class TDisposable: IDisposable
-        {
-            public abstract void Dispose();
-        }
+        private interface TTDisposable: IDisposable { }
     }
 }
