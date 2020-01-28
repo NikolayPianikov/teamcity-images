@@ -33,11 +33,12 @@ namespace TeamCity.Docker
 
             do
             {
-                sb.AppendLine($"{new string(' ', tab)}{error.Message} from {error.Source}");
+                sb.AppendLine($"{new string(' ', tab)}{error.Message}");
                 error = error.InnerException;
                 tab += 2;
             } while (error != null);
 
+            sb.AppendLine(error.ToString());
             logger.Log(sb.ToString(), Result.Error);
         }
     }

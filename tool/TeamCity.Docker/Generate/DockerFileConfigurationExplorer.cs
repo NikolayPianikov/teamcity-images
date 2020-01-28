@@ -10,8 +10,8 @@ namespace TeamCity.Docker.Generate
 {
     internal class DockerFileConfigurationExplorer : IDockerFileConfigurationExplorer
     {
-        private readonly ILogger _logger;
-        private readonly IFileSystem _fileSystem;
+        [NotNull] private readonly ILogger _logger;
+        [NotNull] private readonly IFileSystem _fileSystem;
 
         public DockerFileConfigurationExplorer(
             [NotNull] ILogger logger,
@@ -56,7 +56,7 @@ namespace TeamCity.Docker.Generate
             return new Result<IEnumerable<DockerFileConfiguration>>(GetConfigurations(sourcePath, additionalVars));
         }
 
-        private IEnumerable<DockerFileConfiguration> GetConfigurations([NotNull] string sourcePath, [NotNull] IDictionary<string, string> additionalVars)
+        private IEnumerable<DockerFileConfiguration> GetConfigurations([NotNull] string sourcePath, [NotNull] IReadOnlyDictionary<string, string> additionalVars)
         {
             if (sourcePath == null)
             {
@@ -94,7 +94,7 @@ namespace TeamCity.Docker.Generate
             }
         }
 
-        private IDictionary<string, string> GetVariables([NotNull] string configFile)
+        private IReadOnlyDictionary<string, string> GetVariables([NotNull] string configFile)
         {
             if (configFile == null)
             {
@@ -125,7 +125,7 @@ namespace TeamCity.Docker.Generate
             return vars;
         }
 
-        private Dictionary<string, string> UpdateVariables([NotNull] IDictionary<string, string> variables, [NotNull] IDictionary<string, string> newVariables)
+        private Dictionary<string, string> UpdateVariables([NotNull] IReadOnlyDictionary<string, string> variables, [NotNull] IReadOnlyDictionary<string, string> newVariables)
         {
             if (variables == null)
             {

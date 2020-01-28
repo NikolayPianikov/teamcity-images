@@ -55,7 +55,7 @@ namespace TeamCity.Docker.Push
                         var historyEntries = await _dockerClient.Images.GetImageHistoryAsync(image.RepoTag, CancellationToken.None);
                         foreach (var historyEntry in historyEntries)
                         {
-                            _logger.Log($"{historyEntry.ID} {historyEntry.Created} {historyEntry.Size:D10} {historyEntry.CreatedBy}");
+                            _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(historyEntry.ID)} {historyEntry.Created} {historyEntry.Size:D10} {historyEntry.CreatedBy}");
                         }
                     }
                 }

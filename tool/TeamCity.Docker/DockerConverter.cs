@@ -7,6 +7,8 @@ namespace TeamCity.Docker
 {
     internal class DockerConverter : IDockerConverter
     {
+        private const string EmptyId = "   <missing>";
+
         public string TryConvertRepoTagToTag([NotNull] string repoTag)
         {
             if (repoTag == null)
@@ -47,12 +49,12 @@ namespace TeamCity.Docker
             }
 
             var ind = hash.IndexOf(":", StringComparison.Ordinal);
-            if (ind > 2)
+            if (ind > 2 && hash.Length > ind + 13)
             {
                 return hash.Substring(ind + 1, 12);
             }
 
-            return null;
+            return EmptyId;
         }
     }
 }
