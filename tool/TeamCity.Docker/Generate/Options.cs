@@ -22,6 +22,8 @@ namespace TeamCity.Docker.Generate
         [Option('f', "files", Separator = ';', Required = false, HelpText = "Semicolon separated configuration file.")]
         public IEnumerable<string> ConfigurationFiles { get; set; } = Enumerable.Empty<string>();
 
+        public int Retries => 1;
+
         [Option('t', "target", Required = true, HelpText = "Path to directory for generating docker files.")]
         public string TargetPath { get; set; } = string.Empty;
 

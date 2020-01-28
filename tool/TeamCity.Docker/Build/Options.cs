@@ -18,6 +18,9 @@ namespace TeamCity.Docker.Build
         [Option('f', "files", Separator = ';', Required = false, HelpText = "Semicolon separated configuration file.")]
         public IEnumerable<string> ConfigurationFiles { get; set; } = Enumerable.Empty<string>();
 
+        [Option('r', "retries", Required = false, HelpText = "Defines how many retries do if error occurs.")]
+        public int Retries { get; } = 3;
+
         [Option('c', "context", Required = false, HelpText = "Path to the context directory.")]
         public string ContextPath { get; set; } = "";
 

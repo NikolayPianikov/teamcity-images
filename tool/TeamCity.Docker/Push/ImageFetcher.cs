@@ -15,27 +15,29 @@ namespace TeamCity.Docker.Push
     {
         private readonly ILogger _logger;
         private readonly Docker.IOptions _options;
-        private readonly IDockerClient _dockerClient;
         private readonly IDockerConverter _dockerConverter;
 
         public ImageFetcher(
             [NotNull] ILogger logger,
             [NotNull] Docker.IOptions options,
-            [NotNull] IDockerClient dockerClient,
             [NotNull] IDockerConverter dockerConverter)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _options = options ?? throw new ArgumentNullException(nameof(options));
-            _dockerClient = dockerClient ?? throw new ArgumentNullException(nameof(dockerClient));
             _dockerConverter = dockerConverter ?? throw new ArgumentNullException(nameof(dockerConverter));
         }
 
-        public async Task<Result<IReadOnlyList<DockerImage>>> GetImages()
+        public async Task<Result<IReadOnlyList<DockerImage>>> GetImages(IDockerClient dockerClient)
         {
+            if (dockerClient == null)
+            {
+                throw new ArgumentNullException(nameof(dockerClient));
+            }
+
             using (_logger.CreateBlock("List"))
             {
                 var filters = new Dictionary<string, IDictionary<string, bool>> { { "label", new Dictionary<string, bool> { { $"SessionId={_options.SessionId}", true } } } };
-                var dockerImages = await _dockerClient.Images.ListImagesAsync(new ImagesListParameters { Filters = filters });
+                var dockerImages = await dockerClient.Images.ListImagesAsync(new ImagesListParameters { Filters = filters });
 
                 var images = (
                     from image in (
@@ -52,7 +54,7 @@ namespace TeamCity.Docker.Push
                     using (_logger.CreateBlock(image.RepoTag))
                     {
                         _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.Info.ID)} {image.Info.Created}");
-                        var historyEntries = await _dockerClient.Images.GetImageHistoryAsync(image.RepoTag, CancellationToken.None);
+                        var historyEntries = await dockerClient.Images.GetImageHistoryAsync(image.RepoTag, CancellationToken.None);
                         foreach (var historyEntry in historyEntries)
                         {
                             _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(historyEntry.ID)} {historyEntry.Created} {historyEntry.Size:D10} {historyEntry.CreatedBy}");

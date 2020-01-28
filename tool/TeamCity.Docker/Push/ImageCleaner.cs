@@ -12,18 +12,20 @@ namespace TeamCity.Docker.Push
     internal class ImageCleaner : IImageCleaner
     {
         private readonly ILogger _logger;
-        private readonly IDockerClient _dockerClient;
 
         public ImageCleaner(
-            [NotNull] ILogger logger,
-            [NotNull] IDockerClient dockerClient)
+            [NotNull] ILogger logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _dockerClient = dockerClient ?? throw new ArgumentNullException(nameof(dockerClient));
         }
 
-        public async Task<Result> CleanImages(IEnumerable<DockerImage> images)
+        public async Task<Result> CleanImages(IDockerClient dockerClient, IEnumerable<DockerImage> images)
         {
+            if (dockerClient == null)
+            {
+                throw new ArgumentNullException(nameof(dockerClient));
+            }
+
             if (images == null)
             {
                 throw new ArgumentNullException(nameof(images));
@@ -33,7 +35,7 @@ namespace TeamCity.Docker.Push
             {
                 foreach (var image in images)
                 {
-                    await _dockerClient.Images.DeleteImageAsync(image.RepoTag, new ImageDeleteParameters { Force = true, PruneChildren = true });
+                    await dockerClient.Images.DeleteImageAsync(image.RepoTag, new ImageDeleteParameters { Force = true, PruneChildren = true });
                 }
             }
 

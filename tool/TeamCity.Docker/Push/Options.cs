@@ -14,6 +14,9 @@ namespace TeamCity.Docker.Push
 
         public IEnumerable<string> ConfigurationFiles => throw new NotImplementedException();
 
+        [Option('r', "retries", Required = false, HelpText = "Defines how many retries do if error occurs.")]
+        public int Retries { get; } = 3;
+
         [Option('a', "address", Required = false, HelpText = "Docker server address (default: docker.io).")]
         public string ServerAddress { get; set; } = "docker.io";
 

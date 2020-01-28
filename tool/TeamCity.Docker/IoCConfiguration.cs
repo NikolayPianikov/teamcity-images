@@ -6,6 +6,7 @@ using JetBrains.TeamCity.ServiceMessages.Write;
 using JetBrains.TeamCity.ServiceMessages.Write.Special;
 using JetBrains.TeamCity.ServiceMessages.Write.Special.Impl.Updater;
 using static IoC.Lifetime;
+// ReSharper disable InconsistentNaming
 
 namespace TeamCity.Docker
 {
@@ -23,12 +24,13 @@ namespace TeamCity.Docker
                 .Bind<IEnvironment>().As(Singleton).To<Environment>()
                 .Bind<ILogger>().As(Singleton).Tag("Console").To<ConsoleLogger>()
                 .Bind<ILogger>().As(Singleton).Tag("TeamCity").To<TeamCityLogger>()
-                .Bind<ILogger>().As(Singleton).To<Logger>(ctx => new Logger(ctx.Container.Inject<IEnvironment>(), ctx.Container.Inject<ILogger>("Console"), ctx.Container.Inject<ILogger>("TeamCity")))
+                .Bind<ILogger>().As(Singleton).Tag("Common").To<Logger>(ctx => new Logger(ctx.Container.Inject<IEnvironment>(), ctx.Container.Inject<ILogger>("Console"), ctx.Container.Inject<ILogger>("TeamCity")))
                 .Bind<IDockerClientFactory>().As(Singleton).To<DockerClientFactory>()
-                .Bind<IDockerClient>().As(Singleton).To(ctx => ctx.Container.Inject<IDockerClientFactory>().Create().Result)
+                .Bind<IDockerClient>().To(ctx => ctx.Container.Inject<IDockerClientFactory>().Create().Result)
                 .Bind<IStreamService>().As(Singleton).To<StreamService>()
                 .Bind<IMessageLogger>().As(Singleton).To<MessageLogger>()
                 .Bind<IDockerConverter>().As(Singleton).To<DockerConverter>()
+                .Bind<IGate<TDisposable>, ILogger, IDisposable>().As(Singleton).To<Gate<TDisposable>>(ctx => new Gate<TDisposable>(ctx.Container.Inject<IOptions>(), ctx.Container.Inject<ILogger>("Common"), ctx.Container.Inject<Func<TDisposable>>()))
                 // TeamCity messages
                 .Bind<IServiceMessageFormatter>().As(Singleton).To<ServiceMessageFormatter>()
                 .Bind<IFlowIdGenerator>().As(Singleton).To<FlowIdGenerator>()
@@ -60,6 +62,12 @@ namespace TeamCity.Docker
                 .Bind<Push.IImageFetcher>().As(Singleton).To<Push.ImageFetcher>()
                 .Bind<Push.IImagePublisher>().As(Singleton).To<Push.ImagePublisher>()
                 .Bind<Push.IImageCleaner>().As(Singleton).To<Push.ImageCleaner>();
+        }
+
+        [GenericTypeArgument]
+        private abstract class TDisposable: IDisposable
+        {
+            public abstract void Dispose();
         }
     }
 }

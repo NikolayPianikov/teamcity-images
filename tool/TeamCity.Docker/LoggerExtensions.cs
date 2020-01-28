@@ -23,6 +23,7 @@ namespace TeamCity.Docker
                 throw new ArgumentNullException(nameof(error));
             }
 
+            var originError = error;
             var sb = new StringBuilder();
             var tab = 0;
             if (!string.IsNullOrWhiteSpace(message))
@@ -38,7 +39,7 @@ namespace TeamCity.Docker
                 tab += 2;
             } while (error != null);
 
-            sb.AppendLine(error.ToString());
+            sb.AppendLine(originError.ToString());
             logger.Log(sb.ToString(), Result.Error);
         }
     }

@@ -12,5 +12,7 @@ namespace TeamCity.Docker
         [NotNull] string SessionId { get; }
 
         [NotNull] IEnumerable<string> ConfigurationFiles { get; }
+
+        int Retries { get; }
     }
 }
