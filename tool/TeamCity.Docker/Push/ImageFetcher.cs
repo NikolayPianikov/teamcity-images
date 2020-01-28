@@ -16,51 +16,52 @@ namespace TeamCity.Docker.Push
         private readonly ILogger _logger;
         private readonly Docker.IOptions _options;
         private readonly IDockerConverter _dockerConverter;
+        [NotNull] private readonly ITaskRunner<IDockerClient> _taskRunner;
 
         public ImageFetcher(
             [NotNull] ILogger logger,
             [NotNull] Docker.IOptions options,
-            [NotNull] IDockerConverter dockerConverter)
+            [NotNull] IDockerConverter dockerConverter,
+            [NotNull] ITaskRunner<IDockerClient> taskRunner)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _options = options ?? throw new ArgumentNullException(nameof(options));
             _dockerConverter = dockerConverter ?? throw new ArgumentNullException(nameof(dockerConverter));
+            _taskRunner = taskRunner ?? throw new ArgumentNullException(nameof(taskRunner));
         }
 
-        public async Task<Result<IReadOnlyList<DockerImage>>> GetImages(IDockerClient dockerClient)
+        public async Task<Result<IReadOnlyList<DockerImage>>> GetImages()
         {
-            if (dockerClient == null)
+            using (_logger.CreateBlock("List"))
             {
-                throw new ArgumentNullException(nameof(dockerClient));
-            }
+                var filters = new Dictionary<string, IDictionary<string, bool>> {{"label", new Dictionary<string, bool> {{$"SessionId={_options.SessionId}", true}}}};
+                var dockerImages = await _taskRunner.Run(client => client.Images.ListImagesAsync(new ImagesListParameters {Filters = filters}));
 
-            var filters = new Dictionary<string, IDictionary<string, bool>> {{"label", new Dictionary<string, bool> {{$"SessionId={_options.SessionId}", true}}}};
-            var dockerImages = await dockerClient.Images.ListImagesAsync(new ImagesListParameters {Filters = filters});
+                var images = (
+                        from image in (
+                            from image in dockerImages
+                            where image.RepoTags != null
+                            from tag in image.RepoTags
+                            where !tag.Contains("<none>")
+                            select new DockerImage(image, tag))
+                        select image)
+                    .ToList();
 
-            var images = (
-                    from image in (
-                        from image in dockerImages
-                        where image.RepoTags != null
-                        from tag in image.RepoTags
-                        where !tag.Contains("<none>")
-                        select new DockerImage(image, tag))
-                    select image)
-                .ToList();
-
-            foreach (var image in images)
-            {
-                using (_logger.CreateBlock(image.RepoTag))
+                foreach (var image in images)
                 {
-                    _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.Info.ID)} {image.Info.Created}");
-                    var historyEntries = await dockerClient.Images.GetImageHistoryAsync(image.RepoTag, CancellationToken.None);
-                    foreach (var historyEntry in historyEntries)
+                    using (_logger.CreateBlock(image.RepoTag))
                     {
-                        _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(historyEntry.ID)} {historyEntry.Created} {historyEntry.Size:D10} {historyEntry.CreatedBy}");
+                        _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.Info.ID)} {image.Info.Created}");
+                        var historyEntries = await _taskRunner.Run(client => client.Images.GetImageHistoryAsync(image.RepoTag, CancellationToken.None));
+                        foreach (var historyEntry in historyEntries)
+                        {
+                            _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(historyEntry.ID)} {historyEntry.Created} {historyEntry.Size:D10} {historyEntry.CreatedBy}");
+                        }
                     }
                 }
-            }
 
-            return new Result<IReadOnlyList<DockerImage>>(images);
+                return new Result<IReadOnlyList<DockerImage>>(images);
+            }
         }
     }
 }

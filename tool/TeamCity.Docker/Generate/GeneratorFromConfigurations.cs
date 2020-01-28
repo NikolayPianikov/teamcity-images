@@ -28,7 +28,6 @@ namespace TeamCity.Docker.Generate
 
         public Result<IEnumerable<DockerFile>> Generate()
         {
-            var sourcePath = _options.SourcePath;
             if (string.IsNullOrWhiteSpace(_options.SourcePath))
             {
                 _logger.Log("Path to configuration directory is empty.", Result.Error);

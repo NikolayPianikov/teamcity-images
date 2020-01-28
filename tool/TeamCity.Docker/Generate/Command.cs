@@ -52,31 +52,24 @@ namespace TeamCity.Docker.Generate
                     _logger.Log("Docker files were not generated.", Result.Error);
                     return Task.FromResult(Result.Error);
                 }
-            }
 
-            List<ReadmeFile> readmeFiles;
-            using (_logger.CreateBlock("Generate readme files"))
-            {
-                readmeFiles = _readmeGenerator.Generate(dockerFiles).ToList();
+                foreach (var dockerFile in dockerFiles)
+                {
+                    var content = string.Join(System.Environment.NewLine, dockerFile.Content.Select(line => line.Text));
+                    _fileSystem.WriteFile(Path.Combine(_options.TargetPath, dockerFile.Path), content);
+                }
+
+                var readmeFiles = _readmeGenerator.Generate(dockerFiles).ToList();
                 if (readmeFiles.Count == 0)
                 {
-                    _logger.Log("Docker files were not generated.", Result.Warning);
+                    _logger.Log("Readme was not generated.", Result.Warning);
+                }
+
+                foreach (var readmeFile in readmeFiles)
+                {
+                    _fileSystem.WriteFile(Path.Combine(_options.TargetPath, readmeFile.Path), readmeFile.Content);
                 }
             }
-
-            _logger.Log("Save docker files");
-            foreach (var dockerFile in dockerFiles)
-            {
-                var content = string.Join(System.Environment.NewLine, dockerFile.Content.Select(line => line.Text));
-                _fileSystem.WriteFile(Path.Combine(_options.TargetPath, dockerFile.Path), content);
-            }
-            
-            _logger.Log("Save readme files");
-            foreach (var readmeFile in readmeFiles)
-            {
-                _fileSystem.WriteFile(Path.Combine(_options.TargetPath, readmeFile.Path), readmeFile.Content);
-            }
-            
 
             return Task.FromResult(Result.Success);
         }

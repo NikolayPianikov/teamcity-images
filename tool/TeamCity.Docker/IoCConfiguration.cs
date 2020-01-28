@@ -30,7 +30,7 @@ namespace TeamCity.Docker
                 .Bind<IStreamService>().As(Singleton).To<StreamService>()
                 .Bind<IMessageLogger>().As(Singleton).To<MessageLogger>()
                 .Bind<IDockerConverter>().As(Singleton).To<DockerConverter>()
-                .Bind<IGate<TTDisposable>, ILogger, IDisposable>().As(Singleton).To<Gate<TTDisposable>>(ctx => new Gate<TTDisposable>(ctx.Container.Inject<IOptions>(), ctx.Container.Inject<ILogger>("Common"), ctx.Container.Inject<Func<TTDisposable>>()))
+                .Bind<ITaskRunner<TTDisposable>, ILogger, IDisposable>().As(Singleton).To<TaskRunner<TTDisposable>>(ctx => new TaskRunner<TTDisposable>(ctx.Container.Inject<IOptions>(), ctx.Container.Inject<ILogger>("Common"), ctx.Container.Inject<Func<TTDisposable>>()))
                 // TeamCity messages
                 .Bind<IServiceMessageFormatter>().As(Singleton).To<ServiceMessageFormatter>()
                 .Bind<IFlowIdGenerator>().As(Singleton).To<FlowIdGenerator>()

@@ -46,7 +46,7 @@ namespace TeamCity.Docker.Build
                 throw new ArgumentNullException(nameof(dockerFiles));
             }
 
-            using (_logger.CreateBlock("Build context"))
+            using (_logger.CreateBlock("Context"))
             {
                 var context = new MemoryStream();
                 using (var archive = new TarOutputStream(context) {IsStreamOwner = false})
