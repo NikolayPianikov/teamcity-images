@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using IoC;
 
 // ReSharper disable ParameterTypeCanBeEnumerable.Local
@@ -11,13 +10,11 @@ namespace TeamCity.Docker.Generate
     {
         [NotNull] public readonly string Path;
         [NotNull] public readonly string Content;
-        [NotNull] public readonly IEnumerable<DockerFile> DockerFiles;
 
-        public ReadmeFile([NotNull] string path, [NotNull] string content, [NotNull] IReadOnlyCollection<DockerFile> dockerFiles)
+        public ReadmeFile([NotNull] string path, [NotNull] string content)
         {
             Path = path ?? throw new ArgumentNullException(nameof(path));
             Content = content ?? throw new ArgumentNullException(nameof(content));
-            DockerFiles = dockerFiles ?? throw new ArgumentNullException(nameof(dockerFiles));
         }
     }
 }
