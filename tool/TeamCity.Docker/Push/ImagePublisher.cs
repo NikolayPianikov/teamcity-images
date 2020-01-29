@@ -53,23 +53,13 @@ namespace TeamCity.Docker.Push
                         new ImageTagParameters {RepositoryName = repositoryName, Tag = tag, Force = true}));
 
                     _logger.Log($"Push {newRepoTag}.");
-                    var hasError = false;
-                    await _taskRunner.Run(client => client.Images.PushImageAsync(
-                        newRepoTag,
-                        new ImagePushParameters {ImageID = image.Info.ID},
-                        authConfig,
-                        new Progress<JSONMessage>(message =>
-                        {
-                            if (_messageLogger.Log(message) == Result.Error)
-                            {
-                                hasError = true;
-                            }
-                        })));
-
+                    var imagePushParameters = new ImagePushParameters {ImageID = image.Info.ID};
+                    var result = await _taskRunner.Run(client => PushImage(client, newRepoTag, imagePushParameters, authConfig));
+                    
                     _logger.Log($"Delete tag {newRepoTag}.");
                     await _taskRunner.Run(client => client.Images.DeleteImageAsync(newRepoTag, new ImageDeleteParameters {Force = true, PruneChildren = false}));
 
-                    if (hasError)
+                    if (result == Result.Error)
                     {
                         return Result.Error;
                     }
@@ -78,5 +68,15 @@ namespace TeamCity.Docker.Push
 
             return Result.Success;
         }
+
+        private async Task PushImage(IDockerClient client, string repoTag, ImagePushParameters imagePushParameters, AuthConfig authConfig) =>
+            await client.Images.PushImageAsync(
+                repoTag,
+                imagePushParameters,
+                authConfig,
+                new Progress<JSONMessage>(message =>
+                {
+                    _messageLogger.Log(message);
+                }));
+        }
     }
-}

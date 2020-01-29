@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.ComTypes;
 using Docker.DotNet;
 using IoC;
 using JetBrains.TeamCity.ServiceMessages.Write;
@@ -31,8 +30,7 @@ namespace TeamCity.Docker
                 .Bind<IStreamService>().As(Singleton).To<StreamService>()
                 .Bind<IMessageLogger>().As(Singleton).To<MessageLogger>()
                 .Bind<IDockerConverter>().As(Singleton).To<DockerConverter>()
-                .Bind<TaskRunner<TTDisposable>, ITaskRunner<TTDisposable>, ILogger, IDisposable>().As(Singleton).To(ctx => new TaskRunner<TTDisposable>(ctx.Container.Inject<IOptions>(), ctx.Container.Inject<ILogger>("Common"), ctx.Container.Inject<Func<TTDisposable>>()))
-                .Bind<IActiveObject>().As(Singleton).Tag("Docker client").To(ctx => ctx.Container.Inject<TaskRunner<IDockerClient>>(), ctx => ctx.It.Activate())
+                .Bind<ITaskRunner<IDockerClient>, ILogger>().As(Singleton).To(ctx => new TaskRunner<IDockerClient>(ctx.Container.Inject<IOptions>(), ctx.Container.Inject<ILogger>("Common"), ctx.Container.Inject<Func<IDockerClient>>()))
                 // TeamCity messages
                 .Bind<IServiceMessageFormatter>().As(Singleton).To<ServiceMessageFormatter>()
                 .Bind<IFlowIdGenerator>().As(Singleton).To<FlowIdGenerator>()
@@ -65,8 +63,5 @@ namespace TeamCity.Docker
                 .Bind<Push.IImagePublisher>().As(Singleton).To<Push.ImagePublisher>()
                 .Bind<Push.IImageCleaner>().As(Singleton).To<Push.ImageCleaner>();
         }
-
-        [GenericTypeArgument]
-        private interface TTDisposable: IDisposable { }
     }
 }

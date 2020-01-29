@@ -68,7 +68,6 @@ namespace TeamCity.Docker.Build
                         labels.Add("SessionId", _options.SessionId);
                     }
 
-                    var hasError = false;
                     foreach (var dockerFile in dockerFiles.OrderBy(dockerFile => dockerFile.Metadata.Priority))
                     {
                         if (!dockerFile.Metadata.Repos.Any())
@@ -83,29 +82,15 @@ namespace TeamCity.Docker.Build
                             var dockerFilePathInContext = _pathService.Normalize(Path.Combine(dockerFilesRootPath, dockerFile.Path));
                             try
                             {
-                                contextStream.Position = 0;
-                                using (var buildEventStream = await _taskRunner.Run(client => client.Images.BuildImageFromDockerfileAsync(
-                                    contextStream,
-                                    new ImageBuildParameters
-                                    {
-                                        Dockerfile = dockerFilePathInContext,
-                                        Tags = dockerFile.Metadata.Tags.Concat(_options.Tags).Distinct().ToList(),
-                                        Labels = labels
-                                    },
-                                    CancellationToken.None)))
+                                var buildParameters = new ImageBuildParameters
                                 {
-                                    _streamService.ProcessLines(
-                                        buildEventStream,
-                                        line =>
-                                        {
-                                            if (_messageLogger.Log(line) == Result.Error)
-                                            {
-                                                hasError = true;
-                                            }
-                                        });
-                                }
+                                    Dockerfile = dockerFilePathInContext,
+                                    Tags = dockerFile.Metadata.Tags.Concat(_options.Tags).Distinct().ToList(),
+                                    Labels = labels
+                                };
 
-                                if (hasError)
+                                var result = await _taskRunner.Run(client => BuildImage(client, contextStream, buildParameters));
+                                if (result == Result.Error)
                                 {
                                     return Result.Error;
                                 }
@@ -120,6 +105,18 @@ namespace TeamCity.Docker.Build
                 }
 
                 return Result.Success;
+            }
+        }
+
+        private async Task BuildImage(IDockerClient client, Stream contextStream, ImageBuildParameters buildParameters)
+        {
+            contextStream.Position = 0;
+            using (var buildEventStream = await client.Images.BuildImageFromDockerfileAsync(
+                contextStream,
+                buildParameters,
+                CancellationToken.None))
+            {
+                _streamService.ProcessLines(buildEventStream, line => { _messageLogger.Log(line); });
             }
         }
     }

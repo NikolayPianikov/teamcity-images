@@ -39,7 +39,7 @@ namespace TeamCity.Docker.Push
 
                 var images = (
                         from image in (
-                            from image in dockerImages
+                            from image in dockerImages.Value
                             where image.RepoTags != null
                             from tag in image.RepoTags
                             where !tag.Contains("<none>")
@@ -53,7 +53,7 @@ namespace TeamCity.Docker.Push
                     {
                         _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.Info.ID)} {image.Info.Created}");
                         var historyEntries = await _taskRunner.Run(client => client.Images.GetImageHistoryAsync(image.RepoTag, CancellationToken.None));
-                        foreach (var historyEntry in historyEntries)
+                        foreach (var historyEntry in historyEntries.Value)
                         {
                             _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(historyEntry.ID)} {historyEntry.Created} {historyEntry.Size:D10} {historyEntry.CreatedBy}");
                         }

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Docker.DotNet;
 using IoC;
 
 // ReSharper disable ClassNeverInstantiated.Global
@@ -16,7 +14,6 @@ namespace TeamCity.Docker.Push
         private readonly IImageCleaner _imageCleaner;
 
         public Command(
-            [NotNull] IActiveObject[] activeObjects,
             [NotNull] IOptions options,
             [NotNull] IImageFetcher imageFetcher,
             [NotNull] IImagePublisher imagePublisher,

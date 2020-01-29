@@ -4,10 +4,11 @@ using IoC;
 
 namespace TeamCity.Docker
 {
-    internal interface ITaskRunner<out TState> : IDisposable, ILogger where TState : IDisposable
+    internal interface ITaskRunner<out TState> : ILogger
+        where TState : IDisposable
     {
-        [NotNull] Task Run([NotNull] Func<TState, Task> handler);
+        [NotNull] Task<Result> Run([NotNull] Func<TState, Task> handler);
 
-        [NotNull] Task<T> Run<T>(Func<TState, Task<T>> handler);
+        [NotNull] Task<Result<T>> Run<T>(Func<TState, Task<T>> handler);
     }
 }

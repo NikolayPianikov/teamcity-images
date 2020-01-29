@@ -6,15 +6,15 @@ using IoC;
 
 namespace TeamCity.Docker
 {
-    internal class TaskRunner<TState>: ITaskRunner<TState>, IActiveObject
+    internal class TaskRunner<TState>: ITaskRunner<TState>, IDisposable
         where TState: IDisposable
     {
-        [NotNull] private static readonly Exception DefaultException = new InvalidOperationException("");
         [NotNull] private readonly IOptions _options;
         [NotNull] private readonly ILogger _logger;
         [NotNull] private readonly Func<TState> _stateFactory;
         [CanBeNull] private TState _state;
         private int _curAttempt;
+        private bool _hasError;
 
         public TaskRunner(
             [NotNull] IOptions options,
@@ -28,42 +28,54 @@ namespace TeamCity.Docker
 
         private int Attempts => _options.Retries > 0 ? _options.Retries : 1;
 
-        public void Activate()
-        {
-            GetState();
-        }
-
-        public async Task Run(Func<TState, Task> handler)
+        public async Task<Result> Run(Func<TState, Task> handler)
         {
             if (handler == null)
             {
                 throw new ArgumentNullException(nameof(handler));
             }
 
-            await Run(state =>
+            var result = await Run(state =>
             {
-                handler(state).Wait();
+                var task = handler(state);
+                task.Wait();
                 return Task.FromResult(0);
             });
+
+            return result.State;
         }
-        public async Task<T> Run<T>([NotNull] Func<TState, Task<T>> handler)
+        public async Task<Result<T>> Run<T>([NotNull] Func<TState, Task<T>> handler)
         {
             if (handler == null)
             {
                 throw new ArgumentNullException(nameof(handler));
             }
 
+            _hasError = false;
             Exception lastError = null;
             for (_curAttempt= 0; _curAttempt < Attempts; _curAttempt++)
             {
                 try
                 {
-                    return await handler(GetState());
+                    var result = await handler(GetState());
+                    if (!_hasError)
+                    {
+                        return new Result<T>(result);
+                    }
                 }
                 catch (Exception error)
                 {
                     lastError = error;
-                    _logger.Log(error, $"Attempt #{_curAttempt + 1:00}/{Attempts:00} failed.");
+                }
+
+                var message = $"Attempt {_curAttempt + 1:00} of {Attempts:00} failed.";
+                if (lastError != null)
+                {
+                    _logger.Log(lastError, message);
+                }
+                else
+                {
+                    _logger.Log(message, Result.Warning);
                 }
 
                 _state?.Dispose();
@@ -71,7 +83,12 @@ namespace TeamCity.Docker
             }
 
             _logger.Log("Attempts have been exhausted.", Result.Error);
-            throw lastError ?? DefaultException;
+            if (lastError != null)
+            {
+                throw lastError;
+            }
+
+            return new Result<T>(default(T), Result.Error);
         }
 
         public void Dispose() => _state?.Dispose();
@@ -91,6 +108,10 @@ namespace TeamCity.Docker
                         break;
 
                     case Result.Error:
+                        _hasError = true;
+                        _logger.Log(text, Result.Warning);
+                        break;
+
                     case Result.Warning:
                         _logger.Log(text, Result.Warning);
                         break;
