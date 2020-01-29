@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using IoC;
 
-namespace TeamCity.Docker.Push
+namespace TeamCity.Docker.Build
 {
     internal interface IImageCleaner
     {

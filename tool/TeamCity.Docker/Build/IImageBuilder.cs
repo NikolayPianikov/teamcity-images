@@ -7,6 +7,6 @@ namespace TeamCity.Docker.Build
 {
     internal interface IImageBuilder
     {
-        [NotNull] Task<Result> Build([NotNull] IReadOnlyCollection<DockerFile> dockerFiles);
+        [NotNull] Task<Result> Build([NotNull] IEnumerable<TreeNode<DockerFile>> dockerNodes);
     }
 }

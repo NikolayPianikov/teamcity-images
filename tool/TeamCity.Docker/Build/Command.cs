@@ -11,17 +11,20 @@ namespace TeamCity.Docker.Build
     {
         [NotNull] private readonly ILogger _logger;
         [NotNull] private readonly IEnumerable<Generate.IGenerator> _dockerFileGenerators;
+        [NotNull] private readonly Generate.IDependencyTreeFactory _dependencyTreeFactory;
         [NotNull] private readonly IImageBuilder _imageBuilder;
-        [NotNull] private readonly Push.IImageFetcher _imageFetcher;
+        [NotNull] private readonly IImageFetcher _imageFetcher;
 
         public Command(
             [NotNull] ILogger logger,
             [NotNull] IEnumerable<Generate.IGenerator> dockerFileGenerators,
+            [NotNull] Generate.IDependencyTreeFactory dependencyTreeFactory,
             [NotNull] IImageBuilder imageBuilder,
-            [NotNull] Push.IImageFetcher imageFetcher)
+            [NotNull] IImageFetcher imageFetcher)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _dockerFileGenerators = dockerFileGenerators ?? throw new ArgumentNullException(nameof(dockerFileGenerators));
+            _dependencyTreeFactory = dependencyTreeFactory ?? throw new ArgumentNullException(nameof(dependencyTreeFactory));
             _imageBuilder = imageBuilder ?? throw new ArgumentNullException(nameof(imageBuilder));
             _imageFetcher = imageFetcher ?? throw new ArgumentNullException(nameof(imageFetcher));
         }
@@ -49,9 +52,9 @@ namespace TeamCity.Docker.Build
                 }
             }
 
-            var result = await _imageBuilder.Build(dockerFiles);
-            await _imageFetcher.GetImages();
-            return result;
+            var dockerNodes = _dependencyTreeFactory.Create(dockerFiles);
+            return await _imageBuilder.Build(dockerNodes);
         }
+
     }
 }

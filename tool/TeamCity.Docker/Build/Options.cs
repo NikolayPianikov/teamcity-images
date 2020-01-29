@@ -29,5 +29,17 @@ namespace TeamCity.Docker.Build
 
         [Option('t', "tags", Separator = ';', Required = false, HelpText = "Semicolon separated docker image tags.")]
         public IEnumerable<string> Tags { get; set; } = Enumerable.Empty<string>();
+
+        [Option('a', "address", Required = false, HelpText = "Docker server address (default: docker.io).")]
+        public string ServerAddress { get; set; } = "docker.io";
+
+        [Option('u', "username", Required = false, HelpText = "Docker server username.")]
+        public string Username { get; set; } = "";
+
+        [Option('p', "password", Required = false, HelpText = "Docker server password.")]
+        public string Password { get; set; } = "";
+
+        [Option('n', "clean", Required = false, HelpText = "Clean session docker images.")]
+        public bool Clean { get; set; } = false;
     }
 }

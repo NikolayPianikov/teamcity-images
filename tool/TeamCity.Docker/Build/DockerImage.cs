@@ -2,7 +2,7 @@
 using Docker.DotNet.Models;
 using IoC;
 
-namespace TeamCity.Docker.Push
+namespace TeamCity.Docker.Build
 {
     internal struct DockerImage
     {

@@ -35,7 +35,7 @@ namespace TeamCity.Docker.Generate
                 throw new ArgumentNullException(nameof(dockerNodes));
             }
 
-            var allNodes = EnumerateNodes(dockerNodes).Distinct().ToList();
+            var allNodes = dockerNodes.EnumerateNodes().Distinct().ToList();
 
             var repoTags =
                 from node in allNodes
@@ -49,7 +49,7 @@ namespace TeamCity.Docker.Generate
             }
 
             var dockerNodeGroups =
-                from node in EnumerateNodes(allNodes)
+                from node in allNodes.EnumerateNodes()
                 group node by new { node.Value.Metadata.ImageId };
 
             foreach (var dockerNodeGroup in dockerNodeGroups)
@@ -124,18 +124,6 @@ namespace TeamCity.Docker.Generate
 
                 _logger.Log($"The readme \"{readmeFilePath}\" file was generated for {counter} docker files.");
                 yield return new ReadmeFile(readmeFilePath, sb.ToString());
-            }
-        }
-
-        private static IEnumerable<TreeNode<DockerFile>> EnumerateNodes(IEnumerable<TreeNode<DockerFile>> nodes)
-        {
-            foreach (var node in nodes)
-            {
-                yield return node;
-                foreach (var child in EnumerateNodes(node.Children))
-                {
-                    yield return child;
-                }
             }
         }
 

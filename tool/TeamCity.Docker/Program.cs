@@ -10,11 +10,10 @@ namespace TeamCity.Docker
     public class Program
     {
         public static int Main(string[] args) =>
-            (int)Parser.Default.ParseArguments<Generate.Options, Build.Options, Push.Options>(args)
+            (int)Parser.Default.ParseArguments<Generate.Options, Build.Options>(args)
                 .MapResult(
                     (Generate.Options options) => Run<Generate.IOptions>(options),
                     (Build.Options options) => Run<Build.IOptions>(options),
-                    (Push.Options options) => Run<Push.IOptions>(options),
                     error => Result.Error);
 
         private static Result Run<TOptions>([NotNull] TOptions options)

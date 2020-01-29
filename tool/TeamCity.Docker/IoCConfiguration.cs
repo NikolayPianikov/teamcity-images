@@ -55,14 +55,10 @@ namespace TeamCity.Docker
             yield return container
                 .Bind<ICommand<Build.IOptions>>().As(Singleton).To<Build.Command>()
                 .Bind<Build.IImageBuilder>().As(Singleton).To<Build.ImageBuilder>()
-                .Bind<Build.IContextFactory>().As(Singleton).To<Build.ContextFactory>();
-
-            // Push command
-            yield return container
-                .Bind<ICommand<Push.IOptions>>().As(Singleton).To<Push.Command>()
-                .Bind<Push.IImageFetcher>().As(Singleton).To<Push.ImageFetcher>()
-                .Bind<Push.IImagePublisher>().As(Singleton).To<Push.ImagePublisher>()
-                .Bind<Push.IImageCleaner>().As(Singleton).To<Push.ImageCleaner>();
+                .Bind<Build.IContextFactory>().As(Singleton).To<Build.ContextFactory>()
+                .Bind<Build.IImageFetcher>().As(Singleton).To<Build.ImageFetcher>()
+                .Bind<Build.IImagePublisher>().As(Singleton).To<Build.ImagePublisher>()
+                .Bind<Build.IImageCleaner>().As(Singleton).To<Build.ImageCleaner>();
         }
     }
 }

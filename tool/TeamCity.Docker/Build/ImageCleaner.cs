@@ -7,7 +7,7 @@ using IoC;
 
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace TeamCity.Docker.Push
+namespace TeamCity.Docker.Build
 {
     internal class ImageCleaner : IImageCleaner
     {
@@ -33,6 +33,7 @@ namespace TeamCity.Docker.Push
             {
                 foreach (var image in images)
                 {
+                    _logger.Log($"Clean {image}");
                     await _taskRunner.Run(client => client.Images.DeleteImageAsync(image.RepoTag, new ImageDeleteParameters {Force = true, PruneChildren = true}));
                 }
             }

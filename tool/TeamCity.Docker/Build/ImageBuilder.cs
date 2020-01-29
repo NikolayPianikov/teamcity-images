@@ -22,6 +22,9 @@ namespace TeamCity.Docker.Build
         [NotNull] private readonly IPathService _pathService;
         [NotNull] private readonly IFileSystem _fileSystem;
         [NotNull] private readonly IContextFactory _contextFactory;
+        [NotNull] private readonly IImageFetcher _imageFetcher;
+        [NotNull] private readonly IImagePublisher _imagePublisher;
+        [NotNull] private readonly IImageCleaner _imageCleaner;
         [NotNull] private readonly ITaskRunner<IDockerClient> _taskRunner;
 
         public ImageBuilder(
@@ -32,6 +35,9 @@ namespace TeamCity.Docker.Build
             [NotNull] IPathService pathService,
             [NotNull] IFileSystem fileSystem,
             [NotNull] IContextFactory contextFactory,
+            [NotNull] IImageFetcher imageFetcher,
+            [NotNull] IImagePublisher imagePublisher,
+            [NotNull] IImageCleaner imageCleaner,
             [NotNull] ITaskRunner<IDockerClient> taskRunner)
         {
             _options = options ?? throw new ArgumentNullException(nameof(options));
@@ -41,18 +47,52 @@ namespace TeamCity.Docker.Build
             _pathService = pathService ?? throw new ArgumentNullException(nameof(pathService));
             _fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
             _contextFactory = contextFactory ?? throw new ArgumentNullException(nameof(contextFactory));
+            _imageFetcher = imageFetcher ?? throw new ArgumentNullException(nameof(imageFetcher));
+            _imagePublisher = imagePublisher ?? throw new ArgumentNullException(nameof(imagePublisher));
+            _imageCleaner = imageCleaner ?? throw new ArgumentNullException(nameof(imageCleaner));
             _taskRunner = taskRunner ?? throw new ArgumentNullException(nameof(taskRunner));
         }
 
-        public async Task<Result> Build(IReadOnlyCollection<DockerFile> dockerFiles)
+        public async Task<Result> Build(IEnumerable<TreeNode<DockerFile>> dockerNodes)
         {
-            if (dockerFiles == null)
+            if (dockerNodes == null)
             {
-                throw new ArgumentNullException(nameof(dockerFiles));
+                throw new ArgumentNullException(nameof(dockerNodes));
             }
 
             using (_logger.CreateBlock("Build"))
             {
+                var nodesToBuild = new List<TreeNode<DockerFile>>();
+                var dockerFiles = new HashSet<DockerFile>();
+                foreach (var node in dockerNodes)
+                {
+                    var allNodes = node.EnumerateNodes().ToList();
+                    if (allNodes.Any(i => i.Value.Metadata.Repos.Any()))
+                    {
+                        nodesToBuild.Add(node);
+                        foreach (var treeNode in allNodes)
+                        {
+                            dockerFiles.Add(treeNode.Value);
+                        }
+                    }
+                    else
+                    {
+                        allNodes.ForEach(i => _logger.Log($"Skip {i.Value} because of it has no any repo tag."));
+                    }
+                }
+
+                if (!nodesToBuild.Any())
+                {
+                    _logger.Log("There are no any images to build.", Result.Warning);
+                    return Result.Warning;
+                }
+
+                var labels = new Dictionary<string, string>();
+                if (!string.IsNullOrWhiteSpace(_options.SessionId))
+                {
+                    labels.Add("SessionId", _options.SessionId);
+                }
+
                 var dockerFilesRootPath = _fileSystem.UniqueName;
                 var contextStreamResult = await _contextFactory.Create(dockerFilesRootPath, dockerFiles);
                 if (contextStreamResult.State == Result.Error)
@@ -62,50 +102,70 @@ namespace TeamCity.Docker.Build
 
                 using (var contextStream = contextStreamResult.Value)
                 {
-                    var labels = new Dictionary<string, string>();
-                    if (!string.IsNullOrWhiteSpace(_options.SessionId))
+                    foreach (var node in nodesToBuild)
                     {
-                        labels.Add("SessionId", _options.SessionId);
-                    }
-
-                    foreach (var dockerFile in dockerFiles.OrderBy(dockerFile => dockerFile.Metadata.Priority))
-                    {
-                        if (!dockerFile.Metadata.Repos.Any())
+                        if (await Build(node, contextStream, dockerFilesRootPath, labels) == Result.Error)
                         {
-                            _logger.Log($"Skip {dockerFile} because of it has no any repo tag.");
-                            continue;
-                        }
-
-                        using (_logger.CreateBlock(dockerFile.ToString()))
-                        {
-                            _logger.Log($"The dockerfile is \"{dockerFile.Path}\"");
-                            var dockerFilePathInContext = _pathService.Normalize(Path.Combine(dockerFilesRootPath, dockerFile.Path));
-                            try
-                            {
-                                var buildParameters = new ImageBuildParameters
-                                {
-                                    Dockerfile = dockerFilePathInContext,
-                                    Tags = dockerFile.Metadata.Tags.Concat(_options.Tags).Distinct().ToList(),
-                                    Labels = labels
-                                };
-
-                                var result = await _taskRunner.Run(client => BuildImage(client, contextStream, buildParameters));
-                                if (result == Result.Error)
-                                {
-                                    return Result.Error;
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                _logger.Log(ex);
-                                return Result.Error;
-                            }
+                            return Result.Error;
                         }
                     }
                 }
 
                 return Result.Success;
             }
+        }
+
+        private async Task<Result> Build(TreeNode<DockerFile> node, Stream contextStream, string dockerFilesRootPath, IDictionary<string, string> labels)
+        {
+            var id = Guid.NewGuid().ToString();
+            var curLabels = new Dictionary<string, string>(labels) {{"InternalImageId", id}};
+            var dockerFile = node.Value;
+            var dockerFilePathInContext = _pathService.Normalize(Path.Combine(dockerFilesRootPath, dockerFile.Path));
+            var buildParameters = new ImageBuildParameters
+            {
+                Dockerfile = dockerFilePathInContext,
+                Tags = dockerFile.Metadata.Tags.Concat(_options.Tags).Distinct().ToList(),
+                Labels = curLabels
+            };
+
+            using (_logger.CreateBlock(dockerFile.ToString()))
+            {
+                var result = await _taskRunner.Run(client => BuildImage(client, contextStream, buildParameters));
+                if (result == Result.Error)
+                {
+                    return Result.Error;
+                }
+
+                var imagesResult = await _imageFetcher.GetImages(curLabels);
+                if (imagesResult.State == Result.Error)
+                {
+                    return Result.Error;
+                }
+
+                if (!string.IsNullOrWhiteSpace(_options.Username) && !string.IsNullOrWhiteSpace(_options.Password))
+                {
+                    var pushResult = await _imagePublisher.PushImages(imagesResult.Value);
+                    if (pushResult == Result.Error)
+                    {
+                        return Result.Error;
+                    }
+                }
+
+                foreach (var child in node.Children)
+                {
+                    if (await Build(child, contextStream, dockerFilesRootPath, labels) == Result.Error)
+                    {
+                        return Result.Error;
+                    }
+                }
+
+                if ( _options.Clean)
+                {
+                    await _imageCleaner.CleanImages(imagesResult.Value);
+                }
+            }
+
+            return Result.Success;
         }
 
         private async Task BuildImage(IDockerClient client, Stream contextStream, ImageBuildParameters buildParameters)

@@ -8,7 +8,7 @@ using IoC;
 // ReSharper disable UnusedType.Global
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace TeamCity.Docker.Push
+namespace TeamCity.Docker.Build
 {
     internal class ImagePublisher : IImagePublisher
     {

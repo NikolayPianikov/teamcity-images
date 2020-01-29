@@ -18,5 +18,15 @@ namespace TeamCity.Docker.Generate
         }
 
         public override string ToString() => $"{string.Join(", ", Metadata.Tags)}";
+
+        public override bool Equals(object obj)
+        {
+            return obj is DockerFile other && Path == other.Path;
+        }
+
+        public override int GetHashCode()
+        {
+            return Path.GetHashCode();
+        }
     }
 }

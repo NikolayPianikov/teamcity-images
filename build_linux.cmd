@@ -1,1 +1,1 @@
-dotnet run -p tool/TeamCity.Docker/TeamCity.Docker.csproj -- build -s configs/linux -f configs/linux.config -c context -i 39
+dotnet run -p tool/TeamCity.Docker/TeamCity.Docker.csproj -- build -s configs/linux -f configs/linux.config -c context -n -u nikolayp -p 88e7198e-433d-4035-9e8a-956f9a3bdeae -i 39

@@ -19,31 +19,21 @@ dotnet run -p tool/TeamCity.Docker/TeamCity.Docker.csproj -- generate -s configs
 
 Download [TeamCity-*.tar.gz file](https://www.jetbrains.com/teamcity/download/#section=section-get) and unpack it into the build context directory `context` to have `context\TeamCity`
 
-### Build
+### Build & Push
 
 To build docker image based on the specific dockerfile see the list of command lines for required docker tag.
 
 To build latest TeamCity docker images for Windows run the command line:
 
 ```
-dotnet run -p tool/TeamCity.Docker/TeamCity.Docker.csproj -- build -s configs/windows -f configs/windows.config -c context -i <sessionId>
+dotnet run -p tool/TeamCity.Docker/TeamCity.Docker.csproj -- build -s configs/windows -f configs/windows.config -c context -u <username> -p <password>
 ```
-
-where _sessionId_ is a docker label _SessionId_ to combine all created docker images for the [command](#push).
 
 To build build latest TeamCity docker images for Linux run the command line:
 
 ```
-dotnet run -p tool/TeamCity.Docker/TeamCity.Docker.csproj -- build -s configs/linux -f configs/linux.config -c context -i <sessionId>
+dotnet run -p tool/TeamCity.Docker/TeamCity.Docker.csproj -- build -s configs/linux -f configs/linux.config -c context -u <username> -p <password>
 ```
-### Push
-
-To push docker images for the specific _sessionId_ run the command line:
-
-```
-dotnet run -p tool/TeamCity.Docker/TeamCity.Docker.csproj -- push -u <username> -p <password> -i <sessionId>
-```
-
 where _username_ and _password_ - credentials to [hub.docker.com](https://hub.docker.com/). Also you can specify your custom docker repo by the optional argument `-a`.
 
 For more information run `dotnet run -p tool/TeamCity.Docker/TeamCity.Docker.csproj -- --help`.
