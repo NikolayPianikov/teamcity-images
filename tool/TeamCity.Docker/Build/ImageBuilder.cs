@@ -60,59 +60,56 @@ namespace TeamCity.Docker.Build
                 throw new ArgumentNullException(nameof(dockerNodes));
             }
 
-            using (_logger.CreateBlock("Build"))
+            var nodesToBuild = new List<TreeNode<DockerFile>>();
+            var dockerFiles = new HashSet<DockerFile>();
+            foreach (var node in dockerNodes)
             {
-                var nodesToBuild = new List<TreeNode<DockerFile>>();
-                var dockerFiles = new HashSet<DockerFile>();
-                foreach (var node in dockerNodes)
+                var allNodes = node.EnumerateNodes().ToList();
+                if (allNodes.Any(i => i.Value.Metadata.Repos.Any()))
                 {
-                    var allNodes = node.EnumerateNodes().ToList();
-                    if (allNodes.Any(i => i.Value.Metadata.Repos.Any()))
+                    nodesToBuild.Add(node);
+                    foreach (var treeNode in allNodes)
                     {
-                        nodesToBuild.Add(node);
-                        foreach (var treeNode in allNodes)
-                        {
-                            dockerFiles.Add(treeNode.Value);
-                        }
-                    }
-                    else
-                    {
-                        allNodes.ForEach(i => _logger.Log($"Skip {i.Value} because of it has no any repo tag."));
+                        dockerFiles.Add(treeNode.Value);
                     }
                 }
-
-                if (!nodesToBuild.Any())
+                else
                 {
-                    _logger.Log("There are no any images to build.", Result.Warning);
-                    return Result.Warning;
+                    allNodes.ForEach(i => _logger.Log($"Skip {i.Value} because of it has no any repo tag."));
                 }
-
-                var labels = new Dictionary<string, string>();
-                if (!string.IsNullOrWhiteSpace(_options.SessionId))
-                {
-                    labels.Add("SessionId", _options.SessionId);
-                }
-
-                var dockerFilesRootPath = _fileSystem.UniqueName;
-                var contextStreamResult = await _contextFactory.Create(dockerFilesRootPath, dockerFiles);
-                if (contextStreamResult.State == Result.Error)
-                {
-                    return Result.Error;
-                }
-
-                using (var contextStream = contextStreamResult.Value)
-                {
-                    foreach (var node in nodesToBuild)
-                    {
-                        if (await Build(node, contextStream, dockerFilesRootPath, labels) == Result.Error)
-                        {
-                            return Result.Error;
-                        }
-                    }
-                }
-
-                return Result.Success;
             }
+
+            if (!nodesToBuild.Any())
+            {
+                _logger.Log("There are no any images to build.", Result.Warning);
+                return Result.Warning;
+            }
+
+            var labels = new Dictionary<string, string>();
+            if (!string.IsNullOrWhiteSpace(_options.SessionId))
+            {
+                labels.Add("SessionId", _options.SessionId);
+            }
+
+            var dockerFilesRootPath = _fileSystem.UniqueName;
+            var contextStreamResult = await _contextFactory.Create(dockerFilesRootPath, dockerFiles);
+            if (contextStreamResult.State == Result.Error)
+            {
+                return Result.Error;
+            }
+
+            using (var contextStream = contextStreamResult.Value)
+            {
+                foreach (var node in nodesToBuild)
+                {
+                    if (await Build(node, contextStream, dockerFilesRootPath, labels) == Result.Error)
+                    {
+                        return Result.Error;
+                    }
+                }
+            }
+
+            return Result.Success;
         }
 
         private async Task<Result> Build(TreeNode<DockerFile> node, Stream contextStream, string dockerFilesRootPath, IDictionary<string, string> labels)
@@ -130,10 +127,13 @@ namespace TeamCity.Docker.Build
 
             using (_logger.CreateBlock(dockerFile.ToString()))
             {
-                var result = await _taskRunner.Run(client => BuildImage(client, contextStream, buildParameters));
-                if (result == Result.Error)
+                using (_logger.CreateBlock("Build"))
                 {
-                    return Result.Error;
+                    var result = await _taskRunner.Run(client => BuildImage(client, contextStream, buildParameters));
+                    if (result == Result.Error)
+                    {
+                        return Result.Error;
+                    }
                 }
 
                 var imagesResult = await _imageFetcher.GetImages(curLabels);
