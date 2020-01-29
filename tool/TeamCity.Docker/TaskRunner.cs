@@ -51,10 +51,10 @@ namespace TeamCity.Docker
                 throw new ArgumentNullException(nameof(handler));
             }
 
-            _hasError = false;
-            Exception lastError = null;
             for (_curAttempt= 0; _curAttempt < Attempts; _curAttempt++)
             {
+                _hasError = false;
+                Exception lastError = null;
                 try
                 {
                     var result = await handler(GetState());
@@ -83,11 +83,6 @@ namespace TeamCity.Docker
             }
 
             _logger.Log("Attempts have been exhausted.", Result.Error);
-            if (lastError != null)
-            {
-                throw lastError;
-            }
-
             return new Result<T>(default(T), Result.Error);
         }
 
