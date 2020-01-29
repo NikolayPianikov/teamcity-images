@@ -15,6 +15,7 @@ namespace TeamCity.Docker.Build
         [NotNull] private readonly Push.IImageFetcher _imageFetcher;
 
         public Command(
+            [NotNull] IActiveObject[] activeObjects,
             [NotNull] ILogger logger,
             [NotNull] IEnumerable<Generate.IGenerator> dockerFileGenerators,
             [NotNull] IImageBuilder imageBuilder,

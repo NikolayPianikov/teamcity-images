@@ -51,16 +51,16 @@ namespace TeamCity.Docker.Build
                 throw new ArgumentNullException(nameof(dockerFiles));
             }
 
-            var dockerFilesRootPath = _fileSystem.UniqueName;
-            var contextStreamResult = await _contextFactory.Create(dockerFilesRootPath, dockerFiles);
-            if (contextStreamResult.State == Result.Error)
+            using (_logger.CreateBlock("Build"))
             {
-                return Result.Error;
-            }
+                var dockerFilesRootPath = _fileSystem.UniqueName;
+                var contextStreamResult = await _contextFactory.Create(dockerFilesRootPath, dockerFiles);
+                if (contextStreamResult.State == Result.Error)
+                {
+                    return Result.Error;
+                }
 
-            using (var contextStream = contextStreamResult.Value)
-            {
-                using (_logger.CreateBlock("Build"))
+                using (var contextStream = contextStreamResult.Value)
                 {
                     var labels = new Dictionary<string, string>();
                     if (!string.IsNullOrWhiteSpace(_options.SessionId))
@@ -118,9 +118,9 @@ namespace TeamCity.Docker.Build
                         }
                     }
                 }
-            }
 
-            return Result.Success;
+                return Result.Success;
+            }
         }
     }
 }

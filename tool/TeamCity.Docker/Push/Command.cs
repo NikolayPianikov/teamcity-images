@@ -10,20 +10,18 @@ namespace TeamCity.Docker.Push
 {
     internal class Command: ICommand<IOptions>
     {
-        private readonly ILogger _logger;
         private readonly IOptions _options;
         private readonly IImageFetcher _imageFetcher;
         private readonly IImagePublisher _imagePublisher;
         private readonly IImageCleaner _imageCleaner;
 
         public Command(
-            [NotNull] ILogger logger,
+            [NotNull] IActiveObject[] activeObjects,
             [NotNull] IOptions options,
             [NotNull] IImageFetcher imageFetcher,
             [NotNull] IImagePublisher imagePublisher,
             [NotNull] IImageCleaner imageCleaner)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _options = options ?? throw new ArgumentNullException(nameof(options));
             _imageFetcher = imageFetcher ?? throw new ArgumentNullException(nameof(imageFetcher));
             _imagePublisher = imagePublisher ?? throw new ArgumentNullException(nameof(imagePublisher));

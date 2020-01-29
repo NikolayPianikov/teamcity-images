@@ -6,7 +6,8 @@ using IoC;
 
 namespace TeamCity.Docker
 {
-    internal class TaskRunner<TState>: ITaskRunner<TState> where TState: IDisposable
+    internal class TaskRunner<TState>: ITaskRunner<TState>, IActiveObject
+        where TState: IDisposable
     {
         [NotNull] private static readonly Exception DefaultException = new InvalidOperationException("");
         [NotNull] private readonly IOptions _options;
@@ -26,6 +27,11 @@ namespace TeamCity.Docker
         }
 
         private int Attempts => _options.Retries > 0 ? _options.Retries : 1;
+
+        public void Activate()
+        {
+            GetState();
+        }
 
         public async Task Run(Func<TState, Task> handler)
         {
@@ -93,6 +99,7 @@ namespace TeamCity.Docker
         }
 
         public IDisposable CreateBlock(string blockName) => _logger.CreateBlock(blockName);
+
 
         private TState GetState()
         {

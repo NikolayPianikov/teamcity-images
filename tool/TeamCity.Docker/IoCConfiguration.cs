@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
 using Docker.DotNet;
 using IoC;
 using JetBrains.TeamCity.ServiceMessages.Write;
@@ -30,7 +31,8 @@ namespace TeamCity.Docker
                 .Bind<IStreamService>().As(Singleton).To<StreamService>()
                 .Bind<IMessageLogger>().As(Singleton).To<MessageLogger>()
                 .Bind<IDockerConverter>().As(Singleton).To<DockerConverter>()
-                .Bind<ITaskRunner<TTDisposable>, ILogger, IDisposable>().As(Singleton).To<TaskRunner<TTDisposable>>(ctx => new TaskRunner<TTDisposable>(ctx.Container.Inject<IOptions>(), ctx.Container.Inject<ILogger>("Common"), ctx.Container.Inject<Func<TTDisposable>>()))
+                .Bind<TaskRunner<TTDisposable>, ITaskRunner<TTDisposable>, ILogger, IDisposable>().As(Singleton).To(ctx => new TaskRunner<TTDisposable>(ctx.Container.Inject<IOptions>(), ctx.Container.Inject<ILogger>("Common"), ctx.Container.Inject<Func<TTDisposable>>()))
+                .Bind<IActiveObject>().As(Singleton).Tag("Docker client").To(ctx => ctx.Container.Inject<TaskRunner<IDockerClient>>(), ctx => ctx.It.Activate())
                 // TeamCity messages
                 .Bind<IServiceMessageFormatter>().As(Singleton).To<ServiceMessageFormatter>()
                 .Bind<IFlowIdGenerator>().As(Singleton).To<FlowIdGenerator>()
