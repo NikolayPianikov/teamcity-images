@@ -79,7 +79,7 @@ namespace TeamCity.Docker
                 }
 
                 _state?.Dispose();
-                _state = default;
+                _state = default(TState);
             }
 
             _logger.Log("Attempts have been exhausted.", Result.Error);
