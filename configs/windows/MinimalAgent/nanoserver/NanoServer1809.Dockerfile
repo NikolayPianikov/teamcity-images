@@ -4,7 +4,6 @@
 # ARG nanoserverImage
 # ARG powershellImage
 
-# Priority 1
 # Id teamcity-minimal-agent
 # Tag ${tag}
 # Repo ${repo}

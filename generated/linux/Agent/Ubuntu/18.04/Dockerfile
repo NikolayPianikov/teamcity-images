@@ -9,7 +9,6 @@ ARG teamcityMinimalAgentImage='teamcity-minimal-agent:18.04'
 # ARG dotnetCoreLinuxComponent
 # ARG teamcityMinimalAgentImage
 
-# Priority 2
 # Id teamcity-agent
 # Tag 18.04
 # Tag linux

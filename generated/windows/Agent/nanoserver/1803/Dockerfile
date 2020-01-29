@@ -12,7 +12,6 @@ ARG teamcityWindowsservercoreImage='teamcity-agent:latest-windowsservercore-1803
 # ARG powershellImage
 # ARG teamcityWindowsservercoreImage
 
-# Priority 3
 # Id teamcity-agent
 # Tag latest-nanoserver-1803
 # Repo 

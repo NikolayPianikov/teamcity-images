@@ -10,7 +10,6 @@ ARG powershellImage='mcr.microsoft.com/powershell:nanoserver-1903'
 # ARG nanoserverImage
 # ARG powershellImage
 
-# Priority 1
 # Id teamcity-minimal-agent
 # Tag latest-nanoserver-1903
 # Repo https://hub.docker.com/r/jetbrains/

@@ -8,7 +8,6 @@ ARG ubuntuImage='ubuntu:18.04'
 # ARG jdkLinuxMD5SUM
 # ARG ubuntuImage
 
-# Priority 1
 # Id teamcity-server
 # Tag 18.04
 # Tag linux

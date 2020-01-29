@@ -3,7 +3,6 @@
 # ARG jdkLinuxMD5SUM
 # ARG ubuntuImage
 
-# Priority 1
 # Id teamcity-server
 # Tag ${tag}
 # Tag linux

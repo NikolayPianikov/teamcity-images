@@ -6,7 +6,6 @@
 # ARG mercurialWindowsComponentName
 # ARG teamcityMinimalAgentImage
 
-# Priority 2
 # Id teamcity-agent
 # Tag ${tag}
 # Repo ${repo}

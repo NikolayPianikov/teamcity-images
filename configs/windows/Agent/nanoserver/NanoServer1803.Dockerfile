@@ -6,7 +6,6 @@
 # ARG powershellImage
 # ARG teamcityWindowsservercoreImage
 
-# Priority 3
 # Id teamcity-agent
 # Tag ${tag}
 # Repo ${repo}

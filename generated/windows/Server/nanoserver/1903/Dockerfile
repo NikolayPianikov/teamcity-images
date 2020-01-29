@@ -14,7 +14,6 @@ ARG windowsBuild='1903'
 # ARG windowsBuild
 # ARG powershellImage
 
-# Priority 1
 # Id teamcity-server
 # Tag latest-nanoserver-1903
 # Repo https://hub.docker.com/r/jetbrains/

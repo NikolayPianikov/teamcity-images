@@ -13,7 +13,6 @@ ARG windowsBuild='1803'
 # ARG windowsBuild
 # ARG powershellImage
 
-# Priority 1
 # Id teamcity-server
 # Tag latest-nanoserver-1803
 # Repo 

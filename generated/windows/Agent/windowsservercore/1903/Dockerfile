@@ -13,7 +13,6 @@ ARG windowsservercoreImage='mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsse
 # ARG mercurialWindowsComponentName
 # ARG teamcityMinimalAgentImage
 
-# Priority 2
 # Id teamcity-agent
 # Tag latest-windowsservercore-1903
 # Repo https://hub.docker.com/r/jetbrains/

@@ -9,7 +9,6 @@ namespace TeamCity.Docker.Generate
 {
     internal class DockerMetadataProvider : IDockerMetadataProvider
     {
-        private const string PriorityPrefix = "# Priority ";
         private const string IdPrefix = "# Id ";
         private const string TagPrefix = "# Tag ";
         private const string BaseImagePrefix = "# Based on ";
@@ -23,7 +22,6 @@ namespace TeamCity.Docker.Generate
                 throw new ArgumentNullException(nameof(dockerFileContent));
             }
 
-            var priority = int.MaxValue;
             var imageId = "unknown";
             var tags = new List<string>();
             var baseImages = new List<string>();
@@ -32,16 +30,6 @@ namespace TeamCity.Docker.Generate
             foreach (var comment in dockerFileContent.Where(line => line.Type == DockerLineType.Comment))
             {
                 if (
-                    TrySetByPrefix(
-                        comment.Text,
-                        PriorityPrefix, 
-                        value =>
-                        {
-                            if (int.TryParse(value, out var curPriority))
-                            {
-                                priority = curPriority;
-                            }
-                        }) ||
                     TrySetByPrefix(comment.Text, IdPrefix, value => imageId = value) ||
                     TrySetByPrefix(comment.Text, TagPrefix, value => tags.Add(value)) ||
                     TrySetByPrefix(comment.Text, BaseImagePrefix, value => baseImages.Add(value)) ||
@@ -50,7 +38,7 @@ namespace TeamCity.Docker.Generate
                 { }
             }
 
-            return new Metadata(priority, imageId, tags, baseImages, components, repos);
+            return new Metadata(imageId, tags, baseImages, components, repos);
         }
 
         private static bool TrySetByPrefix([NotNull] string text, [NotNull] string prefix, Action<string> setter)
