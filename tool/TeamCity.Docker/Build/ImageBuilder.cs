@@ -158,6 +158,12 @@ namespace TeamCity.Docker.Build
                     return Result.Error;
                 }
 
+                if (imagesResult.Value.Count == 0)
+                {
+                    _logger.Log("There are no any images found after build.", Result.Error);
+                    return Result.Error;
+                }
+
                 if (!string.IsNullOrWhiteSpace(_options.Username) && !string.IsNullOrWhiteSpace(_options.Password))
                 {
                     var pushResult = await _imagePublisher.PushImages(imagesResult.Value);

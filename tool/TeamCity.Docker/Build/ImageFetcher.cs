@@ -46,6 +46,37 @@ namespace TeamCity.Docker.Build
                 }
 
                 var dockerImages = await _taskRunner.Run(client => client.Images.ListImagesAsync(new ImagesListParameters {Filters = dockerFilters}));
+                if (dockerImages.State == Result.Error)
+                {
+                    return new Result<IReadOnlyList<DockerImage>>(new List<DockerImage>(), Result.Error);
+                }
+
+                long count = 0;
+                long size = 0;
+                var ids = new HashSet<string>();
+                foreach (var image in dockerImages.Value)
+                {
+                    if (ids.Add(image.ID))
+                    {
+                        count++;
+                        size += image.Size;
+                    }
+
+                    if (image.RepoTags != null)
+                    {
+                        foreach (var imageRepoTag in image.RepoTags)
+                        {
+                            _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.ID)} {image.Created} {imageRepoTag} {_dockerConverter.ConvertToSize(image.Size, 1)}");
+                        }
+                    }
+                    else
+                    {
+                        _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.ID)} {image.Created} {_dockerConverter.ConvertToSize(image.Size, 1)}");
+                    }
+                }
+
+                _logger.Log($"Totals {count} images {_dockerConverter.ConvertToSize(size, 1)}");
+
                 var images = (
                         from image in (
                             from image in dockerImages.Value
@@ -56,9 +87,24 @@ namespace TeamCity.Docker.Build
                         select image)
                     .ToList();
 
-                foreach (var image in images)
+                using (_logger.CreateBlock("Result"))
                 {
-                    _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.Info.ID)} {image.Info.Created} {image.RepoTag}");
+                    count = 0;
+                    size = 0;
+                    ids.Clear();
+
+                    foreach (var image in images)
+                    {
+                        if (ids.Add(image.Info.ID))
+                        {
+                            count++;
+                            size += image.Info.Size;
+                        }
+
+                        _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.Info.ID)} {image.Info.Created} {image.RepoTag} {_dockerConverter.ConvertToSize(image.Info.Size, 1)}");
+                    }
+
+                    _logger.Log($"Totals {count} images {_dockerConverter.ConvertToSize(size, 1)}");
                 }
 
                 return new Result<IReadOnlyList<DockerImage>>(images);

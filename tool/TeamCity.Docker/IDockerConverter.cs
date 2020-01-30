@@ -9,5 +9,7 @@ namespace TeamCity.Docker
         [CanBeNull] string TryConvertRepoTagToRepositoryName(string repoTag);
 
         [CanBeNull] string TryConvertConvertHashToImageId(string hash);
+
+        [NotNull] string ConvertToSize(long value, int decimalPlaces = 0);
     }
 }
