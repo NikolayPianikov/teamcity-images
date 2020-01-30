@@ -74,8 +74,9 @@ namespace TeamCity.Docker.Build
                     }
 
                     _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.Info.ID)} {image.Info.Created} {image.RepoTag} {_dockerConverter.ConvertToSize(image.Info.Size, 1)}");
-                    _logger.Log($"Totals {count} images {_dockerConverter.ConvertToSize(size, 1)}");
                 }
+
+                _logger.Log($"Totals {count} images {_dockerConverter.ConvertToSize(size, 1)}");
             }
 
             return Result.Success;

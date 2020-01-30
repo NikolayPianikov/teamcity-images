@@ -105,12 +105,14 @@ namespace TeamCity.Docker.Build
                 return Error;
             }
 
+            var initialState = await GetImages(new Dictionary<string, string>(), "Initial state");
+
             var result = new List<DockerImage>();
             using (var contextStream = contextStreamResult.Value)
             {
                 foreach (var node in nodesToBuild)
                 {
-                    var images = await Build(node, contextStream, dockerFilesRootPath, labels, dependencies);
+                    var images = await Build(node, contextStream, dockerFilesRootPath, labels, initialState, dependencies);
                     if (images.State == Result.Error)
                     {
                         return images;
@@ -143,7 +145,7 @@ namespace TeamCity.Docker.Build
             }
         }
 
-        private async Task<Result<IEnumerable<DockerImage>>> Build(TreeNode<DockerFile> node, Stream contextStream, string dockerFilesRootPath, IReadOnlyDictionary<string, string> labels, IDictionary<string, int> dependencies)
+        private async Task<Result<IEnumerable<DockerImage>>> Build(TreeNode<DockerFile> node, Stream contextStream, string dockerFilesRootPath, IReadOnlyDictionary<string, string> labels, HashSet<DockerImage> initialState, IDictionary<string, int> dependencies)
         {
             var id = Guid.NewGuid().ToString();
             var curLabels = new Dictionary<string, string>(labels) {{"InternalImageId", id}};
@@ -162,8 +164,6 @@ namespace TeamCity.Docker.Build
             {
                 try
                 {
-                    var initialState = await GetImages(new Dictionary<string, string>(), "Initial state");
-
                     using (_logger.CreateBlock("Build"))
                     {
                         var buildResult = await _taskRunner.Run(client => BuildImage(client, contextStream, buildParameters));
@@ -173,8 +173,8 @@ namespace TeamCity.Docker.Build
                         }
                     }
 
-                    var buildState = await GetImages(curLabels, "Produced state");
-                    var afterBuildState = await GetImages(new Dictionary<string, string>(), "After build state");
+                    var buildState = await GetImages(curLabels, "Images");
+                    var afterBuildState = await GetImages(new Dictionary<string, string>());
 
                     // Exclude required dependencies
                     RemoveDependencies(node.Value, dependencies);
@@ -221,7 +221,7 @@ namespace TeamCity.Docker.Build
                     // Build children
                     foreach (var child in node.Children)
                     {
-                        var images = await Build(child, contextStream, dockerFilesRootPath, labels, dependencies);
+                        var images = await Build(child, contextStream, dockerFilesRootPath, labels, initialState, dependencies);
                         if (images.State == Result.Error)
                         {
                             return Error;
@@ -234,7 +234,7 @@ namespace TeamCity.Docker.Build
                 {
                     if (pushed && _options.Clean)
                     {
-                        var buildState = await GetImages(curLabels, "Finish produced state");
+                        var buildState = await GetImages(curLabels);
                         var toRemove = buildState.Where(i => !dependencies.ContainsKey(i.RepoTag)).ToHashSet();
 
                         using (_logger.CreateBlock("Clean"))
