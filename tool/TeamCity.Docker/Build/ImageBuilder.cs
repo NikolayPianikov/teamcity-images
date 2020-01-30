@@ -179,10 +179,10 @@ namespace TeamCity.Docker.Build
                     // Exclude required dependencies
                     RemoveDependencies(node.Value, dependencies);
 
-                    // Exclude state before
                     var difState = afterBuildState.Except(initialState).ToHashSet();
                     var toRemove = difState.Where(i => !dependencies.ContainsKey(i.RepoTag)).ToHashSet();
                     var toPush = buildState.Where(i => !string.IsNullOrWhiteSpace(i.RepoTag)).ToHashSet();
+
                     if (toPush.Count == 0)
                     {
                         _logger.Log("There are no any produced images found after build.", Result.Error);
@@ -258,7 +258,7 @@ namespace TeamCity.Docker.Build
                 {
                     if (dependencies.TryGetValue(baseImage, out var counter))
                     {
-                        dependencies[baseImage] = ++counter;
+                        dependencies[baseImage] = counter + 1;
                     }
                     else
                     {
@@ -281,6 +281,10 @@ namespace TeamCity.Docker.Build
                 if (count == 0)
                 {
                     dependencies.Remove(baseImage);
+                }
+                else
+                {
+                    dependencies[baseImage] = count - 1;
                 }
             }
         }

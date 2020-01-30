@@ -12,6 +12,7 @@ namespace TeamCity.Docker.Build
 {
     internal class ImageCleaner : IImageCleaner
     {
+        private static readonly ImageDeleteParameters DeleteParameters = new ImageDeleteParameters {Force = true, PruneChildren = false};
         private readonly ILogger _logger;
         [NotNull] private readonly IDockerConverter _dockerConverter;
         [NotNull] private readonly ITaskRunner<IDockerClient> _taskRunner;
@@ -37,8 +38,9 @@ namespace TeamCity.Docker.Build
             foreach (var image in images.OrderByDescending(i => i.RepoTag))
             {
                 cleared = true;
+                var name = string.IsNullOrWhiteSpace(image.RepoTag) ? image.Info.ID : image.RepoTag;
                 _logger.Log($"Delete {_dockerConverter.TryConvertConvertHashToImageId(image.Info.ID)} {image.RepoTag}");
-                await _taskRunner.Run(client => client.Images.DeleteImageAsync(string.IsNullOrWhiteSpace(image.RepoTag) ?  image.Info.ID : image.RepoTag, new ImageDeleteParameters { Force = true, PruneChildren = true }));
+                await _taskRunner.Run(client => client.Images.DeleteImageAsync(name, DeleteParameters));
             }
 
             if (!cleared)
