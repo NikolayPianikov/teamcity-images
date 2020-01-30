@@ -33,7 +33,7 @@ namespace TeamCity.Docker.Build
             {
                 foreach (var image in images)
                 {
-                    _logger.Log($"Clean {image}");
+                    _logger.Log($"Delete {image.RepoTag}");
                     await _taskRunner.Run(client => client.Images.DeleteImageAsync(image.RepoTag, new ImageDeleteParameters {Force = true, PruneChildren = true}));
                 }
             }

@@ -85,7 +85,8 @@ namespace TeamCity.Docker.Build
                 return Result.Warning;
             }
 
-            var labels = new Dictionary<string, string>();
+            var id = Guid.NewGuid().ToString();
+            var labels = new Dictionary<string, string> { { "InternalBuildId", id } };
             if (!string.IsNullOrWhiteSpace(_options.SessionId))
             {
                 labels.Add("SessionId", _options.SessionId);
@@ -98,14 +99,25 @@ namespace TeamCity.Docker.Build
                 return Result.Error;
             }
 
-            using (var contextStream = contextStreamResult.Value)
+            try
             {
-                foreach (var node in nodesToBuild)
+                using (var contextStream = contextStreamResult.Value)
                 {
-                    if (await Build(node, contextStream, dockerFilesRootPath, labels) == Result.Error)
+                    foreach (var node in nodesToBuild)
                     {
-                        return Result.Error;
+                        if (await Build(node, contextStream, dockerFilesRootPath, labels) == Result.Error)
+                        {
+                            return Result.Error;
+                        }
                     }
+                }
+            }
+            finally
+            {
+                var imagesResult = await _imageFetcher.GetImages(labels);
+                if (_options.Clean && imagesResult.State != Result.Error)
+                {
+                    await _imageCleaner.CleanImages(imagesResult.Value);
                 }
             }
 
