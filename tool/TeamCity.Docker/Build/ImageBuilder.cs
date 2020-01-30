@@ -119,6 +119,8 @@ namespace TeamCity.Docker.Build
                 {
                     await _imageCleaner.CleanImages(imagesResult.Value);
                 }
+
+                await _imageFetcher.GetImages(new Dictionary<string, string>());
             }
 
             return Result.Success;
