@@ -85,6 +85,8 @@ namespace TeamCity.Docker.Build
                 return Result.Warning;
             }
 
+            await _imageFetcher.GetImages(new Dictionary<string, string>());
+
             var id = Guid.NewGuid().ToString();
             var labels = new Dictionary<string, string> { { "InternalBuildId", id } };
             if (!string.IsNullOrWhiteSpace(_options.SessionId))
