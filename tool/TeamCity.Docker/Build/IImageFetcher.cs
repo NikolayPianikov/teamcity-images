@@ -6,6 +6,6 @@ namespace TeamCity.Docker.Build
 {
     internal interface IImageFetcher
     {
-        [NotNull] Task<Result<IReadOnlyList<DockerImage>>> GetImages([NotNull] IReadOnlyDictionary<string, string> filters);
+        [NotNull] Task<Result<IReadOnlyList<DockerImage>>> GetImages([NotNull] IReadOnlyDictionary<string, string> filters, bool verbose = true);
     }
 }

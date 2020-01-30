@@ -79,20 +79,7 @@ namespace TeamCity.Docker.Build
                     allNodes.ForEach(i => _logger.Log($"Skip {i.Value} because of it has no any repo tag."));
                 }
 
-                foreach (var treeNode in allNodes)
-                {
-                    foreach (var baseImage in treeNode.Value.Metadata.BaseImages)
-                    {
-                        if (dependencies.TryGetValue(baseImage, out var counter))
-                        {
-                            dependencies[baseImage] = ++counter;
-                        }
-                        else
-                        {
-                            dependencies.Add(baseImage, 1);
-                        }
-                    }
-                }
+                AddDependencies(allNodes, dependencies);
             }
 
             if (!nodesToBuild.Any())
@@ -100,8 +87,6 @@ namespace TeamCity.Docker.Build
                 _logger.Log("There are no any images to build.", Result.Warning);
                 return Result.Warning;
             }
-
-            await _imageFetcher.GetImages(new Dictionary<string, string>());
 
             var id = Guid.NewGuid().ToString();
             var labels = new Dictionary<string, string> { { "InternalBuildId", id } };
@@ -117,25 +102,36 @@ namespace TeamCity.Docker.Build
                 return Result.Error;
             }
 
-            try
+            using (var contextStream = contextStreamResult.Value)
             {
-                using (var contextStream = contextStreamResult.Value)
+                foreach (var node in nodesToBuild)
                 {
-                    foreach (var node in nodesToBuild)
+                    if (await Build(node, contextStream, dockerFilesRootPath, labels, dependencies) == Result.Error)
                     {
-                        if (await Build(node, contextStream, dockerFilesRootPath, labels, dependencies) == Result.Error)
-                        {
-                            return Result.Error;
-                        }
+                        return Result.Error;
                     }
                 }
             }
-            finally
-            {
-                await _imageFetcher.GetImages(new Dictionary<string, string>());
-            }
 
             return Result.Success;
+        }
+
+        private static void AddDependencies(IEnumerable<TreeNode<DockerFile>> nodes, IDictionary<string, int> dependencies)
+        {
+            foreach (var treeNode in nodes)
+            {
+                foreach (var baseImage in treeNode.Value.Metadata.BaseImages)
+                {
+                    if (dependencies.TryGetValue(baseImage, out var counter))
+                    {
+                        dependencies[baseImage] = ++counter;
+                    }
+                    else
+                    {
+                        dependencies.Add(baseImage, 1);
+                    }
+                }
+            }
         }
 
         private async Task<Result> Build(TreeNode<DockerFile> node, Stream contextStream, string dockerFilesRootPath, IDictionary<string, string> labels, Dictionary<string, int> dependencies)
@@ -153,8 +149,20 @@ namespace TeamCity.Docker.Build
 
             using (_logger.CreateBlock(dockerFile.ToString()))
             {
+                var producedResult = new Result<IReadOnlyList<DockerImage>>(new List<DockerImage>(), Result.Error);
                 try
                 {
+                    
+                    var before = new HashSet<DockerImage>();
+                    using (_logger.CreateBlock("State before"))
+                    {
+                        var result = await _imageFetcher.GetImages(new Dictionary<string, string>());
+                        if (result.State != Result.Error)
+                        {
+                            before = result.Value.ToHashSet();
+                        }
+                    }
+
                     using (_logger.CreateBlock("Build"))
                     {
                         var result = await _taskRunner.Run(client => BuildImage(client, contextStream, buildParameters));
@@ -164,16 +172,56 @@ namespace TeamCity.Docker.Build
                         }
                     }
 
-                    var imagesResult = await _imageFetcher.GetImages(curLabels);
-                    if (imagesResult.State == Result.Error)
+                    var toRemove = new HashSet<DockerImage>();
+                    var stateAfter = await _imageFetcher.GetImages(new Dictionary<string, string>());
+                    if (stateAfter.State != Result.Error)
                     {
+                        toRemove = stateAfter.Value.ToHashSet();
+                    }
+
+                    // Exclude state before
+                    toRemove.ExceptWith(before);
+
+                    // Exclude required dependencies
+                    RemoveDependencies(node.Value, dependencies);
+                    foreach (var dependency in dependencies.Keys)
+                    {
+                        var exclude = toRemove.Where(i => i.RepoTag == dependency).ToList();
+                        toRemove.ExceptWith(exclude);
+                    }
+
+                    producedResult = await _imageFetcher.GetImages(curLabels, false);
+                    if (producedResult.State == Result.Error || producedResult.Value.Count == 0)
+                    {
+                        _logger.Log("There are no any produced images found after build.", Result.Error);
                         return Result.Error;
                     }
 
-                    if (imagesResult.Value.Count == 0)
+                    // Push produced images
+                    if (!string.IsNullOrWhiteSpace(_options.Username) && !string.IsNullOrWhiteSpace(_options.Password))
                     {
-                        _logger.Log("There are no any images found after build.", Result.Error);
-                        return Result.Error;
+                        using (_logger.CreateBlock("Push"))
+                        {
+                            var pushResult = await _imagePublisher.PushImages(producedResult.Value);
+                            if (pushResult == Result.Error)
+                            {
+                                return Result.Error;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // Exclude produced images
+                        toRemove.ExceptWith(producedResult.Value);
+                    }
+
+                    // Clean
+                    if (_options.Clean)
+                    {
+                        using (_logger.CreateBlock("Clean"))
+                        {
+                            await _imageCleaner.CleanImages(toRemove);
+                        }
                     }
 
                     // Build children
@@ -184,75 +232,46 @@ namespace TeamCity.Docker.Build
                             return Result.Error;
                         }
                     }
-
-                    // Push produced images
-                    if (!string.IsNullOrWhiteSpace(_options.Username) && !string.IsNullOrWhiteSpace(_options.Password))
-                    {
-                        var pushResult = await _imagePublisher.PushImages(imagesResult.Value);
-                        if (pushResult == Result.Error)
-                        {
-                            return Result.Error;
-                        }
-                    }
                 }
                 finally
                 {
-                    if (_options.Clean)
+                    if (_options.Clean && producedResult.State != Result.Error)
                     {
-                        // Remove produced images
-                        var imagesResult = await _imageFetcher.GetImages(curLabels);
-                        if (imagesResult.State != Result.Error)
+                        using (_logger.CreateBlock("Clean"))
                         {
-                            await _imageCleaner.CleanImages(imagesResult.Value);
+                            await _imageCleaner.CleanImages(producedResult.Value);
                         }
+                    }
 
-                        // Remove dependencies
-                        using (_logger.CreateBlock("Dependencies"))
-                        {
-                            var baseImagesToRemove = new HashSet<string>();
-                            foreach (var baseImage in node.Value.Metadata.BaseImages)
-                            {
-                                if (!dependencies.TryGetValue(baseImage, out var count))
-                                {
-                                    continue;
-                                }
-
-                                count--;
-                                if (count == 0)
-                                {
-                                    dependencies.Remove(baseImage);
-                                    baseImagesToRemove.Add(baseImage);
-                                }
-                            }
-
-                            var images = await _imageFetcher.GetImages(new Dictionary<string, string>());
-                            if (images.State != Result.Error)
-                            {
-                                var imagesToRemove = new List<DockerImage>();
-                                foreach (var image in images.Value)
-                                {
-                                    if (baseImagesToRemove.Contains(image.RepoTag))
-                                    {
-                                        baseImagesToRemove.Add(image.Info.ID);
-                                        imagesToRemove.Add(image);
-                                    }
-                                }
-
-                                if (imagesToRemove.Count != 0)
-                                {
-                                    await _imageCleaner.CleanImages(imagesToRemove);
-                                }
-
-                                {
-                                    _logger.Log("Nothing to clean.");
-                                }
-                            }
-                        }
+                    using (_logger.CreateBlock("State after"))
+                    {
+                        await _imageFetcher.GetImages(new Dictionary<string, string>());
                     }
                 }
             }
 
             return Result.Success;
+        }
+
+        private static HashSet<string> RemoveDependencies(DockerFile dockerFile, IDictionary<string, int> dependencies)
+        {
+            var baseImagesToRemove = new HashSet<string>();
+            foreach (var baseImage in dockerFile.Metadata.BaseImages)
+            {
+                if (!dependencies.TryGetValue(baseImage, out var count))
+                {
+                    continue;
+                }
+
+                count--;
+                if (count == 0)
+                {
+                    dependencies.Remove(baseImage);
+                    baseImagesToRemove.Add(baseImage);
+                }
+            }
+
+            return baseImagesToRemove;
         }
 
         private async Task BuildImage(IDockerClient client, Stream contextStream, ImageBuildParameters buildParameters)
