@@ -36,10 +36,14 @@ namespace TeamCity.Docker.Build
                     _logger.Log($"where {key}={value}");
                 }
 
-                var dockerFilters = new Dictionary<string, IDictionary<string, bool>>
+                Dictionary<string, IDictionary<string, bool>> dockerFilters = null;
+                if (filters.Count > 0)
                 {
-                    { "label", filters.ToDictionary(filter => $"{filter.Key}={filter.Value}", filter => true) }
-                };
+                    dockerFilters = new Dictionary<string, IDictionary<string, bool>>
+                    {
+                        {"label", filters.ToDictionary(filter => $"{filter.Key}={filter.Value}", filter => true)}
+                    };
+                }
 
                 var dockerImages = await _taskRunner.Run(client => client.Images.ListImagesAsync(new ImagesListParameters {Filters = dockerFilters}));
                 var images = (
@@ -54,15 +58,7 @@ namespace TeamCity.Docker.Build
 
                 foreach (var image in images)
                 {
-                    using (_logger.CreateBlock(image.RepoTag))
-                    {
-                        _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.Info.ID)} {image.Info.Created}");
-                        var historyEntries = await _taskRunner.Run(client => client.Images.GetImageHistoryAsync(image.RepoTag, CancellationToken.None));
-                        foreach (var historyEntry in historyEntries.Value)
-                        {
-                            _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(historyEntry.ID)} {historyEntry.Created} {historyEntry.Size:D10} {historyEntry.CreatedBy}");
-                        }
-                    }
+                    _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.Info.ID)} {image.Info.Created} {image.RepoTag}");
                 }
 
                 return new Result<IReadOnlyList<DockerImage>>(images);
