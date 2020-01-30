@@ -51,6 +51,12 @@ namespace TeamCity.Docker.Build
                     return new Result<IReadOnlyList<DockerImage>>(new List<DockerImage>(), Result.Error);
                 }
 
+                if (dockerImages.Value.Count == 0)
+                {
+                    _logger.Log("Nothing to list.");
+                    return new Result<IReadOnlyList<DockerImage>>(new List<DockerImage>());
+                }
+
                 long count = 0;
                 long size = 0;
                 var ids = new HashSet<string>();
@@ -93,18 +99,25 @@ namespace TeamCity.Docker.Build
                     size = 0;
                     ids.Clear();
 
-                    foreach (var image in images)
+                    if (images.Count > 0)
                     {
-                        if (ids.Add(image.Info.ID))
+                        foreach (var image in images)
                         {
-                            count++;
-                            size += image.Info.Size;
+                            if (ids.Add(image.Info.ID))
+                            {
+                                count++;
+                                size += image.Info.Size;
+                            }
+
+                            _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.Info.ID)} {image.Info.Created} {image.RepoTag} {_dockerConverter.ConvertToSize(image.Info.Size, 1)}");
                         }
 
-                        _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.Info.ID)} {image.Info.Created} {image.RepoTag} {_dockerConverter.ConvertToSize(image.Info.Size, 1)}");
+                        _logger.Log($"Totals {count} images {_dockerConverter.ConvertToSize(size, 1)}");
                     }
-
-                    _logger.Log($"Totals {count} images {_dockerConverter.ConvertToSize(size, 1)}");
+                    else
+                    {
+                        _logger.Log("Nothing to list.");
+                    }
                 }
 
                 return new Result<IReadOnlyList<DockerImage>>(images);

@@ -31,10 +31,17 @@ namespace TeamCity.Docker.Build
 
             using (_logger.CreateBlock("Clean"))
             {
+                var cleared = false;
                 foreach (var image in images)
                 {
+                    cleared = true;
                     _logger.Log($"Delete {image.RepoTag}");
                     await _taskRunner.Run(client => client.Images.DeleteImageAsync(image.RepoTag, new ImageDeleteParameters {Force = true, PruneChildren = true}));
+                }
+
+                if (!cleared)
+                {
+                    _logger.Log("Nothing to clean.");
                 }
             }
 
