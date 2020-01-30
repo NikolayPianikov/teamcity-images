@@ -13,20 +13,20 @@ namespace TeamCity.Docker.Build
         [NotNull] private readonly IEnumerable<Generate.IGenerator> _dockerFileGenerators;
         [NotNull] private readonly Generate.IDependencyTreeFactory _dependencyTreeFactory;
         [NotNull] private readonly IImageBuilder _imageBuilder;
-        [NotNull] private readonly IImageFetcher _imageFetcher;
+        [NotNull] private readonly IDockerConverter _dockerConverter;
 
         public Command(
             [NotNull] ILogger logger,
             [NotNull] IEnumerable<Generate.IGenerator> dockerFileGenerators,
             [NotNull] Generate.IDependencyTreeFactory dependencyTreeFactory,
             [NotNull] IImageBuilder imageBuilder,
-            [NotNull] IImageFetcher imageFetcher)
+            [NotNull] IDockerConverter dockerConverter)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _dockerFileGenerators = dockerFileGenerators ?? throw new ArgumentNullException(nameof(dockerFileGenerators));
             _dependencyTreeFactory = dependencyTreeFactory ?? throw new ArgumentNullException(nameof(dependencyTreeFactory));
             _imageBuilder = imageBuilder ?? throw new ArgumentNullException(nameof(imageBuilder));
-            _imageFetcher = imageFetcher ?? throw new ArgumentNullException(nameof(imageFetcher));
+            _dockerConverter = dockerConverter ?? throw new ArgumentNullException(nameof(dockerConverter));
         }
 
         public async Task<Result> Run()
@@ -53,7 +53,32 @@ namespace TeamCity.Docker.Build
             }
 
             var dockerNodes = _dependencyTreeFactory.Create(dockerFiles);
-            return await _imageBuilder.Build(dockerNodes);
+            var result = await _imageBuilder.Build(dockerNodes);
+            if (result.State == Result.Error)
+            {
+                return Result.Error;
+            }
+
+            using (_logger.CreateBlock("Result"))
+            {
+                long count = 0;
+                long size = 0;
+                var ids = new HashSet<string>();
+
+                foreach (var image in result.Value)
+                {
+                    if (ids.Add(image.Info.ID))
+                    {
+                        count++;
+                        size += image.Info.Size;
+                    }
+
+                    _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.Info.ID)} {image.Info.Created} {image.RepoTag} {_dockerConverter.ConvertToSize(image.Info.Size, 1)}");
+                    _logger.Log($"Totals {count} images {_dockerConverter.ConvertToSize(size, 1)}");
+                }
+            }
+
+            return Result.Success;
         }
 
     }

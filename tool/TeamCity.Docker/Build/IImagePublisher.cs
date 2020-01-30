@@ -6,6 +6,6 @@ namespace TeamCity.Docker.Build
 {
     internal interface IImagePublisher
     {
-        [NotNull] Task<Result> PushImages([NotNull] IEnumerable<DockerImage> images);
+        [NotNull] Task<Result<IEnumerable<DockerImage>>> PushImages([NotNull] IEnumerable<DockerImage> images);
     }
 }

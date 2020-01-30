@@ -74,16 +74,22 @@ namespace TeamCity.Docker.Build
 
                 if (verbose)
                 {
+                    var labels = string.Empty;
+                    if (image.Labels != null)
+                    {
+                        labels = string.Join(", ", image.Labels.Select(i => $"{i.Key}={i.Value}"));
+                    }
+
                     if (image.RepoTags != null)
                     {
                         foreach (var imageRepoTag in image.RepoTags)
                         {
-                            _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.ID)} {image.Created} {imageRepoTag} {_dockerConverter.ConvertToSize(image.Size, 1)}");
+                            _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.ID)} {image.Created} {imageRepoTag} {_dockerConverter.ConvertToSize(image.Size, 1)} {labels}");
                         }
                     }
                     else
                     {
-                        _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.ID)} {image.Created} {_dockerConverter.ConvertToSize(image.Size, 1)}");
+                        _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.ID)} {image.Created} {_dockerConverter.ConvertToSize(image.Size, 1)} {labels}");
                     }
                 }
             }
@@ -98,8 +104,7 @@ namespace TeamCity.Docker.Build
                         from image in dockerImages.Value
                         where image.RepoTags != null
                         from tag in image.RepoTags
-                        where !tag.Contains("<none>")
-                        select new DockerImage(image, tag))
+                        select new DockerImage(image, tag.Contains("<none>") ? string.Empty : tag))
                     select image)
                 .ToList();
 

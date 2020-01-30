@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 // ReSharper disable ClassNeverInstantiated.Global
 
@@ -8,7 +7,7 @@ namespace TeamCity.Docker
     internal class ConsoleLogger : ILogger, IDisposable
     {
         private readonly object _lockObject = new object();
-        private readonly Stack<string> _blocks = new Stack<string>();
+        private int _blockCount;
 
         public void Log(string text, Result result = Result.Success)
         {
@@ -32,7 +31,7 @@ namespace TeamCity.Docker
                             break;
                     }
 
-                    var prefix = new string(Enumerable.Repeat(' ', _blocks.Count << 1).ToArray());
+                    var prefix = new string(Enumerable.Repeat(' ', _blockCount << 1).ToArray());
                     if (result == Result.Error)
                     {
                         Console.Error.WriteLine(prefix + text);
@@ -59,7 +58,7 @@ namespace TeamCity.Docker
             lock (_lockObject)
             {
                 Log(blockName);
-                _blocks.Push(blockName);
+                _blockCount++;
                 return this;
             }
         }
@@ -68,10 +67,7 @@ namespace TeamCity.Docker
         {
             lock (_lockObject)
             {
-                if (_blocks.Count > 0)
-                {
-                    _blocks.Pop();
-                }
+                _blockCount--;
             }
         }
     }

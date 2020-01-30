@@ -15,6 +15,9 @@ namespace TeamCity.Docker.Build
 {
     internal class ImageBuilder : IImageBuilder
     {
+        private static readonly Result<IEnumerable<DockerImage>> Error = new Result<IEnumerable<DockerImage>>(Enumerable.Empty<DockerImage>(), Result.Error);
+        private static readonly Result<IEnumerable<DockerImage>> Warning = new Result<IEnumerable<DockerImage>>(Enumerable.Empty<DockerImage>(), Result.Warning);
+
         [NotNull] private readonly IOptions _options;
         [NotNull] private readonly ILogger _logger;
         [NotNull] private readonly IMessageLogger _messageLogger;
@@ -53,7 +56,7 @@ namespace TeamCity.Docker.Build
             _taskRunner = taskRunner ?? throw new ArgumentNullException(nameof(taskRunner));
         }
 
-        public async Task<Result> Build(IEnumerable<TreeNode<DockerFile>> dockerNodes)
+        public async Task<Result<IEnumerable<DockerImage>>> Build(IEnumerable<TreeNode<DockerFile>> dockerNodes)
         {
             if (dockerNodes == null)
             {
@@ -85,7 +88,7 @@ namespace TeamCity.Docker.Build
             if (!nodesToBuild.Any())
             {
                 _logger.Log("There are no any images to build.", Result.Warning);
-                return Result.Warning;
+                return Warning;
             }
 
             var id = Guid.NewGuid().ToString();
@@ -99,21 +102,152 @@ namespace TeamCity.Docker.Build
             var contextStreamResult = await _contextFactory.Create(dockerFilesRootPath, dockerFiles);
             if (contextStreamResult.State == Result.Error)
             {
-                return Result.Error;
+                return Error;
             }
 
+            var result = new List<DockerImage>();
             using (var contextStream = contextStreamResult.Value)
             {
                 foreach (var node in nodesToBuild)
                 {
-                    if (await Build(node, contextStream, dockerFilesRootPath, labels, dependencies) == Result.Error)
+                    var images = await Build(node, contextStream, dockerFilesRootPath, labels, dependencies);
+                    if (images.State == Result.Error)
                     {
-                        return Result.Error;
+                        return images;
                     }
+
+                    result.AddRange(images.Value);
                 }
             }
 
-            return Result.Success;
+            return new Result<IEnumerable<DockerImage>>(result);
+        }
+
+        private async Task<HashSet<DockerImage>> GetImages([NotNull] IReadOnlyDictionary<string, string> filters, string blockName = "")
+        {
+            var verbose = !string.IsNullOrWhiteSpace(blockName);
+            IDisposable blockToken = null;
+            if (verbose)
+            {
+                blockToken = _logger.CreateBlock(blockName);
+            }
+
+            try
+            {
+                var images = await _imageFetcher.GetImages(filters, verbose);
+                return images.State == Result.Error ? new HashSet<DockerImage>() : images.Value.ToHashSet();
+            }
+            finally
+            {
+                blockToken?.Dispose();
+            }
+        }
+
+        private async Task<Result<IEnumerable<DockerImage>>> Build(TreeNode<DockerFile> node, Stream contextStream, string dockerFilesRootPath, IReadOnlyDictionary<string, string> labels, IDictionary<string, int> dependencies)
+        {
+            var id = Guid.NewGuid().ToString();
+            var curLabels = new Dictionary<string, string>(labels) {{"InternalImageId", id}};
+            var dockerFile = node.Value;
+            var dockerFilePathInContext = _pathService.Normalize(Path.Combine(dockerFilesRootPath, dockerFile.Path));
+            var buildParameters = new ImageBuildParameters
+            {
+                Dockerfile = dockerFilePathInContext,
+                Tags = dockerFile.Metadata.Tags.Concat(_options.Tags).Distinct().ToList(),
+                Labels = curLabels
+            };
+            
+            var result = new List<DockerImage>();
+            var pushed = false;
+            using (_logger.CreateBlock(dockerFile.ToString()))
+            {
+                try
+                {
+                    var initialState = await GetImages(new Dictionary<string, string>(), "Initial state");
+
+                    using (_logger.CreateBlock("Build"))
+                    {
+                        var buildResult = await _taskRunner.Run(client => BuildImage(client, contextStream, buildParameters));
+                        if (buildResult == Result.Error)
+                        {
+                            return Error;
+                        }
+                    }
+
+                    var buildState = await GetImages(curLabels, "Produced state");
+                    var afterBuildState = await GetImages(new Dictionary<string, string>(), "After build state");
+
+                    // Exclude required dependencies
+                    RemoveDependencies(node.Value, dependencies);
+
+                    // Exclude state before
+                    var difState = afterBuildState.Except(initialState).ToHashSet();
+                    var toRemove = difState.Where(i => !dependencies.ContainsKey(i.RepoTag)).ToHashSet();
+                    var toPush = buildState.Where(i => !string.IsNullOrWhiteSpace(i.RepoTag)).ToHashSet();
+                    if (toPush.Count == 0)
+                    {
+                        _logger.Log("There are no any produced images found after build.", Result.Error);
+                        return Error;
+                    }
+
+                    // Push produced images
+                    if (!string.IsNullOrWhiteSpace(_options.Username) && !string.IsNullOrWhiteSpace(_options.Password))
+                    {
+                        using (_logger.CreateBlock("Push"))
+                        {
+                            var pushResult = await _imagePublisher.PushImages(toPush);
+                            if (pushResult.State == Result.Error)
+                            {
+                                return Error;
+                            }
+
+                            result.AddRange(pushResult.Value);
+                            pushed = true;
+                        }
+                    }
+                    else
+                    {
+                        result.AddRange(toPush);
+                    }
+
+                    // Clean
+                    if (_options.Clean)
+                    {
+                        using (_logger.CreateBlock("Clean"))
+                        {
+                            await _imageCleaner.CleanImages(toRemove);
+                        }
+                    }
+
+                    // Build children
+                    foreach (var child in node.Children)
+                    {
+                        var images = await Build(child, contextStream, dockerFilesRootPath, labels, dependencies);
+                        if (images.State == Result.Error)
+                        {
+                            return Error;
+                        }
+
+                        result.AddRange(images.Value);
+                    }
+                }
+                finally
+                {
+                    if (pushed && _options.Clean)
+                    {
+                        var buildState = await GetImages(curLabels, "Finish produced state");
+                        var toRemove = buildState.Where(i => !dependencies.ContainsKey(i.RepoTag)).ToHashSet();
+
+                        using (_logger.CreateBlock("Clean"))
+                        {
+                            await _imageCleaner.CleanImages(toRemove);
+                        }
+                    }
+
+                    await GetImages(new Dictionary<string, string>(), "Finish state");
+                }
+            }
+
+            return new Result<IEnumerable<DockerImage>>(result);
         }
 
         private static void AddDependencies(IEnumerable<TreeNode<DockerFile>> nodes, IDictionary<string, int> dependencies)
@@ -134,128 +268,8 @@ namespace TeamCity.Docker.Build
             }
         }
 
-        private async Task<Result> Build(TreeNode<DockerFile> node, Stream contextStream, string dockerFilesRootPath, IDictionary<string, string> labels, Dictionary<string, int> dependencies)
+        private static void RemoveDependencies(DockerFile dockerFile, IDictionary<string, int> dependencies)
         {
-            var id = Guid.NewGuid().ToString();
-            var curLabels = new Dictionary<string, string>(labels) {{"InternalImageId", id}};
-            var dockerFile = node.Value;
-            var dockerFilePathInContext = _pathService.Normalize(Path.Combine(dockerFilesRootPath, dockerFile.Path));
-            var buildParameters = new ImageBuildParameters
-            {
-                Dockerfile = dockerFilePathInContext,
-                Tags = dockerFile.Metadata.Tags.Concat(_options.Tags).Distinct().ToList(),
-                Labels = curLabels
-            };
-
-            using (_logger.CreateBlock(dockerFile.ToString()))
-            {
-                var producedResult = new Result<IReadOnlyList<DockerImage>>(new List<DockerImage>(), Result.Error);
-                try
-                {
-                    
-                    var before = new HashSet<DockerImage>();
-                    using (_logger.CreateBlock("State before"))
-                    {
-                        var result = await _imageFetcher.GetImages(new Dictionary<string, string>());
-                        if (result.State != Result.Error)
-                        {
-                            before = result.Value.ToHashSet();
-                        }
-                    }
-
-                    using (_logger.CreateBlock("Build"))
-                    {
-                        var result = await _taskRunner.Run(client => BuildImage(client, contextStream, buildParameters));
-                        if (result == Result.Error)
-                        {
-                            return Result.Error;
-                        }
-                    }
-
-                    var toRemove = new HashSet<DockerImage>();
-                    var stateAfter = await _imageFetcher.GetImages(new Dictionary<string, string>());
-                    if (stateAfter.State != Result.Error)
-                    {
-                        toRemove = stateAfter.Value.ToHashSet();
-                    }
-
-                    // Exclude state before
-                    toRemove.ExceptWith(before);
-
-                    // Exclude required dependencies
-                    RemoveDependencies(node.Value, dependencies);
-                    foreach (var dependency in dependencies.Keys)
-                    {
-                        var exclude = toRemove.Where(i => i.RepoTag == dependency).ToList();
-                        toRemove.ExceptWith(exclude);
-                    }
-
-                    producedResult = await _imageFetcher.GetImages(curLabels, false);
-                    if (producedResult.State == Result.Error || producedResult.Value.Count == 0)
-                    {
-                        _logger.Log("There are no any produced images found after build.", Result.Error);
-                        return Result.Error;
-                    }
-
-                    // Push produced images
-                    if (!string.IsNullOrWhiteSpace(_options.Username) && !string.IsNullOrWhiteSpace(_options.Password))
-                    {
-                        using (_logger.CreateBlock("Push"))
-                        {
-                            var pushResult = await _imagePublisher.PushImages(producedResult.Value);
-                            if (pushResult == Result.Error)
-                            {
-                                return Result.Error;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        // Exclude produced images
-                        toRemove.ExceptWith(producedResult.Value);
-                    }
-
-                    // Clean
-                    if (_options.Clean)
-                    {
-                        using (_logger.CreateBlock("Clean"))
-                        {
-                            await _imageCleaner.CleanImages(toRemove);
-                        }
-                    }
-
-                    // Build children
-                    foreach (var child in node.Children)
-                    {
-                        if (await Build(child, contextStream, dockerFilesRootPath, labels, dependencies) == Result.Error)
-                        {
-                            return Result.Error;
-                        }
-                    }
-                }
-                finally
-                {
-                    if (_options.Clean && producedResult.State != Result.Error)
-                    {
-                        using (_logger.CreateBlock("Clean"))
-                        {
-                            await _imageCleaner.CleanImages(producedResult.Value);
-                        }
-                    }
-
-                    using (_logger.CreateBlock("State after"))
-                    {
-                        await _imageFetcher.GetImages(new Dictionary<string, string>());
-                    }
-                }
-            }
-
-            return Result.Success;
-        }
-
-        private static HashSet<string> RemoveDependencies(DockerFile dockerFile, IDictionary<string, int> dependencies)
-        {
-            var baseImagesToRemove = new HashSet<string>();
             foreach (var baseImage in dockerFile.Metadata.BaseImages)
             {
                 if (!dependencies.TryGetValue(baseImage, out var count))
@@ -267,11 +281,8 @@ namespace TeamCity.Docker.Build
                 if (count == 0)
                 {
                     dependencies.Remove(baseImage);
-                    baseImagesToRemove.Add(baseImage);
                 }
             }
-
-            return baseImagesToRemove;
         }
 
         private async Task BuildImage(IDockerClient client, Stream contextStream, ImageBuildParameters buildParameters)

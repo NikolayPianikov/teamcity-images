@@ -51,10 +51,10 @@ namespace TeamCity.Docker
                 throw new ArgumentNullException(nameof(handler));
             }
 
+            Exception lastError = null;
             for (_curAttempt= 0; _curAttempt < Attempts; _curAttempt++)
             {
                 _hasError = false;
-                Exception lastError = null;
                 try
                 {
                     var result = await handler(GetState());
