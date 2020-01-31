@@ -14,6 +14,7 @@ namespace TeamCity.Docker
     internal class DockerClientFactory : IDockerClientFactory
     {
         private readonly ILogger _logger;
+        [NotNull] private readonly IOptions _options;
         private readonly IList<Uri> _endpoints = new List<Uri>();
 
         public DockerClientFactory(
@@ -22,7 +23,8 @@ namespace TeamCity.Docker
             [NotNull] IEnvironment environment)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            var engineEndpoint = (options ?? throw new ArgumentNullException(nameof(options))).DockerEngineEndpoint;
+            _options = options ?? throw new ArgumentNullException(nameof(options));
+            var engineEndpoint = _options.DockerEngineEndpoint;
             if (string.IsNullOrWhiteSpace(engineEndpoint))
             {
                 if ((environment ?? throw new ArgumentNullException(nameof(environment))).IsOSPlatform(OSPlatform.Windows))
@@ -71,7 +73,7 @@ namespace TeamCity.Docker
                 {
                     foreach (var error in errors)
                     {
-                        _logger.Log(error);
+                        _logger.Log(error, _options.VerboseMode);
                     }
 
                     throw new InvalidOperationException("The docker engine connection error.");

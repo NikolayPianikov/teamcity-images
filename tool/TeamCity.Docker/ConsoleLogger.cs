@@ -1,13 +1,22 @@
 ﻿using System;
 using System.Linq;
+using IoC;
+
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace TeamCity.Docker
 {
     internal class ConsoleLogger : ILogger, IDisposable
     {
+        [NotNull] private readonly IOptions _options;
         private readonly object _lockObject = new object();
         private int _blockCount;
+
+        public ConsoleLogger(
+            [NotNull] IOptions options)
+        {
+            _options = options ?? throw new ArgumentNullException(nameof(options));
+        }
 
         public void Log(string text, Result result = Result.Success)
         {
@@ -45,6 +54,14 @@ namespace TeamCity.Docker
                 {
                     Console.ForegroundColor = foregroundColor;
                 }
+            }
+        }
+
+        public void Details(string text, Result result = Result.Success)
+        {
+            if (_options.VerboseMode)
+            {
+                Log(text, result);
             }
         }
 

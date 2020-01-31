@@ -55,7 +55,7 @@ namespace TeamCity.Docker.Build
                 var tag = _dockerConverter.TryConvertRepoTagToTag(image.RepoTag);
                 var repositoryName = _options.Username + "/" + _dockerConverter.TryConvertRepoTagToRepositoryName(image.RepoTag);
                 var newRepoTag = $"{repositoryName}:{tag}";
-                _logger.Log($"Add tag {newRepoTag} for {image.RepoTag}.");
+                _logger.Log($"{newRepoTag} tagged by {image.RepoTag}.");
                 await _taskRunner.Run(client => client.Images.TagImageAsync(
                     image.RepoTag,
                     new ImageTagParameters {RepositoryName = repositoryName, Tag = tag, Force = true}));
@@ -66,7 +66,7 @@ namespace TeamCity.Docker.Build
 
                 var imagesAfter = await _imageFetcher.GetImages(new Dictionary<string, string>(), false);
 
-                _logger.Log($"Delete tag {newRepoTag}.");
+                _logger.Log($"Untagged {newRepoTag}.");
                 await _taskRunner.Run(client => client.Images.DeleteImageAsync(newRepoTag, new ImageDeleteParameters {Force = true, PruneChildren = false}));
 
                 if (pushResult == Result.Error || imagesAfter.State == Result.Error)

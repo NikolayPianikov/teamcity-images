@@ -71,7 +71,7 @@ namespace TeamCity.Docker
                 var message = $"Attempt {_curAttempt + 1:00} of {Attempts:00} failed.";
                 if (lastError != null)
                 {
-                    _logger.Log(lastError, message);
+                    _logger.Log(lastError, _options.VerboseMode, message);
                 }
                 else
                 {
@@ -114,8 +114,15 @@ namespace TeamCity.Docker
             }
         }
 
-        public IDisposable CreateBlock(string blockName) => _logger.CreateBlock(blockName);
+        public void Details(string text, Result result = Result.Success)
+        {
+            if (_options.VerboseMode)
+            {
+                Log(text, result);
+            }
+        }
 
+        public IDisposable CreateBlock(string blockName) => _logger.CreateBlock(blockName);
 
         private TState GetState()
         {

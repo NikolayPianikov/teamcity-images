@@ -28,5 +28,8 @@ namespace TeamCity.Docker.Generate
         public string TargetPath { get; set; } = string.Empty;
 
         public string DockerEngineEndpoint => throw new NotImplementedException();
+
+        [Option('v', "verbose", Required = false, HelpText = "Add it for detailed output.")]
+        public bool VerboseMode { get; set; } = false;
     }
 }

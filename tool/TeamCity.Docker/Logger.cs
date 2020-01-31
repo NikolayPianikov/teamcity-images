@@ -5,9 +5,11 @@ namespace TeamCity.Docker
 {
     internal class Logger: ILogger
     {
+        [NotNull] private readonly IOptions _options;
         private readonly ILogger _logger;
 
         public Logger(
+            [NotNull] IOptions options,
             [NotNull] IEnvironment environment,
             [NotNull] ILogger consoleLogger,
             [NotNull] ILogger teamCityLogger)
@@ -27,6 +29,8 @@ namespace TeamCity.Docker
                 throw new ArgumentNullException(nameof(teamCityLogger));
             }
 
+            _options = options;
+
             _logger = environment.HasEnvironmentVariable("TEAMCITY_VERSION") ? teamCityLogger : consoleLogger;
         }
 
@@ -38,6 +42,14 @@ namespace TeamCity.Docker
             }
 
             _logger.Log(text, result);
+        }
+
+        public void Details(string text, Result result = Result.Success)
+        {
+            if (_options.VerboseMode)
+            {
+                Log(text, result);
+            }
         }
 
         public IDisposable CreateBlock(string blockName)

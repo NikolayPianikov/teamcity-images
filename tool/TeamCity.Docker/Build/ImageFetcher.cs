@@ -13,15 +13,18 @@ namespace TeamCity.Docker.Build
     internal class ImageFetcher : IImageFetcher
     {
         private readonly ILogger _logger;
+        [NotNull] private readonly IOptions _options;
         private readonly IDockerConverter _dockerConverter;
         [NotNull] private readonly ITaskRunner<IDockerClient> _taskRunner;
 
         public ImageFetcher(
             [NotNull] ILogger logger,
+            [NotNull] IOptions options,
             [NotNull] IDockerConverter dockerConverter,
             [NotNull] ITaskRunner<IDockerClient> taskRunner)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _options = options ?? throw new ArgumentNullException(nameof(options));
             _dockerConverter = dockerConverter ?? throw new ArgumentNullException(nameof(dockerConverter));
             _taskRunner = taskRunner ?? throw new ArgumentNullException(nameof(taskRunner));
         }
@@ -32,7 +35,7 @@ namespace TeamCity.Docker.Build
             {
                 foreach (var (key, value) in filters)
                 {
-                    _logger.Log($"where {key}={value}");
+                    _logger.Details($"where {key}={value}");
                 }
             }
 
@@ -75,7 +78,7 @@ namespace TeamCity.Docker.Build
                 if (verbose)
                 {
                     var labels = string.Empty;
-                    if (image.Labels != null)
+                    if (_options.VerboseMode && image.Labels != null)
                     {
                         labels = string.Join(", ", image.Labels.Select(i => $"{i.Key}={i.Value}"));
                     }
@@ -84,12 +87,12 @@ namespace TeamCity.Docker.Build
                     {
                         foreach (var imageRepoTag in image.RepoTags)
                         {
-                            _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.ID)} {image.Created} {imageRepoTag} {_dockerConverter.ConvertToSize(image.Size, 1)} {labels}");
+                            _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.ID)} {image.Created} {imageRepoTag} {_dockerConverter.ConvertToSize(image.Size, 1)}{labels}");
                         }
                     }
                     else
                     {
-                        _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.ID)} {image.Created} {_dockerConverter.ConvertToSize(image.Size, 1)} {labels}");
+                        _logger.Log($"{_dockerConverter.TryConvertConvertHashToImageId(image.ID)} {image.Created} {_dockerConverter.ConvertToSize(image.Size, 1)}{labels}");
                     }
                 }
             }

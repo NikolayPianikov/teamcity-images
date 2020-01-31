@@ -9,16 +9,15 @@ namespace TeamCity.Docker
 {
     internal class TeamCityLogger: ILogger, IDisposable
     {
+        [NotNull] private readonly IOptions _options;
         private readonly Stack<ITeamCityWriter>_teamCityWriters = new Stack<ITeamCityWriter>();
 
-        public TeamCityLogger([NotNull] ITeamCityWriter teamCityWriter)
+        public TeamCityLogger(
+            [NotNull] ITeamCityWriter teamCityWriter,
+            [NotNull] IOptions options)
         {
-            if (teamCityWriter == null)
-            {
-                throw new ArgumentNullException(nameof(teamCityWriter));
-            }
-
-            _teamCityWriters.Push(teamCityWriter);
+            _options = options ?? throw new ArgumentNullException(nameof(options));
+            _teamCityWriters.Push(teamCityWriter ?? throw new ArgumentNullException(nameof(teamCityWriter)));
         }
 
         private ITeamCityWriter TeamCityWriter => _teamCityWriters.Peek();
@@ -46,6 +45,14 @@ namespace TeamCity.Docker
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(result), result, null);
+            }
+        }
+
+        public void Details(string text, Result result = Result.Success)
+        {
+            if (_options.VerboseMode)
+            {
+                Log(text, result);
             }
         }
 

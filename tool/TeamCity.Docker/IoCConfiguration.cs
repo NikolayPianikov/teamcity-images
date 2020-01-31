@@ -24,7 +24,12 @@ namespace TeamCity.Docker
                 .Bind<IEnvironment>().As(Singleton).To<Environment>()
                 .Bind<ILogger>().As(Singleton).Tag("Console").To<ConsoleLogger>()
                 .Bind<ILogger>().As(Singleton).Tag("TeamCity").To<TeamCityLogger>()
-                .Bind<ILogger>().As(Singleton).Tag("Common").To<Logger>(ctx => new Logger(ctx.Container.Inject<IEnvironment>(), ctx.Container.Inject<ILogger>("Console"), ctx.Container.Inject<ILogger>("TeamCity")))
+                .Bind<ILogger>().As(Singleton).Tag("Common").To<Logger>(ctx => 
+                    new Logger(
+                        ctx.Container.Inject<IOptions>(),
+                        ctx.Container.Inject<IEnvironment>(),
+                        ctx.Container.Inject<ILogger>("Console"),
+                        ctx.Container.Inject<ILogger>("TeamCity")))
                 .Bind<IDockerClientFactory>().As(Singleton).To<DockerClientFactory>()
                 .Bind<IDockerClient>().To(ctx => ctx.Container.Inject<IDockerClientFactory>().Create().Result)
                 .Bind<IStreamService>().As(Singleton).To<StreamService>()
@@ -49,7 +54,7 @@ namespace TeamCity.Docker
                 .Bind<Generate.IDockerFileGenerator>().As(Singleton).To<Generate.DockerFileGenerator>()
                 .Bind<Generate.IReadmeGenerator>().As(Singleton).To<Generate.ReadmeGenerator>()
                 .Bind<Generate.IDockerFileConfigurationExplorer>().As(Singleton).To<Generate.DockerFileConfigurationExplorer>()
-                .Bind<Generate.IGenerator>().Tag("").As(Singleton).To<Generate.GeneratorFromConfigurations>();
+                .Bind<Generate.IGenerator>().As(Singleton).To<Generate.GeneratorFromConfigurations>();
 
             // Build command
             yield return container

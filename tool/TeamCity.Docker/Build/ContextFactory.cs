@@ -72,7 +72,7 @@ namespace TeamCity.Docker.Build
                             {
                                 var filePathInArchive = _pathService.Normalize(Path.GetRelativePath(path, file));
                                 var result = await AddEntry(archive, filePathInArchive, fileStream);
-                                    // _logger.Log($"{number:0000} \"{filePathInArchive}\" was added."); 
+                                _logger.Details($"{number:0000} \"{filePathInArchive}\" was added."); 
                                 if (result == Result.Error)
                                 {
                                     return new Result<Stream>(new MemoryStream(), Result.Error);

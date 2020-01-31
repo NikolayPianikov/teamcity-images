@@ -14,5 +14,7 @@ namespace TeamCity.Docker
         [NotNull] IEnumerable<string> ConfigurationFiles { get; }
 
         int Retries { get; }
+
+        bool VerboseMode { get; }
     }
 }

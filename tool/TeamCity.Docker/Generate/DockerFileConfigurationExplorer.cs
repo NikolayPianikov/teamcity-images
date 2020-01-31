@@ -119,7 +119,7 @@ namespace TeamCity.Docker.Generate
                 var key = text.Substring(0, eq);
                 var val = text.Substring(eq + 1);
                 vars[key] = val;
-                _logger.Log($"SET {key}={val}");
+                _logger.Details($"SET {key}={val}");
             }
 
             return vars;
@@ -142,12 +142,12 @@ namespace TeamCity.Docker.Generate
             {
                 if (result.ContainsKey(key))
                 {
-                    _logger.Log($"UPDATE {key}={value}");
+                    _logger.Details($"UPDATE {key}={value}");
                     result[key] = value;
                 }
                 else
                 {
-                    _logger.Log($"SET {key}={value}");
+                    _logger.Details($"SET {key}={value}");
                     result.Add(key, value);
                 }
             }

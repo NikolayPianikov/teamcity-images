@@ -82,7 +82,7 @@ namespace TeamCity.Docker.Build
                     allNodes.ForEach(i => _logger.Log($"Skip {i.Value} because of it has no any repo tag."));
                 }
 
-                AddDependencies(allNodes, dependencies);
+                FillDependencies(allNodes, dependencies);
             }
 
             if (!nodesToBuild.Any())
@@ -105,7 +105,7 @@ namespace TeamCity.Docker.Build
                 return Error;
             }
 
-            var initialState = await GetImages(new Dictionary<string, string>(), "Initial state");
+            var initialState = await GetImages(new Dictionary<string, string>(), true, "Initial state");
 
             var result = new List<DockerImage>();
             using (var contextStream = contextStreamResult.Value)
@@ -125,9 +125,9 @@ namespace TeamCity.Docker.Build
             return new Result<IEnumerable<DockerImage>>(result);
         }
 
-        private async Task<HashSet<DockerImage>> GetImages([NotNull] IReadOnlyDictionary<string, string> filters, string blockName = "")
+        private async Task<HashSet<DockerImage>> GetImages([NotNull] IReadOnlyDictionary<string, string> filters, bool details = true, string blockName = "")
         {
-            var verbose = !string.IsNullOrWhiteSpace(blockName);
+            var verbose = (_options.VerboseMode && details || !details) && !string.IsNullOrWhiteSpace(blockName);
             IDisposable blockToken = null;
             if (verbose)
             {
@@ -164,6 +164,8 @@ namespace TeamCity.Docker.Build
             {
                 try
                 {
+                    await GetImages(new Dictionary<string, string>(), true, "State");
+
                     using (_logger.CreateBlock("Build"))
                     {
                         var buildResult = await _taskRunner.Run(client => BuildImage(client, contextStream, buildParameters));
@@ -173,11 +175,10 @@ namespace TeamCity.Docker.Build
                         }
                     }
 
-                    var buildState = await GetImages(curLabels, "Images");
+                    var buildState = await GetImages(curLabels, false, "Images");
                     var afterBuildState = await GetImages(new Dictionary<string, string>());
 
-                    // Exclude required dependencies
-                    RemoveDependencies(node.Value, dependencies);
+                    ExcludeServedDependencies(node.Value, dependencies);
 
                     var difState = afterBuildState.Except(initialState).ToHashSet();
                     var toRemove = difState.Where(i => !dependencies.ContainsKey(i.RepoTag)).ToHashSet();
@@ -243,14 +244,14 @@ namespace TeamCity.Docker.Build
                         }
                     }
 
-                    await GetImages(new Dictionary<string, string>(), "Finish state");
+                    await GetImages(new Dictionary<string, string>(), true, "State");
                 }
             }
 
             return new Result<IEnumerable<DockerImage>>(result);
         }
 
-        private static void AddDependencies(IEnumerable<TreeNode<DockerFile>> nodes, IDictionary<string, int> dependencies)
+        private static void FillDependencies(IEnumerable<TreeNode<DockerFile>> nodes, IDictionary<string, int> dependencies)
         {
             foreach (var treeNode in nodes)
             {
@@ -268,7 +269,7 @@ namespace TeamCity.Docker.Build
             }
         }
 
-        private static void RemoveDependencies(DockerFile dockerFile, IDictionary<string, int> dependencies)
+        private static void ExcludeServedDependencies(DockerFile dockerFile, IDictionary<string, int> dependencies)
         {
             foreach (var baseImage in dockerFile.Metadata.BaseImages)
             {

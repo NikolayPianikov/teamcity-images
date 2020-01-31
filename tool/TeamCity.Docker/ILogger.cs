@@ -7,6 +7,8 @@ namespace TeamCity.Docker
     {
         void Log([NotNull] string text, Result result = Result.Success);
 
+        void Details([NotNull] string text, Result result = Result.Success);
+
         [NotNull] IDisposable CreateBlock([NotNull] string blockName);
     }
 }

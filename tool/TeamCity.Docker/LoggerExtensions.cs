@@ -6,7 +6,7 @@ namespace TeamCity.Docker
 {
     internal static class LoggerExtensions
     {
-        public static void Log([NotNull] this ILogger logger, [NotNull] Exception error, [NotNull] string message = "")
+        public static void Log([NotNull] this ILogger logger, [NotNull] Exception error, bool detailed = true, [NotNull] string message = "")
         {
             if (logger == null)
             {
