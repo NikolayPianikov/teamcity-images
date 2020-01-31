@@ -100,7 +100,7 @@ namespace TeamCity.Docker.Build
                 return;
             }
 
-            var description = $"{node.Value.Dependency.RepoTag}";
+            var description = $"{node.Value.File}";
 
             if (!node.Children.Any())
             {

@@ -3,30 +3,16 @@
     internal struct TreeDependency
     {
         public readonly DockerFile File;
-        public readonly Dependency Dependency;
-
-        public TreeDependency(DockerFile file, Dependency dependency)
+        
+        public TreeDependency(DockerFile file)
         {
             File = file;
-            Dependency = dependency;
         }
 
-        public override string ToString()
-        {
-            return Dependency.ToString();
-        }
+        public override string ToString() => File.ToString();
 
-        public override bool Equals(object obj)
-        {
-            return obj is TreeDependency other && (File.Equals(other.File) && Dependency.Equals(other.Dependency));
-        }
+        public override bool Equals(object obj) => obj is TreeDependency other && File.Equals(other.File);
 
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (File.GetHashCode() * 397) ^ Dependency.GetHashCode();
-            }
-        }
+        public override int GetHashCode() => File.GetHashCode();
     }
 }

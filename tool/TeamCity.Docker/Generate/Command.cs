@@ -90,7 +90,7 @@ namespace TeamCity.Docker.Generate
         {
             var toBuild = node.Value.File.Metadata.Repos.Any();
             var action = toBuild ? "Build" : "Generate";
-            var description = $"{action} {node.Value.Dependency.RepoTag}";
+            var description = $"{action} {node.Value.File}";
 
             if (!node.Children.Any())
             {

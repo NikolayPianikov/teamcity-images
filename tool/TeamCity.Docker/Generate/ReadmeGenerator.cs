@@ -36,15 +36,14 @@ namespace TeamCity.Docker.Generate
             }
 
             var allNodes = dockerNodes.EnumerateNodes().ToList();
-            var repoTags =
-                from node in allNodes
-                from tag in node.Value.File.Metadata.Tags
-                select new { node.Value, tag };
 
-            var dockerFileDictionary = new Dictionary<string, TreeDependency>();
-            foreach (var repoTag in repoTags)
+            var dockerFileDictionary = new Dictionary<Dependency, DockerFile>();
+            foreach (var dependency 
+                in from node in allNodes
+                from dependency in node.Value.File.Metadata.Dependencies
+                select new { node.Value.File, dependency })
             {
-                dockerFileDictionary[repoTag.tag] = repoTag.Value;
+                dockerFileDictionary[dependency.dependency] = dependency.File;
             }
 
             var groups =
@@ -70,8 +69,6 @@ namespace TeamCity.Docker.Generate
                     var dockerFile = groupByFile.Key;
                     sb.AppendLine($"- [{GetReadmeTagName(dockerFile)}](#{GetTagLink(dockerFile)})");
                 }
-
-                //var files = dockerNodeGroup.Select(i => i.Value.File).ToList();
 
                 sb.AppendLine();
 
@@ -111,14 +108,12 @@ namespace TeamCity.Docker.Generate
                         sb.AppendLine("```");
                         foreach (var path in buildPath)
                         {
-                            if (path.Value.Dependency.DependencyType != DependencyType.Build)
+                            foreach (var dependency in path.Metadata.Dependencies.Where(i => i.DependencyType == DependencyType.Build))
                             {
-                                continue;
-                            }
-
-                            if (dockerFileDictionary.TryGetValue(path.Value.Dependency.RepoTag, out var dependencyDockerFile))
-                            {
-                                sb.AppendLine(GeneratedDockerBuildCommand(dependencyDockerFile.File));
+                                if (dockerFileDictionary.TryGetValue(dependency, out var dependencyDockerFile))
+                                {
+                                    sb.AppendLine(GeneratedDockerBuildCommand(dependencyDockerFile));
+                                }
                             }
                         }
 
@@ -126,20 +121,18 @@ namespace TeamCity.Docker.Generate
 
                         sb.AppendLine();
                         sb.AppendLine("Base images:");
-                        foreach (var dependency in buildPath.Select(i => i.Value))
+                        foreach (var path in buildPath)
                         {
-                            if (dependency.Dependency.DependencyType == DependencyType.Logical)
+                            foreach (var dependency in path.Metadata.Dependencies.Where(i => i.DependencyType == DependencyType.Build || i.DependencyType == DependencyType.Pull))
                             {
-                                continue;
-                            }
-
-                            if (dockerFileDictionary.TryGetValue(dependency.Dependency.RepoTag, out var imageDockerFile))
-                            {
-                                sb.AppendLine($"- [{dependency}]({GetReadmeFilePath(imageDockerFile.File.Metadata.ImageId)}#{GetTagLink(imageDockerFile.File)})");
-                            }
-                            else
-                            {
-                                sb.AppendLine($"- {dependency}");
+                                if (dockerFileDictionary.TryGetValue(dependency, out var imageDockerFile))
+                                {
+                                    sb.AppendLine($"- [{dependency.RepoTag}]({GetReadmeFilePath(imageDockerFile.Metadata.ImageId)}#{GetTagLink(imageDockerFile)})");
+                                }
+                                else
+                                {
+                                    sb.AppendLine($"- {dependency.RepoTag}");
+                                }
                             }
                         }
 
@@ -154,12 +147,13 @@ namespace TeamCity.Docker.Generate
             }
         }
 
-        private static IEnumerable<TreeNode<TreeDependency>> GetBuildPath(TreeNode<TreeDependency> targetNode)
+        private static IEnumerable<DockerFile> GetBuildPath(TreeNode<TreeDependency> targetNode)
         {
             do
             {
-                yield return targetNode;
-                targetNode = targetNode.Parent;
+                var parent = targetNode.Parent;
+                yield return targetNode.Value.File;
+                targetNode = parent;
             } while (targetNode != null);
         }
 

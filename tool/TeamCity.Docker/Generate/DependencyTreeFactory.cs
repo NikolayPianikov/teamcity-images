@@ -24,7 +24,7 @@ namespace TeamCity.Docker.Generate
             var nodes = new Dictionary<string, Node>();
             foreach (var repoTag in repoTags)
             {
-                nodes[repoTag.tag] = new Node(new TreeDependency(repoTag.file, new Dependency(repoTag.tag, DependencyType.Build)));
+                nodes[repoTag.tag] = new Node(new TreeDependency(repoTag.file));
             }
 
             foreach (var node in nodes.Values.ToList())
@@ -37,8 +37,8 @@ namespace TeamCity.Docker.Generate
                     }
 
                     var metadata = new Metadata(dependency.RepoTag, new List<string>(), new List<Dependency>(), new List<string>(), new List<string>());
-                    var dockerFile = new DockerFile("", metadata, new List<DockerLine>());
-                    var newNode = new Node(new TreeDependency(dockerFile, new Dependency(dependency.RepoTag, DependencyType.Pull)));
+                    var dockerFile = new DockerFile(string.Empty, metadata, new List<DockerLine>());
+                    var newNode = new Node(new TreeDependency(dockerFile));
                     nodes.Add(dependency.RepoTag, newNode);
                 }
             }
@@ -54,22 +54,22 @@ namespace TeamCity.Docker.Generate
                         continue;
                     }
 
-                    if (parentNode.Dependency.Dependency.DependencyType != DependencyType.Pull)
-                    {
-                        roots.Remove(node);
-                        hasBaseImage = true;
-                    }
-
+                    roots.Remove(node);
+                    hasBaseImage = true;
                     parentNode.Children.Add(node);
                 }
 
-                if (!hasBaseImage && node.Dependency.Dependency.DependencyType != DependencyType.Pull)
+                if (!hasBaseImage)
                 {
                     roots.Add(node);
                 }
             }
 
-            return roots.Select(root => CreateTreeNode(root));
+            return (
+                from node in roots.Select(root => CreateTreeNode(root)).EnumerateNodes()
+                where node.Parent != null && string.IsNullOrEmpty(node.Parent.Value.File.Path)
+                select node)
+                .Distinct();
         }
 
         private TreeNode<TreeDependency> CreateTreeNode([NotNull] Node node, [CanBeNull] TreeNode<TreeDependency> parent = null)
@@ -96,20 +96,11 @@ namespace TeamCity.Docker.Generate
                 Children = new HashSet<Node>();
             }
 
-            public override bool Equals(object obj)
-            {
-                return obj is Node other && (Dependency.File.Equals(other.Dependency.File) && Dependency.Dependency.Equals(other.Dependency.Dependency));
-            }
+            public override bool Equals(object obj) => obj is Node other && Dependency.File.Equals(other.Dependency.File);
 
-            public override int GetHashCode()
-            {
-                return Dependency.GetHashCode();
-            }
+            public override int GetHashCode() => Dependency.GetHashCode();
 
-            public override string ToString()
-            {
-                return Dependency.ToString();
-            }
+            public override string ToString() => Dependency.ToString();
         }
     }
 }

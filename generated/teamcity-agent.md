@@ -26,19 +26,8 @@ docker build -f "generated/linux/Agent/Ubuntu/18.04/Dockerfile" -t teamcity-agen
 ```
 
 Base images:
-- [Build teamcity-minimal-agent:18.04](teamcity-minimal-agent.md#1804-linux)
-- [Build teamcity-agent:18.04](teamcity-agent.md#1804-linux)
-
-
-Docker build commands:
-```
-docker build -f "generated/linux/MinimalAgent/Ubuntu/18.04/Dockerfile" -t teamcity-minimal-agent:18.04 -t teamcity-minimal-agent:linux "context"
-docker build -f "generated/linux/Agent/Ubuntu/18.04/Dockerfile" -t teamcity-agent:18.04 -t teamcity-agent:linux "context"
-```
-
-Base images:
-- [Build teamcity-minimal-agent:18.04](teamcity-minimal-agent.md#1804-linux)
-- [Build teamcity-agent:linux](teamcity-agent.md#1804-linux)
+- [ubuntu:18.04](teamcity-minimal-agent.md#1804-linux)
+- [teamcity-minimal-agent:18.04](teamcity-agent.md#1804-linux)
 
 ### latest-windowsservercore-1803
 
@@ -51,13 +40,15 @@ Installed components:
 
 Docker build commands:
 ```
-docker build -f "generated/windows/MinimalAgent/nanoserver/1803/Dockerfile" -t teamcity-minimal-agent:latest-nanoserver-1803 "context"
+docker build -f "generated/windows/Server/nanoserver/1803/Dockerfile" -t teamcity-server:latest-nanoserver-1803 "context"
+docker build -f "generated/windows/Agent/windowsservercore/1803/Dockerfile" -t teamcity-agent:latest-windowsservercore-1803 "context"
 docker build -f "generated/windows/Agent/windowsservercore/1803/Dockerfile" -t teamcity-agent:latest-windowsservercore-1803 "context"
 ```
 
 Base images:
-- [Build teamcity-minimal-agent:latest-nanoserver-1803](teamcity-minimal-agent.md#latest-nanoserver-1803)
-- [Build teamcity-agent:latest-windowsservercore-1803](teamcity-agent.md#latest-windowsservercore-1803)
+- [mcr.microsoft.com/powershell:nanoserver-1803](teamcity-server.md#latest-nanoserver-1803)
+- [mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1803](teamcity-agent.md#latest-windowsservercore-1803)
+- [teamcity-minimal-agent:latest-nanoserver-1803](teamcity-agent.md#latest-windowsservercore-1803)
 
 ### latest-nanoserver-1803
 
@@ -68,15 +59,19 @@ Installed components:
 
 Docker build commands:
 ```
-docker build -f "generated/windows/MinimalAgent/nanoserver/1803/Dockerfile" -t teamcity-minimal-agent:latest-nanoserver-1803 "context"
+docker build -f "generated/windows/Server/nanoserver/1803/Dockerfile" -t teamcity-server:latest-nanoserver-1803 "context"
 docker build -f "generated/windows/Agent/windowsservercore/1803/Dockerfile" -t teamcity-agent:latest-windowsservercore-1803 "context"
+docker build -f "generated/windows/Agent/windowsservercore/1803/Dockerfile" -t teamcity-agent:latest-windowsservercore-1803 "context"
+docker build -f "generated/windows/Server/nanoserver/1803/Dockerfile" -t teamcity-server:latest-nanoserver-1803 "context"
 docker build -f "generated/windows/Agent/nanoserver/1803/Dockerfile" -t teamcity-agent:latest-nanoserver-1803 "context"
 ```
 
 Base images:
-- [Build teamcity-minimal-agent:latest-nanoserver-1803](teamcity-minimal-agent.md#latest-nanoserver-1803)
-- [Build teamcity-agent:latest-windowsservercore-1803](teamcity-agent.md#latest-windowsservercore-1803)
-- [Build teamcity-agent:latest-nanoserver-1803](teamcity-agent.md#latest-nanoserver-1803)
+- [mcr.microsoft.com/powershell:nanoserver-1803](teamcity-server.md#latest-nanoserver-1803)
+- [mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1803](teamcity-agent.md#latest-windowsservercore-1803)
+- [teamcity-minimal-agent:latest-nanoserver-1803](teamcity-agent.md#latest-windowsservercore-1803)
+- [mcr.microsoft.com/powershell:nanoserver-1803](teamcity-server.md#latest-nanoserver-1803)
+- [teamcity-agent:latest-windowsservercore-1803](teamcity-agent.md#latest-nanoserver-1803)
 
 ### latest-windowsservercore-1809
 
@@ -92,13 +87,15 @@ Installed components:
 
 Docker build commands:
 ```
-docker build -f "generated/windows/MinimalAgent/nanoserver/1809/Dockerfile" -t teamcity-minimal-agent:latest-nanoserver-1809 "context"
+docker build -f "generated/windows/Server/nanoserver/1809/Dockerfile" -t teamcity-server:latest-nanoserver-1809 "context"
+docker build -f "generated/windows/Agent/windowsservercore/1809/Dockerfile" -t teamcity-agent:latest-windowsservercore-1809 "context"
 docker build -f "generated/windows/Agent/windowsservercore/1809/Dockerfile" -t teamcity-agent:latest-windowsservercore-1809 "context"
 ```
 
 Base images:
-- [Build teamcity-minimal-agent:latest-nanoserver-1809](teamcity-minimal-agent.md#latest-nanoserver-1809)
-- [Build teamcity-agent:latest-windowsservercore-1809](teamcity-agent.md#latest-windowsservercore-1809)
+- [mcr.microsoft.com/powershell:nanoserver-1809](teamcity-server.md#latest-nanoserver-1809)
+- [mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019](teamcity-agent.md#latest-windowsservercore-1809)
+- [teamcity-minimal-agent:latest-nanoserver-1809](teamcity-agent.md#latest-windowsservercore-1809)
 
 ### latest-nanoserver-1809
 
@@ -112,15 +109,19 @@ Installed components:
 
 Docker build commands:
 ```
-docker build -f "generated/windows/MinimalAgent/nanoserver/1809/Dockerfile" -t teamcity-minimal-agent:latest-nanoserver-1809 "context"
+docker build -f "generated/windows/Server/nanoserver/1809/Dockerfile" -t teamcity-server:latest-nanoserver-1809 "context"
 docker build -f "generated/windows/Agent/windowsservercore/1809/Dockerfile" -t teamcity-agent:latest-windowsservercore-1809 "context"
+docker build -f "generated/windows/Agent/windowsservercore/1809/Dockerfile" -t teamcity-agent:latest-windowsservercore-1809 "context"
+docker build -f "generated/windows/Server/nanoserver/1809/Dockerfile" -t teamcity-server:latest-nanoserver-1809 "context"
 docker build -f "generated/windows/Agent/nanoserver/1809/Dockerfile" -t teamcity-agent:latest-nanoserver-1809 "context"
 ```
 
 Base images:
-- [Build teamcity-minimal-agent:latest-nanoserver-1809](teamcity-minimal-agent.md#latest-nanoserver-1809)
-- [Build teamcity-agent:latest-windowsservercore-1809](teamcity-agent.md#latest-windowsservercore-1809)
-- [Build teamcity-agent:latest-nanoserver-1809](teamcity-agent.md#latest-nanoserver-1809)
+- [mcr.microsoft.com/powershell:nanoserver-1809](teamcity-server.md#latest-nanoserver-1809)
+- [mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019](teamcity-agent.md#latest-windowsservercore-1809)
+- [teamcity-minimal-agent:latest-nanoserver-1809](teamcity-agent.md#latest-windowsservercore-1809)
+- [mcr.microsoft.com/powershell:nanoserver-1809](teamcity-server.md#latest-nanoserver-1809)
+- [teamcity-agent:latest-windowsservercore-1809](teamcity-agent.md#latest-nanoserver-1809)
 
 ### latest-windowsservercore-1903
 
@@ -136,13 +137,15 @@ Installed components:
 
 Docker build commands:
 ```
-docker build -f "generated/windows/MinimalAgent/nanoserver/1903/Dockerfile" -t teamcity-minimal-agent:latest-nanoserver-1903 "context"
+docker build -f "generated/windows/Server/nanoserver/1903/Dockerfile" -t teamcity-server:latest-nanoserver-1903 "context"
+docker build -f "generated/windows/Agent/windowsservercore/1903/Dockerfile" -t teamcity-agent:latest-windowsservercore-1903 "context"
 docker build -f "generated/windows/Agent/windowsservercore/1903/Dockerfile" -t teamcity-agent:latest-windowsservercore-1903 "context"
 ```
 
 Base images:
-- [Build teamcity-minimal-agent:latest-nanoserver-1903](teamcity-minimal-agent.md#latest-nanoserver-1903)
-- [Build teamcity-agent:latest-windowsservercore-1903](teamcity-agent.md#latest-windowsservercore-1903)
+- [mcr.microsoft.com/powershell:nanoserver-1903](teamcity-server.md#latest-nanoserver-1903)
+- [mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1903](teamcity-agent.md#latest-windowsservercore-1903)
+- [teamcity-minimal-agent:latest-nanoserver-1903](teamcity-agent.md#latest-windowsservercore-1903)
 
 ### latest-nanoserver-1903
 
@@ -156,13 +159,17 @@ Installed components:
 
 Docker build commands:
 ```
-docker build -f "generated/windows/MinimalAgent/nanoserver/1903/Dockerfile" -t teamcity-minimal-agent:latest-nanoserver-1903 "context"
+docker build -f "generated/windows/Server/nanoserver/1903/Dockerfile" -t teamcity-server:latest-nanoserver-1903 "context"
 docker build -f "generated/windows/Agent/windowsservercore/1903/Dockerfile" -t teamcity-agent:latest-windowsservercore-1903 "context"
+docker build -f "generated/windows/Agent/windowsservercore/1903/Dockerfile" -t teamcity-agent:latest-windowsservercore-1903 "context"
+docker build -f "generated/windows/Server/nanoserver/1903/Dockerfile" -t teamcity-server:latest-nanoserver-1903 "context"
 docker build -f "generated/windows/Agent/nanoserver/1903/Dockerfile" -t teamcity-agent:latest-nanoserver-1903 "context"
 ```
 
 Base images:
-- [Build teamcity-minimal-agent:latest-nanoserver-1903](teamcity-minimal-agent.md#latest-nanoserver-1903)
-- [Build teamcity-agent:latest-windowsservercore-1903](teamcity-agent.md#latest-windowsservercore-1903)
-- [Build teamcity-agent:latest-nanoserver-1903](teamcity-agent.md#latest-nanoserver-1903)
+- [mcr.microsoft.com/powershell:nanoserver-1903](teamcity-server.md#latest-nanoserver-1903)
+- [mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1903](teamcity-agent.md#latest-windowsservercore-1903)
+- [teamcity-minimal-agent:latest-nanoserver-1903](teamcity-agent.md#latest-windowsservercore-1903)
+- [mcr.microsoft.com/powershell:nanoserver-1903](teamcity-server.md#latest-nanoserver-1903)
+- [teamcity-agent:latest-windowsservercore-1903](teamcity-agent.md#latest-nanoserver-1903)
 
