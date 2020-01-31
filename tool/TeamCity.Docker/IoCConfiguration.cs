@@ -24,7 +24,7 @@ namespace TeamCity.Docker
                 .Bind<IEnvironment>().As(Singleton).To<Environment>()
                 .Bind<ILogger>().As(Singleton).Tag("Console").To<ConsoleLogger>()
                 .Bind<ILogger>().As(Singleton).Tag("TeamCity").To<TeamCityLogger>()
-                .Bind<ILogger>().As(Singleton).Tag("Common").To<Logger>(ctx => 
+                .Bind<ILogger>().As(Singleton).To<Logger>(ctx => 
                     new Logger(
                         ctx.Container.Inject<IOptions>(),
                         ctx.Container.Inject<IEnvironment>(),
@@ -35,14 +35,15 @@ namespace TeamCity.Docker
                 .Bind<IStreamService>().As(Singleton).To<StreamService>()
                 .Bind<IMessageLogger>().As(Singleton).To<MessageLogger>()
                 .Bind<IDockerConverter>().As(Singleton).To<DockerConverter>()
-                .Bind<ITaskRunner<IDockerClient>, ILogger>().As(Singleton).To(ctx => new TaskRunner<IDockerClient>(ctx.Container.Inject<IOptions>(), ctx.Container.Inject<ILogger>("Common"), ctx.Container.Inject<Func<IDockerClient>>()))
+                .Bind<IPathService>().As(Singleton).To<PathService>()
+
                 // TeamCity messages
                 .Bind<IServiceMessageFormatter>().As(Singleton).To<ServiceMessageFormatter>()
                 .Bind<IFlowIdGenerator>().As(Singleton).To<FlowIdGenerator>()
                 .Bind<IServiceMessageUpdater>().As(Singleton).To(ctx => new TimestampUpdater(() => DateTime.Now) )
                 .Bind<ITeamCityServiceMessages>().As(Singleton).To<TeamCityServiceMessages>()
-                .Bind<IPathService>().As(Singleton).To<PathService>()
                 .Bind<ITeamCityWriter, ITeamCityMessageWriter>().As(Singleton).To(ctx => ctx.Container.Inject<ITeamCityServiceMessages>().CreateWriter())
+
                 .Bind<ICommand<IGenerateOptions>>().As(Singleton).To<GenerateCommand>()
                 .Bind<ICommand<IBuildOptions>>().As(Singleton).To<BuildCommand>();
         }
