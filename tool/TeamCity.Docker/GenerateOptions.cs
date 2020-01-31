@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using CommandLine;
+
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
 
-namespace TeamCity.Docker.Generate
+namespace TeamCity.Docker
 {
     [Verb("generate", HelpText = "Generate docker and readme files.")]
-    internal class Options: IOptions
+    internal class GenerateOptions: IGenerateOptions
     {
         [Option('s', "source", Required = false, HelpText = "Path to configuration directory.")]
         public string SourcePath { get; set; } = string.Empty;

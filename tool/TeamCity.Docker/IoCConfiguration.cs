@@ -42,28 +42,9 @@ namespace TeamCity.Docker
                 .Bind<IServiceMessageUpdater>().As(Singleton).To(ctx => new TimestampUpdater(() => DateTime.Now) )
                 .Bind<ITeamCityServiceMessages>().As(Singleton).To<TeamCityServiceMessages>()
                 .Bind<IPathService>().As(Singleton).To<PathService>()
-                .Bind<ITeamCityWriter, ITeamCityMessageWriter>().As(Singleton).To(ctx => ctx.Container.Inject<ITeamCityServiceMessages>().CreateWriter());
-
-            // Generate command
-            yield return container
-                .Bind<ICommand<Generate.IOptions>>().As(Singleton).To<Generate.Command>()
-                .Bind<Generate.IDependencyTreeFactory>().As(Singleton).To<Generate.DependencyTreeFactory>()
-                .Bind<Generate.IResources>().As(Singleton).To<Generate.Resources>()
-                .Bind<Generate.IDockerFileContentParser>().As(Singleton).To<Generate.DockerFileContentParser>()
-                .Bind<Generate.IDockerMetadataProvider>().As(Singleton).To<Generate.DockerMetadataProvider>()
-                .Bind<Generate.IDockerFileGenerator>().As(Singleton).To<Generate.DockerFileGenerator>()
-                .Bind<Generate.IReadmeGenerator>().As(Singleton).To<Generate.ReadmeGenerator>()
-                .Bind<Generate.IDockerFileConfigurationExplorer>().As(Singleton).To<Generate.DockerFileConfigurationExplorer>()
-                .Bind<Generate.IGenerator>().As(Singleton).To<Generate.GeneratorFromConfigurations>();
-
-            // Build command
-            yield return container
-                .Bind<ICommand<Build.IOptions>>().As(Singleton).To<Build.Command>()
-                .Bind<Build.IImageBuilder>().As(Singleton).To<Build.ImageBuilder>()
-                .Bind<Build.IContextFactory>().As(Singleton).To<Build.ContextFactory>()
-                .Bind<Build.IImageFetcher>().As(Singleton).To<Build.ImageFetcher>()
-                .Bind<Build.IImagePublisher>().As(Singleton).To<Build.ImagePublisher>()
-                .Bind<Build.IImageCleaner>().As(Singleton).To<Build.ImageCleaner>();
+                .Bind<ITeamCityWriter, ITeamCityMessageWriter>().As(Singleton).To(ctx => ctx.Container.Inject<ITeamCityServiceMessages>().CreateWriter())
+                .Bind<ICommand<IGenerateOptions>>().As(Singleton).To<GenerateCommand>()
+                .Bind<ICommand<IBuildOptions>>().As(Singleton).To<BuildCommand>();
         }
     }
 }

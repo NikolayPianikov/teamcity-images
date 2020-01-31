@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using IoC;
 
-namespace TeamCity.Docker.Build
+namespace TeamCity.Docker
 {
-    internal interface IOptions : Docker.IOptions
+    internal interface IBuildOptions : Docker.IOptions
     {
         [NotNull] string ContextPath { get; }
 

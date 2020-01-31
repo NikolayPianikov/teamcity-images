@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CommandLine;
+
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
 
-namespace TeamCity.Docker.Build
+namespace TeamCity.Docker
 {
     [Verb("build", HelpText = "Build docker images for session.")]
-    internal class Options: IOptions
+    internal class BuildOptions: IBuildOptions
     {
         [Option('s', "source", Required = false, HelpText = "Path to configuration directory.")]
         public string SourcePath { get; set; } = string.Empty;

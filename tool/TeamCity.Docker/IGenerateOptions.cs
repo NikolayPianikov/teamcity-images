@@ -1,8 +1,8 @@
 ﻿using IoC;
 
-namespace TeamCity.Docker.Generate
+namespace TeamCity.Docker
 {
-    internal interface IOptions: Docker.IOptions
+    internal interface IGenerateOptions: Docker.IOptions
     {
         [NotNull] string ContextPath { get; }
 
