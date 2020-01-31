@@ -8,6 +8,9 @@
 # Tag linux
 # Repo ${repo}
 
+# This dependency was added to optimize docker image build.
+# Depends on teamcity-minimal-agent:${tag}
+
 # Based on ${ubuntuImage}
 FROM ${ubuntuImage}
 

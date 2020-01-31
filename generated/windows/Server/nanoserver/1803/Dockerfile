@@ -17,6 +17,9 @@ ARG windowsBuild='1803'
 # Tag latest-nanoserver-1803
 # Repo 
 
+# This dependency was added to optimize docker image build.
+# Depends on teamcity-minimal-agent:latest-nanoserver-1803
+
 # Based on mcr.microsoft.com/powershell:nanoserver-1803
 # Install PowerShell
 FROM ${powershellImage} AS base

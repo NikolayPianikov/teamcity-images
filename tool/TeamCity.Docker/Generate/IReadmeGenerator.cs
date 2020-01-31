@@ -5,6 +5,6 @@ namespace TeamCity.Docker.Generate
 {
     internal interface IReadmeGenerator
     {
-        [NotNull] IEnumerable<ReadmeFile> Generate([NotNull] IEnumerable<TreeNode<DockerFile>> dockerNodes);
+        [NotNull] IEnumerable<ReadmeFile> Generate([NotNull] IEnumerable<TreeNode<TreeDependency>> dockerNodes);
     }
 }

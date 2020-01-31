@@ -56,25 +56,25 @@ namespace TeamCity.Docker.Build
             _taskRunner = taskRunner ?? throw new ArgumentNullException(nameof(taskRunner));
         }
 
-        public async Task<Result<IEnumerable<DockerImage>>> Build(IEnumerable<TreeNode<DockerFile>> dockerNodes)
+        public async Task<Result<IEnumerable<DockerImage>>> Build(IEnumerable<TreeNode<TreeDependency>> dockerNodes)
         {
             if (dockerNodes == null)
             {
                 throw new ArgumentNullException(nameof(dockerNodes));
             }
 
-            var nodesToBuild = new List<TreeNode<DockerFile>>();
+            var nodesToBuild = new List<TreeNode<TreeDependency>>();
             var dockerFiles = new HashSet<DockerFile>();
             var dependencies = new Dictionary<string, int>();
             foreach (var node in dockerNodes)
             {
                 var allNodes = node.EnumerateNodes().ToList();
-                if (allNodes.Any(i => i.Value.Metadata.Repos.Any()))
+                if (allNodes.Any(i => i.Value.File.Metadata.Repos.Any()))
                 {
                     nodesToBuild.Add(node);
                     foreach (var treeNode in allNodes)
                     {
-                        dockerFiles.Add(treeNode.Value);
+                        dockerFiles.Add(treeNode.Value.File);
                     }
                 }
                 else
@@ -145,11 +145,11 @@ namespace TeamCity.Docker.Build
             }
         }
 
-        private async Task<Result<IEnumerable<DockerImage>>> Build(TreeNode<DockerFile> node, Stream contextStream, string dockerFilesRootPath, IReadOnlyDictionary<string, string> labels, HashSet<DockerImage> initialState, IDictionary<string, int> dependencies)
+        private async Task<Result<IEnumerable<DockerImage>>> Build(TreeNode<TreeDependency> node, Stream contextStream, string dockerFilesRootPath, IReadOnlyDictionary<string, string> labels, HashSet<DockerImage> initialState, IDictionary<string, int> dependencies)
         {
             var id = Guid.NewGuid().ToString();
             var curLabels = new Dictionary<string, string>(labels) {{"InternalImageId", id}};
-            var dockerFile = node.Value;
+            var dockerFile = node.Value.File;
             var dockerFilePathInContext = _pathService.Normalize(Path.Combine(dockerFilesRootPath, dockerFile.Path));
             var buildParameters = new ImageBuildParameters
             {
@@ -178,7 +178,7 @@ namespace TeamCity.Docker.Build
                     var buildState = await GetImages(curLabels, false, "Images");
                     var afterBuildState = await GetImages(new Dictionary<string, string>());
 
-                    ExcludeServedDependencies(node.Value, dependencies);
+                    ExcludeServedDependencies(node.Value.File, dependencies);
 
                     var difState = afterBuildState.Except(initialState).ToHashSet();
                     var toRemove = difState.Where(i => !dependencies.ContainsKey(i.RepoTag)).ToHashSet();
@@ -251,19 +251,19 @@ namespace TeamCity.Docker.Build
             return new Result<IEnumerable<DockerImage>>(result);
         }
 
-        private static void FillDependencies(IEnumerable<TreeNode<DockerFile>> nodes, IDictionary<string, int> dependencies)
+        private static void FillDependencies(IEnumerable<TreeNode<TreeDependency>> nodes, IDictionary<string, int> dependencies)
         {
             foreach (var treeNode in nodes)
             {
-                foreach (var baseImage in treeNode.Value.Metadata.BaseImages)
+                foreach (var dependency in treeNode.Value.File.Metadata.Dependencies)
                 {
-                    if (dependencies.TryGetValue(baseImage, out var counter))
+                    if (dependencies.TryGetValue(dependency.RepoTag, out var counter))
                     {
-                        dependencies[baseImage] = counter + 1;
+                        dependencies[dependency.RepoTag] = counter + 1;
                     }
                     else
                     {
-                        dependencies.Add(baseImage, 1);
+                        dependencies.Add(dependency.RepoTag, 1);
                     }
                 }
             }
@@ -271,9 +271,9 @@ namespace TeamCity.Docker.Build
 
         private static void ExcludeServedDependencies(DockerFile dockerFile, IDictionary<string, int> dependencies)
         {
-            foreach (var baseImage in dockerFile.Metadata.BaseImages)
+            foreach (var dependency in dockerFile.Metadata.Dependencies)
             {
-                if (!dependencies.TryGetValue(baseImage, out var count))
+                if (!dependencies.TryGetValue(dependency.RepoTag, out var count))
                 {
                     continue;
                 }
@@ -281,11 +281,11 @@ namespace TeamCity.Docker.Build
                 count--;
                 if (count == 0)
                 {
-                    dependencies.Remove(baseImage);
+                    dependencies.Remove(dependency.RepoTag);
                 }
                 else
                 {
-                    dependencies[baseImage] = count - 1;
+                    dependencies[dependency.RepoTag] = count - 1;
                 }
             }
         }

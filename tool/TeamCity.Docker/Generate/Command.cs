@@ -86,15 +86,19 @@ namespace TeamCity.Docker.Generate
             return Task.FromResult(Result.Success);
         }
 
-        private void ShowNode(TreeNode<DockerFile> node)
+        private void ShowNode(TreeNode<TreeDependency> node)
         {
+            var toBuild = node.Value.File.Metadata.Repos.Any();
+            var action = toBuild ? "Build" : "Generate";
+            var description = $"{action} {node.Value.Dependency.RepoTag}";
+
             if (!node.Children.Any())
             {
-                _logger.Log(node.Value.ToString());
+                _logger.Log(description);
                 return;
             }
 
-            using (_logger.CreateBlock(node.Value.ToString()))
+            using (_logger.CreateBlock(description))
             {
                 foreach (var treeNode in node.Children)
                 {

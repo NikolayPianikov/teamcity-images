@@ -10,6 +10,9 @@
 # Tag ${tag}
 # Repo ${repo}
 
+# This dependency was added to optimize docker image build.
+# Depends on teamcity-minimal-agent:latest-nanoserver-${windowsBuild}
+
 # Based on ${powershellImage}
 # Install PowerShell
 FROM ${powershellImage} AS base

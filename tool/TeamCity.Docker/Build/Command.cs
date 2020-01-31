@@ -2,8 +2,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using IoC;
+using TeamCity.Docker.Generate;
 
 namespace TeamCity.Docker.Build
 {
@@ -52,7 +54,15 @@ namespace TeamCity.Docker.Build
                 }
             }
 
-            var dockerNodes = _dependencyTreeFactory.Create(dockerFiles);
+            var dockerNodes = _dependencyTreeFactory.Create(dockerFiles).ToList();
+            using (_logger.CreateBlock("Build Tree"))
+            {
+                foreach (var node in dockerNodes)
+                {
+                    ShowNode(node);
+                }
+            }
+
             var result = await _imageBuilder.Build(dockerNodes);
             if (result.State == Result.Error)
             {
@@ -82,5 +92,29 @@ namespace TeamCity.Docker.Build
             return Result.Success;
         }
 
+        private void ShowNode(TreeNode<TreeDependency> node)
+        {
+            var toBuild = node.Value.File.Metadata.Repos.Any();
+            if (!toBuild)
+            {
+                return;
+            }
+
+            var description = $"{node.Value.Dependency.RepoTag}";
+
+            if (!node.Children.Any())
+            {
+                _logger.Log(description);
+                return;
+            }
+
+            using (_logger.CreateBlock(description))
+            {
+                foreach (var treeNode in node.Children)
+                {
+                    ShowNode(treeNode);
+                }
+            }
+        }
     }
 }

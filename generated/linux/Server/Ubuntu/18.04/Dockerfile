@@ -13,6 +13,9 @@ ARG ubuntuImage='ubuntu:18.04'
 # Tag linux
 # Repo https://hub.docker.com/r/jetbrains/
 
+# This dependency was added to optimize docker image build.
+# Depends on teamcity-minimal-agent:18.04
+
 # Based on ubuntu:18.04
 FROM ${ubuntuImage}
 

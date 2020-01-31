@@ -2,7 +2,7 @@
   "profiles": {
     "Build": {
       "commandName": "Project",
-      "commandLineArgs": "build -s configs/linux -f configs/linux.config -c context -n -u nikolayp -p 88e7198e-433d-4035-9e8a-956f9a3bdeae",
+      "commandLineArgs": "generate -s configs -f configs/windows.config;configs/linux.config -c context -t generated",
       "workingDirectory": "C:\\Projects\\teamcity-images"
     }
   }

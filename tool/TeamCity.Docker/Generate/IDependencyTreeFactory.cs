@@ -5,6 +5,6 @@ namespace TeamCity.Docker.Generate
 {
     internal interface IDependencyTreeFactory
     {
-        [NotNull] IEnumerable<TreeNode<DockerFile>> Create([NotNull] IEnumerable<DockerFile> dockerFiles);
+        [NotNull] IEnumerable<TreeNode<TreeDependency>> Create([NotNull] IEnumerable<DockerFile> dockerFiles);
     }
 }

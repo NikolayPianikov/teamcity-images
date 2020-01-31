@@ -28,50 +28,57 @@ namespace TeamCity.Docker.Generate
             _dockerConverter = dockerConverter ?? throw new ArgumentNullException(nameof(dockerConverter));
         }
 
-        public IEnumerable<ReadmeFile> Generate(IEnumerable<TreeNode<DockerFile>> dockerNodes)
+        public IEnumerable<ReadmeFile> Generate(IEnumerable<TreeNode<TreeDependency>> dockerNodes)
         {
             if (dockerNodes == null)
             {
                 throw new ArgumentNullException(nameof(dockerNodes));
             }
 
-            var allNodes = dockerNodes.EnumerateNodes().Distinct().ToList();
-
+            var allNodes = dockerNodes.EnumerateNodes().ToList();
             var repoTags =
                 from node in allNodes
-                from tag in node.Value.Metadata.Tags
+                from tag in node.Value.File.Metadata.Tags
                 select new { node.Value, tag };
 
-            var dockerFileDictionary = new Dictionary<string, DockerFile>();
+            var dockerFileDictionary = new Dictionary<string, TreeDependency>();
             foreach (var repoTag in repoTags)
             {
                 dockerFileDictionary[repoTag.tag] = repoTag.Value;
             }
 
-            var dockerNodeGroups =
-                from node in allNodes.EnumerateNodes()
-                group node by new { node.Value.Metadata.ImageId };
+            var groups =
+                from node in allNodes
+                group node by node.Value.File.Metadata.ImageId
+                into groupsByImageId
+                from groupByImageId in 
+                    from groupByImageId in groupsByImageId
+                    group groupByImageId by groupByImageId.Value.File
+                group groupByImageId by groupsByImageId.Key;
 
-            foreach (var dockerNodeGroup in dockerNodeGroups)
+            foreach (var groupByImageId in groups)
             {
-                var imageId = dockerNodeGroup.Key.ImageId;
+                var imageId = groupByImageId.Key;
                 var readmeFilePath = GetReadmeFilePath(imageId);
-                var nodes = dockerNodeGroup.ToList();
+
+                var groupByImage = groupByImageId.ToList();
 
                 var sb = new StringBuilder();
                 sb.AppendLine("### Tags");
-                foreach (var node in nodes)
+                foreach (var groupByFile in groupByImage)
                 {
-                    var dockerFile = node.Value;
+                    var dockerFile = groupByFile.Key;
                     sb.AppendLine($"- [{GetReadmeTagName(dockerFile)}](#{GetTagLink(dockerFile)})");
                 }
+
+                //var files = dockerNodeGroup.Select(i => i.Value.File).ToList();
 
                 sb.AppendLine();
 
                 var counter = 0;
-                foreach (var node in nodes)
+                foreach (var groupByFile in groupByImage)
                 {
-                    var dockerFile = node.Value;
+                    var dockerFile = groupByFile.Key;
                     sb.AppendLine($"### {GetReadmeTagName(dockerFile)}");
 
                     sb.AppendLine();
@@ -88,37 +95,57 @@ namespace TeamCity.Docker.Generate
                     }
 
                     sb.AppendLine();
-                    sb.AppendLine("Docker build commands:");
-                    sb.AppendLine("```");
-                    foreach (var dependency in GetParents(allNodes, node).Concat(Enumerable.Repeat(node, 1)))
-                    {
-                        sb.AppendLine(GeneratedDockerBuildCommand(dependency.Value));
-                    }
-
-                    sb.AppendLine("```");
-
-                    sb.AppendLine();
                     sb.AppendLine("Installed components:");
                     foreach (var component in dockerFile.Metadata.Components)
                     {
                         sb.AppendLine($"- {component}");
                     }
 
-                    sb.AppendLine();
-                    sb.AppendLine("Base images:");
-                    foreach (var image in dockerFile.Metadata.BaseImages)
+                    foreach (var node in groupByFile)
                     {
-                        if (dockerFileDictionary.TryGetValue(image, out var imageDockerFile))
+                        var buildPath = GetBuildPath(node).ToList();
+                        buildPath.Reverse();
+
+                        sb.AppendLine();
+                        sb.AppendLine("Docker build commands:");
+                        sb.AppendLine("```");
+                        foreach (var path in buildPath)
                         {
-                            sb.AppendLine($"- [{image}]({GetReadmeFilePath(imageDockerFile.Metadata.ImageId)}#{GetTagLink(imageDockerFile)})");
+                            if (path.Value.Dependency.DependencyType != DependencyType.Build)
+                            {
+                                continue;
+                            }
+
+                            if (dockerFileDictionary.TryGetValue(path.Value.Dependency.RepoTag, out var dependencyDockerFile))
+                            {
+                                sb.AppendLine(GeneratedDockerBuildCommand(dependencyDockerFile.File));
+                            }
                         }
-                        else
+
+                        sb.AppendLine("```");
+
+                        sb.AppendLine();
+                        sb.AppendLine("Base images:");
+                        foreach (var dependency in buildPath.Select(i => i.Value))
                         {
-                            sb.AppendLine($"- {image}");
+                            if (dependency.Dependency.DependencyType == DependencyType.Logical)
+                            {
+                                continue;
+                            }
+
+                            if (dockerFileDictionary.TryGetValue(dependency.Dependency.RepoTag, out var imageDockerFile))
+                            {
+                                sb.AppendLine($"- [{dependency}]({GetReadmeFilePath(imageDockerFile.File.Metadata.ImageId)}#{GetTagLink(imageDockerFile.File)})");
+                            }
+                            else
+                            {
+                                sb.AppendLine($"- {dependency}");
+                            }
                         }
+
+                        sb.AppendLine();
                     }
 
-                    sb.AppendLine();
                     counter++;
                 }
 
@@ -127,20 +154,13 @@ namespace TeamCity.Docker.Generate
             }
         }
 
-        private static IEnumerable<TreeNode<DockerFile>> GetParents(IReadOnlyCollection<TreeNode<DockerFile>> nodes, TreeNode<DockerFile> targetNode)
+        private static IEnumerable<TreeNode<TreeDependency>> GetBuildPath(TreeNode<TreeDependency> targetNode)
         {
-            foreach (var treeNode in nodes)
+            do
             {
-                if (treeNode.Children.Contains(targetNode))
-                {
-                    foreach (var parent in GetParents(nodes, treeNode))
-                    {
-                        yield return parent;
-                    }
-
-                    yield return treeNode;
-                }
-            }
+                yield return targetNode;
+                targetNode = targetNode.Parent;
+            } while (targetNode != null);
         }
 
         private string GetTagLink(DockerFile dockerFile) =>

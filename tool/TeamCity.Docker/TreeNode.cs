@@ -1,19 +1,24 @@
 ﻿using System.Collections.Generic;
+using IoC;
 
 namespace TeamCity.Docker
 {
     internal class TreeNode<T>
     {
+        [CanBeNull] public readonly TreeNode<T> Parent;
         public readonly T Value;
-        public readonly IList<TreeNode<T>> Children;
+        public readonly IReadOnlyCollection<TreeNode<T>> Children;
 
-        public TreeNode(T value)
+        public TreeNode([CanBeNull] TreeNode<T> parent, T value, IReadOnlyCollection<TreeNode<T>> children)
         {
+            Parent = parent;
             Value = value;
-            Children = new List<TreeNode<T>>();
+            Children = children;
         }
 
         public override int GetHashCode() => EqualityComparer<T>.Default.GetHashCode(Value);
+
+        public override string ToString() => Value.ToString();
 
         public override bool Equals(object obj)
         {

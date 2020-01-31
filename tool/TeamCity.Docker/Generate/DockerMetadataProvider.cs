@@ -11,7 +11,8 @@ namespace TeamCity.Docker.Generate
     {
         private const string IdPrefix = "# Id ";
         private const string TagPrefix = "# Tag ";
-        private const string BaseImagePrefix = "# Based on ";
+        private const string BasedOnPrefix = "# Based on ";
+        private const string DependsOnPrefix = "# Depends on ";
         private const string ComponentsPrefix = "# Install ";
         private const string RepoPrefix = "# Repo ";
 
@@ -24,7 +25,7 @@ namespace TeamCity.Docker.Generate
 
             var imageId = "unknown";
             var tags = new List<string>();
-            var baseImages = new List<string>();
+            var dependencies = new List<Dependency>();
             var components = new List<string>();
             var repos = new List<string>();
             foreach (var comment in dockerFileContent.Where(line => line.Type == DockerLineType.Comment))
@@ -32,13 +33,14 @@ namespace TeamCity.Docker.Generate
                 if (
                     TrySetByPrefix(comment.Text, IdPrefix, value => imageId = value) ||
                     TrySetByPrefix(comment.Text, TagPrefix, value => tags.Add(value)) ||
-                    TrySetByPrefix(comment.Text, BaseImagePrefix, value => baseImages.Add(value)) ||
+                    TrySetByPrefix(comment.Text, BasedOnPrefix, value => dependencies.Add(new Dependency(value, DependencyType.Build))) ||
+                    TrySetByPrefix(comment.Text, DependsOnPrefix, value => dependencies.Add(new Dependency(value, DependencyType.Logical))) ||
                     TrySetByPrefix(comment.Text, ComponentsPrefix, value => components.Add(value)) ||
                     TrySetByPrefix(comment.Text, RepoPrefix, value => repos.Add(value)))
                 { }
             }
 
-            return new Metadata(imageId, tags, baseImages, components, repos);
+            return new Metadata(imageId, tags, dependencies, components, repos);
         }
 
         private static bool TrySetByPrefix([NotNull] string text, [NotNull] string prefix, Action<string> setter)
