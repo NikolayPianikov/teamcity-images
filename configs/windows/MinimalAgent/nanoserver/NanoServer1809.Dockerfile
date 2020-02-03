@@ -7,8 +7,9 @@
 # Id teamcity-minimal-agent
 # Tag ${tag}
 # Repo ${repo}
+# Weight 1
 
-# Based on ${powershellImage}
+# Based on ${powershellImage} 1
 FROM ${powershellImage} AS base
 
 SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
@@ -42,6 +43,7 @@ COPY run-agent.ps1 /BuildAgent/run-agent.ps1
 # Workaround for https://github.com/PowerShell/PowerShell-Docker/issues/164
 ARG nanoserverImage
 
+# Based on ${nanoserverImage} 1
 FROM ${nanoserverImage}
 
 ENV ProgramFiles="C:\Program Files" \

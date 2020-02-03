@@ -2,10 +2,8 @@
 
 namespace TeamCity.Docker
 {
-    internal interface IGenerateOptions: Docker.IOptions
+    internal interface IGenerateOptions: IOptions
     {
-        [NotNull] string ContextPath { get; }
-
         [NotNull] string TargetPath { get; }
     }
 }

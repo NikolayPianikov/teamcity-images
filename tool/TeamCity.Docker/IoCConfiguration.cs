@@ -5,6 +5,8 @@ using IoC;
 using JetBrains.TeamCity.ServiceMessages.Write;
 using JetBrains.TeamCity.ServiceMessages.Write.Special;
 using JetBrains.TeamCity.ServiceMessages.Write.Special.Impl.Updater;
+using TeamCity.Docker.Generic;
+using TeamCity.Docker.Model;
 using static IoC.Lifetime;
 // ReSharper disable InconsistentNaming
 
@@ -36,6 +38,11 @@ namespace TeamCity.Docker
                 .Bind<IMessageLogger>().As(Singleton).To<MessageLogger>()
                 .Bind<IDockerConverter>().As(Singleton).To<DockerConverter>()
                 .Bind<IPathService>().As(Singleton).To<PathService>()
+                .Bind<IConfigurationExplorer>().As(Singleton).To<ConfigurationExplorer>()
+                .Bind<IContentParser>().As(Singleton).To<ContentParser>()
+                .Bind<IReadmeGenerator>().As(Singleton).To<ReadmeGenerator>()
+                .Bind<IFactory<IGraph<IArtifact, Dependency>, IEnumerable<Template>>>().As(Singleton).To<DockerGraphFactory>()
+                .Bind<IContextFactory>().As(Singleton).To<ContextFactory>()
 
                 // TeamCity messages
                 .Bind<IServiceMessageFormatter>().As(Singleton).To<ServiceMessageFormatter>()

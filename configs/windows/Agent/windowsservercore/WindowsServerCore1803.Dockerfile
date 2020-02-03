@@ -9,8 +9,9 @@
 # Id teamcity-agent
 # Tag ${tag}
 # Repo ${repo}
+# Weight 11
 
-# Based on ${windowsservercoreImage}
+# Based on ${windowsservercoreImage} 10
 FROM ${windowsservercoreImage} AS tools
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]

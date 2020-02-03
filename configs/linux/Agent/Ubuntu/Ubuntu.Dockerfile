@@ -7,6 +7,7 @@
 # Tag ${tag}
 # Tag linux
 # Repo ${repo}
+# Weight 1
 
 # Based on ${teamcityMinimalAgentImage}
 FROM ${teamcityMinimalAgentImage}

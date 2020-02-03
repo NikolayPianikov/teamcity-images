@@ -7,8 +7,9 @@
 # Id teamcity-minimal-agent
 # Tag ${tag}
 # Repo ${repo}
+# Weight 1
 
-# Based on ${powershellImage}
+# Based on ${powershellImage} 1
 # Install PowerShell
 FROM ${powershellImage} AS base
 
@@ -40,8 +41,9 @@ RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
 COPY TeamCity/buildAgent C:/BuildAgent
 COPY run-agent.ps1 /BuildAgent/run-agent.ps1
 
-ARG nanoserverImage
+ARG nanoserverImage 1000
 
+# Based on ${nanoserverImage} 1
 FROM ${nanoserverImage}
 
 COPY --from=base ["C:/Program Files/Java/OpenJDK", "C:/Program Files/Java/OpenJDK"]

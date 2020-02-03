@@ -22,6 +22,8 @@ namespace TeamCity.Docker
 
         void WriteFile([NotNull] string path, [NotNull] string content);
 
+        void WriteLines([NotNull] string path, [NotNull] IEnumerable<string> lines);
+
         [NotNull] Stream OpenRead([NotNull] string path);
 
         [NotNull] Stream OpenWrite([NotNull] string path);

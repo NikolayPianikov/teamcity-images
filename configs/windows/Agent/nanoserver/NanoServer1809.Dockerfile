@@ -9,8 +9,9 @@
 # Id teamcity-agent
 # Tag ${tag}
 # Repo ${repo}
+# Weight 1
 
-# Based on ${powershellImage}
+# Based on ${powershellImage} 1
 FROM ${powershellImage} AS dotnet
 
 SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
@@ -35,6 +36,7 @@ FROM ${teamcityWindowsservercoreImage} AS tools
 # Workaround for https://github.com/PowerShell/PowerShell-Docker/issues/164
 ARG nanoserverImage
 
+# Based on ${nanoserverImage} 1
 FROM ${nanoserverImage}
 
 ENV ProgramFiles="C:\Program Files" \

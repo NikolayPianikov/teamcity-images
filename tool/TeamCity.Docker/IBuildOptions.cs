@@ -3,10 +3,8 @@ using IoC;
 
 namespace TeamCity.Docker
 {
-    internal interface IBuildOptions : Docker.IOptions
+    internal interface IBuildOptions : IOptions
     {
-        [NotNull] string ContextPath { get; }
-
         [NotNull] IEnumerable<string> Tags { get; }
 
         [NotNull] string ServerAddress { get; }

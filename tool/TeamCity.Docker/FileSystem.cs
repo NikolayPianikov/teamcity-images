@@ -81,6 +81,22 @@ namespace TeamCity.Docker
             File.WriteAllText(path, content);
         }
 
+        public void WriteLines(string path, IEnumerable<string> lines)
+        {
+            if (path == null)
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
+
+            if (lines == null)
+            {
+                throw new ArgumentNullException(nameof(lines));
+            }
+
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            File.WriteAllLines(path, lines);
+        }
+
         public Stream OpenRead(string path)
         {
             if (path == null)

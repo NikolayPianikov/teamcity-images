@@ -7,8 +7,9 @@
 # Tag ${tag}
 # Tag linux
 # Repo ${repo}
+# Weight 1
 
-# Based on ${ubuntuImage}
+# Based on ${ubuntuImage} 0
 FROM ${ubuntuImage}
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'

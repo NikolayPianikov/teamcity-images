@@ -9,11 +9,9 @@
 # Id teamcity-server
 # Tag ${tag}
 # Repo ${repo}
+# Weight 2
 
-# This dependency was added to optimize docker image build.
-# Depends on teamcity-minimal-agent:latest-nanoserver-${windowsBuild}
-
-# Based on ${powershellImage}
+# Based on ${powershellImage} 1
 # Install PowerShell
 FROM ${powershellImage} AS base
 
