@@ -122,7 +122,7 @@ namespace TeamCity.Docker
             }
         }
 
-        private IEnumerable<IArtifact> GetArtifacts(IGraph<IArtifact, Dependency> graph, INode<IArtifact> node)
+        private static IEnumerable<IArtifact> GetArtifacts(IGraph<IArtifact, Dependency> graph, INode<IArtifact> node)
         {
             yield return node.Value;
 
