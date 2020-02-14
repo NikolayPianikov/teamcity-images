@@ -2,12 +2,12 @@
 
 namespace TeamCity.Docker.Model
 {
-    internal class Readme: IArtifact
+    internal class FileArtifact: IArtifact
     {
         public readonly string Path;
         public readonly IEnumerable<string> Lines;
 
-        public Readme(string path, IEnumerable<string> lines)
+        public FileArtifact(string path, IEnumerable<string> lines)
         {
             Path = path;
             Lines = lines;

@@ -13,7 +13,6 @@ namespace TeamCity.Docker
 
         [NotNull] string ContextPath { get; }
 
-
         [NotNull] IEnumerable<string> ConfigurationFiles { get; }
 
         int Retries { get; }

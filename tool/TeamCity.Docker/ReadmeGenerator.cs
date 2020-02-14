@@ -9,25 +9,24 @@ using TeamCity.Docker.Model;
 
 namespace TeamCity.Docker
 {
-    internal class ReadmeGenerator : IReadmeGenerator
+    internal class ReadmeGenerator : IGenerator
     {
         private static readonly Dependency GenerateDependency = new Dependency(DependencyType.Generate);
         [NotNull] private readonly IGenerateOptions _options;
         [NotNull] private readonly IPathService _pathService;
-        [NotNull] private readonly IDockerConverter _dockerConverter;
 
         public ReadmeGenerator(
             [NotNull] IGenerateOptions options,
-            [NotNull] IPathService pathService,
-            [NotNull] IDockerConverter dockerConverter)
+            [NotNull] IPathService pathService)
         {
             _options = options ?? throw new ArgumentNullException(nameof(options));
             _pathService = pathService ?? throw new ArgumentNullException(nameof(pathService));
-            _dockerConverter = dockerConverter ?? throw new ArgumentNullException(nameof(dockerConverter));
         }
 
-        public void Generate(IGraph<IArtifact, Dependency> graph)
+        public void Generate([NotNull] IGraph<IArtifact, Dependency> graph)
         {
+            if (graph == null) throw new ArgumentNullException(nameof(graph));
+
             var groups =
                 from node in graph.Nodes
                 let image = node.Value as Image
@@ -45,7 +44,7 @@ namespace TeamCity.Docker
             {
                 var imageId = groupByImageId.Key;
                 var lines = new List<string>();
-                graph.TryAddNode(new Readme(GetReadmeFilePath(imageId), lines), out var readmeNode);
+                graph.TryAddNode(new FileArtifact(GetReadmeFilePath(imageId), lines), out var readmeNode);
                 var groupByImage = groupByImageId.ToList();
 
                 lines.Add("### Tags");

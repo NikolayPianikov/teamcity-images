@@ -3,7 +3,7 @@ using TeamCity.Docker.Model;
 
 namespace TeamCity.Docker
 {
-    internal interface IReadmeGenerator
+    internal interface IGenerator
     {
         void Generate(IGraph<IArtifact, Dependency> graph);
     }
