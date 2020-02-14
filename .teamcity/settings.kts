@@ -37,6 +37,6 @@ object BuildImage : BuildType({
 })
 
 object RemoteTeamcityImages : GitVcsRoot({
-    name = "remote teamcity images"
+    name = "teamcity images repo"
     url = "https://github.com/NikolayPianikov/teamcity-images.git"
 })
