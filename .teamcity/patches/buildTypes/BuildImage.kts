@@ -18,7 +18,10 @@ changeBuildType(RelativeId("BuildImage")) {
                 name = "step 1"
                 commandType = build {
                     source = content {
-                        content = "aaaa"
+                        content = """
+                            aaaa
+                            cdscdsc
+                        """.trimIndent()
                     }
                     commandArgs = "--pull"
                 }
