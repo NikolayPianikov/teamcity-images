@@ -36,6 +36,7 @@ namespace TeamCity.Docker
             var lines = new List<string>();
             lines.Add("import jetbrains.buildServer.configs.kotlin.v2019_2.*");
             lines.Add("import jetbrains.buildServer.configs.kotlin.v2019_2.vcs.GitVcsRoot");
+            lines.Add("import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dockerCommand");
             lines.Add("version = \"2019.2\"");
             lines.Add(string.Empty);
 
@@ -75,7 +76,7 @@ namespace TeamCity.Docker
             lines.Add("url = \"https://github.com/NikolayPianikov/teamcity-images.git\"");
             lines.Add("})");
 
-            graph.TryAddNode(new FileArtifact(Path.Combine(_options.TeamCityDslPath, "aaa.kts"), lines), out var dslNode);
+            graph.TryAddNode(new FileArtifact(Path.Combine(_options.TeamCityDslPath, "docker.kts"), lines), out var dslNode);
         }
 
         private static IEnumerable<INode<IArtifact>> GetPath(IGraph<IArtifact, Dependency> graph, INode<IArtifact> node)

@@ -1,5 +1,6 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.vcs.GitVcsRoot
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dockerCommand
 version = "2019.2"
 
 object build_1 : BuildType({
