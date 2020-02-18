@@ -3,8 +3,8 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.vcs.GitVcsRoot
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dockerCommand
 version = "2019.2"
 
-object teamcity-agent:latest-nanoserver-1903:latest-windowsservercore-1903_teamcity-minimal-agent:latest-nanoserver-1903_teamcity-server:latest-nanoserver-1903 : BuildType({
-name = "build docker image teamcity-agent:latest-nanoserver-1903:latest-windowsservercore-1903_teamcity-minimal-agent:latest-nanoserver-1903_teamcity-server:latest-nanoserver-1903"
+object teamcity-agent_latest-nanoserver-1903_latest-windowsservercore-1903_teamcity-minimal-agent_latest-nanoserver-1903_teamcity-server_latest-nanoserver-1903 : BuildType({
+name = "build docker image teamcity-agent_latest-nanoserver-1903_latest-windowsservercore-1903_teamcity-minimal-agent_latest-nanoserver-1903_teamcity-server_latest-nanoserver-1903"
 steps {
 dockerCommand {
 name = "build teamcity-server:latest-nanoserver-1903"
@@ -70,8 +70,8 @@ param("dockerImage.platform", "windows")
 })
 
 
-object teamcity-agent:latest-nanoserver-1809:latest-windowsservercore-1809_teamcity-minimal-agent:latest-nanoserver-1809_teamcity-server:latest-nanoserver-1809 : BuildType({
-name = "build docker image teamcity-agent:latest-nanoserver-1809:latest-windowsservercore-1809_teamcity-minimal-agent:latest-nanoserver-1809_teamcity-server:latest-nanoserver-1809"
+object teamcity-agent_latest-nanoserver-1809_latest-windowsservercore-1809_teamcity-minimal-agent_latest-nanoserver-1809_teamcity-server_latest-nanoserver-1809 : BuildType({
+name = "build docker image teamcity-agent_latest-nanoserver-1809_latest-windowsservercore-1809_teamcity-minimal-agent_latest-nanoserver-1809_teamcity-server_latest-nanoserver-1809"
 steps {
 dockerCommand {
 name = "build teamcity-server:latest-nanoserver-1809"
@@ -137,8 +137,8 @@ param("dockerImage.platform", "windows")
 })
 
 
-object teamcity-agent:18.04,linux_teamcity-minimal-agent:18.04,linux_teamcity-server:18.04,linux : BuildType({
-name = "build docker image teamcity-agent:18.04,linux_teamcity-minimal-agent:18.04,linux_teamcity-server:18.04,linux"
+object teamcity-agent_18.04,linux_teamcity-minimal-agent_18.04,linux_teamcity-server_18.04,linux : BuildType({
+name = "build docker image teamcity-agent_18.04,linux_teamcity-minimal-agent_18.04,linux_teamcity-server_18.04,linux"
 steps {
 dockerCommand {
 name = "build teamcity-server:18.04,linux"
@@ -192,8 +192,8 @@ param("dockerImage.platform", "linux")
 })
 
 
-object teamcity-agent:latest-nanoserver-1803:latest-windowsservercore-1803_teamcity-minimal-agent:latest-nanoserver-1803_teamcity-server:latest-nanoserver-1803 : BuildType({
-name = "build docker image teamcity-agent:latest-nanoserver-1803:latest-windowsservercore-1803_teamcity-minimal-agent:latest-nanoserver-1803_teamcity-server:latest-nanoserver-1803"
+object teamcity-agent_latest-nanoserver-1803_latest-windowsservercore-1803_teamcity-minimal-agent_latest-nanoserver-1803_teamcity-server_latest-nanoserver-1803 : BuildType({
+name = "build docker image teamcity-agent_latest-nanoserver-1803_latest-windowsservercore-1803_teamcity-minimal-agent_latest-nanoserver-1803_teamcity-server_latest-nanoserver-1803"
 steps {
 dockerCommand {
 name = "build teamcity-server:latest-nanoserver-1803"
@@ -261,10 +261,10 @@ param("dockerImage.platform", "windows")
 
 project {
 vcsRoot(RemoteTeamcityImages)
-buildType(teamcity-agent:latest-nanoserver-1903:latest-windowsservercore-1903_teamcity-minimal-agent:latest-nanoserver-1903_teamcity-server:latest-nanoserver-1903)
-buildType(teamcity-agent:latest-nanoserver-1809:latest-windowsservercore-1809_teamcity-minimal-agent:latest-nanoserver-1809_teamcity-server:latest-nanoserver-1809)
-buildType(teamcity-agent:18.04,linux_teamcity-minimal-agent:18.04,linux_teamcity-server:18.04,linux)
-buildType(teamcity-agent:latest-nanoserver-1803:latest-windowsservercore-1803_teamcity-minimal-agent:latest-nanoserver-1803_teamcity-server:latest-nanoserver-1803)
+buildType(teamcity-agent_latest-nanoserver-1903_latest-windowsservercore-1903_teamcity-minimal-agent_latest-nanoserver-1903_teamcity-server_latest-nanoserver-1903)
+buildType(teamcity-agent_latest-nanoserver-1809_latest-windowsservercore-1809_teamcity-minimal-agent_latest-nanoserver-1809_teamcity-server_latest-nanoserver-1809)
+buildType(teamcity-agent_18.04,linux_teamcity-minimal-agent_18.04,linux_teamcity-server_18.04,linux)
+buildType(teamcity-agent_latest-nanoserver-1803_latest-windowsservercore-1803_teamcity-minimal-agent_latest-nanoserver-1803_teamcity-server_latest-nanoserver-1803)
 }
 
 object RemoteTeamcityImages : GitVcsRoot({
