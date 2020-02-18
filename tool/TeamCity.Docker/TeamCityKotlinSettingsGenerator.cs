@@ -192,7 +192,10 @@ namespace TeamCity.Docker
             if (weight > 0)
             {
                 yield return "features {";
-                yield return $"freeDiskSpace {{ requiredSpace = \"{weight}gb\" failBuild = true }}";
+                yield return "freeDiskSpace {";
+                yield return $"requiredSpace = \"{weight}gb\"";
+                yield return "failBuild = true";
+                yield return "}";
                 yield return "}";
             }
 
