@@ -73,7 +73,7 @@ failBuild = true
 }
 }
 dependencies {
-dependency(AbsoluteId("Docker_TeamCityDist")) {
+dependency(AbsoluteId("TC2019_2_BuildDist")) {
 snapshot { }
 artifacts {
 artifactRules = "TeamCity-*.tar.gz!/**=>context"
@@ -152,7 +152,7 @@ failBuild = true
 }
 }
 dependencies {
-dependency(AbsoluteId("Docker_TeamCityDist")) {
+dependency(AbsoluteId("TC2019_2_BuildDist")) {
 snapshot { }
 artifacts {
 artifactRules = "TeamCity-*.tar.gz!/**=>context"
@@ -220,7 +220,7 @@ failBuild = true
 }
 }
 dependencies {
-dependency(AbsoluteId("Docker_TeamCityDist")) {
+dependency(AbsoluteId("TC2019_2_BuildDist")) {
 snapshot { }
 artifacts {
 artifactRules = "TeamCity-*.tar.gz!/**=>context"
@@ -299,7 +299,7 @@ failBuild = true
 }
 }
 dependencies {
-dependency(AbsoluteId("Docker_TeamCityDist")) {
+dependency(AbsoluteId("TC2019_2_BuildDist")) {
 snapshot { }
 artifacts {
 artifactRules = "TeamCity-*.tar.gz!/**=>context"
