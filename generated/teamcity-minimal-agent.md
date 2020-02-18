@@ -8,6 +8,8 @@
 
 [Dockerfile](linux/MinimalAgent/Ubuntu/18.04/Dockerfile)
 
+Platform: 
+
 The docker image is available on:
 - [https://hub.docker.com/r/jetbrains/teamcity-minimal-agent](https://hub.docker.com/r/jetbrains/teamcity-minimal-agent)
 
@@ -28,6 +30,8 @@ _The required free space to generate image(s) is about **1 GB**._
 
 [Dockerfile](windows/MinimalAgent/nanoserver/1803/Dockerfile)
 
+Platform: 
+
 Installed components:
 - PowerShell
 - [JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
@@ -46,6 +50,8 @@ _The required free space to generate image(s) is about **2 GB**._
 ### :whale: latest-nanoserver-1809
 
 [Dockerfile](windows/MinimalAgent/nanoserver/1809/Dockerfile)
+
+Platform: 
 
 The docker image is available on:
 - [https://hub.docker.com/r/jetbrains/teamcity-minimal-agent](https://hub.docker.com/r/jetbrains/teamcity-minimal-agent)
@@ -69,6 +75,8 @@ _The required free space to generate image(s) is about **3 GB**._
 ### :whale: latest-nanoserver-1903
 
 [Dockerfile](windows/MinimalAgent/nanoserver/1903/Dockerfile)
+
+Platform: 
 
 The docker image is available on:
 - [https://hub.docker.com/r/jetbrains/teamcity-minimal-agent](https://hub.docker.com/r/jetbrains/teamcity-minimal-agent)

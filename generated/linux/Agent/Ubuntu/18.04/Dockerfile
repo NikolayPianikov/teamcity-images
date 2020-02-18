@@ -9,6 +9,7 @@ ARG teamcityMinimalAgentImage='teamcity-minimal-agent:18.04'
 # ARG dotnetCoreLinuxComponent
 # ARG teamcityMinimalAgentImage
 
+# Platform linux
 
 FROM ${teamcityMinimalAgentImage}
 

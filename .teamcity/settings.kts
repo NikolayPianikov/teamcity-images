@@ -17,7 +17,7 @@ teamcity-server:latest-nanoserver-1903
 """.trimIndent()
 commandArgs = "--pull"
 }
-param("dockerImage.platform", "windows")
+param("dockerImage.platform", "")
 }
 
 dockerCommand {
@@ -31,7 +31,7 @@ teamcity-minimal-agent:latest-nanoserver-1903
 """.trimIndent()
 commandArgs = "--pull"
 }
-param("dockerImage.platform", "windows")
+param("dockerImage.platform", "")
 }
 
 dockerCommand {
@@ -45,7 +45,7 @@ teamcity-agent:latest-windowsservercore-1903
 """.trimIndent()
 commandArgs = "--pull"
 }
-param("dockerImage.platform", "windows")
+param("dockerImage.platform", "")
 }
 
 dockerCommand {
@@ -59,7 +59,7 @@ teamcity-agent:latest-nanoserver-1903
 """.trimIndent()
 commandArgs = "--pull"
 }
-param("dockerImage.platform", "windows")
+param("dockerImage.platform", "")
 }
 
 }
@@ -80,7 +80,7 @@ teamcity-server:latest-nanoserver-1809
 """.trimIndent()
 commandArgs = "--pull"
 }
-param("dockerImage.platform", "windows")
+param("dockerImage.platform", "")
 }
 
 dockerCommand {
@@ -94,7 +94,7 @@ teamcity-minimal-agent:latest-nanoserver-1809
 """.trimIndent()
 commandArgs = "--pull"
 }
-param("dockerImage.platform", "windows")
+param("dockerImage.platform", "")
 }
 
 dockerCommand {
@@ -108,7 +108,7 @@ teamcity-agent:latest-windowsservercore-1809
 """.trimIndent()
 commandArgs = "--pull"
 }
-param("dockerImage.platform", "windows")
+param("dockerImage.platform", "")
 }
 
 dockerCommand {
@@ -122,7 +122,7 @@ teamcity-agent:latest-nanoserver-1809
 """.trimIndent()
 commandArgs = "--pull"
 }
-param("dockerImage.platform", "windows")
+param("dockerImage.platform", "")
 }
 
 }
@@ -144,7 +144,7 @@ teamcity-server:linux
 """.trimIndent()
 commandArgs = "--pull"
 }
-param("dockerImage.platform", "windows")
+param("dockerImage.platform", "")
 }
 
 dockerCommand {
@@ -159,7 +159,7 @@ teamcity-minimal-agent:linux
 """.trimIndent()
 commandArgs = "--pull"
 }
-param("dockerImage.platform", "windows")
+param("dockerImage.platform", "")
 }
 
 dockerCommand {
@@ -174,7 +174,7 @@ teamcity-agent:linux
 """.trimIndent()
 commandArgs = "--pull"
 }
-param("dockerImage.platform", "windows")
+param("dockerImage.platform", "")
 }
 
 }
@@ -195,7 +195,7 @@ teamcity-server:latest-nanoserver-1803
 """.trimIndent()
 commandArgs = "--pull"
 }
-param("dockerImage.platform", "windows")
+param("dockerImage.platform", "")
 }
 
 dockerCommand {
@@ -209,7 +209,7 @@ teamcity-minimal-agent:latest-nanoserver-1803
 """.trimIndent()
 commandArgs = "--pull"
 }
-param("dockerImage.platform", "windows")
+param("dockerImage.platform", "")
 }
 
 dockerCommand {
@@ -223,7 +223,7 @@ teamcity-agent:latest-windowsservercore-1803
 """.trimIndent()
 commandArgs = "--pull"
 }
-param("dockerImage.platform", "windows")
+param("dockerImage.platform", "")
 }
 
 dockerCommand {
@@ -237,7 +237,7 @@ teamcity-agent:latest-nanoserver-1803
 """.trimIndent()
 commandArgs = "--pull"
 }
-param("dockerImage.platform", "windows")
+param("dockerImage.platform", "")
 }
 
 }

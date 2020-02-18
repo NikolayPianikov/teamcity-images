@@ -64,6 +64,9 @@ namespace TeamCity.Docker
                     lines.Add(string.Empty);
                     lines.Add($"[Dockerfile]({_pathService.Normalize(Path.Combine(dockerFile.Path, "Dockerfile"))})");
 
+                    lines.Add(string.Empty);
+                    lines.Add($"Platform: {dockerFile.Platform}");
+
                     if (dockerFile.Repositories.Any())
                     {
                         lines.Add(string.Empty);

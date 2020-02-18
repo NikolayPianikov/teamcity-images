@@ -13,6 +13,7 @@ ARG windowsservercoreImage='mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsse
 # ARG mercurialWindowsComponentName
 # ARG teamcityMinimalAgentImage
 
+# Platform windows
 
 FROM ${windowsservercoreImage} AS tools
 

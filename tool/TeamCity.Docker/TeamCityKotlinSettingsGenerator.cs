@@ -128,7 +128,7 @@ namespace TeamCity.Docker
                 yield return "commandArgs = \"--pull\"";
 
                 yield return "}";
-                yield return "param(\"dockerImage.platform\", \"windows\")";
+                yield return $"param(\"dockerImage.platform\", \"{image.File.Platform}\")";
                 yield return "}";
 
                 yield return string.Empty;

@@ -6,6 +6,7 @@
 
 # Id teamcity-minimal-agent
 # Tag ${tag}
+# Platform ${windowsPlatform}
 # Repo ${repo}
 # Weight 1
 

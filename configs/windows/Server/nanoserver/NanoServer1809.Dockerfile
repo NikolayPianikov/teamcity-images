@@ -8,6 +8,7 @@
 
 # Id teamcity-server
 # Tag ${tag}
+# Platform ${windowsPlatform}
 # Repo ${repo}
 # Weight 2
 

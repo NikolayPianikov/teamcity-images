@@ -6,6 +6,7 @@
 # Id teamcity-minimal-agent
 # Tag ${tag}
 # Tag linux
+# Platform ${linuxPlatform}
 # Repo ${repo}
 # Weight 1
 

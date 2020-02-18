@@ -17,6 +17,7 @@ namespace TeamCity.Docker
         private static readonly Dependency GenerateDependency = new Dependency(DependencyType.Generate);
         private const string IdPrefix = "# Id ";
         private const string TagPrefix = "# Tag ";
+        private const string PlatformPrefix = "# Platform ";
         private const string BasedOnPrefix = "# Based on ";
         private const string ComponentsPrefix = "# Install ";
         private const string RepoPrefix = "# Repo ";
@@ -44,6 +45,7 @@ namespace TeamCity.Docker
                     var lines = _contentParser.Parse(template.Lines, variant.Variables).ToImmutableList();
                     var imageId = "unknown";
                     var tags = new List<string>();
+                    var platform = string.Empty;
                     var references = new List<Reference>();
                     var components = new List<string>();
                     var repositories = new List<string>();
@@ -58,6 +60,7 @@ namespace TeamCity.Docker
                             isMetadata =
                                 TrySetByPrefix(line.Text, IdPrefix, value => imageId = value) ||
                                 TrySetByPrefix(line.Text, TagPrefix, value => tags.Add(value)) ||
+                                TrySetByPrefix(line.Text, TagPrefix, value => platform = value) ||
                                 TrySetByPrefix(line.Text, BasedOnPrefix, value =>
                                 {
                                     var match = ReferenceRegex.Match(value);
@@ -89,7 +92,7 @@ namespace TeamCity.Docker
                         }
                     }
 
-                    var dockerfile = new Dockerfile(_pathService.Normalize(variant.BuildPath), imageId, tags, components, repositories, references, new Weight(weight), dockerfileLines);
+                    var dockerfile = new Dockerfile(_pathService.Normalize(variant.BuildPath), imageId, platform, tags, components, repositories, references, new Weight(weight), dockerfileLines);
                     if (graph.TryAddNode(new Image(dockerfile), out var dockerImageNode))
                     {
                         foreach (var tag in tags)

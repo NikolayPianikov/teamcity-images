@@ -8,6 +8,7 @@
 
 # Id teamcity-agent
 # Tag ${tag}
+# Platform ${windowsPlatform}
 # Repo ${repo}
 # Weight 1
 

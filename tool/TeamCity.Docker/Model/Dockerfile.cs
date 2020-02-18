@@ -8,6 +8,7 @@ namespace TeamCity.Docker.Model
     {
         [NotNull] public readonly string Path;
         [NotNull] public readonly string ImageId;
+        [NotNull] public readonly string Platform;
         [NotNull] public readonly IEnumerable<string> Tags;
         [NotNull] public readonly IEnumerable<string> Components;
         [NotNull] public readonly IEnumerable<string> Repositories;
@@ -18,6 +19,7 @@ namespace TeamCity.Docker.Model
         public Dockerfile(
             [NotNull] string path,
             [NotNull] string imageId,
+            [NotNull] string platform,
             [NotNull] IReadOnlyCollection<string> tags,
             [NotNull] IReadOnlyCollection<string> components,
             [NotNull] IReadOnlyCollection<string> repositories,
@@ -27,6 +29,7 @@ namespace TeamCity.Docker.Model
         {
             Path = path ?? throw new ArgumentNullException(nameof(path));
             ImageId = imageId ?? throw new ArgumentNullException(nameof(imageId));
+            Platform = platform ?? throw new ArgumentNullException(nameof(platform));
             Tags = tags ?? throw new ArgumentNullException(nameof(tags));
             Components = components ?? throw new ArgumentNullException(nameof(components));
             Repositories = repositories ?? throw new ArgumentNullException(nameof(repositories));

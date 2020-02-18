@@ -6,6 +6,7 @@
 # Id teamcity-server
 # Tag ${tag}
 # Tag linux
+# Platform ${linuxPlatform}
 # Repo ${repo}
 # Weight 1
 

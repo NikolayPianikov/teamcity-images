@@ -11,6 +11,8 @@
 
 [Dockerfile](linux/Agent/Ubuntu/18.04/Dockerfile)
 
+Platform: 
+
 The docker image is available on:
 - [https://hub.docker.com/r/jetbrains/teamcity-agent](https://hub.docker.com/r/jetbrains/teamcity-agent)
 
@@ -34,6 +36,8 @@ _The required free space to generate image(s) is about **2 GB**._
 
 [Dockerfile](windows/Agent/nanoserver/1803/Dockerfile)
 
+Platform: 
+
 Installed components:
 - [.NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-win-x64.zip)
 
@@ -53,6 +57,8 @@ _The required free space to generate image(s) is about **24 GB**._
 ### :whale: latest-nanoserver-1809
 
 [Dockerfile](windows/Agent/nanoserver/1809/Dockerfile)
+
+Platform: 
 
 The docker image is available on:
 - [https://hub.docker.com/r/jetbrains/teamcity-agent](https://hub.docker.com/r/jetbrains/teamcity-agent)
@@ -78,6 +84,8 @@ _The required free space to generate image(s) is about **25 GB**._
 
 [Dockerfile](windows/Agent/nanoserver/1903/Dockerfile)
 
+Platform: 
+
 The docker image is available on:
 - [https://hub.docker.com/r/jetbrains/teamcity-agent](https://hub.docker.com/r/jetbrains/teamcity-agent)
 
@@ -102,6 +110,8 @@ _The required free space to generate image(s) is about **25 GB**._
 
 [Dockerfile](windows/Agent/windowsservercore/1803/Dockerfile)
 
+Platform: 
+
 Installed components:
 - [JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
 - [Git x64 v.2.19.1](https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip)
@@ -122,6 +132,8 @@ _The required free space to generate image(s) is about **23 GB**._
 ### :whale: latest-windowsservercore-1809
 
 [Dockerfile](windows/Agent/windowsservercore/1809/Dockerfile)
+
+Platform: 
 
 The docker image is available on:
 - [https://hub.docker.com/r/jetbrains/teamcity-agent](https://hub.docker.com/r/jetbrains/teamcity-agent)
@@ -147,6 +159,8 @@ _The required free space to generate image(s) is about **24 GB**._
 ### :whale: latest-windowsservercore-1903
 
 [Dockerfile](windows/Agent/windowsservercore/1903/Dockerfile)
+
+Platform: 
 
 The docker image is available on:
 - [https://hub.docker.com/r/jetbrains/teamcity-agent](https://hub.docker.com/r/jetbrains/teamcity-agent)
