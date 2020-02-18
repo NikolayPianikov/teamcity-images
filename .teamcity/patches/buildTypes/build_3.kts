@@ -59,6 +59,19 @@ changeBuildType(RelativeId("build_3")) {
         }
     }
     steps {
+        update<DockerCommandStep>(1) {
+            commandType = build {
+                source = file {
+                    path = "context/generated/linux/MinimalAgent/Ubuntu/18.04/Dockerfile"
+                }
+                contextDir = "context"
+                namesAndTags = """
+                    teamcity-minimal-agent:18.04
+                    teamcity-minimal-agent:linux
+                """.trimIndent()
+                commandArgs = ""
+            }
+        }
         update<DockerCommandStep>(2) {
             commandType = build {
                 source = file {
