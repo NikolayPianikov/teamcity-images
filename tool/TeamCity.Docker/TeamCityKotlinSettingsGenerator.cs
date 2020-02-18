@@ -38,7 +38,6 @@ namespace TeamCity.Docker
             lines.Add("import jetbrains.buildServer.configs.kotlin.v2019_2.*");
             lines.Add("import jetbrains.buildServer.configs.kotlin.v2019_2.vcs.GitVcsRoot");
             lines.Add("import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dockerCommand");
-            lines.Add("import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script");
             lines.Add("version = \"2019.2\"");
             lines.Add(string.Empty);
 
@@ -67,25 +66,27 @@ namespace TeamCity.Docker
 
             lines.Add($"object root : BuildType({{");
             lines.Add("name = \"root\"");
+            lines.Add("dependencies {");
+            foreach (var buildType in buildTypes)
+            {
+                lines.Add($"dependency({buildType}) {{");
+                lines.Add("snapshot {}");
+                lines.Add("}");
+            }
+            lines.Add("}");
             lines.Add("})");
 
             lines.Add(string.Empty);
 
             lines.Add("project {");
             lines.Add("vcsRoot(RemoteTeamcityImages)");
-            lines.Add("sequence {");
-            lines.Add("parallel {");
             foreach (var buildType in buildTypes)
             {
-                lines.Add($"build({buildType})");
+                lines.Add($"buildType({buildType})");
             }
-            lines.Add("}"); // parallel
-
-            lines.Add(string.Empty);
-            lines.Add($"build(root)");
-            lines.Add(string.Empty);
-
-            lines.Add("}"); // sequence
+            
+            lines.Add($"buildType(root)");
+            
             lines.Add("}"); // project
 
             lines.Add(string.Empty);

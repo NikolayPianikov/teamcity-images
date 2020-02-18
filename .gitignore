@@ -2,3 +2,5 @@
 **/bin/
 **/.vs/
 context/TeamCity/
+.teamcity/.idea/
+*.iml

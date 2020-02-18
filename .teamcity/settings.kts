@@ -1,7 +1,6 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.vcs.GitVcsRoot
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dockerCommand
-import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 version = "2019.2"
 
 object build_1 : BuildType({
@@ -266,21 +265,29 @@ param("dockerImage.platform", "windows")
 
 object root : BuildType({
 name = "root"
+dependencies {
+dependency(build_1) {
+snapshot {}
+}
+dependency(build_2) {
+snapshot {}
+}
+dependency(build_3) {
+snapshot {}
+}
+dependency(build_4) {
+snapshot {}
+}
+}
 })
 
 project {
 vcsRoot(RemoteTeamcityImages)
-sequence {
-parallel {
-build(build_1)
-build(build_2)
-build(build_3)
-build(build_4)
-}
-
-build(root)
-
-}
+buildType(build_1)
+buildType(build_2)
+buildType(build_3)
+buildType(build_4)
+buildType(root)
 }
 
 object RemoteTeamcityImages : GitVcsRoot({
