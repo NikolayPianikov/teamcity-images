@@ -180,6 +180,8 @@ namespace TeamCity.Docker
                 }
                 yield return "\"\"\".trimIndent()";
 
+                yield return "commandArgs = \"\"";
+
                 yield return "}";
                 yield return $"param(\"dockerImage.platform\", \"{image.File.Platform}\")";
                 yield return "}";

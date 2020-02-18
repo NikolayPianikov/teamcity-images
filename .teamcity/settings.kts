@@ -19,6 +19,7 @@ contextDir = "context"
 namesAndTags = """
 teamcity-server:latest-nanoserver-1903
 """.trimIndent()
+commandArgs = ""
 }
 param("dockerImage.platform", "windows")
 }
@@ -33,6 +34,7 @@ contextDir = "context"
 namesAndTags = """
 teamcity-minimal-agent:latest-nanoserver-1903
 """.trimIndent()
+commandArgs = ""
 }
 param("dockerImage.platform", "windows")
 }
@@ -47,6 +49,7 @@ contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-windowsservercore-1903
 """.trimIndent()
+commandArgs = ""
 }
 param("dockerImage.platform", "windows")
 }
@@ -61,6 +64,7 @@ contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-nanoserver-1903
 """.trimIndent()
+commandArgs = ""
 }
 param("dockerImage.platform", "windows")
 }
@@ -98,6 +102,7 @@ contextDir = "context"
 namesAndTags = """
 teamcity-server:latest-nanoserver-1809
 """.trimIndent()
+commandArgs = ""
 }
 param("dockerImage.platform", "windows")
 }
@@ -112,6 +117,7 @@ contextDir = "context"
 namesAndTags = """
 teamcity-minimal-agent:latest-nanoserver-1809
 """.trimIndent()
+commandArgs = ""
 }
 param("dockerImage.platform", "windows")
 }
@@ -126,6 +132,7 @@ contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-windowsservercore-1809
 """.trimIndent()
+commandArgs = ""
 }
 param("dockerImage.platform", "windows")
 }
@@ -140,6 +147,7 @@ contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-nanoserver-1809
 """.trimIndent()
+commandArgs = ""
 }
 param("dockerImage.platform", "windows")
 }
@@ -178,6 +186,7 @@ namesAndTags = """
 teamcity-server:18.04
 teamcity-server:linux
 """.trimIndent()
+commandArgs = ""
 }
 param("dockerImage.platform", "linux")
 }
@@ -193,6 +202,7 @@ namesAndTags = """
 teamcity-minimal-agent:18.04
 teamcity-minimal-agent:linux
 """.trimIndent()
+commandArgs = ""
 }
 param("dockerImage.platform", "linux")
 }
@@ -208,6 +218,7 @@ namesAndTags = """
 teamcity-agent:18.04
 teamcity-agent:linux
 """.trimIndent()
+commandArgs = ""
 }
 param("dockerImage.platform", "linux")
 }
@@ -245,6 +256,7 @@ contextDir = "context"
 namesAndTags = """
 teamcity-server:latest-nanoserver-1803
 """.trimIndent()
+commandArgs = ""
 }
 param("dockerImage.platform", "windows")
 }
@@ -259,6 +271,7 @@ contextDir = "context"
 namesAndTags = """
 teamcity-minimal-agent:latest-nanoserver-1803
 """.trimIndent()
+commandArgs = ""
 }
 param("dockerImage.platform", "windows")
 }
@@ -273,6 +286,7 @@ contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-windowsservercore-1803
 """.trimIndent()
+commandArgs = ""
 }
 param("dockerImage.platform", "windows")
 }
@@ -287,6 +301,7 @@ contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-nanoserver-1803
 """.trimIndent()
+commandArgs = ""
 }
 param("dockerImage.platform", "windows")
 }
