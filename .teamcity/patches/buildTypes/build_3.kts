@@ -59,6 +59,19 @@ changeBuildType(RelativeId("build_3")) {
         }
     }
     steps {
+        update<DockerCommandStep>(0) {
+            commandType = build {
+                source = file {
+                    path = "context/generated/linux/Server/Ubuntu/18.04/Dockerfile"
+                }
+                contextDir = "context"
+                namesAndTags = """
+                    teamcity-server:18.04
+                    teamcity-server:linux
+                """.trimIndent()
+                commandArgs = ""
+            }
+        }
         update<DockerCommandStep>(1) {
             commandType = build {
                 source = file {
