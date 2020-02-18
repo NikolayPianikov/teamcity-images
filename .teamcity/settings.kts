@@ -6,6 +6,7 @@ version = "2019.2"
 object build_1 : BuildType({
 name = "build_1"
 description  = "teamcity-server:latest-nanoserver-1903 teamcity-minimal-agent:latest-nanoserver-1903 teamcity-agent:latest-windowsservercore-1903:latest-nanoserver-1903"
+vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
 name = "build teamcity-server:latest-nanoserver-1903"
@@ -74,6 +75,7 @@ param("dockerImage.platform", "windows")
 object build_2 : BuildType({
 name = "build_2"
 description  = "teamcity-server:latest-nanoserver-1809 teamcity-minimal-agent:latest-nanoserver-1809 teamcity-agent:latest-windowsservercore-1809:latest-nanoserver-1809"
+vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
 name = "build teamcity-server:latest-nanoserver-1809"
@@ -142,6 +144,7 @@ param("dockerImage.platform", "windows")
 object build_3 : BuildType({
 name = "build_3"
 description  = "teamcity-server:18.04,linux teamcity-minimal-agent:18.04,linux teamcity-agent:18.04,linux"
+vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
 name = "build teamcity-server:18.04,linux"
@@ -198,6 +201,7 @@ param("dockerImage.platform", "linux")
 object build_4 : BuildType({
 name = "build_4"
 description  = "teamcity-server:latest-nanoserver-1803 teamcity-minimal-agent:latest-nanoserver-1803 teamcity-agent:latest-windowsservercore-1803:latest-nanoserver-1803"
+vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
 name = "build teamcity-server:latest-nanoserver-1803"

@@ -157,6 +157,7 @@ namespace TeamCity.Docker
             yield return $"object {name} : BuildType({{";
             yield return $"name = \"{name}\"";
             yield return $"description  = \"{description}\"";
+            yield return "vcs {root(RemoteTeamcityImages)}";
             yield return "steps {";
             foreach (var image in images)
             {
