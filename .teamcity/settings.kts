@@ -3,8 +3,9 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.vcs.GitVcsRoot
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dockerCommand
 version = "2019.2"
 
-object teamcity_agent_latest_nanoserver_1903_latest_windowsservercore_1903_teamcity_minimal_agent_latest_nanoserver_1903_teamcity_server_latest_nanoserver_1903 : BuildType({
-name = "build docker image teamcity_agent_latest_nanoserver_1903_latest_windowsservercore_1903_teamcity_minimal_agent_latest_nanoserver_1903_teamcity_server_latest_nanoserver_1903"
+object build_1 : BuildType({
+name = "build_1"
+description  = "teamcity-server:latest-nanoserver-1903_teamcity-minimal-agent:latest-nanoserver-1903_teamcity-agent:latest-windowsservercore-1903:latest-nanoserver-1903"
 steps {
 dockerCommand {
 name = "build teamcity-server:latest-nanoserver-1903"
@@ -70,8 +71,9 @@ param("dockerImage.platform", "windows")
 })
 
 
-object teamcity_agent_latest_nanoserver_1809_latest_windowsservercore_1809_teamcity_minimal_agent_latest_nanoserver_1809_teamcity_server_latest_nanoserver_1809 : BuildType({
-name = "build docker image teamcity_agent_latest_nanoserver_1809_latest_windowsservercore_1809_teamcity_minimal_agent_latest_nanoserver_1809_teamcity_server_latest_nanoserver_1809"
+object build_2 : BuildType({
+name = "build_2"
+description  = "teamcity-server:latest-nanoserver-1809_teamcity-minimal-agent:latest-nanoserver-1809_teamcity-agent:latest-windowsservercore-1809:latest-nanoserver-1809"
 steps {
 dockerCommand {
 name = "build teamcity-server:latest-nanoserver-1809"
@@ -137,8 +139,9 @@ param("dockerImage.platform", "windows")
 })
 
 
-object teamcity_agent_18.04,linux_teamcity_minimal_agent_18.04,linux_teamcity_server_18.04,linux : BuildType({
-name = "build docker image teamcity_agent_18.04,linux_teamcity_minimal_agent_18.04,linux_teamcity_server_18.04,linux"
+object build_3 : BuildType({
+name = "build_3"
+description  = "teamcity-server:18.04,linux_teamcity-minimal-agent:18.04,linux_teamcity-agent:18.04,linux"
 steps {
 dockerCommand {
 name = "build teamcity-server:18.04,linux"
@@ -192,8 +195,9 @@ param("dockerImage.platform", "linux")
 })
 
 
-object teamcity_agent_latest_nanoserver_1803_latest_windowsservercore_1803_teamcity_minimal_agent_latest_nanoserver_1803_teamcity_server_latest_nanoserver_1803 : BuildType({
-name = "build docker image teamcity_agent_latest_nanoserver_1803_latest_windowsservercore_1803_teamcity_minimal_agent_latest_nanoserver_1803_teamcity_server_latest_nanoserver_1803"
+object build_4 : BuildType({
+name = "build_4"
+description  = "teamcity-server:latest-nanoserver-1803_teamcity-minimal-agent:latest-nanoserver-1803_teamcity-agent:latest-windowsservercore-1803:latest-nanoserver-1803"
 steps {
 dockerCommand {
 name = "build teamcity-server:latest-nanoserver-1803"
@@ -261,10 +265,10 @@ param("dockerImage.platform", "windows")
 
 project {
 vcsRoot(RemoteTeamcityImages)
-buildType(teamcity_agent_latest_nanoserver_1903_latest_windowsservercore_1903_teamcity_minimal_agent_latest_nanoserver_1903_teamcity_server_latest_nanoserver_1903)
-buildType(teamcity_agent_latest_nanoserver_1809_latest_windowsservercore_1809_teamcity_minimal_agent_latest_nanoserver_1809_teamcity_server_latest_nanoserver_1809)
-buildType(teamcity_agent_18.04,linux_teamcity_minimal_agent_18.04,linux_teamcity_server_18.04,linux)
-buildType(teamcity_agent_latest_nanoserver_1803_latest_windowsservercore_1803_teamcity_minimal_agent_latest_nanoserver_1803_teamcity_server_latest_nanoserver_1803)
+buildType(build_1)
+buildType(build_2)
+buildType(build_3)
+buildType(build_4)
 }
 
 object RemoteTeamcityImages : GitVcsRoot({

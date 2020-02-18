@@ -41,9 +41,10 @@ namespace TeamCity.Docker
             lines.Add("version = \"2019.2\"");
             lines.Add(string.Empty);
 
-            var buildTypes = new HashSet<string>();
+            var buildTypes = new List<string>();
 
             var buildGraphs = _buildGraphsFactory.Create(graph).ToList();
+            var counter = 0;
             foreach (var buildGraph in buildGraphs)
             {
                 var path = new List<INode<IArtifact>>();
@@ -55,43 +56,10 @@ namespace TeamCity.Docker
 
                 path.Reverse();
 
-                var groups =
-                    from node in buildGraph.Nodes
-                    let image = node.Value as Image
-                    where image != null
-                    group node by image.File.ImageId
-                    into groupsByImageId
-                    from groupByImageId in
-                        from groupByImageId in groupsByImageId
-                        let image = groupByImageId.Value as Image
-                        where image != null
-                        group groupByImageId by image.File
-                    group groupByImageId by groupsByImageId.Key;
-
-                var nameSb = new StringBuilder();
-                foreach (var grp in groups)
-                {
-                    if (nameSb.Length > 0)
-                    {
-                        nameSb.Append("_");
-                    }
-
-                    nameSb.Append(grp.Key);
-                    foreach (var aa in grp)
-                    {
-                        var tags = string.Join(",", aa.Key.Tags);
-                        if (!string.IsNullOrWhiteSpace(tags))
-                        {
-                            nameSb.Append(':');
-                            nameSb.Append(tags);
-                        }
-                    }
-                }
-
-                var name = nameSb.Replace(':', '_').Replace('-', '_').ToString();
-                buildTypes.Add(name);
-
-                lines.AddRange(GenerateBuildType(name, path.Select(i => i.Value).OfType<Image>()));
+                counter++;
+                
+                var name = $"build_{counter}";
+                lines.AddRange(GenerateBuildType(name, path.Select(i => i.Value).OfType<Image>().ToList()));
                 buildTypes.Add(name);
                 lines.Add(string.Empty);
             }
@@ -137,10 +105,40 @@ namespace TeamCity.Docker
             }
         }
 
-        private IEnumerable<string> GenerateBuildType(string name, IEnumerable<Image> images)
+        private IEnumerable<string> GenerateBuildType(string name, ICollection<Image> images)
         {
+            var groups =
+                from image in images
+                group image by image.File.ImageId
+                into groupsByImageId
+                from groupByImageId in
+                    from image in groupsByImageId
+                    group image by image.File
+                group groupByImageId by groupsByImageId.Key;
+
+            var description = new StringBuilder();
+            foreach (var grp in groups)
+            {
+                if (description.Length > 0)
+                {
+                    description.Append("_");
+                }
+
+                description.Append(grp.Key);
+                foreach (var aa in grp)
+                {
+                    var tags = string.Join(",", aa.Key.Tags);
+                    if (!string.IsNullOrWhiteSpace(tags))
+                    {
+                        description.Append(':');
+                        description.Append(tags);
+                    }
+                }
+            }
+
             yield return $"object {name} : BuildType({{";
-            yield return $"name = \"build docker image {name}\"";
+            yield return $"name = \"{name}\"";
+            yield return $"description  = \"{description}\"";
             yield return "steps {";
             foreach (var image in images)
             {
