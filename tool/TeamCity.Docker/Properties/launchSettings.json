@@ -2,7 +2,7 @@
   "profiles": {
     "Build": {
       "commandName": "Project",
-      "commandLineArgs": "generate -s configs -f configs/windows.config;configs/linux.config -c context -t context/generated -d .teamcity",
+      "commandLineArgs": "generate -s configs -f configs/windows.config;configs/windows-internal.config;configs/linux.config;configs/linux-internal.config -c context -t context/generated -d .teamcity -b TC2019_2_BuildDist",
       "workingDirectory": "C:\\Projects\\teamcity-images"
     }
   }

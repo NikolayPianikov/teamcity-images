@@ -68,7 +68,7 @@ param("dockerImage.platform", "windows")
 }
 features {
 freeDiskSpace {
-requiredSpace = "15gb"
+requiredSpace = "27gb"
 failBuild = true
 }
 }
@@ -147,7 +147,7 @@ param("dockerImage.platform", "windows")
 }
 features {
 freeDiskSpace {
-requiredSpace = "15gb"
+requiredSpace = "27gb"
 failBuild = true
 }
 }
@@ -294,7 +294,7 @@ param("dockerImage.platform", "windows")
 }
 features {
 freeDiskSpace {
-requiredSpace = "15gb"
+requiredSpace = "26gb"
 failBuild = true
 }
 }

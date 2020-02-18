@@ -20,7 +20,7 @@ namespace TeamCity.Docker
                 var bestCut = new HashSet<INode<IArtifact>>(buildGraph.FindMinimumCutByStoerWagner(links => links.Select(i => i.From.Value.Weight.Value).Concat(Enumerable.Repeat(0, 1)).Sum(), out var bestCost));
                 if (bestCost > 0)
                 {
-                    yield return buildGraph.Copy(node => node.Value is Image);
+                    yield return buildGraph.Copy(node => node.Value is Image || node.Value is Reference);
                     break;
                 }
 
@@ -30,7 +30,7 @@ namespace TeamCity.Docker
                 }
 
                 cutNodes.UnionWith(bestCut);
-                yield return buildGraph.Copy(node => node.Value is Image && bestCut.Contains(node));
+                yield return buildGraph.Copy(node => (node.Value is Image || node.Value is Reference) && bestCut.Contains(node));
                 buildGraph = buildGraph.Copy(node => !cutNodes.Contains(node));
             }
         }
