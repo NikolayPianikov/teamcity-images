@@ -17,6 +17,7 @@ namespace TeamCity.Docker.Generic
             :this(EqualityComparer<TNode>.Default, EqualityComparer<TLink>.Default)
         { }
 
+        // ReSharper disable once MemberCanBePrivate.Global
         public Graph(
             [NotNull] IEqualityComparer<TNode> nodeComparer,
             [NotNull] IEqualityComparer<TLink> linkComparer)
@@ -72,11 +73,34 @@ namespace TeamCity.Docker.Generic
             return _links.Remove(link);
         }
 
+        public IGraph<TNode, TLink> Copy(Predicate<INode<TNode>> filter)
+        {
+            var clone = new Graph<TNode, TLink>(_nodeComparer, _linkComparer);
+            var newNodes = Nodes
+                .Where(node => filter(node))
+                .Select(node =>
+                {
+                    clone.TryAddNode(node.Value, out var newNode);
+                    return new { node, newNode};
+                })
+                .ToDictionary(i => i.node, i => i.newNode);
+
+            foreach (var link in Links)
+            {
+                if (newNodes.TryGetValue(link.From, out var newFrom) && newNodes.TryGetValue(link.To, out var newTo))
+                {
+                    clone.TryAddLink(newNodes[link.From], link.Value, newNodes[link.To], out var _);
+                }
+            }
+
+            return clone;
+        }
+
         public override string ToString()
         {
             var dict = new Dictionary<INode<TNode>, int>();
             var sb = new StringBuilder();
-            sb.AppendLine("digraph docker {");
+            sb.AppendLine("digraph graph {");
             foreach (var node in _nodes)
             {
                 sb.AppendLine($"{GetId(dict, node)} [label=\"{node.Value}\"];");
@@ -89,6 +113,35 @@ namespace TeamCity.Docker.Generic
 
             sb.AppendLine("}");
             return sb.ToString();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            var other = (Graph<TNode, TLink>) obj;
+            return _nodes.SetEquals(other._nodes) && _links.SetEquals(other._links);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return _nodes.Sum(node => node.GetHashCode()) + _links.Sum(link => link.GetHashCode());
+            }
         }
 
         private bool TryAddNode(INode<TNode> newNode, out INode<TNode> node)

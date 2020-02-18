@@ -40,9 +40,6 @@ namespace TeamCity.Docker
         [Option('p', "password", Required = false, HelpText = "Docker server password.")]
         public string Password { get; set; } = "";
 
-        [Option('o', "optimize", Required = false, HelpText = "Add it to optimize the disk usage and clean produced docker images after `Push`.")]
-        public bool Clean { get; set; } = false;
-
         [Option('v', "verbose", Required = false, HelpText = "Add it for detailed output.")]
         public bool VerboseMode { get; set; } = false;
     }

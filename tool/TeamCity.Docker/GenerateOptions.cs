@@ -28,6 +28,9 @@ namespace TeamCity.Docker
         [Option('t', "target", Required = true, HelpText = "Path to directory for generating docker files.")]
         public string TargetPath { get; set; } = string.Empty;
 
+        [Option('d', "dsl", Required = false, HelpText = "Path to directory for teamcity DSL script settings.kts.")]
+        public string TeamCityScriptPath { get; set; } = string.Empty;
+
         public string DockerEngineEndpoint => throw new NotImplementedException();
 
         [Option('v', "verbose", Required = false, HelpText = "Add it for detailed output.")]

@@ -44,7 +44,7 @@ namespace TeamCity.Docker
             {
                 var imageId = groupByImageId.Key;
                 var lines = new List<string>();
-                graph.TryAddNode(new FileArtifact(GetReadmeFilePath(imageId), lines), out var readmeNode);
+                graph.TryAddNode(new FileArtifact(Path.Combine(_options.TargetPath, GetReadmeFilePath(imageId)), lines), out var readmeNode);
                 var groupByImage = groupByImageId.ToList();
 
                 lines.Add("### Tags");

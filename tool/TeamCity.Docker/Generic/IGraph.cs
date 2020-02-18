@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using IoC;
 
 namespace TeamCity.Docker.Generic
@@ -20,5 +21,7 @@ namespace TeamCity.Docker.Generic
         bool TryAddLink([NotNull] INode<TNode> from, [NotNull] TLink value, [NotNull] INode<TNode> to, out ILink<TNode, TLink> link);
 
         bool TryRemoveLink([NotNull] ILink<TNode, TLink> link);
+
+        IGraph<TNode, TLink> Copy(Predicate<INode<TNode>> filter);
     }
 }

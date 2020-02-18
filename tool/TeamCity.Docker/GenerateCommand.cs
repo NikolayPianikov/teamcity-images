@@ -62,11 +62,10 @@ namespace TeamCity.Docker
                 _fileSystem.WriteLines(path, dockerfile.Lines.Select(i => i.Text));
             }
 
-            var readmeFiles = graph.Value.Nodes.Select(i => i.Value).OfType<FileArtifact>();
-            foreach (var readmeFile in readmeFiles)
+            var artifacts = graph.Value.Nodes.Select(i => i.Value).OfType<FileArtifact>();
+            foreach (var artifact in artifacts)
             {
-                var path = Path.Combine(_options.TargetPath, readmeFile.Path);
-                _fileSystem.WriteLines(path, readmeFile.Lines);
+                _fileSystem.WriteLines(artifact.Path, artifact.Lines);
             }
 
             return Task.FromResult(graph.State);

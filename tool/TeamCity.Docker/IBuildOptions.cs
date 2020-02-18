@@ -12,7 +12,5 @@ namespace TeamCity.Docker
         [NotNull] string Username { get; }
 
         [NotNull] string Password { get; }
-
-        bool Clean { get; }
     }
 }
