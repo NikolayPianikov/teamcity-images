@@ -55,11 +55,12 @@ namespace TeamCity.Docker
                 }
 
                 path.Reverse();
-
                 counter++;
-                
+
+                var weight = buildGraph.Nodes.Select(i => i.Value.Weight.Value).Sum();
+
                 var name = $"build_{counter}";
-                lines.AddRange(GenerateBuildType(name, path.Select(i => i.Value).OfType<Image>().ToList()));
+                lines.AddRange(GenerateBuildType(name, path.Select(i => i.Value).OfType<Image>().ToList(), weight));
                 buildTypes.Add(name);
                 lines.Add(string.Empty);
             }
@@ -123,7 +124,7 @@ namespace TeamCity.Docker
             }
         }
 
-        private IEnumerable<string> GenerateBuildType(string name, ICollection<Image> images)
+        private IEnumerable<string> GenerateBuildType(string name, ICollection<Image> images, int weight)
         {
             var groups =
                 from image in images
@@ -187,6 +188,14 @@ namespace TeamCity.Docker
                 yield return string.Empty;
             }
             yield return "}";
+
+            if (weight > 0)
+            {
+                yield return "features {";
+                yield return $"freeDiskSpace {{ requiredSpace = \"{weight}gb\" failBuild = true }}";
+                yield return "}";
+            }
+
             yield return "})";
             yield return string.Empty;
         }

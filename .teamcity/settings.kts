@@ -69,6 +69,9 @@ param("dockerImage.platform", "windows")
 }
 
 }
+features {
+freeDiskSpace { requiredSpace = "15gb" failBuild = true }
+}
 })
 
 
@@ -138,6 +141,9 @@ param("dockerImage.platform", "windows")
 }
 
 }
+features {
+freeDiskSpace { requiredSpace = "15gb" failBuild = true }
+}
 })
 
 
@@ -194,6 +200,9 @@ commandArgs = "--pull"
 param("dockerImage.platform", "linux")
 }
 
+}
+features {
+freeDiskSpace { requiredSpace = "3gb" failBuild = true }
 }
 })
 
@@ -263,6 +272,9 @@ commandArgs = "--pull"
 param("dockerImage.platform", "windows")
 }
 
+}
+features {
+freeDiskSpace { requiredSpace = "15gb" failBuild = true }
 }
 })
 
