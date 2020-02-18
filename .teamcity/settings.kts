@@ -5,7 +5,7 @@ version = "2019.2"
 
 object build_1 : BuildType({
 name = "build_1"
-description  = "teamcity-server:latest-nanoserver-1903_teamcity-minimal-agent:latest-nanoserver-1903_teamcity-agent:latest-windowsservercore-1903:latest-nanoserver-1903"
+description  = "teamcity-server:latest-nanoserver-1903 teamcity-minimal-agent:latest-nanoserver-1903 teamcity-agent:latest-windowsservercore-1903:latest-nanoserver-1903"
 steps {
 dockerCommand {
 name = "build teamcity-server:latest-nanoserver-1903"
@@ -73,7 +73,7 @@ param("dockerImage.platform", "windows")
 
 object build_2 : BuildType({
 name = "build_2"
-description  = "teamcity-server:latest-nanoserver-1809_teamcity-minimal-agent:latest-nanoserver-1809_teamcity-agent:latest-windowsservercore-1809:latest-nanoserver-1809"
+description  = "teamcity-server:latest-nanoserver-1809 teamcity-minimal-agent:latest-nanoserver-1809 teamcity-agent:latest-windowsservercore-1809:latest-nanoserver-1809"
 steps {
 dockerCommand {
 name = "build teamcity-server:latest-nanoserver-1809"
@@ -141,7 +141,7 @@ param("dockerImage.platform", "windows")
 
 object build_3 : BuildType({
 name = "build_3"
-description  = "teamcity-server:18.04,linux_teamcity-minimal-agent:18.04,linux_teamcity-agent:18.04,linux"
+description  = "teamcity-server:18.04,linux teamcity-minimal-agent:18.04,linux teamcity-agent:18.04,linux"
 steps {
 dockerCommand {
 name = "build teamcity-server:18.04,linux"
@@ -197,7 +197,7 @@ param("dockerImage.platform", "linux")
 
 object build_4 : BuildType({
 name = "build_4"
-description  = "teamcity-server:latest-nanoserver-1803_teamcity-minimal-agent:latest-nanoserver-1803_teamcity-agent:latest-windowsservercore-1803:latest-nanoserver-1803"
+description  = "teamcity-server:latest-nanoserver-1803 teamcity-minimal-agent:latest-nanoserver-1803 teamcity-agent:latest-windowsservercore-1803:latest-nanoserver-1803"
 steps {
 dockerCommand {
 name = "build teamcity-server:latest-nanoserver-1803"
@@ -265,10 +265,19 @@ param("dockerImage.platform", "windows")
 
 project {
 vcsRoot(RemoteTeamcityImages)
+sequence {
+parallel {
 buildType(build_1)
 buildType(build_2)
 buildType(build_3)
 buildType(build_4)
+}
+
+object build : BuildType({
+name = "build"
+})
+
+}
 }
 
 object RemoteTeamcityImages : GitVcsRoot({
