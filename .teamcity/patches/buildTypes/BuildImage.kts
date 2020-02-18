@@ -27,7 +27,7 @@ changeBuildType(RelativeId("BuildImage")) {
         }
         insert(1) {
             dockerCommand {
-                name = "step 1 (1)"
+                name = "step 2"
                 commandType = build {
                     source = content {
                         content = "aaaa"
