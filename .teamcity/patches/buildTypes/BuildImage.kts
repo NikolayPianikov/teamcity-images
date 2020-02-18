@@ -25,5 +25,17 @@ changeBuildType(RelativeId("BuildImage")) {
                 param("dockerImage.platform", "windows")
             }
         }
+        insert(1) {
+            dockerCommand {
+                name = "step 1 (1)"
+                commandType = build {
+                    source = content {
+                        content = "aaaa"
+                    }
+                    commandArgs = "--pull"
+                }
+                param("dockerImage.platform", "windows")
+            }
+        }
     }
 }
