@@ -10,8 +10,9 @@ dockerCommand {
 name = "build teamcity-server:latest-nanoserver-1903"
 commandType = build {
 source = file {
-path = """windows/Server/nanoserver/1903"""
+path = """context/generated/windows/Server/nanoserver/1903"""
 }
+contextDir = "context"
 namesAndTags = """
 teamcity-server:latest-nanoserver-1903
 """.trimIndent()
@@ -24,8 +25,9 @@ dockerCommand {
 name = "build teamcity-minimal-agent:latest-nanoserver-1903"
 commandType = build {
 source = file {
-path = """windows/MinimalAgent/nanoserver/1903"""
+path = """context/generated/windows/MinimalAgent/nanoserver/1903"""
 }
+contextDir = "context"
 namesAndTags = """
 teamcity-minimal-agent:latest-nanoserver-1903
 """.trimIndent()
@@ -38,8 +40,9 @@ dockerCommand {
 name = "build teamcity-agent:latest-windowsservercore-1903"
 commandType = build {
 source = file {
-path = """windows/Agent/windowsservercore/1903"""
+path = """context/generated/windows/Agent/windowsservercore/1903"""
 }
+contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-windowsservercore-1903
 """.trimIndent()
@@ -52,8 +55,9 @@ dockerCommand {
 name = "build teamcity-agent:latest-nanoserver-1903"
 commandType = build {
 source = file {
-path = """windows/Agent/nanoserver/1903"""
+path = """context/generated/windows/Agent/nanoserver/1903"""
 }
+contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-nanoserver-1903
 """.trimIndent()
@@ -73,8 +77,9 @@ dockerCommand {
 name = "build teamcity-server:latest-nanoserver-1809"
 commandType = build {
 source = file {
-path = """windows/Server/nanoserver/1809"""
+path = """context/generated/windows/Server/nanoserver/1809"""
 }
+contextDir = "context"
 namesAndTags = """
 teamcity-server:latest-nanoserver-1809
 """.trimIndent()
@@ -87,8 +92,9 @@ dockerCommand {
 name = "build teamcity-minimal-agent:latest-nanoserver-1809"
 commandType = build {
 source = file {
-path = """windows/MinimalAgent/nanoserver/1809"""
+path = """context/generated/windows/MinimalAgent/nanoserver/1809"""
 }
+contextDir = "context"
 namesAndTags = """
 teamcity-minimal-agent:latest-nanoserver-1809
 """.trimIndent()
@@ -101,8 +107,9 @@ dockerCommand {
 name = "build teamcity-agent:latest-windowsservercore-1809"
 commandType = build {
 source = file {
-path = """windows/Agent/windowsservercore/1809"""
+path = """context/generated/windows/Agent/windowsservercore/1809"""
 }
+contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-windowsservercore-1809
 """.trimIndent()
@@ -115,8 +122,9 @@ dockerCommand {
 name = "build teamcity-agent:latest-nanoserver-1809"
 commandType = build {
 source = file {
-path = """windows/Agent/nanoserver/1809"""
+path = """context/generated/windows/Agent/nanoserver/1809"""
 }
+contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-nanoserver-1809
 """.trimIndent()
@@ -136,8 +144,9 @@ dockerCommand {
 name = "build teamcity-server:18.04,linux"
 commandType = build {
 source = file {
-path = """linux/Server/Ubuntu/18.04"""
+path = """context/generated/linux/Server/Ubuntu/18.04"""
 }
+contextDir = "context"
 namesAndTags = """
 teamcity-server:18.04
 teamcity-server:linux
@@ -151,8 +160,9 @@ dockerCommand {
 name = "build teamcity-minimal-agent:18.04,linux"
 commandType = build {
 source = file {
-path = """linux/MinimalAgent/Ubuntu/18.04"""
+path = """context/generated/linux/MinimalAgent/Ubuntu/18.04"""
 }
+contextDir = "context"
 namesAndTags = """
 teamcity-minimal-agent:18.04
 teamcity-minimal-agent:linux
@@ -166,8 +176,9 @@ dockerCommand {
 name = "build teamcity-agent:18.04,linux"
 commandType = build {
 source = file {
-path = """linux/Agent/Ubuntu/18.04"""
+path = """context/generated/linux/Agent/Ubuntu/18.04"""
 }
+contextDir = "context"
 namesAndTags = """
 teamcity-agent:18.04
 teamcity-agent:linux
@@ -188,8 +199,9 @@ dockerCommand {
 name = "build teamcity-server:latest-nanoserver-1803"
 commandType = build {
 source = file {
-path = """windows/Server/nanoserver/1803"""
+path = """context/generated/windows/Server/nanoserver/1803"""
 }
+contextDir = "context"
 namesAndTags = """
 teamcity-server:latest-nanoserver-1803
 """.trimIndent()
@@ -202,8 +214,9 @@ dockerCommand {
 name = "build teamcity-minimal-agent:latest-nanoserver-1803"
 commandType = build {
 source = file {
-path = """windows/MinimalAgent/nanoserver/1803"""
+path = """context/generated/windows/MinimalAgent/nanoserver/1803"""
 }
+contextDir = "context"
 namesAndTags = """
 teamcity-minimal-agent:latest-nanoserver-1803
 """.trimIndent()
@@ -216,8 +229,9 @@ dockerCommand {
 name = "build teamcity-agent:latest-windowsservercore-1803"
 commandType = build {
 source = file {
-path = """windows/Agent/windowsservercore/1803"""
+path = """context/generated/windows/Agent/windowsservercore/1803"""
 }
+contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-windowsservercore-1803
 """.trimIndent()
@@ -230,8 +244,9 @@ dockerCommand {
 name = "build teamcity-agent:latest-nanoserver-1803"
 commandType = build {
 source = file {
-path = """windows/Agent/nanoserver/1803"""
+path = """context/generated/windows/Agent/nanoserver/1803"""
 }
+contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-nanoserver-1803
 """.trimIndent()

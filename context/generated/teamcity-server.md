@@ -6,19 +6,19 @@
 
 ### :whale: 18.04, linux
 
-[Dockerfile](linux/MinimalAgent/Ubuntu/18.04/Dockerfile)
+[Dockerfile](linux/Server/Ubuntu/18.04/Dockerfile)
 
 Platform: linux
 
 The docker image is available on:
-- [https://hub.docker.com/r/jetbrains/teamcity-minimal-agent](https://hub.docker.com/r/jetbrains/teamcity-minimal-agent)
+- [https://hub.docker.com/r/jetbrains/teamcity-server](https://hub.docker.com/r/jetbrains/teamcity-server)
 
 Installed components:
 - [JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-linux-x64.tar.gz)
 
 Docker commands:
 ```
-docker build -f "generated/linux/MinimalAgent/Ubuntu/18.04" -t 18.04 -t linux "context"
+docker build -f "context/generated/linux/Server/Ubuntu/18.04" -t 18.04 -t linux "context"
 ```
 Base images:
 ```
@@ -28,7 +28,7 @@ _The required free space to generate image(s) is about **1 GB**._
 
 ### :whale: latest-nanoserver-1803
 
-[Dockerfile](windows/MinimalAgent/nanoserver/1803/Dockerfile)
+[Dockerfile](windows/Server/nanoserver/1803/Dockerfile)
 
 Platform: windows
 
@@ -36,63 +36,64 @@ Installed components:
 - PowerShell
 - [JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
 - [JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
+- [Git x64 v.2.19.1](https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip)
 
 Docker commands:
 ```
-docker build -f "generated/windows/MinimalAgent/nanoserver/1803" -t latest-nanoserver-1803 "context"
+docker build -f "context/generated/windows/Server/nanoserver/1803" -t latest-nanoserver-1803 "context"
 ```
 Base images:
 ```
 docker pull mcr.microsoft.com/powershell:nanoserver-1803
 ```
-_The required free space to generate image(s) is about **2 GB**._
+_The required free space to generate image(s) is about **3 GB**._
 
 ### :whale: latest-nanoserver-1809
 
-[Dockerfile](windows/MinimalAgent/nanoserver/1809/Dockerfile)
+[Dockerfile](windows/Server/nanoserver/1809/Dockerfile)
 
 Platform: windows
 
 The docker image is available on:
-- [https://hub.docker.com/r/jetbrains/teamcity-minimal-agent](https://hub.docker.com/r/jetbrains/teamcity-minimal-agent)
+- [https://hub.docker.com/r/jetbrains/teamcity-server](https://hub.docker.com/r/jetbrains/teamcity-server)
 
 Installed components:
+- PowerShell
 - [JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
 - [JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
-- PowerShell
+- [Git x64 v.2.19.1](https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip)
 
 Docker commands:
 ```
-docker build -f "generated/windows/MinimalAgent/nanoserver/1809" -t latest-nanoserver-1809 "context"
+docker build -f "context/generated/windows/Server/nanoserver/1809" -t latest-nanoserver-1809 "context"
 ```
 Base images:
 ```
-docker pull mcr.microsoft.com/windows/nanoserver:1809
 docker pull mcr.microsoft.com/powershell:nanoserver-1809
 ```
 _The required free space to generate image(s) is about **3 GB**._
 
 ### :whale: latest-nanoserver-1903
 
-[Dockerfile](windows/MinimalAgent/nanoserver/1903/Dockerfile)
+[Dockerfile](windows/Server/nanoserver/1903/Dockerfile)
 
 Platform: windows
 
 The docker image is available on:
-- [https://hub.docker.com/r/jetbrains/teamcity-minimal-agent](https://hub.docker.com/r/jetbrains/teamcity-minimal-agent)
+- [https://hub.docker.com/r/jetbrains/teamcity-server](https://hub.docker.com/r/jetbrains/teamcity-server)
 
 Installed components:
+- PowerShell
 - [JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
 - [JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
-- PowerShell
+- [Git x64 v.2.19.1](https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip)
 
 Docker commands:
 ```
-docker build -f "generated/windows/MinimalAgent/nanoserver/1903" -t latest-nanoserver-1903 "context"
+docker build -f "context/generated/windows/Server/nanoserver/1903" -t latest-nanoserver-1903 "context"
 ```
 Base images:
 ```
-docker pull mcr.microsoft.com/windows/nanoserver:1903
 docker pull mcr.microsoft.com/powershell:nanoserver-1903
 ```
 _The required free space to generate image(s) is about **3 GB**._

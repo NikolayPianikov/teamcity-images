@@ -115,8 +115,10 @@ namespace TeamCity.Docker
                 yield return "commandType = build {";
 
                 yield return "source = file {";
-                yield return $"path = \"\"\"{_pathService.Normalize(image.File.Path)}\"\"\"";
+                yield return $"path = \"\"\"{_pathService.Normalize(Path.Combine(_options.TargetPath, image.File.Path))}\"\"\"";
                 yield return "}";
+
+                yield return $"contextDir = \"{_pathService.Normalize(_options.ContextPath)}\"";
 
                 yield return "namesAndTags = \"\"\"";
                 foreach (var tag in image.File.Tags)
