@@ -43,6 +43,7 @@ changeBuildType(RelativeId("BuildImage")) {
                     source = content {
                         content = "aaaa"
                     }
+                    namesAndTags = "wqqwqe:aa"
                     commandArgs = "--pull"
                 }
                 param("dockerImage.platform", "windows")
