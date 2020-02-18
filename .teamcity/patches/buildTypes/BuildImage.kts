@@ -26,6 +26,8 @@ changeBuildType(RelativeId("BuildImage")) {
                         content = """
                             aaaa
                             cdscdsc
+                            $TQ
+                            3456t546i-01938097&*^&*${'$'}&#%${'$'}^&#
                         """.trimIndent()
                     }
                     commandArgs = "--pull"
