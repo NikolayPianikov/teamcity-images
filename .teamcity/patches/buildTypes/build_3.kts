@@ -23,7 +23,7 @@ changeBuildType(RelativeId("build_3")) {
             }
 
             artifacts {
-                artifactRules = "TeamCity-*.tar.gz!/=>context"
+                artifactRules = "TeamCity-*.tar.gz!/**=>context/"
             }
         }
 
