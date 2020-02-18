@@ -1,13 +1,17 @@
 # Default arguments
-ARG jdkWindowsComponent='https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip'
-ARG jreWindowsComponent='https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip'
+ARG gitWindowsComponent='https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip'
+ARG jdkWindowsComponent='https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip'
+ARG jreWindowsComponent='https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip'
 ARG nanoserverImage='mcr.microsoft.com/windows/nanoserver:1903'
 ARG powershellImage='mcr.microsoft.com/powershell:nanoserver-1903'
+ARG windowsBuild='1903'
 
 # The list of required arguments
+# ARG powershellImage
 # ARG jreWindowsComponent
 # ARG jdkWindowsComponent
-# ARG nanoserverImage
+# ARG gitWindowsComponent
+# ARG windowsBuild
 # ARG powershellImage
 
 
@@ -35,9 +39,19 @@ RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
     Remove-Item -Force -Recurse $Env:Temp\JDK ; \
     Remove-Item -Force jdk.zip
 
-# Prepare build agent distribution
-COPY TeamCity/buildAgent C:/BuildAgent
-COPY run-agent.ps1 /BuildAgent/run-agent.ps1
+ARG gitWindowsComponent
+
+RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
+    Invoke-WebRequest $Env:gitWindowsComponent -OutFile git.zip; \
+    Expand-Archive git.zip -DestinationPath $Env:ProgramFiles\Git ; \
+    Remove-Item -Force git.zip
+
+# Prepare TeamCity server distribution
+ARG windowsBuild
+
+COPY TeamCity /
+RUN New-Item C:/TeamCity/webapps/ROOT/WEB-INF/DistributionType.txt -type file -force -value "docker-windows-$Env:windowsBuild" | Out-Null
+COPY run-server.ps1 /TeamCity/run-server.ps1
 
 # Workaround for https://github.com/PowerShell/PowerShell-Docker/issues/164
 ARG nanoserverImage
@@ -70,14 +84,25 @@ RUN pwsh -NoLogo -NoProfile -Command " \
     }"
 
 COPY --from=base ["C:/Program Files/Java/OpenJDK", "C:/Program Files/Java/OpenJDK"]
+COPY --from=base ["C:/Program Files/Git", "C:/Program Files/Git"]
 
 ENV JRE_HOME="C:\Program Files\Java\OpenJDK" \
-    CONFIG_FILE="C:\BuildAgent\conf\buildAgent.properties"
+    TEAMCITY_DIST="C:\TeamCity" \
+    TEAMCITY_LOGS="C:\TeamCity\logs" \
+    TEAMCITY_DATA_PATH="C:\ProgramData\JetBrains\TeamCity" \
+    TEAMCITY_SERVER_MEM_OPTS="-Xmx2g -XX:ReservedCodeCacheSize=350m"
 
-EXPOSE 9090
 
-VOLUME C:/BuildAgent/conf
+EXPOSE 8111
 
-COPY --from=base /BuildAgent /BuildAgent
+VOLUME $TEAMCITY_DATA_PATH \
+       $TEAMCITY_LOGS
 
-CMD pwsh ./BuildAgent/run-agent.ps1
+COPY --from=base $TEAMCITY_DIST $TEAMCITY_DIST
+
+CMD pwsh C:/TeamCity/run-server.ps1
+
+# In order to set system PATH, ContainerAdministrator must be used
+USER ContainerAdministrator
+RUN setx /M PATH "%PATH%;%JRE_HOME%\bin;C:\Program Files\Git\cmd"
+USER ContainerUser

@@ -18,7 +18,7 @@ Installed components:
 
 Docker commands:
 ```
-docker build -f "context/generated/linux/Server/Ubuntu/18.04" -t 18.04 -t linux "context"
+docker build -f "generated/linux/Server/Ubuntu/18.04" -t 18.04 -t linux "context"
 ```
 Base images:
 ```
@@ -34,13 +34,13 @@ Platform: windows
 
 Installed components:
 - PowerShell
-- [JRE Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
-- [JDK Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
-- [Git x64 v.2.19.1](http://repo.labs.intellij.net/thirdparty/vm-templates/MinGit-2.19.1-64-bit.zip)
+- [JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
+- [JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
+- [Git x64 v.2.19.1](https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip)
 
 Docker commands:
 ```
-docker build -f "context/generated/windows/Server/nanoserver/1803" -t latest-nanoserver-1803 "context"
+docker build -f "generated/windows/Server/nanoserver/1803" -t latest-nanoserver-1803 "context"
 ```
 Base images:
 ```
@@ -59,13 +59,13 @@ The docker image is available on:
 
 Installed components:
 - PowerShell
-- [JRE Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
-- [JDK Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
-- [Git x64 v.2.19.1](http://repo.labs.intellij.net/thirdparty/vm-templates/MinGit-2.19.1-64-bit.zip)
+- [JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
+- [JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
+- [Git x64 v.2.19.1](https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip)
 
 Docker commands:
 ```
-docker build -f "context/generated/windows/Server/nanoserver/1809" -t latest-nanoserver-1809 "context"
+docker build -f "generated/windows/Server/nanoserver/1809" -t latest-nanoserver-1809 "context"
 ```
 Base images:
 ```
@@ -84,13 +84,13 @@ The docker image is available on:
 
 Installed components:
 - PowerShell
-- [JRE Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
-- [JDK Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
-- [Git x64 v.2.19.1](http://repo.labs.intellij.net/thirdparty/vm-templates/MinGit-2.19.1-64-bit.zip)
+- [JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
+- [JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
+- [Git x64 v.2.19.1](https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip)
 
 Docker commands:
 ```
-docker build -f "context/generated/windows/Server/nanoserver/1903" -t latest-nanoserver-1903 "context"
+docker build -f "generated/windows/Server/nanoserver/1903" -t latest-nanoserver-1903 "context"
 ```
 Base images:
 ```

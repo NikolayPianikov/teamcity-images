@@ -1,7 +1,7 @@
 # Default arguments
-ARG gitWindowsComponent='https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip'
-ARG jdkWindowsComponent='https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip'
-ARG mercurialWindowsComponent='https://bitbucket.org/tortoisehg/files/downloads/mercurial-4.7.2-x64.msi'
+ARG gitWindowsComponent='http://repo.labs.intellij.net/thirdparty/vm-templates/MinGit-2.19.1-64-bit.zip'
+ARG jdkWindowsComponent='https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip'
+ARG mercurialWindowsComponent='http://repo.labs.intellij.net/thirdparty/vm-templates/mercurial-4.7.2-x64.msi'
 ARG teamcityMinimalAgentImage='teamcity-minimal-agent:latest-nanoserver-1803'
 ARG windowsservercoreImage='mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1803'
 

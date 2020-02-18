@@ -23,8 +23,8 @@ Installed components:
 
 Docker commands:
 ```
-docker build -f "context/generated/linux/MinimalAgent/Ubuntu/18.04" -t 18.04 -t linux "context"
-docker build -f "context/generated/linux/Agent/Ubuntu/18.04" -t 18.04 -t linux "context"
+docker build -f "generated/linux/MinimalAgent/Ubuntu/18.04" -t 18.04 -t linux "context"
+docker build -f "generated/linux/Agent/Ubuntu/18.04" -t 18.04 -t linux "context"
 ```
 Base images:
 ```
@@ -43,9 +43,9 @@ Installed components:
 
 Docker commands:
 ```
-docker build -f "context/generated/windows/MinimalAgent/nanoserver/1803" -t latest-nanoserver-1803 "context"
-docker build -f "context/generated/windows/Agent/windowsservercore/1803" -t latest-windowsservercore-1803 "context"
-docker build -f "context/generated/windows/Agent/nanoserver/1803" -t latest-nanoserver-1803 "context"
+docker build -f "generated/windows/MinimalAgent/nanoserver/1803" -t latest-nanoserver-1803 "context"
+docker build -f "generated/windows/Agent/windowsservercore/1803" -t latest-windowsservercore-1803 "context"
+docker build -f "generated/windows/Agent/nanoserver/1803" -t latest-nanoserver-1803 "context"
 ```
 Base images:
 ```
@@ -68,9 +68,9 @@ Installed components:
 
 Docker commands:
 ```
-docker build -f "context/generated/windows/MinimalAgent/nanoserver/1809" -t latest-nanoserver-1809 "context"
-docker build -f "context/generated/windows/Agent/windowsservercore/1809" -t latest-windowsservercore-1809 "context"
-docker build -f "context/generated/windows/Agent/nanoserver/1809" -t latest-nanoserver-1809 "context"
+docker build -f "generated/windows/MinimalAgent/nanoserver/1809" -t latest-nanoserver-1809 "context"
+docker build -f "generated/windows/Agent/windowsservercore/1809" -t latest-windowsservercore-1809 "context"
+docker build -f "generated/windows/Agent/nanoserver/1809" -t latest-nanoserver-1809 "context"
 ```
 Base images:
 ```
@@ -94,9 +94,9 @@ Installed components:
 
 Docker commands:
 ```
-docker build -f "context/generated/windows/MinimalAgent/nanoserver/1903" -t latest-nanoserver-1903 "context"
-docker build -f "context/generated/windows/Agent/windowsservercore/1903" -t latest-windowsservercore-1903 "context"
-docker build -f "context/generated/windows/Agent/nanoserver/1903" -t latest-nanoserver-1903 "context"
+docker build -f "generated/windows/MinimalAgent/nanoserver/1903" -t latest-nanoserver-1903 "context"
+docker build -f "generated/windows/Agent/windowsservercore/1903" -t latest-windowsservercore-1903 "context"
+docker build -f "generated/windows/Agent/nanoserver/1903" -t latest-nanoserver-1903 "context"
 ```
 Base images:
 ```
@@ -113,14 +113,14 @@ _The required free space to generate image(s) is about **25 GB**._
 Platform: windows
 
 Installed components:
-- [JDK Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
-- [Git x64 v.2.19.1](http://repo.labs.intellij.net/thirdparty/vm-templates/MinGit-2.19.1-64-bit.zip)
-- [Mercurial x64 v.4.7.2](http://repo.labs.intellij.net/thirdparty/vm-templates/mercurial-4.7.2-x64.msi)
+- [JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
+- [Git x64 v.2.19.1](https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip)
+- [Mercurial x64 v.4.7.2](https://bitbucket.org/tortoisehg/files/downloads/mercurial-4.7.2-x64.msi)
 
 Docker commands:
 ```
-docker build -f "context/generated/windows/MinimalAgent/nanoserver/1803" -t latest-nanoserver-1803 "context"
-docker build -f "context/generated/windows/Agent/windowsservercore/1803" -t latest-windowsservercore-1803 "context"
+docker build -f "generated/windows/MinimalAgent/nanoserver/1803" -t latest-nanoserver-1803 "context"
+docker build -f "generated/windows/Agent/windowsservercore/1803" -t latest-windowsservercore-1803 "context"
 ```
 Base images:
 ```
@@ -139,14 +139,14 @@ The docker image is available on:
 - [https://hub.docker.com/r/jetbrains/teamcity-agent](https://hub.docker.com/r/jetbrains/teamcity-agent)
 
 Installed components:
-- [JDK Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
-- [Git x64 v.2.19.1](http://repo.labs.intellij.net/thirdparty/vm-templates/MinGit-2.19.1-64-bit.zip)
-- [Mercurial x64 v.4.7.2](http://repo.labs.intellij.net/thirdparty/vm-templates/mercurial-4.7.2-x64.msi)
+- [JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
+- [Git x64 v.2.19.1](https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip)
+- [Mercurial x64 v.4.7.2](https://bitbucket.org/tortoisehg/files/downloads/mercurial-4.7.2-x64.msi)
 
 Docker commands:
 ```
-docker build -f "context/generated/windows/MinimalAgent/nanoserver/1809" -t latest-nanoserver-1809 "context"
-docker build -f "context/generated/windows/Agent/windowsservercore/1809" -t latest-windowsservercore-1809 "context"
+docker build -f "generated/windows/MinimalAgent/nanoserver/1809" -t latest-nanoserver-1809 "context"
+docker build -f "generated/windows/Agent/windowsservercore/1809" -t latest-windowsservercore-1809 "context"
 ```
 Base images:
 ```
@@ -166,14 +166,14 @@ The docker image is available on:
 - [https://hub.docker.com/r/jetbrains/teamcity-agent](https://hub.docker.com/r/jetbrains/teamcity-agent)
 
 Installed components:
-- [JDK Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
-- [Git x64 v.2.19.1](http://repo.labs.intellij.net/thirdparty/vm-templates/MinGit-2.19.1-64-bit.zip)
-- [Mercurial x64 v.4.7.2](http://repo.labs.intellij.net/thirdparty/vm-templates/mercurial-4.7.2-x64.msi)
+- [JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
+- [Git x64 v.2.19.1](https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip)
+- [Mercurial x64 v.4.7.2](https://bitbucket.org/tortoisehg/files/downloads/mercurial-4.7.2-x64.msi)
 
 Docker commands:
 ```
-docker build -f "context/generated/windows/MinimalAgent/nanoserver/1903" -t latest-nanoserver-1903 "context"
-docker build -f "context/generated/windows/Agent/windowsservercore/1903" -t latest-windowsservercore-1903 "context"
+docker build -f "generated/windows/MinimalAgent/nanoserver/1903" -t latest-nanoserver-1903 "context"
+docker build -f "generated/windows/Agent/windowsservercore/1903" -t latest-windowsservercore-1903 "context"
 ```
 Base images:
 ```

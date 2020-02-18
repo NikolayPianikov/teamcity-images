@@ -1,6 +1,6 @@
 # Default arguments
-ARG jdkWindowsComponent='https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip'
-ARG jreWindowsComponent='https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip'
+ARG jdkWindowsComponent='https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip'
+ARG jreWindowsComponent='https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip'
 ARG nanoserverImage='mcr.microsoft.com/windows/nanoserver:1809'
 ARG powershellImage='mcr.microsoft.com/powershell:nanoserver-1809'
 

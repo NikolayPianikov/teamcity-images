@@ -1,8 +1,8 @@
 # Default arguments
-ARG jdkWindowsComponent='https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip'
-ARG jreWindowsComponent='https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip'
-ARG nanoserverImage='mcr.microsoft.com/powershell:nanoserver-1803'
-ARG powershellImage='mcr.microsoft.com/powershell:nanoserver-1803'
+ARG jdkWindowsComponent='https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip'
+ARG jreWindowsComponent='https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip'
+ARG nanoserverImage='mcr.microsoft.com/windows/nanoserver:1809'
+ARG powershellImage='mcr.microsoft.com/powershell:nanoserver-1809'
 
 # The list of required arguments
 # ARG jreWindowsComponent
@@ -39,9 +39,35 @@ RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
 COPY TeamCity/buildAgent C:/BuildAgent
 COPY run-agent.ps1 /BuildAgent/run-agent.ps1
 
-ARG nanoserverImage 1000
+# Workaround for https://github.com/PowerShell/PowerShell-Docker/issues/164
+ARG nanoserverImage
 
 FROM ${nanoserverImage}
+
+ENV ProgramFiles="C:\Program Files" \
+    # set a fixed location for the Module analysis cache
+    LOCALAPPDATA="C:\Users\ContainerAdministrator\AppData\Local" \
+    PSModuleAnalysisCachePath="$LOCALAPPDATA\Microsoft\Windows\PowerShell\docker\ModuleAnalysisCache" \
+    # Persist %PSCORE% ENV variable for user convenience
+    PSCORE="$ProgramFiles\PowerShell\pwsh.exe"
+
+COPY --from=base ["C:/Program Files/PowerShell", "C:/Program Files/PowerShell"]
+
+# In order to set system PATH, ContainerAdministrator must be used
+USER ContainerAdministrator
+RUN setx /M PATH "%PATH%;%ProgramFiles%\PowerShell"
+USER ContainerUser
+
+# intialize powershell module cache
+RUN pwsh -NoLogo -NoProfile -Command " \
+    $stopTime = (get-date).AddMinutes(15); \
+    $ErrorActionPreference = 'Stop' ; \
+    $ProgressPreference = 'SilentlyContinue' ; \
+    while(!(Test-Path -Path $env:PSModuleAnalysisCachePath)) {  \
+        Write-Host "'Waiting for $env:PSModuleAnalysisCachePath'" ; \
+        if((get-date) -gt $stopTime) { throw 'timout expired'} \
+        Start-Sleep -Seconds 6 ; \
+    }"
 
 COPY --from=base ["C:/Program Files/Java/OpenJDK", "C:/Program Files/Java/OpenJDK"]
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using IoC;
 using TeamCity.Docker.Generic;
 using TeamCity.Docker.Model;
@@ -40,10 +41,9 @@ namespace TeamCity.Docker
             lines.Add("version = \"2019.2\"");
             lines.Add(string.Empty);
 
-            var buildTypes = new List<string>();
+            var buildTypes = new HashSet<string>();
 
             var buildGraphs = _buildGraphsFactory.Create(graph).ToList();
-            var counter = 0;
             foreach (var buildGraph in buildGraphs)
             {
                 var path = new List<INode<IArtifact>>();
@@ -55,8 +55,42 @@ namespace TeamCity.Docker
 
                 path.Reverse();
 
-                counter++;
-                var name = $"build_{counter}";
+                var groups =
+                    from node in buildGraph.Nodes
+                    let image = node.Value as Image
+                    where image != null
+                    group node by image.File.ImageId
+                    into groupsByImageId
+                    from groupByImageId in
+                        from groupByImageId in groupsByImageId
+                        let image = groupByImageId.Value as Image
+                        where image != null
+                        group groupByImageId by image.File
+                    group groupByImageId by groupsByImageId.Key;
+
+                var nameSb = new StringBuilder();
+                foreach (var grp in groups)
+                {
+                    if (nameSb.Length > 0)
+                    {
+                        nameSb.Append("_");
+                    }
+
+                    nameSb.Append(grp.Key);
+                    foreach (var aa in grp)
+                    {
+                        var tags = string.Join(",", aa.Key.Tags);
+                        if (!string.IsNullOrWhiteSpace(tags))
+                        {
+                            nameSb.Append(':');
+                            nameSb.Append(tags);
+                        }
+                    }
+                }
+
+                var name = nameSb.ToString();
+                buildTypes.Add(name);
+
                 lines.AddRange(GenerateBuildType(name, path.Select(i => i.Value).OfType<Image>()));
                 buildTypes.Add(name);
                 lines.Add(string.Empty);
