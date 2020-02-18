@@ -10,11 +10,6 @@ To apply the patch, change the buildType with id = 'BuildImage'
 accordingly, and delete the patch script.
 */
 changeBuildType(RelativeId("BuildImage")) {
-    check(description == "") {
-        "Unexpected description: '$description'"
-    }
-    description = "dasdas fdfef"
-
     expectSteps {
     }
     steps {
@@ -22,31 +17,9 @@ changeBuildType(RelativeId("BuildImage")) {
             dockerCommand {
                 name = "step 1"
                 commandType = build {
-                    source = file {
-                        path = """generated\linux\Agent\Ubuntu\18.04\Dockerfile"""
-                    }
-                    commandArgs = "--pull"
-                }
-                param("dockerImage.platform", "windows")
-                param("dockerfile.content", """
-                    aaaa
-                    cdscdsc
-                    $TQ
-                    3456t546i-01938097&*^&*${'$'}&#%${'$'}^&#
-                """.trimIndent())
-            }
-        }
-        insert(1) {
-            dockerCommand {
-                name = "step 2"
-                commandType = build {
                     source = content {
                         content = "aaaa"
                     }
-                    namesAndTags = """
-                        wqqwqe:aa
-                        wqqwqe:bb
-                    """.trimIndent()
                     commandArgs = "--pull"
                 }
                 param("dockerImage.platform", "windows")
