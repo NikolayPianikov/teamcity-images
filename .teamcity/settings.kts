@@ -72,6 +72,14 @@ requiredSpace = "15gb"
 failBuild = true
 }
 }
+dependencies {
+dependency(AbsoluteId("Docker_TeamCityDist")) {
+snapshot { }
+artifacts {
+artifactRules = "TeamCity-*.tar.gz!=>context"
+}
+}
+}
 })
 
 
@@ -143,6 +151,14 @@ requiredSpace = "15gb"
 failBuild = true
 }
 }
+dependencies {
+dependency(AbsoluteId("Docker_TeamCityDist")) {
+snapshot { }
+artifacts {
+artifactRules = "TeamCity-*.tar.gz!=>context"
+}
+}
+}
 })
 
 
@@ -201,6 +217,14 @@ features {
 freeDiskSpace {
 requiredSpace = "3gb"
 failBuild = true
+}
+}
+dependencies {
+dependency(AbsoluteId("Docker_TeamCityDist")) {
+snapshot { }
+artifacts {
+artifactRules = "TeamCity-*.tar.gz!=>context"
+}
 }
 }
 })
@@ -272,6 +296,14 @@ features {
 freeDiskSpace {
 requiredSpace = "15gb"
 failBuild = true
+}
+}
+dependencies {
+dependency(AbsoluteId("Docker_TeamCityDist")) {
+snapshot { }
+artifacts {
+artifactRules = "TeamCity-*.tar.gz!=>context"
+}
 }
 }
 })

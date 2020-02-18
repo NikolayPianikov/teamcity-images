@@ -7,5 +7,7 @@ namespace TeamCity.Docker
         [NotNull] string TargetPath { get; }
 
         [NotNull] string TeamCityDslPath { get; }
+
+        [NotNull] string TeamCityBuildConfigurationId { get; }
     }
 }
