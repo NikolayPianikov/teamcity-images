@@ -29,7 +29,7 @@ namespace TeamCity.Docker
         public string TargetPath { get; set; } = string.Empty;
 
         [Option('d', "dsl", Required = false, HelpText = "Path to directory for teamcity DSL script settings.kts.")]
-        public string TeamCityScriptPath { get; set; } = string.Empty;
+        public string TeamCityDslPath { get; set; } = string.Empty;
 
         public string DockerEngineEndpoint => throw new NotImplementedException();
 

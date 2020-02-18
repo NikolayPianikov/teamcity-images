@@ -23,6 +23,11 @@ namespace TeamCity.Docker
         public void Generate([NotNull] IGraph<IArtifact, Dependency> graph)
         {
             if (graph == null) throw new ArgumentNullException(nameof(graph));
+            if (string.IsNullOrWhiteSpace(_options.TeamCityDslPath))
+            {
+                return;
+            }
+
             var buildGraphs = _buildGraphsFactory.Create(graph).ToList();
         }
     }

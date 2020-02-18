@@ -40,6 +40,7 @@ namespace TeamCity.Docker
                 .Bind<IPathService>().As(Singleton).To<PathService>()
                 .Bind<IConfigurationExplorer>().As(Singleton).To<ConfigurationExplorer>()
                 .Bind<IContentParser>().As(Singleton).To<ContentParser>()
+                .Bind<IBuildGraphsFactory>().As(Singleton).To<BuildGraphsFactory>()
                 .Bind<IGenerator>().Tag("Readme").As(Singleton).To<ReadmeGenerator>()
                 .Bind<IGenerator>().Tag("Kotlin").As(Singleton).To<TeamCityKotlinSettingsGenerator>()
                 .Bind<IFactory<IGraph<IArtifact, Dependency>, IEnumerable<Template>>>().As(Singleton).To<DockerGraphFactory>()

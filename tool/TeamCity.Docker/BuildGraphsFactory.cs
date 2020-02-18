@@ -17,7 +17,7 @@ namespace TeamCity.Docker
             var cutNodes = new HashSet<INode<IArtifact>>();
             while (true)
             {
-                var bestCut = new HashSet<INode<IArtifact>>(buildGraph.FindMinimumCutByStoerWagner(links => links.Count(), out var bestCost));
+                var bestCut = new HashSet<INode<IArtifact>>(buildGraph.FindMinimumCutByStoerWagner(links => links.Select(i => i.From.Value.Weight.Value).Concat(Enumerable.Repeat(0, 1)).Sum(), out var bestCost));
                 if (bestCost > 0)
                 {
                     yield return buildGraph.Copy(node => node.Value is Image);

@@ -6,6 +6,6 @@ namespace TeamCity.Docker
     {
         [NotNull] string TargetPath { get; }
 
-        [NotNull] string TeamCityScriptPath { get; }
+        [NotNull] string TeamCityDslPath { get; }
     }
 }

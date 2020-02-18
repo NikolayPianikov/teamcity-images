@@ -100,7 +100,7 @@ namespace TeamCity.Docker.Generic
         {
             var dict = new Dictionary<INode<TNode>, int>();
             var sb = new StringBuilder();
-            sb.AppendLine("digraph graph {");
+            sb.AppendLine("digraph g {");
             foreach (var node in _nodes)
             {
                 sb.AppendLine($"{GetId(dict, node)} [label=\"{node.Value}\"];");
