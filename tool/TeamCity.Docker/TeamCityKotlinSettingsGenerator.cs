@@ -204,7 +204,7 @@ namespace TeamCity.Docker
                 yield return $"dependency(AbsoluteId(\"{_options.TeamCityBuildConfigurationId}\")) {{";
                 yield return "snapshot { }";
                 yield return "artifacts {";
-                yield return $"artifactRules = \"TeamCity-*.tar.gz!=>{_pathService.Normalize(_options.ContextPath)}\"";
+                yield return $"artifactRules = \"TeamCity-*.tar.gz!/**=>{_pathService.Normalize(_options.ContextPath)}\"";
                 yield return "}";
                 yield return "}";
                 yield return "}";

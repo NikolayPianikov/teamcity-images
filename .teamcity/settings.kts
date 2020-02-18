@@ -76,7 +76,7 @@ dependencies {
 dependency(AbsoluteId("Docker_TeamCityDist")) {
 snapshot { }
 artifacts {
-artifactRules = "TeamCity-*.tar.gz!=>context"
+artifactRules = "TeamCity-*.tar.gz!/**=>context"
 }
 }
 }
@@ -155,7 +155,7 @@ dependencies {
 dependency(AbsoluteId("Docker_TeamCityDist")) {
 snapshot { }
 artifacts {
-artifactRules = "TeamCity-*.tar.gz!=>context"
+artifactRules = "TeamCity-*.tar.gz!/**=>context"
 }
 }
 }
@@ -223,7 +223,7 @@ dependencies {
 dependency(AbsoluteId("Docker_TeamCityDist")) {
 snapshot { }
 artifacts {
-artifactRules = "TeamCity-*.tar.gz!=>context"
+artifactRules = "TeamCity-*.tar.gz!/**=>context"
 }
 }
 }
@@ -302,7 +302,7 @@ dependencies {
 dependency(AbsoluteId("Docker_TeamCityDist")) {
 snapshot { }
 artifacts {
-artifactRules = "TeamCity-*.tar.gz!=>context"
+artifactRules = "TeamCity-*.tar.gz!/**=>context"
 }
 }
 }
