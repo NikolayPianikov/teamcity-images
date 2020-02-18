@@ -11,7 +11,7 @@
 
 [Dockerfile](linux/Agent/Ubuntu/18.04/Dockerfile)
 
-Platform: 
+Platform: linux
 
 The docker image is available on:
 - [https://hub.docker.com/r/jetbrains/teamcity-agent](https://hub.docker.com/r/jetbrains/teamcity-agent)
@@ -36,7 +36,7 @@ _The required free space to generate image(s) is about **2 GB**._
 
 [Dockerfile](windows/Agent/nanoserver/1803/Dockerfile)
 
-Platform: 
+Platform: windows
 
 Installed components:
 - [.NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-win-x64.zip)
@@ -58,7 +58,7 @@ _The required free space to generate image(s) is about **24 GB**._
 
 [Dockerfile](windows/Agent/nanoserver/1809/Dockerfile)
 
-Platform: 
+Platform: windows
 
 The docker image is available on:
 - [https://hub.docker.com/r/jetbrains/teamcity-agent](https://hub.docker.com/r/jetbrains/teamcity-agent)
@@ -84,7 +84,7 @@ _The required free space to generate image(s) is about **25 GB**._
 
 [Dockerfile](windows/Agent/nanoserver/1903/Dockerfile)
 
-Platform: 
+Platform: windows
 
 The docker image is available on:
 - [https://hub.docker.com/r/jetbrains/teamcity-agent](https://hub.docker.com/r/jetbrains/teamcity-agent)
@@ -110,7 +110,7 @@ _The required free space to generate image(s) is about **25 GB**._
 
 [Dockerfile](windows/Agent/windowsservercore/1803/Dockerfile)
 
-Platform: 
+Platform: windows
 
 Installed components:
 - [JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
@@ -133,7 +133,7 @@ _The required free space to generate image(s) is about **23 GB**._
 
 [Dockerfile](windows/Agent/windowsservercore/1809/Dockerfile)
 
-Platform: 
+Platform: windows
 
 The docker image is available on:
 - [https://hub.docker.com/r/jetbrains/teamcity-agent](https://hub.docker.com/r/jetbrains/teamcity-agent)
@@ -160,7 +160,7 @@ _The required free space to generate image(s) is about **24 GB**._
 
 [Dockerfile](windows/Agent/windowsservercore/1903/Dockerfile)
 
-Platform: 
+Platform: windows
 
 The docker image is available on:
 - [https://hub.docker.com/r/jetbrains/teamcity-agent](https://hub.docker.com/r/jetbrains/teamcity-agent)

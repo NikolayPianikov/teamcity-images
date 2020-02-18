@@ -10,7 +10,6 @@ ARG powershellImage='mcr.microsoft.com/powershell:nanoserver-1809'
 # ARG nanoserverImage
 # ARG powershellImage
 
-# Platform windows
 
 FROM ${powershellImage} AS base
 

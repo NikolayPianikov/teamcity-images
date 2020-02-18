@@ -8,7 +8,6 @@ ARG ubuntuImage='ubuntu:18.04'
 # ARG jdkLinuxMD5SUM
 # ARG ubuntuImage
 
-# Platform linux
 
 FROM ${ubuntuImage}
 

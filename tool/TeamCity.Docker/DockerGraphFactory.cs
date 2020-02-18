@@ -60,7 +60,7 @@ namespace TeamCity.Docker
                             isMetadata =
                                 TrySetByPrefix(line.Text, IdPrefix, value => imageId = value) ||
                                 TrySetByPrefix(line.Text, TagPrefix, value => tags.Add(value)) ||
-                                TrySetByPrefix(line.Text, TagPrefix, value => platform = value) ||
+                                TrySetByPrefix(line.Text, PlatformPrefix, value => platform = value) ||
                                 TrySetByPrefix(line.Text, BasedOnPrefix, value =>
                                 {
                                     var match = ReferenceRegex.Match(value);

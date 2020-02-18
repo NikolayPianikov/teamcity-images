@@ -8,7 +8,7 @@
 
 [Dockerfile](linux/Server/Ubuntu/18.04/Dockerfile)
 
-Platform: 
+Platform: linux
 
 The docker image is available on:
 - [https://hub.docker.com/r/jetbrains/teamcity-server](https://hub.docker.com/r/jetbrains/teamcity-server)
@@ -30,7 +30,7 @@ _The required free space to generate image(s) is about **1 GB**._
 
 [Dockerfile](windows/Server/nanoserver/1803/Dockerfile)
 
-Platform: 
+Platform: windows
 
 Installed components:
 - PowerShell
@@ -52,7 +52,7 @@ _The required free space to generate image(s) is about **3 GB**._
 
 [Dockerfile](windows/Server/nanoserver/1809/Dockerfile)
 
-Platform: 
+Platform: windows
 
 The docker image is available on:
 - [https://hub.docker.com/r/jetbrains/teamcity-server](https://hub.docker.com/r/jetbrains/teamcity-server)
@@ -77,7 +77,7 @@ _The required free space to generate image(s) is about **3 GB**._
 
 [Dockerfile](windows/Server/nanoserver/1903/Dockerfile)
 
-Platform: 
+Platform: windows
 
 The docker image is available on:
 - [https://hub.docker.com/r/jetbrains/teamcity-server](https://hub.docker.com/r/jetbrains/teamcity-server)

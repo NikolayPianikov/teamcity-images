@@ -13,7 +13,6 @@ ARG teamcityWindowsservercoreImage='teamcity-agent:latest-windowsservercore-1903
 # ARG powershellImage
 # ARG teamcityWindowsservercoreImage
 
-# Platform windows
 
 FROM ${powershellImage} AS dotnet
 
