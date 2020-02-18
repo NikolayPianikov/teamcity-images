@@ -88,7 +88,7 @@ namespace TeamCity.Docker
                     }
                 }
 
-                var name = nameSb.Replace(':', '_').ToString();
+                var name = nameSb.Replace(':', '_').Replace('-', '_').ToString();
                 buildTypes.Add(name);
 
                 lines.AddRange(GenerateBuildType(name, path.Select(i => i.Value).OfType<Image>()));
