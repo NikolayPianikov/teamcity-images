@@ -13,7 +13,7 @@ changeBuildType(RelativeId("BuildImage")) {
     check(description == "") {
         "Unexpected description: '$description'"
     }
-    description = "dasdas"
+    description = "dasdas fdfef"
 
     expectSteps {
     }
