@@ -263,19 +263,21 @@ param("dockerImage.platform", "windows")
 })
 
 
+object root : BuildType({
+name = "root"
+})
+
 project {
 vcsRoot(RemoteTeamcityImages)
 sequence {
 parallel {
-buildType(build_1)
-buildType(build_2)
-buildType(build_3)
-buildType(build_4)
+build(build_1)
+build(build_2)
+build(build_3)
+build(build_4)
 }
 
-object build : BuildType({
-name = "build"
-})
+build(root)
 
 }
 }

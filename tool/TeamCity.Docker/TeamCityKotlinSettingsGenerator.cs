@@ -64,22 +64,24 @@ namespace TeamCity.Docker
                 lines.Add(string.Empty);
             }
 
+            lines.Add($"object root : BuildType({{");
+            lines.Add("name = \"root\"");
+            lines.Add("})");
+
+            lines.Add(string.Empty);
+
             lines.Add("project {");
             lines.Add("vcsRoot(RemoteTeamcityImages)");
             lines.Add("sequence {");
             lines.Add("parallel {");
             foreach (var buildType in buildTypes)
             {
-                lines.Add($"buildType({buildType})");
+                lines.Add($"build({buildType})");
             }
             lines.Add("}"); // parallel
 
             lines.Add(string.Empty);
-
-            lines.Add($"object build : BuildType({{");
-            lines.Add("name = \"build\"");
-            lines.Add("})");
-
+            lines.Add($"build(root)");
             lines.Add(string.Empty);
 
             lines.Add("}"); // sequence
