@@ -39,7 +39,7 @@ RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
 COPY TeamCity/buildAgent C:/BuildAgent
 COPY run-agent.ps1 /BuildAgent/run-agent.ps1
 
-ARG nanoserverImage 1000
+ARG nanoserverImage
 
 FROM ${nanoserverImage}
 
