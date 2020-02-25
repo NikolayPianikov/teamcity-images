@@ -4,8 +4,8 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dockerCommand
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.freeDiskSpace
 version = "2019.2"
 
-object build_1 : BuildType({
-name = "build_1"
+object latest-nanoserver-1903 : BuildType({
+name = "latest-nanoserver-1903"
 description  = "teamcity-server:latest-nanoserver-1903 teamcity-minimal-agent:latest-nanoserver-1903 teamcity-agent:latest-windowsservercore-1903:latest-nanoserver-1903"
 vcs {root(RemoteTeamcityImages)}
 steps {
@@ -83,8 +83,8 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 })
 
 
-object build_2 : BuildType({
-name = "build_2"
+object latest-nanoserver-1809 : BuildType({
+name = "latest-nanoserver-1809"
 description  = "teamcity-server:latest-nanoserver-1809 teamcity-minimal-agent:latest-nanoserver-1809 teamcity-agent:latest-windowsservercore-1809:latest-nanoserver-1809"
 vcs {root(RemoteTeamcityImages)}
 steps {
@@ -162,8 +162,8 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 })
 
 
-object build_3 : BuildType({
-name = "build_3"
+object 18.04_linux : BuildType({
+name = "18.04 linux"
 description  = "teamcity-server:18.04,linux teamcity-minimal-agent:18.04,linux teamcity-agent:18.04,linux"
 vcs {root(RemoteTeamcityImages)}
 steps {
@@ -230,8 +230,8 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 })
 
 
-object build_4 : BuildType({
-name = "build_4"
+object latest-nanoserver-1803 : BuildType({
+name = "latest-nanoserver-1803"
 description  = "teamcity-server:latest-nanoserver-1803 teamcity-minimal-agent:latest-nanoserver-1803 teamcity-agent:latest-windowsservercore-1803:latest-nanoserver-1803"
 vcs {root(RemoteTeamcityImages)}
 steps {
@@ -310,18 +310,19 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 
 
 object root : BuildType({
-name = "root"
+name = "Build All Docker Images"
+artifactRules = "context/generated => "
 dependencies {
-dependency(build_1) {
+dependency(latest_nanoserver_1903) {
 snapshot {}
 }
-dependency(build_2) {
+dependency(latest_nanoserver_1809) {
 snapshot {}
 }
-dependency(build_3) {
+dependency(18_04 linux) {
 snapshot {}
 }
-dependency(build_4) {
+dependency(latest_nanoserver_1803) {
 snapshot {}
 }
 }
@@ -329,10 +330,10 @@ snapshot {}
 
 project {
 vcsRoot(RemoteTeamcityImages)
-buildType(build_1)
-buildType(build_2)
-buildType(build_3)
-buildType(build_4)
+buildType(latest_nanoserver_1903)
+buildType(latest_nanoserver_1809)
+buildType(18_04 linux)
+buildType(latest_nanoserver_1803)
 buildType(root)
 }
 

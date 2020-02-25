@@ -46,6 +46,7 @@ namespace TeamCity.Docker
 
             var buildGraphs = _buildGraphsFactory.Create(graph).ToList();
             var counter = 0;
+            var names = new HashSet<string>();
             foreach (var buildGraph in buildGraphs)
             {
                 var path = new List<INode<IArtifact>>();
@@ -56,18 +57,38 @@ namespace TeamCity.Docker
                 }
 
                 path.Reverse();
-                counter++;
 
-                var weight = buildGraph.Nodes.Select(i => i.Value.Weight.Value).Sum();
+                var weight = buildGraph.Nodes
+                    .Select(i => i.Value.Weight.Value)
+                    .Sum();
 
-                var name = $"build_{counter}";
-                lines.AddRange(GenerateBuildType(name, path.Select(i => i.Value).OfType<Image>().ToList(), weight));
-                buildTypes.Add(name);
+                var generalTags = buildGraph.Nodes
+                    .Select(i => i.Value)
+                    .OfType<Image>()
+                    .SelectMany(i => i.File.Tags)
+                    .GroupBy(i => i)
+                    .Select(i =>new { tag = i.Key , count = i.Count() })
+                    .Where(i => i.count > 1)
+                    .OrderByDescending(i => i.count)
+                    .Select(i => i.tag)
+                    .ToList();
+
+                var name = generalTags.Any() ? string.Join(" ", generalTags) : "Build Docker Images";
+                var id = name.Replace('-', '_').Replace('.', '_');
+                if (!names.Add(name))
+                {
+                    name = $"{name} {++counter}";
+                    id = $"{id}_{++counter}";
+                }
+
+                lines.AddRange(GenerateBuildType(id, name, path.Select(i => i.Value).OfType<Image>().ToList(), weight));
+                buildTypes.Add(id);
                 lines.Add(string.Empty);
             }
 
             lines.Add($"object root : BuildType({{");
-            lines.Add("name = \"root\"");
+            lines.Add("name = \"Build All Docker Images\"");
+            lines.Add($"artifactRules = \"{_pathService.Normalize(_options.TargetPath)} => \"");
             lines.Add("dependencies {");
             foreach (var buildType in buildTypes)
             {
@@ -125,7 +146,7 @@ namespace TeamCity.Docker
             }
         }
 
-        private IEnumerable<string> GenerateBuildType(string name, ICollection<Image> images, int weight)
+        private IEnumerable<string> GenerateBuildType(string id, string name, ICollection<Image> images, int weight)
         {
             var groups =
                 from image in images
@@ -156,7 +177,7 @@ namespace TeamCity.Docker
                 }
             }
 
-            yield return $"object {name} : BuildType({{";
+            yield return $"object {name.Replace(' ', '_')} : BuildType({{";
             yield return $"name = \"{name}\"";
             yield return $"description  = \"{description}\"";
             yield return "vcs {root(RemoteTeamcityImages)}";
