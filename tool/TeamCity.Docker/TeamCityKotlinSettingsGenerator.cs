@@ -13,17 +13,20 @@ namespace TeamCity.Docker
     internal class TeamCityKotlinSettingsGenerator : IGenerator
     {
         [NotNull] private readonly IGenerateOptions _options;
-        [NotNull] private readonly IBuildGraphsFactory _buildGraphsFactory;
+        [NotNull] private readonly IFactory<IEnumerable<IGraph<IArtifact, Dependency>>, IGraph<IArtifact, Dependency>> _buildGraphsFactory;
         [NotNull] private readonly IPathService _pathService;
+        [NotNull] private readonly IBuildPathProvider _buildPathProvider;
 
         public TeamCityKotlinSettingsGenerator(
             [NotNull] IGenerateOptions options,
-            [NotNull] IBuildGraphsFactory buildGraphsFactory,
-            [NotNull] IPathService pathService)
+            [NotNull] IFactory<IEnumerable<IGraph<IArtifact, Dependency>>, IGraph<IArtifact, Dependency>> buildGraphsFactory,
+            [NotNull] IPathService pathService,
+            [NotNull] IBuildPathProvider buildPathProvider)
         {
-            _options = options;
+            _options = options ?? throw new ArgumentNullException(nameof(options));
             _buildGraphsFactory = buildGraphsFactory ?? throw new ArgumentNullException(nameof(buildGraphsFactory));
             _pathService = pathService ?? throw new ArgumentNullException(nameof(pathService));
+            _buildPathProvider = buildPathProvider ?? throw new ArgumentNullException(nameof(buildPathProvider));
         }
 
         public void Generate([NotNull] IGraph<IArtifact, Dependency> graph)
@@ -44,20 +47,18 @@ namespace TeamCity.Docker
             lines.Add(string.Empty);
 
             var buildTypes = new List<string>();
+            var buildGraphResult = _buildGraphsFactory.Create(graph);
+            if (buildGraphResult.State == Result.Error)
+            {
+                return;
+            }
 
-            var buildGraphs = _buildGraphsFactory.Create(graph).ToList();
+            var buildGraphs = buildGraphResult.Value.ToList();
             var counter = 0;
             var names = new HashSet<string>();
             foreach (var buildGraph in buildGraphs)
             {
-                var path = new List<INode<IArtifact>>();
-                var leaves = buildGraph.Nodes.Except(buildGraph.Links.Select(i => i.To)).ToList();
-                foreach (var leaf in leaves)
-                {
-                    path.AddRange(GetPath(buildGraph, leaf));
-                }
-
-                path.Reverse();
+                var path = _buildPathProvider.GetPath(buildGraph).ToList();
 
                 var weight = buildGraph.Nodes
                     .Select(i => i.Value.Weight.Value)
@@ -121,30 +122,6 @@ namespace TeamCity.Docker
             lines.Add("})");
 
             graph.TryAddNode(new FileArtifact(_pathService.Normalize(Path.Combine(_options.TeamCityDslPath, "settings.kts")), lines), out var dslNode);
-        }
-
-        private static IEnumerable<INode<IArtifact>> GetPath(IGraph<IArtifact, Dependency> graph, INode<IArtifact> node)
-        {
-            yield return node;
-
-            var dependencies = (
-                    from dependencyLink in graph.Links
-                    where dependencyLink.From.Equals(node)
-                    select dependencyLink.To)
-                .ToList();
-
-            var images =
-                from dependency in dependencies
-                let image = dependency.Value as Image
-                select new {dependency, image};
-
-            foreach (var image in images)
-            {
-                foreach (var nestedCommand in GetPath(graph, image.dependency))
-                {
-                    yield return nestedCommand;
-                }
-            }
         }
 
         private IEnumerable<string> GenerateBuildType(string id, string name, ICollection<Image> images, int weight)

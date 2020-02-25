@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using IoC;
-using Newtonsoft.Json.Linq;
 using TeamCity.Docker.Generic;
 using TeamCity.Docker.Model;
 // ReSharper disable ClassNeverInstantiated.Global
@@ -15,13 +14,16 @@ namespace TeamCity.Docker
         private static readonly Dependency GenerateDependency = new Dependency(DependencyType.Generate);
         [NotNull] private readonly IGenerateOptions _options;
         [NotNull] private readonly IPathService _pathService;
+        [NotNull] private readonly IBuildPathProvider _buildPathProvider;
 
         public ReadmeGenerator(
             [NotNull] IGenerateOptions options,
-            [NotNull] IPathService pathService)
+            [NotNull] IPathService pathService,
+            [NotNull] IBuildPathProvider buildPathProvider)
         {
             _options = options ?? throw new ArgumentNullException(nameof(options));
             _pathService = pathService ?? throw new ArgumentNullException(nameof(pathService));
+            _buildPathProvider = buildPathProvider ?? throw new ArgumentNullException(nameof(buildPathProvider));
         }
 
         public void Generate([NotNull] IGraph<IArtifact, Dependency> graph)
@@ -103,7 +105,7 @@ namespace TeamCity.Docker
 
                     foreach (var node in groupByFile)
                     {
-                        var artifacts = GetArtifacts(graph, node).Reverse().Distinct().ToList();
+                        var artifacts = _buildPathProvider.GetPath(graph, node).Select(i => i.Value).ToList();
                         var images = artifacts.OfType<Image>().ToList();
                         var weight = 0;
 
@@ -151,30 +153,6 @@ namespace TeamCity.Docker
                     {
                         graph.TryAddLink(node, GenerateDependency, readmeNode, out _);
                     }
-                }
-            }
-        }
-
-        private static IEnumerable<IArtifact> GetArtifacts(IGraph<IArtifact, Dependency> graph, INode<IArtifact> node)
-        {
-            yield return node.Value;
-
-            var dependencies = (
-                from dependencyLink in graph.Links
-                where dependencyLink.From.Equals(node)
-                select dependencyLink.To)
-                .ToList();
-
-            var images =
-                from dependency in dependencies
-                let image = dependency.Value as Image
-                select new {dependency, image};
-
-            foreach (var image in images)
-            {
-                foreach (var nestedCommand in GetArtifacts(graph, image.dependency))
-                {
-                    yield return nestedCommand;
                 }
             }
         }

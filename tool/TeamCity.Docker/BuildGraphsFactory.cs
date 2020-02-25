@@ -7,9 +7,15 @@ using TeamCity.Docker.Model;
 namespace TeamCity.Docker
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    internal class BuildGraphsFactory : IBuildGraphsFactory
+    internal class BuildGraphsFactory : IFactory<IEnumerable<IGraph<IArtifact, Dependency>>, IGraph<IArtifact, Dependency>>
     {
-        public IEnumerable<IGraph<IArtifact, Dependency>> Create(IGraph<IArtifact, Dependency> graph)
+        public Result<IEnumerable<IGraph<IArtifact, Dependency>>> Create(IGraph<IArtifact, Dependency> graph)
+        {
+            if (graph == null) throw new ArgumentNullException(nameof(graph));
+            return new Result<IEnumerable<IGraph<IArtifact, Dependency>>>(CreateInternal(graph));
+        }
+
+        private IEnumerable<IGraph<IArtifact, Dependency>> CreateInternal(IGraph<IArtifact, Dependency> graph)
         {
             if (graph == null) throw new ArgumentNullException(nameof(graph));
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using Docker.DotNet;
 using IoC;
 using JetBrains.TeamCity.ServiceMessages.Write;
@@ -22,6 +23,7 @@ namespace TeamCity.Docker
             }
 
             yield return container
+                .Bind<CancellationTokenSource>().As(Singleton).To<CancellationTokenSource>()
                 .Bind<IFileSystem>().As(Singleton).To<FileSystem>()
                 .Bind<IEnvironment>().As(Singleton).To<Environment>()
                 .Bind<ILogger>().As(Singleton).Tag("Console").To<ConsoleLogger>()
@@ -40,11 +42,12 @@ namespace TeamCity.Docker
                 .Bind<IPathService>().As(Singleton).To<PathService>()
                 .Bind<IConfigurationExplorer>().As(Singleton).To<ConfigurationExplorer>()
                 .Bind<IContentParser>().As(Singleton).To<ContentParser>()
-                .Bind<IBuildGraphsFactory>().As(Singleton).To<BuildGraphsFactory>()
+                .Bind<IFactory<IEnumerable<IGraph<IArtifact, Dependency>>, IGraph<IArtifact, Dependency>>>().As(Singleton).To<BuildGraphsFactory>()
                 .Bind<IGenerator>().Tag("Readme").As(Singleton).To<ReadmeGenerator>()
                 .Bind<IGenerator>().Tag("Kotlin").As(Singleton).To<TeamCityKotlinSettingsGenerator>()
                 .Bind<IFactory<IGraph<IArtifact, Dependency>, IEnumerable<Template>>>().As(Singleton).To<DockerGraphFactory>()
                 .Bind<IContextFactory>().As(Singleton).To<ContextFactory>()
+                .Bind<IBuildPathProvider>().As(Singleton).To<BuildPathProvider>()
 
                 // TeamCity messages
                 .Bind<IServiceMessageFormatter>().As(Singleton).To<ServiceMessageFormatter>()
