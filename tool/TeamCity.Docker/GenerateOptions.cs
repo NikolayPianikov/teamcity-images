@@ -34,6 +34,9 @@ namespace TeamCity.Docker
         [Option('b', "build", Required = false, HelpText = "TeamCity build configuration id.")]
         public string TeamCityBuildConfigurationId { get; set; } = string.Empty;
 
+        [Option('r', "registry", Required = false, HelpText = "Comma separated TeamCity docker registry id(s).")]
+        public string TeamCityDockerRegistryId { get; set; } = string.Empty;
+
         public string DockerEngineEndpoint => throw new NotImplementedException();
 
         [Option('v', "verbose", Required = false, HelpText = "Add it for detailed output.")]

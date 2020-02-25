@@ -252,15 +252,25 @@ namespace TeamCity.Docker
 
             yield return "}";
 
+            yield return "features {";
+
             if (weight > 0)
             {
-                yield return "features {";
                 yield return "freeDiskSpace {";
                 yield return $"requiredSpace = \"{weight}gb\"";
                 yield return "failBuild = true";
                 yield return "}";
+            }
+
+            if (!string.IsNullOrWhiteSpace(_options.TeamCityDockerRegistryId))
+            {
+                yield return "dockerSupport {";
+                yield return "loginToRegistry = on {";
+                yield return $"dockerRegistryId = {_options.TeamCityDockerRegistryId}";
                 yield return "}";
             }
+
+            yield return "}";
 
             if (!string.IsNullOrWhiteSpace(_options.TeamCityBuildConfigurationId))
             {

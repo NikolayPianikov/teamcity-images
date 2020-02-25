@@ -139,6 +139,10 @@ freeDiskSpace {
 requiredSpace = "27gb"
 failBuild = true
 }
+dockerSupport {
+loginToRegistry = on {
+dockerRegistryId = PROJECT_EXT_2307
+}
 }
 dependencies {
 dependency(AbsoluteId("TC2019_2_BuildDist")) {
@@ -286,6 +290,10 @@ freeDiskSpace {
 requiredSpace = "27gb"
 failBuild = true
 }
+dockerSupport {
+loginToRegistry = on {
+dockerRegistryId = PROJECT_EXT_2307
+}
 }
 dependencies {
 dependency(AbsoluteId("TC2019_2_BuildDist")) {
@@ -431,6 +439,10 @@ features {
 freeDiskSpace {
 requiredSpace = "3gb"
 failBuild = true
+}
+dockerSupport {
+loginToRegistry = on {
+dockerRegistryId = PROJECT_EXT_2307
 }
 }
 dependencies {
@@ -578,6 +590,10 @@ features {
 freeDiskSpace {
 requiredSpace = "26gb"
 failBuild = true
+}
+dockerSupport {
+loginToRegistry = on {
+dockerRegistryId = PROJECT_EXT_2307
 }
 }
 dependencies {
