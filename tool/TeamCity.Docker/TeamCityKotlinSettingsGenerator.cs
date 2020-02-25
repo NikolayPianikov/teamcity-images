@@ -268,6 +268,7 @@ namespace TeamCity.Docker
                 yield return "loginToRegistry = on {";
                 yield return $"dockerRegistryId = \"{_options.TeamCityDockerRegistryId}\"";
                 yield return "}";
+                yield return "}";
             }
 
             yield return "}";

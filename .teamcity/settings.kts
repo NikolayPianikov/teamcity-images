@@ -144,6 +144,7 @@ loginToRegistry = on {
 dockerRegistryId = "PROJECT_EXT_2307"
 }
 }
+}
 dependencies {
 dependency(AbsoluteId("TC2019_2_BuildDist")) {
 snapshot { }
@@ -293,6 +294,7 @@ failBuild = true
 dockerSupport {
 loginToRegistry = on {
 dockerRegistryId = "PROJECT_EXT_2307"
+}
 }
 }
 dependencies {
@@ -445,6 +447,7 @@ loginToRegistry = on {
 dockerRegistryId = "PROJECT_EXT_2307"
 }
 }
+}
 dependencies {
 dependency(AbsoluteId("TC2019_2_BuildDist")) {
 snapshot { }
@@ -594,6 +597,7 @@ failBuild = true
 dockerSupport {
 loginToRegistry = on {
 dockerRegistryId = "PROJECT_EXT_2307"
+}
 }
 }
 dependencies {
