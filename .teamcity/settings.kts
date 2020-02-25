@@ -68,7 +68,7 @@ param("dockerImage.platform", "windows")
 dockerCommand {
 name = "image tag teamcity-server:latest-nanoserver-1903"
 commandType = other {
-subCommand = "image tag"
+subCommand = "tag"
 commandArgs = "teamcity-server:latest-nanoserver-1903 %repository%teamcity-server:latest-nanoserver-1903"
 }
 }
@@ -76,7 +76,7 @@ commandArgs = "teamcity-server:latest-nanoserver-1903 %repository%teamcity-serve
 dockerCommand {
 name = "image tag teamcity-minimal-agent:latest-nanoserver-1903"
 commandType = other {
-subCommand = "image tag"
+subCommand = "tag"
 commandArgs = "teamcity-minimal-agent:latest-nanoserver-1903 %repository%teamcity-minimal-agent:latest-nanoserver-1903"
 }
 }
@@ -84,7 +84,7 @@ commandArgs = "teamcity-minimal-agent:latest-nanoserver-1903 %repository%teamcit
 dockerCommand {
 name = "image tag teamcity-agent:latest-windowsservercore-1903"
 commandType = other {
-subCommand = "image tag"
+subCommand = "tag"
 commandArgs = "teamcity-agent:latest-windowsservercore-1903 %repository%teamcity-agent:latest-windowsservercore-1903"
 }
 }
@@ -92,7 +92,7 @@ commandArgs = "teamcity-agent:latest-windowsservercore-1903 %repository%teamcity
 dockerCommand {
 name = "image tag teamcity-agent:latest-nanoserver-1903"
 commandType = other {
-subCommand = "image tag"
+subCommand = "tag"
 commandArgs = "teamcity-agent:latest-nanoserver-1903 %repository%teamcity-agent:latest-nanoserver-1903"
 }
 }
@@ -215,7 +215,7 @@ param("dockerImage.platform", "windows")
 dockerCommand {
 name = "image tag teamcity-server:latest-nanoserver-1809"
 commandType = other {
-subCommand = "image tag"
+subCommand = "tag"
 commandArgs = "teamcity-server:latest-nanoserver-1809 %repository%teamcity-server:latest-nanoserver-1809"
 }
 }
@@ -223,7 +223,7 @@ commandArgs = "teamcity-server:latest-nanoserver-1809 %repository%teamcity-serve
 dockerCommand {
 name = "image tag teamcity-minimal-agent:latest-nanoserver-1809"
 commandType = other {
-subCommand = "image tag"
+subCommand = "tag"
 commandArgs = "teamcity-minimal-agent:latest-nanoserver-1809 %repository%teamcity-minimal-agent:latest-nanoserver-1809"
 }
 }
@@ -231,7 +231,7 @@ commandArgs = "teamcity-minimal-agent:latest-nanoserver-1809 %repository%teamcit
 dockerCommand {
 name = "image tag teamcity-agent:latest-windowsservercore-1809"
 commandType = other {
-subCommand = "image tag"
+subCommand = "tag"
 commandArgs = "teamcity-agent:latest-windowsservercore-1809 %repository%teamcity-agent:latest-windowsservercore-1809"
 }
 }
@@ -239,7 +239,7 @@ commandArgs = "teamcity-agent:latest-windowsservercore-1809 %repository%teamcity
 dockerCommand {
 name = "image tag teamcity-agent:latest-nanoserver-1809"
 commandType = other {
-subCommand = "image tag"
+subCommand = "tag"
 commandArgs = "teamcity-agent:latest-nanoserver-1809 %repository%teamcity-agent:latest-nanoserver-1809"
 }
 }
@@ -351,7 +351,7 @@ param("dockerImage.platform", "linux")
 dockerCommand {
 name = "image tag teamcity-server:18.04"
 commandType = other {
-subCommand = "image tag"
+subCommand = "tag"
 commandArgs = "teamcity-server:18.04 %repository%teamcity-server:18.04"
 }
 }
@@ -359,7 +359,7 @@ commandArgs = "teamcity-server:18.04 %repository%teamcity-server:18.04"
 dockerCommand {
 name = "image tag teamcity-server:linux"
 commandType = other {
-subCommand = "image tag"
+subCommand = "tag"
 commandArgs = "teamcity-server:linux %repository%teamcity-server:linux"
 }
 }
@@ -367,7 +367,7 @@ commandArgs = "teamcity-server:linux %repository%teamcity-server:linux"
 dockerCommand {
 name = "image tag teamcity-minimal-agent:18.04"
 commandType = other {
-subCommand = "image tag"
+subCommand = "tag"
 commandArgs = "teamcity-minimal-agent:18.04 %repository%teamcity-minimal-agent:18.04"
 }
 }
@@ -375,7 +375,7 @@ commandArgs = "teamcity-minimal-agent:18.04 %repository%teamcity-minimal-agent:1
 dockerCommand {
 name = "image tag teamcity-minimal-agent:linux"
 commandType = other {
-subCommand = "image tag"
+subCommand = "tag"
 commandArgs = "teamcity-minimal-agent:linux %repository%teamcity-minimal-agent:linux"
 }
 }
@@ -383,7 +383,7 @@ commandArgs = "teamcity-minimal-agent:linux %repository%teamcity-minimal-agent:l
 dockerCommand {
 name = "image tag teamcity-agent:18.04"
 commandType = other {
-subCommand = "image tag"
+subCommand = "tag"
 commandArgs = "teamcity-agent:18.04 %repository%teamcity-agent:18.04"
 }
 }
@@ -391,7 +391,7 @@ commandArgs = "teamcity-agent:18.04 %repository%teamcity-agent:18.04"
 dockerCommand {
 name = "image tag teamcity-agent:linux"
 commandType = other {
-subCommand = "image tag"
+subCommand = "tag"
 commandArgs = "teamcity-agent:linux %repository%teamcity-agent:linux"
 }
 }
@@ -508,7 +508,7 @@ param("dockerImage.platform", "windows")
 dockerCommand {
 name = "image tag teamcity-server:latest-nanoserver-1803"
 commandType = other {
-subCommand = "image tag"
+subCommand = "tag"
 commandArgs = "teamcity-server:latest-nanoserver-1803 %repository%teamcity-server:latest-nanoserver-1803"
 }
 }
@@ -516,7 +516,7 @@ commandArgs = "teamcity-server:latest-nanoserver-1803 %repository%teamcity-serve
 dockerCommand {
 name = "image tag teamcity-minimal-agent:latest-nanoserver-1803"
 commandType = other {
-subCommand = "image tag"
+subCommand = "tag"
 commandArgs = "teamcity-minimal-agent:latest-nanoserver-1803 %repository%teamcity-minimal-agent:latest-nanoserver-1803"
 }
 }
@@ -524,7 +524,7 @@ commandArgs = "teamcity-minimal-agent:latest-nanoserver-1803 %repository%teamcit
 dockerCommand {
 name = "image tag teamcity-agent:latest-windowsservercore-1803"
 commandType = other {
-subCommand = "image tag"
+subCommand = "tag"
 commandArgs = "teamcity-agent:latest-windowsservercore-1803 %repository%teamcity-agent:latest-windowsservercore-1803"
 }
 }
@@ -532,7 +532,7 @@ commandArgs = "teamcity-agent:latest-windowsservercore-1803 %repository%teamcity
 dockerCommand {
 name = "image tag teamcity-agent:latest-nanoserver-1803"
 commandType = other {
-subCommand = "image tag"
+subCommand = "tag"
 commandArgs = "teamcity-agent:latest-nanoserver-1803 %repository%teamcity-agent:latest-nanoserver-1803"
 }
 }

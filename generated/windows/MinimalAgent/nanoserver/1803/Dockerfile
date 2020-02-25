@@ -11,6 +11,7 @@ ARG powershellImage='mcr.microsoft.com/powershell:nanoserver-1803'
 # ARG powershellImage
 
 
+
 FROM ${powershellImage} AS base
 
 SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]

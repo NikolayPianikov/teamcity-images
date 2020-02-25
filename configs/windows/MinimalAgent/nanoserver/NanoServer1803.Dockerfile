@@ -10,6 +10,8 @@
 # Repo ${repo}
 # Weight 1
 
+## ${agentCommentHeader}
+
 # Based on ${powershellImage} 1
 # Install PowerShell
 FROM ${powershellImage} AS base

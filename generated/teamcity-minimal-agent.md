@@ -40,6 +40,8 @@ _The required free space to generate image(s) is about **1 GB**._
 
 Platform: windows
 
+This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
+
 Installed components:
 
 - PowerShell
@@ -64,6 +66,8 @@ _The required free space to generate image(s) is about **2 GB**._
 [Dockerfile](windows/MinimalAgent/nanoserver/1809/Dockerfile)
 
 Platform: windows
+
+This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
 The docker image is available on:
 
@@ -95,6 +99,8 @@ _The required free space to generate image(s) is about **3 GB**._
 [Dockerfile](windows/MinimalAgent/nanoserver/1903/Dockerfile)
 
 Platform: windows
+
+This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
 The docker image is available on:
 

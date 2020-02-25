@@ -219,7 +219,7 @@ namespace TeamCity.Docker
                     yield return $"name = \"image tag {image.File.ImageId}:{tag}\"";
                     yield return "commandType = other {";
 
-                    yield return "subCommand = \"image tag\"";
+                    yield return "subCommand = \"tag\"";
                     yield return $"commandArgs = \"{image.File.ImageId}:{tag} %repository%{image.File.ImageId}:{tag}\"";
 
                     yield return "}";
