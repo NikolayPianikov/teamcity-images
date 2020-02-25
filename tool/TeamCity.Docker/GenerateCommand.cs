@@ -15,6 +15,7 @@ namespace TeamCity.Docker
     {
         private readonly ILogger _logger;
         [NotNull] private readonly IFileSystem _fileSystem;
+        [NotNull] private readonly IPathService _pathService;
         [NotNull] private readonly IGenerateOptions _options;
         [NotNull] private readonly IConfigurationExplorer _configurationExplorer;
         [NotNull] private readonly IFactory<IGraph<IArtifact, Dependency>, IEnumerable<Template>> _buildGraphFactory;
@@ -23,6 +24,7 @@ namespace TeamCity.Docker
         public GenerateCommand(
             [NotNull] ILogger logger,
             [NotNull] IFileSystem fileSystem,
+            [NotNull] IPathService pathService,
             [NotNull] IGenerateOptions options,
             [NotNull] IConfigurationExplorer configurationExplorer,
             [NotNull] IFactory<IGraph<IArtifact, Dependency>, IEnumerable<Template>> buildGraphFactory,
@@ -30,6 +32,7 @@ namespace TeamCity.Docker
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
+            _pathService = pathService ?? throw new ArgumentNullException(nameof(pathService));
             _options = options ?? throw new ArgumentNullException(nameof(options));
             _configurationExplorer = configurationExplorer ?? throw new ArgumentNullException(nameof(configurationExplorer));
             _buildGraphFactory = buildGraphFactory ?? throw new ArgumentNullException(nameof(buildGraphFactory));
@@ -50,22 +53,27 @@ namespace TeamCity.Docker
                 return Task.FromResult(Result.Error);
             }
 
-            foreach (var generator in _generators)
+            using (_logger.CreateBlock("Generate"))
             {
-                generator.Generate(graph.Value);
-            }
+                foreach (var generator in _generators)
+                {
+                    generator.Generate(graph.Value);
+                }
 
-            var dockerFiles = graph.Value.Nodes.Select(i => i.Value).OfType<GeneratedDockerfile>();
-            foreach (var dockerfile in dockerFiles)
-            {
-                var path = Path.Combine(_options.TargetPath, dockerfile.Path);
-                _fileSystem.WriteLines(path, dockerfile.Lines.Select(i => i.Text));
-            }
+                var dockerFiles = graph.Value.Nodes.Select(i => i.Value).OfType<GeneratedDockerfile>();
+                foreach (var dockerfile in dockerFiles)
+                {
+                    var path = _pathService.Normalize(Path.Combine(_options.TargetPath, dockerfile.Path));
+                    _logger.Log(path);
+                    _fileSystem.WriteLines(path, dockerfile.Lines.Select(i => i.Text));
+                }
 
-            var artifacts = graph.Value.Nodes.Select(i => i.Value).OfType<FileArtifact>();
-            foreach (var artifact in artifacts)
-            {
-                _fileSystem.WriteLines(artifact.Path, artifact.Lines);
+                var artifacts = graph.Value.Nodes.Select(i => i.Value).OfType<FileArtifact>();
+                foreach (var artifact in artifacts)
+                {
+                    _logger.Log(artifact.Path);
+                    _fileSystem.WriteLines(artifact.Path, artifact.Lines);
+                }
             }
 
             return Task.FromResult(graph.State);

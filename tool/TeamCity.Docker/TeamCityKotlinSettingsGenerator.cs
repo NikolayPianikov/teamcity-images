@@ -109,7 +109,7 @@ namespace TeamCity.Docker
                 lines.Add($"buildType({buildType})");
             }
 
-            lines.Add($"buildType(root)");
+            lines.Add("buildType(root)");
 
             lines.Add("}"); // project
 
@@ -120,7 +120,7 @@ namespace TeamCity.Docker
             lines.Add("url = \"https://github.com/NikolayPianikov/teamcity-images.git\"");
             lines.Add("})");
 
-            graph.TryAddNode(new FileArtifact(Path.Combine(_options.TeamCityDslPath, "settings.kts"), lines), out var dslNode);
+            graph.TryAddNode(new FileArtifact(_pathService.Normalize(Path.Combine(_options.TeamCityDslPath, "settings.kts")), lines), out var dslNode);
         }
 
         private static IEnumerable<INode<IArtifact>> GetPath(IGraph<IArtifact, Dependency> graph, INode<IArtifact> node)
