@@ -214,8 +214,9 @@ namespace TeamCity.Docker
             // docker image tag
             foreach (var image in images)
             {
-                foreach (var tag in image.File.Tags)
+                if (image.File.Tags.Any())
                 {
+                    var tag = image.File.Tags.First();
                     yield return "dockerCommand {";
                     yield return $"name = \"image tag {image.File.ImageId}:{tag}\"";
                     yield return "commandType = other {";
