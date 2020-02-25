@@ -162,7 +162,7 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 })
 
 
-object TC2019_2_BuildDist_18_04 linux : BuildType({
+object TC2019_2_BuildDist_18_04_linux : BuildType({
 name = "18.04 linux"
 description  = "teamcity-server:18.04,linux teamcity-minimal-agent:18.04,linux teamcity-agent:18.04,linux"
 vcs {root(RemoteTeamcityImages)}
@@ -319,7 +319,7 @@ snapshot {}
 dependency(TC2019_2_BuildDist_latest_nanoserver_1809) {
 snapshot {}
 }
-dependency(TC2019_2_BuildDist_18_04 linux) {
+dependency(TC2019_2_BuildDist_18_04_linux) {
 snapshot {}
 }
 dependency(TC2019_2_BuildDist_latest_nanoserver_1803) {
@@ -332,7 +332,7 @@ project {
 vcsRoot(RemoteTeamcityImages)
 buildType(TC2019_2_BuildDist_latest_nanoserver_1903)
 buildType(TC2019_2_BuildDist_latest_nanoserver_1809)
-buildType(TC2019_2_BuildDist_18_04 linux)
+buildType(TC2019_2_BuildDist_18_04_linux)
 buildType(TC2019_2_BuildDist_latest_nanoserver_1803)
 buildType(root)
 }

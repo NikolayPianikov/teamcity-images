@@ -79,7 +79,7 @@ namespace TeamCity.Docker
                     name = $"{name} {++counter}";
                 }
 
-                var id = _options.TeamCityBuildConfigurationId + "_" + name.Replace('-', '_').Replace('.', '_');
+                var id = _options.TeamCityBuildConfigurationId + "_" + name.Replace(' ', '_').Replace('-', '_').Replace('.', '_');
                 lines.AddRange(GenerateBuildType(id, name, path.Select(i => i.Value).OfType<Image>().ToList(), weight));
                 buildTypes.Add(id);
                 lines.Add(string.Empty);
