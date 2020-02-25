@@ -13,14 +13,8 @@ namespace TeamCity.Docker
         [Option('s', "source", Required = false, HelpText = "Path to configuration directory.")]
         public string SourcePath { get; set; } = string.Empty;
 
-        [Option('i', "id", Required = false, HelpText = "Session Id.")]
-        public string SessionId { get; set; } = string.Empty;
-
         [Option('f', "files", Separator = ';', Required = false, HelpText = "Semicolon separated configuration file.")]
         public IEnumerable<string> ConfigurationFiles { get; set; } = Enumerable.Empty<string>();
-
-        [Option('r', "retries", Required = false, HelpText = "Defines how many retries do if error occurs.")]
-        public int Retries { get; } = 3;
 
         [Option('c', "context", Required = false, HelpText = "Path to the context directory.")]
         public string ContextPath { get; set; } = "";
