@@ -15,6 +15,7 @@ ARG windowsBuild='1903'
 # ARG powershellImage
 
 
+
 FROM ${powershellImage} AS base
 
 SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]

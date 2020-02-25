@@ -210,6 +210,25 @@ namespace TeamCity.Docker
                 yield return string.Empty;
             }
 
+            // docker image tag
+            foreach (var image in images)
+            {
+                foreach (var tag in image.File.Tags)
+                {
+                    yield return "dockerCommand {";
+                    yield return $"name = \"image tag {image.File.ImageId}:{tag}\"";
+                    yield return "commandType = other {";
+
+                    yield return "subCommand = \"image tag\"";
+                    yield return $"commandArgs = \"{image.File.ImageId}:{tag} %repository%{image.File.ImageId}:{tag}\"";
+
+                    yield return "}";
+                    yield return "}";
+
+                    yield return string.Empty;
+                }
+            }
+
             // docker push
             foreach (var image in images)
             {

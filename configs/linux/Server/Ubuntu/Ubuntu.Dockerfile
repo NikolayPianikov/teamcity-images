@@ -10,6 +10,8 @@
 # Repo ${repo}
 # Weight 1
 
+## ${serverCommentHeader}
+
 # Based on ${ubuntuImage} 0
 FROM ${ubuntuImage}
 

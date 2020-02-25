@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using IoC;
+using Newtonsoft.Json.Linq;
 using TeamCity.Docker.Generic;
 using TeamCity.Docker.Model;
 // ReSharper disable ClassNeverInstantiated.Global
@@ -67,53 +68,83 @@ namespace TeamCity.Docker
                     lines.Add(string.Empty);
                     lines.Add($"Platform: {dockerFile.Platform}");
 
+                    if (dockerFile.Comments.Any())
+                    {
+                        lines.Add(string.Empty);
+                        foreach (var comment in dockerFile.Comments)
+                        {
+                            lines.Add(comment);
+                        }
+                    }
+
                     if (dockerFile.Repositories.Any())
                     {
                         lines.Add(string.Empty);
                         lines.Add("The docker image is available on:");
+                        lines.Add(string.Empty);
                         foreach (var repo in dockerFile.Repositories)
                         {
                             lines.Add($"- [{repo}{dockerFile.ImageId}]({repo}{dockerFile.ImageId})");
                         }
+
+                        lines.Add(string.Empty);
                     }
 
-                    lines.Add(string.Empty);
-                    lines.Add("Installed components:");
-                    foreach (var component in dockerFile.Components)
+                    if (dockerFile.Components.Any())
                     {
-                        lines.Add($"- {component}");
+                        lines.Add(string.Empty);
+                        lines.Add("Installed components:");
+                        lines.Add(string.Empty);
+                        foreach (var component in dockerFile.Components)
+                        {
+                            lines.Add($"- {component}");
+                        }
                     }
 
                     foreach (var node in groupByFile)
                     {
                         var artifacts = GetArtifacts(graph, node).Reverse().Distinct().ToList();
-
-                        lines.Add(string.Empty);
-                        lines.Add("Docker commands:");
-
-                        lines.Add("```");
+                        var images = artifacts.OfType<Image>().ToList();
                         var weight = 0;
-                        foreach (var image in artifacts.OfType<Image>())
+
+                        if (images.Any())
                         {
-                            lines.Add(GenerateCommand(image));
-                            weight += image.Weight.Value;
+                            lines.Add(string.Empty);
+                            lines.Add("Docker commands:");
+                            lines.Add(string.Empty);
+
+                            lines.Add("```");
+                            foreach (var image in images)
+                            {
+                                lines.Add(GenerateCommand(image));
+                                weight += image.Weight.Value;
+                            }
+
+                            lines.Add("```");
                         }
 
-                        lines.Add("```");
-
-                        lines.Add("Base images:");
-
-                        lines.Add("```");
-                        foreach (var reference in artifacts.OfType<Reference>())
+                        var references = artifacts.OfType<Reference>();
+                        if (references.Any())
                         {
-                            lines.Add(GeneratePullCommand(reference));
-                            weight += reference.Weight.Value;
+                            lines.Add(string.Empty);
+                            lines.Add("Base images:");
+                            lines.Add(string.Empty);
+
+                            lines.Add("```");
+                            foreach (var reference in artifacts.OfType<Reference>())
+                            {
+                                lines.Add(GeneratePullCommand(reference));
+                                weight += reference.Weight.Value;
+                            }
+
+                            lines.Add("```");
                         }
 
-                        lines.Add("```");
-
-                        lines.Add($"_The required free space to generate image(s) is about **{weight} GB**._");
-                        lines.Add(string.Empty);
+                        if (weight > 0)
+                        {
+                            lines.Add(string.Empty);
+                            lines.Add($"_The required free space to generate image(s) is about **{weight} GB**._");
+                        }
                     }
 
                     foreach (var node in groupByFile)

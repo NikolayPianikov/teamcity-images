@@ -12,6 +12,8 @@
 # Repo ${repo}
 # Weight 11
 
+## ${agentCommentHeader}
+
 # Based on ${windowsservercoreImage} 10
 FROM ${windowsservercoreImage} AS tools
 

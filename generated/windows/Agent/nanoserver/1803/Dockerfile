@@ -13,6 +13,7 @@ ARG teamcityWindowsservercoreImage='teamcity-agent:latest-windowsservercore-1803
 # ARG teamcityWindowsservercoreImage
 
 
+
 FROM ${powershellImage} AS dotnet
 
 SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]

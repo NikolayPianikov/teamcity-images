@@ -12,6 +12,7 @@ namespace TeamCity.Docker.Model
         [NotNull] public readonly IEnumerable<string> Tags;
         [NotNull] public readonly IEnumerable<string> Components;
         [NotNull] public readonly IEnumerable<string> Repositories;
+        [NotNull] public readonly IReadOnlyCollection<string> Comments;
         [NotNull] public readonly IReadOnlyCollection<Reference> References;
         public readonly Weight Weight;
         [NotNull] public readonly IEnumerable<Line> Lines;
@@ -23,6 +24,7 @@ namespace TeamCity.Docker.Model
             [NotNull] IReadOnlyCollection<string> tags,
             [NotNull] IReadOnlyCollection<string> components,
             [NotNull] IReadOnlyCollection<string> repositories,
+            [NotNull] IReadOnlyCollection<string> comments,
             [NotNull] IReadOnlyCollection<Reference> references,
             [NotNull] Weight weight,
             [NotNull] IReadOnlyCollection<Line> lines)
@@ -33,6 +35,7 @@ namespace TeamCity.Docker.Model
             Tags = tags ?? throw new ArgumentNullException(nameof(tags));
             Components = components ?? throw new ArgumentNullException(nameof(components));
             Repositories = repositories ?? throw new ArgumentNullException(nameof(repositories));
+            Comments = comments ?? throw new ArgumentNullException(nameof(comments));
             References = references ?? throw new ArgumentNullException(nameof(references));
             Weight = weight;
             Lines = lines ?? throw new ArgumentNullException(nameof(lines));
