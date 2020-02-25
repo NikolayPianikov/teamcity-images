@@ -141,7 +141,7 @@ failBuild = true
 }
 dockerSupport {
 loginToRegistry = on {
-dockerRegistryId = PROJECT_EXT_2307
+dockerRegistryId = "PROJECT_EXT_2307"
 }
 }
 dependencies {
@@ -292,7 +292,7 @@ failBuild = true
 }
 dockerSupport {
 loginToRegistry = on {
-dockerRegistryId = PROJECT_EXT_2307
+dockerRegistryId = "PROJECT_EXT_2307"
 }
 }
 dependencies {
@@ -442,7 +442,7 @@ failBuild = true
 }
 dockerSupport {
 loginToRegistry = on {
-dockerRegistryId = PROJECT_EXT_2307
+dockerRegistryId = "PROJECT_EXT_2307"
 }
 }
 dependencies {
@@ -593,7 +593,7 @@ failBuild = true
 }
 dockerSupport {
 loginToRegistry = on {
-dockerRegistryId = PROJECT_EXT_2307
+dockerRegistryId = "PROJECT_EXT_2307"
 }
 }
 dependencies {

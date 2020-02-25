@@ -266,7 +266,7 @@ namespace TeamCity.Docker
             {
                 yield return "dockerSupport {";
                 yield return "loginToRegistry = on {";
-                yield return $"dockerRegistryId = {_options.TeamCityDockerRegistryId}";
+                yield return $"dockerRegistryId = \"{_options.TeamCityDockerRegistryId}\"";
                 yield return "}";
             }
 
