@@ -74,13 +74,12 @@ namespace TeamCity.Docker
                     .ToList();
 
                 var name = generalTags.Any() ? string.Join(" ", generalTags) : "Build Docker Images";
-                var id = name.Replace('-', '_').Replace('.', '_');
                 if (!names.Add(name))
                 {
                     name = $"{name} {++counter}";
-                    id = $"{id}_{++counter}";
                 }
 
+                var id = name.Replace('-', '_').Replace('.', '_');
                 lines.AddRange(GenerateBuildType(id, name, path.Select(i => i.Value).OfType<Image>().ToList(), weight));
                 buildTypes.Add(id);
                 lines.Add(string.Empty);
@@ -177,7 +176,7 @@ namespace TeamCity.Docker
                 }
             }
 
-            yield return $"object {name.Replace(' ', '_')} : BuildType({{";
+            yield return $"object {id} : BuildType({{";
             yield return $"name = \"{name}\"";
             yield return $"description  = \"{description}\"";
             yield return "vcs {root(RemoteTeamcityImages)}";

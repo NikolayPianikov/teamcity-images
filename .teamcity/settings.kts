@@ -4,7 +4,7 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dockerCommand
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.freeDiskSpace
 version = "2019.2"
 
-object latest-nanoserver-1903 : BuildType({
+object latest_nanoserver_1903 : BuildType({
 name = "latest-nanoserver-1903"
 description  = "teamcity-server:latest-nanoserver-1903 teamcity-minimal-agent:latest-nanoserver-1903 teamcity-agent:latest-windowsservercore-1903:latest-nanoserver-1903"
 vcs {root(RemoteTeamcityImages)}
@@ -83,7 +83,7 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 })
 
 
-object latest-nanoserver-1809 : BuildType({
+object latest_nanoserver_1809 : BuildType({
 name = "latest-nanoserver-1809"
 description  = "teamcity-server:latest-nanoserver-1809 teamcity-minimal-agent:latest-nanoserver-1809 teamcity-agent:latest-windowsservercore-1809:latest-nanoserver-1809"
 vcs {root(RemoteTeamcityImages)}
@@ -162,7 +162,7 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 })
 
 
-object 18.04_linux : BuildType({
+object 18_04 linux : BuildType({
 name = "18.04 linux"
 description  = "teamcity-server:18.04,linux teamcity-minimal-agent:18.04,linux teamcity-agent:18.04,linux"
 vcs {root(RemoteTeamcityImages)}
@@ -230,7 +230,7 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 })
 
 
-object latest-nanoserver-1803 : BuildType({
+object latest_nanoserver_1803 : BuildType({
 name = "latest-nanoserver-1803"
 description  = "teamcity-server:latest-nanoserver-1803 teamcity-minimal-agent:latest-nanoserver-1803 teamcity-agent:latest-windowsservercore-1803:latest-nanoserver-1803"
 vcs {root(RemoteTeamcityImages)}
