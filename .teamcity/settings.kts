@@ -65,6 +65,42 @@ teamcity-agent:latest-nanoserver-1903
 param("dockerImage.platform", "windows")
 }
 
+dockerCommand {
+name = "push teamcity-server:latest-nanoserver-1903"
+commandType = push {
+namesAndTags = """
+%repository%teamcity-server:latest-nanoserver-1903
+""".trimIndent()
+}
+}
+
+dockerCommand {
+name = "push teamcity-minimal-agent:latest-nanoserver-1903"
+commandType = push {
+namesAndTags = """
+%repository%teamcity-minimal-agent:latest-nanoserver-1903
+""".trimIndent()
+}
+}
+
+dockerCommand {
+name = "push teamcity-agent:latest-windowsservercore-1903"
+commandType = push {
+namesAndTags = """
+%repository%teamcity-agent:latest-windowsservercore-1903
+""".trimIndent()
+}
+}
+
+dockerCommand {
+name = "push teamcity-agent:latest-nanoserver-1903"
+commandType = push {
+namesAndTags = """
+%repository%teamcity-agent:latest-nanoserver-1903
+""".trimIndent()
+}
+}
+
 }
 features {
 freeDiskSpace {
@@ -144,6 +180,42 @@ teamcity-agent:latest-nanoserver-1809
 param("dockerImage.platform", "windows")
 }
 
+dockerCommand {
+name = "push teamcity-server:latest-nanoserver-1809"
+commandType = push {
+namesAndTags = """
+%repository%teamcity-server:latest-nanoserver-1809
+""".trimIndent()
+}
+}
+
+dockerCommand {
+name = "push teamcity-minimal-agent:latest-nanoserver-1809"
+commandType = push {
+namesAndTags = """
+%repository%teamcity-minimal-agent:latest-nanoserver-1809
+""".trimIndent()
+}
+}
+
+dockerCommand {
+name = "push teamcity-agent:latest-windowsservercore-1809"
+commandType = push {
+namesAndTags = """
+%repository%teamcity-agent:latest-windowsservercore-1809
+""".trimIndent()
+}
+}
+
+dockerCommand {
+name = "push teamcity-agent:latest-nanoserver-1809"
+commandType = push {
+namesAndTags = """
+%repository%teamcity-agent:latest-nanoserver-1809
+""".trimIndent()
+}
+}
+
 }
 features {
 freeDiskSpace {
@@ -210,6 +282,36 @@ teamcity-agent:linux
 """.trimIndent()
 }
 param("dockerImage.platform", "linux")
+}
+
+dockerCommand {
+name = "push teamcity-server:18.04,linux"
+commandType = push {
+namesAndTags = """
+%repository%teamcity-server:18.04
+%repository%teamcity-server:linux
+""".trimIndent()
+}
+}
+
+dockerCommand {
+name = "push teamcity-minimal-agent:18.04,linux"
+commandType = push {
+namesAndTags = """
+%repository%teamcity-minimal-agent:18.04
+%repository%teamcity-minimal-agent:linux
+""".trimIndent()
+}
+}
+
+dockerCommand {
+name = "push teamcity-agent:18.04,linux"
+commandType = push {
+namesAndTags = """
+%repository%teamcity-agent:18.04
+%repository%teamcity-agent:linux
+""".trimIndent()
+}
 }
 
 }
@@ -289,6 +391,42 @@ teamcity-agent:latest-nanoserver-1803
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
+}
+
+dockerCommand {
+name = "push teamcity-server:latest-nanoserver-1803"
+commandType = push {
+namesAndTags = """
+%repository%teamcity-server:latest-nanoserver-1803
+""".trimIndent()
+}
+}
+
+dockerCommand {
+name = "push teamcity-minimal-agent:latest-nanoserver-1803"
+commandType = push {
+namesAndTags = """
+%repository%teamcity-minimal-agent:latest-nanoserver-1803
+""".trimIndent()
+}
+}
+
+dockerCommand {
+name = "push teamcity-agent:latest-windowsservercore-1803"
+commandType = push {
+namesAndTags = """
+%repository%teamcity-agent:latest-windowsservercore-1803
+""".trimIndent()
+}
+}
+
+dockerCommand {
+name = "push teamcity-agent:latest-nanoserver-1803"
+commandType = push {
+namesAndTags = """
+%repository%teamcity-agent:latest-nanoserver-1803
+""".trimIndent()
+}
 }
 
 }

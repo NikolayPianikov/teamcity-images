@@ -10,7 +10,7 @@ using TeamCity.Docker.Model;
 
 namespace TeamCity.Docker
 {
-    internal class TeamCityKotlinSettingsGenerator: IGenerator
+    internal class TeamCityKotlinSettingsGenerator : IGenerator
     {
         [NotNull] private readonly IGenerateOptions _options;
         [NotNull] private readonly IBuildGraphsFactory _buildGraphsFactory;
@@ -67,7 +67,7 @@ namespace TeamCity.Docker
                     .OfType<Image>()
                     .SelectMany(i => i.File.Tags)
                     .GroupBy(i => i)
-                    .Select(i =>new { tag = i.Key , count = i.Count() })
+                    .Select(i => new {tag = i.Key, count = i.Count()})
                     .Where(i => i.count > 1)
                     .OrderByDescending(i => i.count)
                     .Select(i => i.tag)
@@ -95,6 +95,7 @@ namespace TeamCity.Docker
                 lines.Add("snapshot {}");
                 lines.Add("}");
             }
+
             lines.Add("}");
             lines.Add("})");
 
@@ -106,9 +107,9 @@ namespace TeamCity.Docker
             {
                 lines.Add($"buildType({buildType})");
             }
-            
+
             lines.Add($"buildType(root)");
-            
+
             lines.Add("}"); // project
 
             lines.Add(string.Empty);
@@ -134,7 +135,7 @@ namespace TeamCity.Docker
             var images =
                 from dependency in dependencies
                 let image = dependency.Value as Image
-                select new { dependency, image };
+                select new {dependency, image};
 
             foreach (var image in images)
             {
@@ -181,6 +182,7 @@ namespace TeamCity.Docker
             yield return $"description  = \"{description}\"";
             yield return "vcs {root(RemoteTeamcityImages)}";
             yield return "steps {";
+            // docker build
             foreach (var image in images)
             {
                 yield return "dockerCommand {";
@@ -198,6 +200,7 @@ namespace TeamCity.Docker
                 {
                     yield return $"{image.File.ImageId}:{tag}";
                 }
+
                 yield return "\"\"\".trimIndent()";
 
                 yield return "}";
@@ -206,6 +209,28 @@ namespace TeamCity.Docker
 
                 yield return string.Empty;
             }
+
+            // docker push
+            foreach (var image in images)
+            {
+                yield return "dockerCommand {";
+                yield return $"name = \"push {image.File.ImageId}:{string.Join(",", image.File.Tags)}\"";
+                yield return "commandType = push {";
+
+                yield return "namesAndTags = \"\"\"";
+                foreach (var tag in image.File.Tags)
+                {
+                    yield return $"%repository%{image.File.ImageId}:{tag}";
+                }
+
+                yield return "\"\"\".trimIndent()";
+
+                yield return "}";
+                yield return "}";
+
+                yield return string.Empty;
+            }
+
             yield return "}";
 
             if (weight > 0)
