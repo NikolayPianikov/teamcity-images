@@ -87,9 +87,8 @@ namespace TeamCity.Docker
                 lines.Add(string.Empty);
             }
 
-            lines.Add($"object root : BuildType({{");
+            lines.Add("object root : BuildType({");
             lines.Add("name = \"Build All Docker Images\"");
-            lines.Add($"artifactRules = \"{_pathService.Normalize(_options.TargetPath)} => \"");
             lines.Add("dependencies {");
             foreach (var buildType in buildTypes)
             {

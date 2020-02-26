@@ -1,1 +1,0 @@
-dotnet run -p tool/TeamCity.Docker/TeamCity.Docker.csproj -- build -s configs/windows -f configs/common.config;configs/windows.config -c context -u nikolayp -p 88e7198e-433d-4035-9e8a-956f9a3bdeae

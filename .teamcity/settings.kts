@@ -590,7 +590,6 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 
 object root : BuildType({
 name = "Build All Docker Images"
-artifactRules = "context/generated => "
 dependencies {
 dependency(TC2019_2_BuildDist_latest_nanoserver_1903) {
 snapshot {}

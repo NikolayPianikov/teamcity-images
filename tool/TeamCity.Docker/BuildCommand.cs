@@ -98,9 +98,7 @@ namespace TeamCity.Docker
             using (contextStream)
             using (_logger.CreateBlock("Build"))
             {
-                var internalBuildId = Guid.NewGuid().ToString();
-                var labels = new Dictionary<string, string> { { "InternalBuildId", internalBuildId } };
-
+                var labels = new Dictionary<string, string>();
                 foreach (var graph in buildGraphs)
                 {
                     var buildPath = _buildPathProvider.GetPath(graph).ToList();
@@ -114,12 +112,11 @@ namespace TeamCity.Docker
                                 {
                                     contextStream.Position = 0;
                                     var dockerFilePathInContext = _pathService.Normalize(Path.Combine(dockerFilesRootPath, dockerFile.Path));
-                                    var internalImageId = Guid.NewGuid().ToString();
                                     var buildParameters = new ImageBuildParameters
                                     {
                                         Dockerfile = dockerFilePathInContext,
-                                        Tags = dockerFile.Tags.Concat(_options.Tags).Distinct().ToList(),
-                                        Labels = new Dictionary<string, string>(labels) {{"InternalImageId", internalImageId}}
+                                        Tags = dockerFile.Tags.Distinct().ToList(),
+                                        Labels = labels
                                     };
 
                                     using (var buildEventStream = await _dockerClient.Images.BuildImageFromDockerfileAsync(
