@@ -12,7 +12,7 @@ Run a script like _net30_windows_build.cmd_. For instance .net core 3 scripts ar
 
 These script builds a set of required docker images by local docker.
 
-### Generate
+### Generate docker files
 
 Run a script like _net30_generate.cmd_. _net30_generate.cmd_ script generates docker files, readme and Kotlin script for TeamCity build configurations.
 
