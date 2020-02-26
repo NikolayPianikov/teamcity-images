@@ -12,7 +12,7 @@
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.7.82" />
     <PackageReference Include="Docker.DotNet" Version="3.125.2" />
-    <PackageReference Include="IoC.Container.Source" Version="1.2.1-beta376" />
+    <PackageReference Include="IoC.Container" Version="1.2.2" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="SharpZipLib" Version="1.2.0" />
     <PackageReference Include="TeamCity.ServiceMessages" Version="3.0.13" />
