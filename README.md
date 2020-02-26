@@ -4,7 +4,7 @@
 * [Agent](generated/teamcity-agent.md) on [hub.docker.com](https://hub.docker.com/r/jetbrains/teamcity-agent)
 * [Server](generated/teamcity-server.md) on [hub.docker.com](https://hub.docker.com/r/jetbrains/teamcity-server)
 
-## Building docker images
+### Building docker images
 
 Run a script like _net30_windows_build.cmd_. For instance .net core 3 scripts are:
 - to build windows docker images run the script _net30_windows_build.cmd_
