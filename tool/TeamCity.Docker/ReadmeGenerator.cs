@@ -171,7 +171,7 @@ namespace TeamCity.Docker
             imageId + ".md";
 
         private static string GetTagLink(Dockerfile dockerFile) =>
-            "whale-" + GetReadmeTagName(dockerFile).Replace(".", string.Empty).Replace(" ", "-");
+            GetReadmeTagName(dockerFile).Replace(".", string.Empty).Replace(" ", "-");
 
         private static string GetReadmeTagName(Dockerfile dockerFile) =>
             string.Join(" or ", dockerFile.Tags);
