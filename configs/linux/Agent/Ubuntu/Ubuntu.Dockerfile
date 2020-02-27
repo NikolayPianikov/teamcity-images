@@ -10,7 +10,8 @@
 # Repo ${repo}
 # Weight 1
 
-## ![ubuntu](logo/ubuntu.png) ${agentCommentHeader}
+## ${ubuntuLogo}
+## ${agentCommentHeader}
 
 # Based on ${teamcityMinimalAgentImage}
 FROM ${teamcityMinimalAgentImage}

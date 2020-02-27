@@ -12,6 +12,7 @@
 # Repo ${repo}
 # Weight 2
 
+## ${windowsLogo}
 ## ${serverCommentHeader}
 
 # Based on ${powershellImage} 1

@@ -13,7 +13,8 @@
 
 Platform: linux
 
-![ubuntu](logo/ubuntu.png) This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
+<img align="center" src="/logo/ubuntu.png">
+This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
 The docker image is available on:
 
@@ -46,6 +47,7 @@ _The required free space to generate image(s) is about **2 GB**._
 
 Platform: windows
 
+<img align="center" src="windows.jpg">
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
 Installed components:
@@ -75,6 +77,7 @@ _The required free space to generate image(s) is about **24 GB**._
 
 Platform: windows
 
+<img align="center" src="windows.jpg">
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
 The docker image is available on:
@@ -110,6 +113,7 @@ _The required free space to generate image(s) is about **25 GB**._
 
 Platform: windows
 
+<img align="center" src="windows.jpg">
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
 The docker image is available on:
@@ -145,6 +149,7 @@ _The required free space to generate image(s) is about **25 GB**._
 
 Platform: windows
 
+<img align="center" src="windows.jpg">
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
 Installed components:
@@ -175,6 +180,7 @@ _The required free space to generate image(s) is about **23 GB**._
 
 Platform: windows
 
+<img align="center" src="windows.jpg">
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
 The docker image is available on:
@@ -211,6 +217,7 @@ _The required free space to generate image(s) is about **24 GB**._
 
 Platform: windows
 
+<img align="center" src="windows.jpg">
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
 The docker image is available on:
