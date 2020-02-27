@@ -13,7 +13,7 @@
 ## ${agentCommentHeader}
 
 # Based on ${powershellImage} 1
-# Install PowerShell
+# Install ${powerShellComponentName}
 FROM ${powershellImage} AS base
 
 SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]

@@ -56,7 +56,7 @@ ENV ProgramFiles="C:\Program Files" \
     # Persist %PSCORE% ENV variable for user convenience
     PSCORE="$ProgramFiles\PowerShell\pwsh.exe"
 
-# Install PowerShell
+# Install ${powerShellComponentName}
 COPY --from=base ["C:/Program Files/PowerShell", "C:/Program Files/PowerShell"]
 
 # In order to set system PATH, ContainerAdministrator must be used

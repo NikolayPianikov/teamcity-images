@@ -44,7 +44,7 @@ This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) se
 
 Installed components:
 
-- PowerShell
+- <img src="https://github.com/PowerShell/PowerShell/blob/master/assets/ps_black_64.svg" height="24" width="24" align="center">[PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 - [JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
 - [JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
 - [Git x64 v.2.19.1](https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip)
@@ -77,7 +77,7 @@ The docker image is available on:
 
 Installed components:
 
-- PowerShell
+- <img src="https://github.com/PowerShell/PowerShell/blob/master/assets/ps_black_64.svg" height="24" width="24" align="center">[PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 - [JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
 - [JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
 - [Git x64 v.2.19.1](https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip)
@@ -110,7 +110,7 @@ The docker image is available on:
 
 Installed components:
 
-- PowerShell
+- <img src="https://github.com/PowerShell/PowerShell/blob/master/assets/ps_black_64.svg" height="24" width="24" align="center">[PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 - [JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
 - [JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
 - [Git x64 v.2.19.1](https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip)

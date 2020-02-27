@@ -13,7 +13,7 @@
 
 Platform: linux
 
-This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
+![ubuntu](logo/ubuntu.png) This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
 The docker image is available on:
 
@@ -50,6 +50,7 @@ This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) bu
 
 Installed components:
 
+- <img src="https://github.com/PowerShell/PowerShell/blob/master/assets/ps_black_64.svg" height="24" width="24" align="center">[PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 - [.NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-win-x64.zip)
 
 Docker commands:
@@ -84,6 +85,7 @@ The docker image is available on:
 Installed components:
 
 - [.NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-win-x64.zip)
+- <img src="https://github.com/PowerShell/PowerShell/blob/master/assets/ps_black_64.svg" height="24" width="24" align="center">[PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 
 Docker commands:
 
@@ -118,6 +120,7 @@ The docker image is available on:
 Installed components:
 
 - [.NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-win-x64.zip)
+- <img src="https://github.com/PowerShell/PowerShell/blob/master/assets/ps_black_64.svg" height="24" width="24" align="center">[PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 
 Docker commands:
 
@@ -146,6 +149,7 @@ This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) bu
 
 Installed components:
 
+- <img src="https://github.com/PowerShell/PowerShell/blob/master/assets/ps_black_64.svg" height="24" width="24" align="center">[PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 - [JDK Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
 - [Git x64 v.2.19.1](http://repo.labs.intellij.net/thirdparty/vm-templates/MinGit-2.19.1-64-bit.zip)
 - [Mercurial x64 v.4.7.2](http://repo.labs.intellij.net/thirdparty/vm-templates/mercurial-4.7.2-x64.msi)
@@ -180,6 +184,7 @@ The docker image is available on:
 
 Installed components:
 
+- <img src="https://github.com/PowerShell/PowerShell/blob/master/assets/ps_black_64.svg" height="24" width="24" align="center">[PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 - [JDK Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
 - [Git x64 v.2.19.1](http://repo.labs.intellij.net/thirdparty/vm-templates/MinGit-2.19.1-64-bit.zip)
 - [Mercurial x64 v.4.7.2](http://repo.labs.intellij.net/thirdparty/vm-templates/mercurial-4.7.2-x64.msi)
@@ -215,6 +220,7 @@ The docker image is available on:
 
 Installed components:
 
+- <img src="https://github.com/PowerShell/PowerShell/blob/master/assets/ps_black_64.svg" height="24" width="24" align="center">[PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 - [JDK Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
 - [Git x64 v.2.19.1](http://repo.labs.intellij.net/thirdparty/vm-templates/MinGit-2.19.1-64-bit.zip)
 - [Mercurial x64 v.4.7.2](http://repo.labs.intellij.net/thirdparty/vm-templates/mercurial-4.7.2-x64.msi)

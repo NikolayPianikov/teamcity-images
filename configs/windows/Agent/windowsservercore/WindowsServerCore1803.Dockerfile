@@ -17,6 +17,7 @@
 # Based on ${windowsservercoreImage} 10
 FROM ${windowsservercoreImage} AS tools
 
+# Install ${powerShellComponentName}
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install [${jdkWindowsComponentName}](${jdkWindowsComponent})

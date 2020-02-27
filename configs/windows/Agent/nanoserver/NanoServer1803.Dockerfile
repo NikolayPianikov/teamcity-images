@@ -15,6 +15,7 @@
 ## ${agentCommentHeader}
 
 # Based on ${powershellImage} 1
+# Install ${powerShellComponentName}
 FROM ${powershellImage} AS dotnet
 
 SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
