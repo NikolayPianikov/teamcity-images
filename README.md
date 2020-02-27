@@ -1,10 +1,14 @@
 # TeamCity docker images
 
-## Docker images on [hub.docker.com](https://hub.docker.com/)
+* [Minimal agent](generated/teamcity-minimal-agent.md)
+* [Agent](generated/teamcity-agent.md)
+* [Server](generated/teamcity-server.md)
 
-* [Minimal agent](generated/teamcity-minimal-agent.md) on [hub.docker.com](https://hub.docker.com/r/jetbrains/teamcity-minimal-agent)
-* [Agent](generated/teamcity-agent.md) on [hub.docker.com](https://hub.docker.com/r/jetbrains/teamcity-agent)
-* [Server](generated/teamcity-server.md) on [hub.docker.com](https://hub.docker.com/r/jetbrains/teamcity-server)
+## Docker images on [<img align="center" height="18" src="/logo/docker_hub.png">](https://hub.docker.com/search?q=JetBrains%2FTeamCity&type=image)
+
+* [Minimal agent](https://hub.docker.com/r/jetbrains/teamcity-minimal-agent)
+* [Agent](https://hub.docker.com/r/jetbrains/teamcity-agent)
+* [Server](https://hub.docker.com/r/jetbrains/teamcity-server)
 
 ## Docker images
 
