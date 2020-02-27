@@ -11,6 +11,7 @@
 # Weight 1
 
 ## ${ubuntuLogo}
+##
 ## ${agentCommentHeader}
 
 # Based on ${ubuntuImage} 0

@@ -10,6 +10,7 @@ ARG teamcityMinimalAgentImage='teamcity-minimal-agent:18.04'
 # ARG teamcityMinimalAgentImage
 
 
+##
 
 FROM ${teamcityMinimalAgentImage}
 
