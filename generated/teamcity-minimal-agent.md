@@ -8,9 +8,7 @@
 
 [Dockerfile](linux/MinimalAgent/Ubuntu/18.04/Dockerfile)
 
-Platform: linux
-
-OS: <img align="center" height="64" src="/logo/ubuntu.png">
+<img align="center" height="64" src="/logo/ubuntu.png">
 
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
@@ -22,6 +20,8 @@ The docker image is available on:
 Installed components:
 
 - [<img align="center" height="18" src="/logo/corretto.png"> JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-linux-x64.tar.gz)
+
+Docker Container Platform: linux
 
 Docker commands:
 
@@ -40,9 +40,7 @@ _The required free space to generate image(s) is about **1 GB**._
 
 [Dockerfile](windows/MinimalAgent/nanoserver/1803/Dockerfile)
 
-Platform: windows
-
-OS: <img align="center" height="64" src="/logo/windows_nano.png">
+<img align="center" height="64" src="/logo/windows_nano.png">
 
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
@@ -56,6 +54,8 @@ Installed components:
 - <img src="https://github.com/PowerShell/PowerShell/blob/master/assets/ps_black_64.svg" height="24" width="24" align="center"> [PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 - [<img align="center" height="18" src="/logo/corretto.png"> JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
 - [<img align="center" height="18" src="/logo/corretto.png"> JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
+
+Docker Container Platform: windows
 
 Docker commands:
 
@@ -74,9 +74,7 @@ _The required free space to generate image(s) is about **2 GB**._
 
 [Dockerfile](windows/MinimalAgent/nanoserver/1809/Dockerfile)
 
-Platform: windows
-
-OS: <img align="center" height="64" src="/logo/windows_nano.png">
+<img align="center" height="64" src="/logo/windows_nano.png">
 
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
@@ -90,6 +88,8 @@ Installed components:
 - [<img align="center" height="18" src="/logo/corretto.png"> JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
 - [<img align="center" height="18" src="/logo/corretto.png"> JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
 - <img src="https://github.com/PowerShell/PowerShell/blob/master/assets/ps_black_64.svg" height="24" width="24" align="center"> [PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
+
+Docker Container Platform: windows
 
 Docker commands:
 
@@ -109,9 +109,7 @@ _The required free space to generate image(s) is about **3 GB**._
 
 [Dockerfile](windows/MinimalAgent/nanoserver/1903/Dockerfile)
 
-Platform: windows
-
-OS: <img align="center" height="64" src="/logo/windows_nano.png">
+<img align="center" height="64" src="/logo/windows_nano.png">
 
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
@@ -125,6 +123,8 @@ Installed components:
 - [<img align="center" height="18" src="/logo/corretto.png"> JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
 - [<img align="center" height="18" src="/logo/corretto.png"> JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
 - <img src="https://github.com/PowerShell/PowerShell/blob/master/assets/ps_black_64.svg" height="24" width="24" align="center"> [PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
+
+Docker Container Platform: windows
 
 Docker commands:
 

@@ -67,9 +67,6 @@ namespace TeamCity.Docker
                     lines.Add(string.Empty);
                     lines.Add($"[Dockerfile]({_pathService.Normalize(Path.Combine(dockerFile.Path, "Dockerfile"))})");
 
-                    lines.Add(string.Empty);
-                    lines.Add($"Platform: {dockerFile.Platform}");
-
                     if (dockerFile.Comments.Any())
                     {
                         lines.Add(string.Empty);
@@ -102,6 +99,9 @@ namespace TeamCity.Docker
                             lines.Add($"- {component}");
                         }
                     }
+
+                    lines.Add(string.Empty);
+                    lines.Add($"Docker Container Platform: {dockerFile.Platform}");
 
                     foreach (var node in groupByFile)
                     {
