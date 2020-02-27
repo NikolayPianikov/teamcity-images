@@ -12,7 +12,7 @@
 # Repo ${repo}
 # Weight 2
 
-## ${windowsLogo}
+## ${windowsNanoLogo}
 ##
 ## ${serverCommentHeader}
 

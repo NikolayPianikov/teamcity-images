@@ -42,7 +42,7 @@ _The required free space to generate image(s) is about **1 GB**._
 
 Platform: windows
 
-OS: <img align="center" height="18" src="/logo/windows.png">
+OS: <img align="center" height="18" src="/logo/windows_nano.png">
 
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
@@ -76,7 +76,7 @@ _The required free space to generate image(s) is about **2 GB**._
 
 Platform: windows
 
-OS: <img align="center" height="18" src="/logo/windows.png">
+OS: <img align="center" height="18" src="/logo/windows_nano.png">
 
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
@@ -111,7 +111,7 @@ _The required free space to generate image(s) is about **3 GB**._
 
 Platform: windows
 
-OS: <img align="center" height="18" src="/logo/windows.png">
+OS: <img align="center" height="18" src="/logo/windows_nano.png">
 
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
