@@ -2,5 +2,6 @@
 {
     internal interface IBuildOptions : IOptions
     {
+        string FilterRegex { get; }
     }
 }

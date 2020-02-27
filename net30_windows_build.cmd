@@ -1,1 +1,1 @@
-call build.cmd netcoreapp3.0 windows
+call build.cmd netcoreapp3.0 windows "" "%~1"

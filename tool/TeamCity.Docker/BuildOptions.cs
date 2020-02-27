@@ -24,5 +24,8 @@ namespace TeamCity.Docker
 
         [Option('v', "verbose", Required = false, HelpText = "Add it for detailed output.")]
         public bool VerboseMode { get; set; } = false;
+
+        [Option('r', "regex", Required = false, HelpText = "Build graph filter regular expression.")]
+        public string FilterRegex { get; set; } = string.Empty;
     }
 }

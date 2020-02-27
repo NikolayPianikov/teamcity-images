@@ -1,1 +1,1 @@
-call build.cmd netcoreapp3.0 linux ";configs/linux-internal.config"
+call build.cmd netcoreapp3.0 linux ";configs/linux-internal.config" "%~1"

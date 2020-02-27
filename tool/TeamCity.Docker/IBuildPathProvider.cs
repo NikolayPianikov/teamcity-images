@@ -7,7 +7,8 @@ namespace TeamCity.Docker
 {
     internal interface IBuildPathProvider
     {
-        IEnumerable<INode<IArtifact>> GetPath([NotNull] IGraph<IArtifact, Dependency> buildGraph);
-        IEnumerable<INode<IArtifact>> GetPath([NotNull] IGraph<IArtifact, Dependency> buildGraph, [NotNull] INode<IArtifact> leafNode);
+        [NotNull] IEnumerable<INode<IArtifact>> GetPath([NotNull] IGraph<IArtifact, Dependency> buildGraph);
+
+        [NotNull] IEnumerable<INode<IArtifact>> GetPath([NotNull] IGraph<IArtifact, Dependency> buildGraph, [NotNull] INode<IArtifact> leafNode);
     }
 }

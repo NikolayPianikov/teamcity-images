@@ -48,6 +48,7 @@ namespace TeamCity.Docker
                 .Bind<IFactory<IGraph<IArtifact, Dependency>, IEnumerable<Template>>>().As(Singleton).To<DockerGraphFactory>()
                 .Bind<IContextFactory>().As(Singleton).To<ContextFactory>()
                 .Bind<IBuildPathProvider>().As(Singleton).To<BuildPathProvider>()
+                .Bind<IFactory<string, IGraph<IArtifact, Dependency>>>().As(Singleton).To<GraphNameFactory>()
 
                 // TeamCity messages
                 .Bind<IServiceMessageFormatter>().As(Singleton).To<ServiceMessageFormatter>()

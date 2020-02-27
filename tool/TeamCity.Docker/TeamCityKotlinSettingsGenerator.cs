@@ -16,17 +16,20 @@ namespace TeamCity.Docker
         [NotNull] private readonly IFactory<IEnumerable<IGraph<IArtifact, Dependency>>, IGraph<IArtifact, Dependency>> _buildGraphsFactory;
         [NotNull] private readonly IPathService _pathService;
         [NotNull] private readonly IBuildPathProvider _buildPathProvider;
+        [NotNull] private readonly IFactory<string, IGraph<IArtifact, Dependency>> _graphNameFactory;
 
         public TeamCityKotlinSettingsGenerator(
             [NotNull] IGenerateOptions options,
             [NotNull] IFactory<IEnumerable<IGraph<IArtifact, Dependency>>, IGraph<IArtifact, Dependency>> buildGraphsFactory,
             [NotNull] IPathService pathService,
-            [NotNull] IBuildPathProvider buildPathProvider)
+            [NotNull] IBuildPathProvider buildPathProvider,
+            [NotNull] IFactory<string, IGraph<IArtifact, Dependency>> graphNameFactory)
         {
             _options = options ?? throw new ArgumentNullException(nameof(options));
             _buildGraphsFactory = buildGraphsFactory ?? throw new ArgumentNullException(nameof(buildGraphsFactory));
             _pathService = pathService ?? throw new ArgumentNullException(nameof(pathService));
             _buildPathProvider = buildPathProvider ?? throw new ArgumentNullException(nameof(buildPathProvider));
+            _graphNameFactory = graphNameFactory ?? throw new ArgumentNullException(nameof(graphNameFactory));
         }
 
         public void Generate([NotNull] IGraph<IArtifact, Dependency> graph)
@@ -64,18 +67,12 @@ namespace TeamCity.Docker
                     .Select(i => i.Value.Weight.Value)
                     .Sum();
 
-                var generalTags = buildGraph.Nodes
-                    .Select(i => i.Value)
-                    .OfType<Image>()
-                    .SelectMany(i => i.File.Tags)
-                    .GroupBy(i => i)
-                    .Select(i => new {tag = i.Key, count = i.Count()})
-                    .Where(i => i.count > 1)
-                    .OrderByDescending(i => i.count)
-                    .Select(i => i.tag)
-                    .ToList();
-
-                var name = generalTags.Any() ? string.Join(" ", generalTags) : "Build Docker Images";
+                var name = _graphNameFactory.Create(buildGraph).Value;
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    name = "Build Docker Images";
+                }
+                
                 if (!names.Add(name))
                 {
                     name = $"{name} {++counter}";

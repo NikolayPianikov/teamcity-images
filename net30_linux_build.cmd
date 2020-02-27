@@ -1,1 +1,1 @@
-call build.cmd netcoreapp3.0 linux
+call build.cmd netcoreapp3.0 linux "" "%~1"

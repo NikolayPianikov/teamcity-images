@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Docker.DotNet;
@@ -25,6 +26,7 @@ namespace TeamCity.Docker
         [NotNull] private readonly IConfigurationExplorer _configurationExplorer;
         [NotNull] private readonly IFactory<IGraph<IArtifact, Dependency>, IEnumerable<Template>> _buildGraphFactory;
         [NotNull] private readonly IFactory<IEnumerable<IGraph<IArtifact, Dependency>>, IGraph<IArtifact, Dependency>> _buildGraphsFactory;
+        [NotNull] private readonly IFactory<string, IGraph<IArtifact, Dependency>> _graphNameFactory;
         [NotNull] private readonly IBuildPathProvider _buildPathProvider;
         [NotNull] private readonly IContextFactory _contextFactory;
         [NotNull] private readonly IStreamService _streamService;
@@ -40,6 +42,7 @@ namespace TeamCity.Docker
             [NotNull] IConfigurationExplorer configurationExplorer,
             [NotNull] IFactory<IGraph<IArtifact, Dependency>, IEnumerable<Template>> buildGraphFactory,
             [NotNull] IFactory<IEnumerable<IGraph<IArtifact, Dependency>>, IGraph<IArtifact, Dependency>> buildGraphsFactory,
+            [NotNull] IFactory<string, IGraph<IArtifact, Dependency>> graphNameFactory,
             [NotNull] IBuildPathProvider buildPathProvider,
             [NotNull] IContextFactory contextFactory,
             [NotNull] IStreamService streamService,
@@ -54,6 +57,7 @@ namespace TeamCity.Docker
             _configurationExplorer = configurationExplorer ?? throw new ArgumentNullException(nameof(configurationExplorer));
             _buildGraphFactory = buildGraphFactory ?? throw new ArgumentNullException(nameof(buildGraphFactory));
             _buildGraphsFactory = buildGraphsFactory ?? throw new ArgumentNullException(nameof(buildGraphsFactory));
+            _graphNameFactory = graphNameFactory ?? throw new ArgumentNullException(nameof(graphNameFactory));
             _buildPathProvider = buildPathProvider ?? throw new ArgumentNullException(nameof(buildPathProvider));
             _contextFactory = contextFactory ?? throw new ArgumentNullException(nameof(contextFactory));
             _streamService = streamService ?? throw new ArgumentNullException(nameof(streamService));
@@ -99,36 +103,46 @@ namespace TeamCity.Docker
             using (_logger.CreateBlock("Build"))
             {
                 var labels = new Dictionary<string, string>();
-                foreach (var graph in buildGraphs)
+                foreach (var buildGraph in buildGraphs)
                 {
-                    var buildPath = _buildPathProvider.GetPath(graph).ToList();
-                    foreach (var buildNode in buildPath)
+                    var name = _graphNameFactory.Create(buildGraph).Value ?? "Unnamed graph";
+                    if (!string.IsNullOrWhiteSpace(_options.FilterRegex) && !new Regex(_options.FilterRegex).IsMatch(name))
                     {
-                        switch (buildNode.Value)
+                        _logger.Log($"\"{name}\" was skipped according to filter \"{_options.FilterRegex}\".", Result.Warning);
+                        continue;
+                    }
+
+                    using (_logger.CreateBlock(name))
+                    {
+                        var buildPath = _buildPathProvider.GetPath(buildGraph).ToList();
+                        foreach (var buildNode in buildPath)
                         {
-                            case Image image:
-                                var dockerFile = image.File;
-                                using (_logger.CreateBlock(dockerFile.ToString()))
-                                {
-                                    contextStream.Position = 0;
-                                    var dockerFilePathInContext = _pathService.Normalize(Path.Combine(dockerFilesRootPath, dockerFile.Path));
-                                    var buildParameters = new ImageBuildParameters
+                            switch (buildNode.Value)
+                            {
+                                case Image image:
+                                    var dockerFile = image.File;
+                                    using (_logger.CreateBlock(dockerFile.ToString()))
                                     {
-                                        Dockerfile = dockerFilePathInContext,
-                                        Tags = dockerFile.Tags.Distinct().ToList(),
-                                        Labels = labels
-                                    };
+                                        contextStream.Position = 0;
+                                        var dockerFilePathInContext = _pathService.Normalize(Path.Combine(dockerFilesRootPath, dockerFile.Path));
+                                        var buildParameters = new ImageBuildParameters
+                                        {
+                                            Dockerfile = dockerFilePathInContext,
+                                            Tags = dockerFile.Tags.Distinct().ToList(),
+                                            Labels = labels
+                                        };
 
-                                    using (var buildEventStream = await _dockerClient.Images.BuildImageFromDockerfileAsync(
-                                        contextStream,
-                                        buildParameters,
-                                        _cancellationTokenSource.Token))
-                                    {
-                                        _streamService.ProcessLines(buildEventStream, line => { _messageLogger.Log(line); });
+                                        using (var buildEventStream = await _dockerClient.Images.BuildImageFromDockerfileAsync(
+                                            contextStream,
+                                            buildParameters,
+                                            _cancellationTokenSource.Token))
+                                        {
+                                            _streamService.ProcessLines(buildEventStream, line => { _messageLogger.Log(line); });
+                                        }
                                     }
-                                }
 
-                                break;
+                                    break;
+                            }
                         }
                     }
                 }
