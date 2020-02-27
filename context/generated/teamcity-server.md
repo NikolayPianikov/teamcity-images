@@ -41,7 +41,7 @@ _The required free space to generate image(s) is about **1 GB**._
 
 Platform: windows
 
-<img align="center" height="18" src="/logo/ubuntu.png">
+<img align="center" height="18" src="/logo/windows.png">
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) server image. The image is suitable for production use and evaluation purposes.
 
 Installed components:
@@ -70,7 +70,7 @@ _The required free space to generate image(s) is about **3 GB**._
 
 Platform: windows
 
-<img align="center" height="18" src="/logo/ubuntu.png">
+<img align="center" height="18" src="/logo/windows.png">
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) server image. The image is suitable for production use and evaluation purposes.
 
 The docker image is available on:
@@ -104,7 +104,7 @@ _The required free space to generate image(s) is about **3 GB**._
 
 Platform: windows
 
-<img align="center" height="18" src="/logo/ubuntu.png">
+<img align="center" height="18" src="/logo/windows.png">
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) server image. The image is suitable for production use and evaluation purposes.
 
 The docker image is available on:
