@@ -9,7 +9,6 @@ ARG ubuntuImage='ubuntu:18.04'
 # ARG ubuntuImage
 
 
-##
 
 FROM ${ubuntuImage}
 
@@ -42,8 +41,6 @@ RUN update-alternatives --install /usr/bin/java java ${JRE_HOME}/bin/java 1 && \
     update-alternatives --set javac ${JRE_HOME}/../bin/javac
 
 # JDK preparation end
-##################################
-
 VOLUME /data/teamcity_agent/conf
 
 ENV CONFIG_FILE=/data/teamcity_agent/conf/buildAgent.properties \

@@ -14,6 +14,7 @@
 Platform: linux
 
 OS: <img align="center" height="18" src="/logo/ubuntu.png">
+
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
 The docker image is available on:
@@ -48,7 +49,13 @@ _The required free space to generate image(s) is about **2 GB**._
 Platform: windows
 
 OS: <img align="center" height="18" src="/logo/windows.png">
+
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
+
+The docker image is available on:
+
+- [teamcity-agent](teamcity-agent)
+
 
 Installed components:
 
@@ -78,6 +85,7 @@ _The required free space to generate image(s) is about **24 GB**._
 Platform: windows
 
 OS: <img align="center" height="18" src="/logo/windows.png">
+
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
 The docker image is available on:
@@ -114,6 +122,7 @@ _The required free space to generate image(s) is about **25 GB**._
 Platform: windows
 
 OS: <img align="center" height="18" src="/logo/windows.png">
+
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
 The docker image is available on:
@@ -150,7 +159,13 @@ _The required free space to generate image(s) is about **25 GB**._
 Platform: windows
 
 OS: <img align="center" height="18" src="/logo/windows.png">
+
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
+
+The docker image is available on:
+
+- [teamcity-agent](teamcity-agent)
+
 
 Installed components:
 
@@ -181,6 +196,7 @@ _The required free space to generate image(s) is about **23 GB**._
 Platform: windows
 
 OS: <img align="center" height="18" src="/logo/windows.png">
+
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
 The docker image is available on:
@@ -218,6 +234,7 @@ _The required free space to generate image(s) is about **24 GB**._
 Platform: windows
 
 OS: <img align="center" height="18" src="/logo/windows.png">
+
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
 The docker image is available on:

@@ -14,7 +14,6 @@ ARG windowsservercoreImage='mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsse
 # ARG teamcityMinimalAgentImage
 
 
-##
 
 FROM ${windowsservercoreImage} AS tools
 

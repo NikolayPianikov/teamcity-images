@@ -14,7 +14,6 @@ ARG windowsBuild='1803'
 # ARG powershellImage
 
 
-##
 
 FROM ${powershellImage} AS base
 

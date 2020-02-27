@@ -49,7 +49,6 @@ RUN update-alternatives --install /usr/bin/java java ${JRE_HOME}/bin/java 1 && \
     update-alternatives --set javac ${JRE_HOME}/../bin/javac
 
 # JDK preparation end
-##################################
 
 ENV TEAMCITY_DATA_PATH=/data/teamcity_server/datadir \
     TEAMCITY_DIST=/opt/teamcity \

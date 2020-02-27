@@ -15,7 +15,7 @@ namespace TeamCity.Docker
     {
         private static readonly Regex ReferenceRegex = new Regex(@"^\s*(?<reference>.+?)(\s+(?<weight>\d+)|)$", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase | RegexOptions.Compiled);
         private static readonly Dependency GenerateDependency = new Dependency(DependencyType.Generate);
-        private const string CommentPrefix = "## ";
+        private const string CommentPrefix = "##";
         private const string IdPrefix = "# Id ";
         private const string TagPrefix = "# Tag ";
         private const string PlatformPrefix = "# Platform ";
@@ -60,7 +60,7 @@ namespace TeamCity.Docker
                         if (line.Type == LineType.Comment)
                         {
                             isMetadata =
-                                TrySetByPrefix(line.Text, CommentPrefix, value => comments.Add(value)) ||
+                                TrySetByPrefix(line.Text, CommentPrefix, value => comments.Add(value.Trim())) ||
                                 TrySetByPrefix(line.Text, IdPrefix, value => imageId = value) ||
                                 TrySetByPrefix(line.Text, TagPrefix, value => tags.Add(value)) ||
                                 TrySetByPrefix(line.Text, PlatformPrefix, value => platform = value) ||
@@ -155,12 +155,7 @@ namespace TeamCity.Docker
 
             if (text.StartsWith(prefix))
             {
-                var value = text.Substring(prefix.Length).Trim();
-                if (!string.IsNullOrWhiteSpace(value))
-                {
-                    setter(value);
-                }
-
+                setter(text.Substring(prefix.Length).Trim());
                 return true;
             }
 

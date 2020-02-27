@@ -11,7 +11,6 @@ ARG powershellImage='mcr.microsoft.com/powershell:nanoserver-1903'
 # ARG powershellImage
 
 
-##
 
 FROM ${powershellImage} AS base
 
