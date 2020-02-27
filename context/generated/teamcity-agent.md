@@ -26,9 +26,9 @@ Installed components:
 - Mercurial
 - [<img align="center" height="18" src="/logo/dotnetcore.png"> SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-linux-x64.tar.gz)
 
-Docker Container Platform: linux
+Container Platform: linux
 
-Docker commands:
+Build commands:
 
 ```
 docker build -f "context/generated/linux/MinimalAgent/Ubuntu/18.04" -t 18.04 -t linux "context"
@@ -60,9 +60,9 @@ Installed components:
 - <img src="/logo/powershell.png" height="18" align="center"> [PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 - [.NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-win-x64.zip)
 
-Docker Container Platform: windows
+Container Platform: windows
 
-Docker commands:
+Build commands:
 
 ```
 docker build -f "context/generated/windows/MinimalAgent/nanoserver/1803" -t latest-nanoserver-1803 "context"
@@ -96,9 +96,9 @@ Installed components:
 - [.NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-win-x64.zip)
 - <img src="/logo/powershell.png" height="18" align="center"> [PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 
-Docker Container Platform: windows
+Container Platform: windows
 
-Docker commands:
+Build commands:
 
 ```
 docker build -f "context/generated/windows/MinimalAgent/nanoserver/1809" -t latest-nanoserver-1809 "context"
@@ -133,9 +133,9 @@ Installed components:
 - [.NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-win-x64.zip)
 - <img src="/logo/powershell.png" height="18" align="center"> [PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 
-Docker Container Platform: windows
+Container Platform: windows
 
-Docker commands:
+Build commands:
 
 ```
 docker build -f "context/generated/windows/MinimalAgent/nanoserver/1903" -t latest-nanoserver-1903 "context"
@@ -172,9 +172,9 @@ Installed components:
 - [Git x64 v.2.19.1](http://repo.labs.intellij.net/thirdparty/vm-templates/MinGit-2.19.1-64-bit.zip)
 - [Mercurial x64 v.4.7.2](http://repo.labs.intellij.net/thirdparty/vm-templates/mercurial-4.7.2-x64.msi)
 
-Docker Container Platform: windows
+Container Platform: windows
 
-Docker commands:
+Build commands:
 
 ```
 docker build -f "context/generated/windows/MinimalAgent/nanoserver/1803" -t latest-nanoserver-1803 "context"
@@ -209,9 +209,9 @@ Installed components:
 - [Git x64 v.2.19.1](http://repo.labs.intellij.net/thirdparty/vm-templates/MinGit-2.19.1-64-bit.zip)
 - [Mercurial x64 v.4.7.2](http://repo.labs.intellij.net/thirdparty/vm-templates/mercurial-4.7.2-x64.msi)
 
-Docker Container Platform: windows
+Container Platform: windows
 
-Docker commands:
+Build commands:
 
 ```
 docker build -f "context/generated/windows/MinimalAgent/nanoserver/1809" -t latest-nanoserver-1809 "context"
@@ -247,9 +247,9 @@ Installed components:
 - [Git x64 v.2.19.1](http://repo.labs.intellij.net/thirdparty/vm-templates/MinGit-2.19.1-64-bit.zip)
 - [Mercurial x64 v.4.7.2](http://repo.labs.intellij.net/thirdparty/vm-templates/mercurial-4.7.2-x64.msi)
 
-Docker Container Platform: windows
+Container Platform: windows
 
-Docker commands:
+Build commands:
 
 ```
 docker build -f "context/generated/windows/MinimalAgent/nanoserver/1903" -t latest-nanoserver-1903 "context"

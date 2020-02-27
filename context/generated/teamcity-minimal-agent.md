@@ -21,9 +21,9 @@ Installed components:
 
 - [<img align="center" height="18" src="/logo/corretto.png"> JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-linux-x64.tar.gz)
 
-Docker Container Platform: linux
+Container Platform: linux
 
-Docker commands:
+Build commands:
 
 ```
 docker build -f "context/generated/linux/MinimalAgent/Ubuntu/18.04" -t 18.04 -t linux "context"
@@ -55,9 +55,9 @@ Installed components:
 - [JRE Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
 - [JDK Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
 
-Docker Container Platform: windows
+Container Platform: windows
 
-Docker commands:
+Build commands:
 
 ```
 docker build -f "context/generated/windows/MinimalAgent/nanoserver/1803" -t latest-nanoserver-1803 "context"
@@ -89,9 +89,9 @@ Installed components:
 - [JDK Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
 - <img src="/logo/powershell.png" height="18" align="center"> [PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 
-Docker Container Platform: windows
+Container Platform: windows
 
-Docker commands:
+Build commands:
 
 ```
 docker build -f "context/generated/windows/MinimalAgent/nanoserver/1809" -t latest-nanoserver-1809 "context"
@@ -124,9 +124,9 @@ Installed components:
 - [JDK Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
 - <img src="/logo/powershell.png" height="18" align="center"> [PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 
-Docker Container Platform: windows
+Container Platform: windows
 
-Docker commands:
+Build commands:
 
 ```
 docker build -f "context/generated/windows/MinimalAgent/nanoserver/1903" -t latest-nanoserver-1903 "context"

@@ -101,7 +101,7 @@ namespace TeamCity.Docker
                     }
 
                     lines.Add(string.Empty);
-                    lines.Add($"Docker Container Platform: {dockerFile.Platform}");
+                    lines.Add($"Container Platform: {dockerFile.Platform}");
 
                     foreach (var node in groupByFile)
                     {
@@ -112,7 +112,7 @@ namespace TeamCity.Docker
                         if (images.Any())
                         {
                             lines.Add(string.Empty);
-                            lines.Add("Docker commands:");
+                            lines.Add("Build commands:");
                             lines.Add(string.Empty);
 
                             lines.Add("```");
