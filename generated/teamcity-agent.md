@@ -26,7 +26,7 @@ Installed components:
 
 - Git
 - Mercurial
-- [.NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-linux-x64.tar.gz)
+- [<img align="center" height="18" src="/logo/dotnetcore.png"> .NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-linux-x64.tar.gz)
 
 Docker commands:
 
@@ -60,7 +60,7 @@ The docker image is available on:
 Installed components:
 
 - <img src="https://github.com/PowerShell/PowerShell/blob/master/assets/ps_black_64.svg" height="24" width="24" align="center">[PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
-- [.NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-win-x64.zip)
+- [<img align="center" height="18" src="/logo/dotnetcore.png"> .NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-win-x64.zip)
 
 Docker commands:
 
@@ -95,7 +95,7 @@ The docker image is available on:
 
 Installed components:
 
-- [.NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-win-x64.zip)
+- [<img align="center" height="18" src="/logo/dotnetcore.png"> .NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-win-x64.zip)
 - <img src="https://github.com/PowerShell/PowerShell/blob/master/assets/ps_black_64.svg" height="24" width="24" align="center">[PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 
 Docker commands:
@@ -132,7 +132,7 @@ The docker image is available on:
 
 Installed components:
 
-- [.NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-win-x64.zip)
+- [<img align="center" height="18" src="/logo/dotnetcore.png"> .NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-win-x64.zip)
 - <img src="https://github.com/PowerShell/PowerShell/blob/master/assets/ps_black_64.svg" height="24" width="24" align="center">[PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 
 Docker commands:

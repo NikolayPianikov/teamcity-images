@@ -26,7 +26,7 @@ Installed components:
 
 - Git
 - Mercurial
-- [.NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-linux-x64.tar.gz)
+- [<img align="center" height="18" src="/logo/dotnetcore.png"> .NET Core SDK x64 v.3.1.100](https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.100/dotnet-sdk-3.1.100-linux-x64.tar.gz)
 
 Docker commands:
 
