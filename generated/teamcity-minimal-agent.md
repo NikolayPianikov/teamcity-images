@@ -51,7 +51,7 @@ The docker image is available on:
 
 Installed components:
 
-- <img src="https://github.com/PowerShell/PowerShell/blob/master/assets/ps_black_64.svg" height="24" width="24" align="center"> [PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
+- <img src="/logo/powershell.png" height="18" align="center"> [PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 - [<img align="center" height="18" src="/logo/corretto.png"> JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
 - [<img align="center" height="18" src="/logo/corretto.png"> JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
 
@@ -87,7 +87,7 @@ Installed components:
 
 - [<img align="center" height="18" src="/logo/corretto.png"> JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
 - [<img align="center" height="18" src="/logo/corretto.png"> JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
-- <img src="https://github.com/PowerShell/PowerShell/blob/master/assets/ps_black_64.svg" height="24" width="24" align="center"> [PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
+- <img src="/logo/powershell.png" height="18" align="center"> [PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 
 Docker Container Platform: windows
 
@@ -122,7 +122,7 @@ Installed components:
 
 - [<img align="center" height="18" src="/logo/corretto.png"> JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
 - [<img align="center" height="18" src="/logo/corretto.png"> JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
-- <img src="https://github.com/PowerShell/PowerShell/blob/master/assets/ps_black_64.svg" height="24" width="24" align="center"> [PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
+- <img src="/logo/powershell.png" height="18" align="center"> [PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 
 Docker Container Platform: windows
 
