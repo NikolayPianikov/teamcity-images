@@ -1,10 +1,10 @@
 ### Tags
-- [18.04 linux](#whale-1804-linux)
+- [18.04 or linux](#whale-1804-linux)
 - [latest-nanoserver-1803](#whale-latest-nanoserver-1803)
 - [latest-nanoserver-1809](#whale-latest-nanoserver-1809)
 - [latest-nanoserver-1903](#whale-latest-nanoserver-1903)
 
-### :whale: 18.04 linux
+### :whale: 18.04 or linux
 
 [Dockerfile](linux/MinimalAgent/Ubuntu/18.04/Dockerfile)
 

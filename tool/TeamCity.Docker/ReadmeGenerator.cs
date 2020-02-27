@@ -174,6 +174,6 @@ namespace TeamCity.Docker
             string.Join("-", dockerFile.Tags.Select(tag => tag.Replace(".", string.Empty)));
 
         private static string GetReadmeTagName(Dockerfile dockerFile) =>
-            string.Join(" ", dockerFile.Tags);
+            string.Join(" or ", dockerFile.Tags);
     }
 }
