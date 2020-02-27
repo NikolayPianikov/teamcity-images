@@ -13,7 +13,7 @@
 
 Platform: linux
 
-OS: <img align="center" height="18" src="/logo/ubuntu.png">
+OS: <img align="center" height="64" src="/logo/ubuntu.png">
 
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
@@ -48,7 +48,7 @@ _The required free space to generate image(s) is about **2 GB**._
 
 Platform: windows
 
-OS: <img align="center" height="18" src="/logo/windows_nano.png">
+OS: <img align="center" height="64" src="/logo/windows_nano.png">
 
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
@@ -84,7 +84,7 @@ _The required free space to generate image(s) is about **24 GB**._
 
 Platform: windows
 
-OS: <img align="center" height="18" src="/logo/windows_nano.png">
+OS: <img align="center" height="64" src="/logo/windows_nano.png">
 
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
@@ -121,7 +121,7 @@ _The required free space to generate image(s) is about **25 GB**._
 
 Platform: windows
 
-OS: <img align="center" height="18" src="/logo/windows_nano.png">
+OS: <img align="center" height="64" src="/logo/windows_nano.png">
 
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
@@ -158,7 +158,7 @@ _The required free space to generate image(s) is about **25 GB**._
 
 Platform: windows
 
-OS: <img align="center" height="18" src="/logo/windows.png">
+OS: <img align="center" height="64" src="/logo/windows.png">
 
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
@@ -195,7 +195,7 @@ _The required free space to generate image(s) is about **23 GB**._
 
 Platform: windows
 
-OS: <img align="center" height="18" src="/logo/windows.png">
+OS: <img align="center" height="64" src="/logo/windows.png">
 
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
@@ -233,7 +233,7 @@ _The required free space to generate image(s) is about **24 GB**._
 
 Platform: windows
 
-OS: <img align="center" height="18" src="/logo/windows.png">
+OS: <img align="center" height="64" src="/logo/windows.png">
 
 This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
 
