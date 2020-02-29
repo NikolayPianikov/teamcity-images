@@ -51,7 +51,7 @@ The docker image is available on:
 
 Installed components:
 
-- <img src="/logo/powershell.png" height="18" align="center"> [PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
+- [<img src="/logo/powershell.png" height="18" align="center"> PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 - [<img align="center" height="18" src="/logo/corretto.png"> JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
 - [<img align="center" height="18" src="/logo/corretto.png"> JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
 - [<img align="center" height="18" src="/logo/git.png"> x64 v.2.19.1](https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip)
@@ -86,7 +86,7 @@ The docker image is available on:
 
 Installed components:
 
-- <img src="/logo/powershell.png" height="18" align="center"> [PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
+- [<img src="/logo/powershell.png" height="18" align="center"> PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 - [<img align="center" height="18" src="/logo/corretto.png"> JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
 - [<img align="center" height="18" src="/logo/corretto.png"> JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
 - [<img align="center" height="18" src="/logo/git.png"> x64 v.2.19.1](https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip)
@@ -121,7 +121,7 @@ The docker image is available on:
 
 Installed components:
 
-- <img src="/logo/powershell.png" height="18" align="center"> [PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
+- [<img src="/logo/powershell.png" height="18" align="center"> PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 - [<img align="center" height="18" src="/logo/corretto.png"> JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
 - [<img align="center" height="18" src="/logo/corretto.png"> JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
 - [<img align="center" height="18" src="/logo/git.png"> x64 v.2.19.1](https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip)
