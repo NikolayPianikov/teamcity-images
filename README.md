@@ -14,7 +14,7 @@ The [TeamCity build agent](https://www.jetbrains.com/help/teamcity/build-agent.h
 
 - [Agent](https://hub.docker.com/r/jetbrains/teamcity-agent) - this image adds a TeamCity agent suitable for Java development. It is based on [jetbrains/teamcity-minimal-agent](https://hub.docker.com/r/jetbrains/teamcity-minimal-agent) but gives you more benefits, e.g.
 
-  - client-side checkout if you use 'git' or 'mercurial'
+  - client-side checkout if you use <img align="center" height="18" src="/logo/git.png"> or <img align="center" height="18" src="/logo/mercurial.png"> Mercurial
   - more bundled build tools
   - 'docker-in-docker' on Linux
 
@@ -25,8 +25,7 @@ The [TeamCity build agent](https://www.jetbrains.com/help/teamcity/build-agent.h
 Before the beginning make sure you have got:
 
 - [<img align="center" height="18" src="/logo/docker_hub.png">](https://hub.docker.com/search?q=&type=edition&offering=community) installed.
-
-- <img align="center" height="18" src="/logo/dotnetcore.png"> SDK installed.
+- [<img align="center" height="18" src="/logo/dotnetcore.png">](https://dotnet.microsoft.com/download) SDK installed.
 
 ### Build images
 
