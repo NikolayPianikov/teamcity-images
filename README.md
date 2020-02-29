@@ -24,7 +24,7 @@ The [TeamCity build agent](https://www.jetbrains.com/help/teamcity/build-agent.h
 
 Before the beginning make sure you have got:
 
-- [<img align="center" height="18" src="/logo/dotnetcore.png">](https://hub.docker.com/search?q=&type=edition&offering=community) installed.
+- [<img align="center" height="18" src="/logo/docker_hub.png">](https://hub.docker.com/search?q=&type=edition&offering=community) installed.
 
 - <img align="center" height="18" src="/logo/dotnetcore.png"> SDK installed.
 
