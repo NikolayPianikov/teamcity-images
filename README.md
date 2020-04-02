@@ -20,7 +20,21 @@ The [TeamCity build agent](https://www.jetbrains.com/help/teamcity/build-agent.h
 
 - [Server](https://hub.docker.com/r/jetbrains/teamcity-server)
 
-## Manually building Docker Images
+## Creating your own Docker Images based on [JetBrains TeamCity](jetbrains.com/teamcity/) docker images
+
+Before the beginning make sure you have got:
+
+- [<img align="center" height="18" src="/logo/docker_hub.png">](https://hub.docker.com/search?q=&type=edition&offering=community) installed.
+
+Create a docker file based on some of official [JetBrains TeamCity](jetbrains.com/teamcity/) docker images, for instance the docker file _Dockerfile_ with [<img align="center" height="18" src="/logo/dotnetcore.png">](https://dotnet.microsoft.com/download) SDK 2.1 installed may contain the following lines:
+
+```
+FROM jetbrains/teamcity-agent:linux
+
+RUN apt-get install -y sudo apt-get install dotnet-sdk-2.1
+```
+
+## Manually building TeamCity Docker Images
 
 Before the beginning make sure you have got:
 

@@ -189,18 +189,20 @@ namespace TeamCity.Docker
             {
                 if (image.File.Tags.Any())
                 {
-                    var tag = image.File.Tags.First();
-                    yield return "dockerCommand {";
-                    yield return $"name = \"image tag {image.File.ImageId}:{tag}\"";
-                    yield return "commandType = other {";
+                    foreach (var tag in image.File.Tags)
+                    {
+                        yield return "dockerCommand {";
+                        yield return $"name = \"image tag {image.File.ImageId}:{tag}\"";
+                        yield return "commandType = other {";
 
-                    yield return "subCommand = \"tag\"";
-                    yield return $"commandArgs = \"{image.File.ImageId}:{tag} %repository%{image.File.ImageId}:{tag}\"";
+                        yield return "subCommand = \"tag\"";
+                        yield return $"commandArgs = \"{image.File.ImageId}:{tag} %repository%{image.File.ImageId}:{tag}\"";
 
-                    yield return "}";
-                    yield return "}";
+                        yield return "}";
+                        yield return "}";
 
-                    yield return string.Empty;
+                        yield return string.Empty;
+                    }
                 }
             }
 

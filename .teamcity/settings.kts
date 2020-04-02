@@ -368,6 +368,14 @@ commandArgs = "teamcity-server:18.04 %repository%teamcity-server:18.04"
 }
 
 dockerCommand {
+name = "image tag teamcity-server:linux"
+commandType = other {
+subCommand = "tag"
+commandArgs = "teamcity-server:linux %repository%teamcity-server:linux"
+}
+}
+
+dockerCommand {
 name = "image tag teamcity-minimal-agent:18.04"
 commandType = other {
 subCommand = "tag"
@@ -376,10 +384,26 @@ commandArgs = "teamcity-minimal-agent:18.04 %repository%teamcity-minimal-agent:1
 }
 
 dockerCommand {
+name = "image tag teamcity-minimal-agent:linux"
+commandType = other {
+subCommand = "tag"
+commandArgs = "teamcity-minimal-agent:linux %repository%teamcity-minimal-agent:linux"
+}
+}
+
+dockerCommand {
 name = "image tag teamcity-agent:18.04"
 commandType = other {
 subCommand = "tag"
 commandArgs = "teamcity-agent:18.04 %repository%teamcity-agent:18.04"
+}
+}
+
+dockerCommand {
+name = "image tag teamcity-agent:linux"
+commandType = other {
+subCommand = "tag"
+commandArgs = "teamcity-agent:linux %repository%teamcity-agent:linux"
 }
 }
 
