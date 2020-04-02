@@ -40,6 +40,8 @@ namespace TeamCity.Docker
                     from groupByImageId in groupsByImageId
                     let image = groupByImageId.Value as Image
                     where image != null
+                    let repoCount = image.File.Repositories.Count(i => !string.IsNullOrWhiteSpace(i))
+                    orderby repoCount descending
                     group groupByImageId by image.File
                 group groupByImageId by groupsByImageId.Key;
 
@@ -51,6 +53,8 @@ namespace TeamCity.Docker
                 var groupByImage = groupByImageId.ToList();
 
                 lines.Add("### Tags");
+                lines.Add(string.Empty);
+
                 foreach (var groupByFile in groupByImage)
                 {
                     var dockerFile = groupByFile.Key;
@@ -76,17 +80,19 @@ namespace TeamCity.Docker
                         }
                     }
 
-                    if (dockerFile.Repositories.Any())
+                    if (dockerFile.Repositories.Any(i => !string.IsNullOrWhiteSpace(i)))
                     {
                         lines.Add(string.Empty);
                         lines.Add("The docker image is available on:");
                         lines.Add(string.Empty);
-                        foreach (var repo in dockerFile.Repositories)
+                        foreach (var repo in dockerFile.Repositories.Where(i => !string.IsNullOrWhiteSpace(i)))
                         {
                             lines.Add($"- [{repo}{dockerFile.ImageId}]({repo}{dockerFile.ImageId})");
                         }
-
-                        lines.Add(string.Empty);
+                    }
+                    else
+                    {
+                        lines.Add("The docker image is not available and may be created manually.");
                     }
 
                     if (dockerFile.Components.Any())

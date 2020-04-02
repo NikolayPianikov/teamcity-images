@@ -1,8 +1,9 @@
 ### Tags
+
 - [18.04 or linux](#whale-1804-or-linux)
-- [latest-nanoserver-1803](#whale-latest-nanoserver-1803)
 - [latest-nanoserver-1809](#whale-latest-nanoserver-1809)
 - [latest-nanoserver-1903](#whale-latest-nanoserver-1903)
+- [latest-nanoserver-1803](#whale-latest-nanoserver-1803)
 
 ### :whale: 18.04 or linux
 
@@ -15,7 +16,6 @@ This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) bu
 The docker image is available on:
 
 - [https://hub.docker.com/r/jetbrains/teamcity-minimal-agent](https://hub.docker.com/r/jetbrains/teamcity-minimal-agent)
-
 
 Installed components:
 
@@ -36,40 +36,6 @@ docker pull ubuntu:18.04
 ```
 
 _The required free space to generate image(s) is about **1 GB**._
-### :whale: latest-nanoserver-1803
-
-[Dockerfile](windows/MinimalAgent/nanoserver/1803/Dockerfile)
-
-<img align="center" height="64" src="/logo/windows_nano.png">
-
-This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
-
-The docker image is available on:
-
-- [teamcity-minimal-agent](teamcity-minimal-agent)
-
-
-Installed components:
-
-- [<img src="/logo/powershell.png" height="18" align="center"> PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
-- [JRE Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
-- [JDK Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
-
-Container Platform: windows
-
-Build commands:
-
-```
-docker build -f "context/generated/windows/MinimalAgent/nanoserver/1803" -t latest-nanoserver-1803 "context"
-```
-
-Base images:
-
-```
-docker pull mcr.microsoft.com/powershell:nanoserver-1803
-```
-
-_The required free space to generate image(s) is about **2 GB**._
 ### :whale: latest-nanoserver-1809
 
 [Dockerfile](windows/MinimalAgent/nanoserver/1809/Dockerfile)
@@ -81,7 +47,6 @@ This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) bu
 The docker image is available on:
 
 - [https://hub.docker.com/r/jetbrains/teamcity-minimal-agent](https://hub.docker.com/r/jetbrains/teamcity-minimal-agent)
-
 
 Installed components:
 
@@ -117,7 +82,6 @@ The docker image is available on:
 
 - [https://hub.docker.com/r/jetbrains/teamcity-minimal-agent](https://hub.docker.com/r/jetbrains/teamcity-minimal-agent)
 
-
 Installed components:
 
 - [JRE Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
@@ -140,3 +104,33 @@ docker pull mcr.microsoft.com/powershell:nanoserver-1903
 ```
 
 _The required free space to generate image(s) is about **3 GB**._
+### :whale: latest-nanoserver-1803
+
+[Dockerfile](windows/MinimalAgent/nanoserver/1803/Dockerfile)
+
+<img align="center" height="64" src="/logo/windows_nano.png">
+
+This is an official [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) build agent image.
+The docker image is not available and may be created manually.
+
+Installed components:
+
+- [<img src="/logo/powershell.png" height="18" align="center"> PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
+- [JRE Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
+- [JDK Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
+
+Container Platform: windows
+
+Build commands:
+
+```
+docker build -f "context/generated/windows/MinimalAgent/nanoserver/1803" -t latest-nanoserver-1803 "context"
+```
+
+Base images:
+
+```
+docker pull mcr.microsoft.com/powershell:nanoserver-1803
+```
+
+_The required free space to generate image(s) is about **2 GB**._
