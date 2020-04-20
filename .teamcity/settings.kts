@@ -615,18 +615,16 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 object root : BuildType({
 name = "Build All Docker Images"
 dependencies {
-dependency(TC2019_2_BuildDist_latest_nanoserver_1903) {
-snapshot {}
-}
-dependency(TC2019_2_BuildDist_latest_nanoserver_1809) {
-snapshot {}
-}
-dependency(TC2019_2_BuildDist_18_04_linux) {
-snapshot {}
-}
-dependency(TC2019_2_BuildDist_latest_nanoserver_1803) {
-snapshot {}
-}
+snapshot(AbsoluteId("TC2019_2_BuildDist"))
+{}
+snapshot(TC2019_2_BuildDist_latest_nanoserver_1903)
+{}
+snapshot(TC2019_2_BuildDist_latest_nanoserver_1809)
+{}
+snapshot(TC2019_2_BuildDist_18_04_linux)
+{}
+snapshot(TC2019_2_BuildDist_latest_nanoserver_1803)
+{}
 }
 })
 

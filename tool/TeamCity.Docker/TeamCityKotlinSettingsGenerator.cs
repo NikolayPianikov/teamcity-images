@@ -87,11 +87,14 @@ namespace TeamCity.Docker
             lines.Add("object root : BuildType({");
             lines.Add("name = \"Build All Docker Images\"");
             lines.Add("dependencies {");
+            
+            lines.Add($"snapshot(AbsoluteId(\"{_options.TeamCityBuildConfigurationId}\"))");
+            lines.Add("{}");
+
             foreach (var buildType in buildTypes)
             {
-                lines.Add($"dependency({buildType}) {{");
-                lines.Add("snapshot {}");
-                lines.Add("}");
+                lines.Add($"snapshot({buildType})");
+                lines.Add("{}");
             }
 
             lines.Add("}");
