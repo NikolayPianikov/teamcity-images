@@ -14,6 +14,21 @@ ARG powershellImage='mcr.microsoft.com/powershell:nanoserver-1803'
 
 FROM ${powershellImage} AS base
 
+ENV LOCALAPPDATA="C:\Users\ContainerUser\AppData\Local" \
+    # set a fixed location for the Module analysis cache
+    PSModuleAnalysisCachePath="C:\Users\ContainerUser\AppData\Local\Microsoft\Windows\PowerShell\docker\ModuleAnalysisCache"
+
+# intialize powershell module cache
+RUN pwsh -NoLogo -NoProfile -Command " \
+    $stopTime = (get-date).AddMinutes(15); \
+    $ErrorActionPreference = 'Stop' ; \
+    $ProgressPreference = 'SilentlyContinue' ; \
+    while(!(Test-Path -Path $env:PSModuleAnalysisCachePath)) {  \
+        Write-Host "'Waiting for $env:PSModuleAnalysisCachePath'" ; \
+        if((get-date) -gt $stopTime) { throw 'timout expired'} \
+        Start-Sleep -Seconds 6 ; \
+    }"
+
 SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 ARG jreWindowsComponent
@@ -54,5 +69,20 @@ EXPOSE 9090
 VOLUME C:/BuildAgent/conf
 
 COPY --from=base /BuildAgent /BuildAgent
+
+ENV LOCALAPPDATA="C:\Users\ContainerUser\AppData\Local" \
+    # set a fixed location for the Module analysis cache
+    PSModuleAnalysisCachePath="C:\Users\ContainerUser\AppData\Local\Microsoft\Windows\PowerShell\docker\ModuleAnalysisCache"
+
+# intialize powershell module cache
+RUN pwsh -NoLogo -NoProfile -Command " \
+    $stopTime = (get-date).AddMinutes(15); \
+    $ErrorActionPreference = 'Stop' ; \
+    $ProgressPreference = 'SilentlyContinue' ; \
+    while(!(Test-Path -Path $env:PSModuleAnalysisCachePath)) {  \
+        Write-Host "'Waiting for $env:PSModuleAnalysisCachePath'" ; \
+        if((get-date) -gt $stopTime) { throw 'timout expired'} \
+        Start-Sleep -Seconds 6 ; \
+    }"
 
 CMD pwsh ./BuildAgent/run-agent.ps1
