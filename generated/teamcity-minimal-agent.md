@@ -26,7 +26,7 @@ Container Platform: linux
 Build commands:
 
 ```
-docker build -f "generated/linux/MinimalAgent/Ubuntu/18.04" -t 18.04 -t linux "context"
+docker build -f "generated/linux/MinimalAgent/Ubuntu/18.04/Dockerfile" -t 18.04 -t linux "context"
 ```
 
 Base images:
@@ -50,8 +50,8 @@ The docker image is available on:
 
 Installed components:
 
-- [<img align="center" height="18" src="/logo/corretto.png"> JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
-- [<img align="center" height="18" src="/logo/corretto.png"> JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
+- [<img align="center" height="18" src="/logo/corretto.png"> JRE Amazon Corretto x64 v.8.232.09.1](https://corretto.aws/downloads/resources/8.252.09.1/amazon-corretto-8.252.09.1-windows-x64-jre.zip)
+- [<img align="center" height="18" src="/logo/corretto.png"> JDK Amazon Corretto x64 v.8.232.09.1](https://corretto.aws/downloads/resources/8.252.09.1/amazon-corretto-8.252.09.1-windows-x64-jdk.zip)
 - [<img src="/logo/powershell.png" height="18" align="center"> PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 
 Container Platform: windows
@@ -59,7 +59,7 @@ Container Platform: windows
 Build commands:
 
 ```
-docker build -f "generated/windows/MinimalAgent/nanoserver/1809" -t latest-nanoserver-1809 "context"
+docker build -f "generated/windows/MinimalAgent/nanoserver/1809/Dockerfile" -t latest-nanoserver-1809 "context"
 ```
 
 Base images:
@@ -84,8 +84,8 @@ The docker image is available on:
 
 Installed components:
 
-- [<img align="center" height="18" src="/logo/corretto.png"> JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
-- [<img align="center" height="18" src="/logo/corretto.png"> JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
+- [<img align="center" height="18" src="/logo/corretto.png"> JRE Amazon Corretto x64 v.8.232.09.1](https://corretto.aws/downloads/resources/8.252.09.1/amazon-corretto-8.252.09.1-windows-x64-jre.zip)
+- [<img align="center" height="18" src="/logo/corretto.png"> JDK Amazon Corretto x64 v.8.232.09.1](https://corretto.aws/downloads/resources/8.252.09.1/amazon-corretto-8.252.09.1-windows-x64-jdk.zip)
 - [<img src="/logo/powershell.png" height="18" align="center"> PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 
 Container Platform: windows
@@ -93,7 +93,7 @@ Container Platform: windows
 Build commands:
 
 ```
-docker build -f "generated/windows/MinimalAgent/nanoserver/1903" -t latest-nanoserver-1903 "context"
+docker build -f "generated/windows/MinimalAgent/nanoserver/1903/Dockerfile" -t latest-nanoserver-1903 "context"
 ```
 
 Base images:
@@ -116,15 +116,15 @@ The docker image is not available and may be created manually.
 Installed components:
 
 - [<img src="/logo/powershell.png" height="18" align="center"> PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
-- [<img align="center" height="18" src="/logo/corretto.png"> JRE Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip)
-- [<img align="center" height="18" src="/logo/corretto.png"> JDK Amazon Corretto x64 v.8.232.09.1](https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip)
+- [<img align="center" height="18" src="/logo/corretto.png"> JRE Amazon Corretto x64 v.8.232.09.1](https://corretto.aws/downloads/resources/8.252.09.1/amazon-corretto-8.252.09.1-windows-x64-jre.zip)
+- [<img align="center" height="18" src="/logo/corretto.png"> JDK Amazon Corretto x64 v.8.232.09.1](https://corretto.aws/downloads/resources/8.252.09.1/amazon-corretto-8.252.09.1-windows-x64-jdk.zip)
 
 Container Platform: windows
 
 Build commands:
 
 ```
-docker build -f "generated/windows/MinimalAgent/nanoserver/1803" -t latest-nanoserver-1803 "context"
+docker build -f "generated/windows/MinimalAgent/nanoserver/1803/Dockerfile" -t latest-nanoserver-1803 "context"
 ```
 
 Base images:

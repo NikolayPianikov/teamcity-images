@@ -26,7 +26,7 @@ Container Platform: linux
 Build commands:
 
 ```
-docker build -f "context/generated/linux/MinimalAgent/Ubuntu/18.04" -t 18.04 -t linux "context"
+docker build -f "context/generated/linux/MinimalAgent/Ubuntu/18.04/Dockerfile" -t 18.04 -t linux "context"
 ```
 
 Base images:
@@ -59,7 +59,7 @@ Container Platform: windows
 Build commands:
 
 ```
-docker build -f "context/generated/windows/MinimalAgent/nanoserver/1809" -t latest-nanoserver-1809 "context"
+docker build -f "context/generated/windows/MinimalAgent/nanoserver/1809/Dockerfile" -t latest-nanoserver-1809 "context"
 ```
 
 Base images:
@@ -93,7 +93,7 @@ Container Platform: windows
 Build commands:
 
 ```
-docker build -f "context/generated/windows/MinimalAgent/nanoserver/1903" -t latest-nanoserver-1903 "context"
+docker build -f "context/generated/windows/MinimalAgent/nanoserver/1903/Dockerfile" -t latest-nanoserver-1903 "context"
 ```
 
 Base images:
@@ -124,7 +124,7 @@ Container Platform: windows
 Build commands:
 
 ```
-docker build -f "context/generated/windows/MinimalAgent/nanoserver/1803" -t latest-nanoserver-1803 "context"
+docker build -f "context/generated/windows/MinimalAgent/nanoserver/1803/Dockerfile" -t latest-nanoserver-1803 "context"
 ```
 
 Base images:

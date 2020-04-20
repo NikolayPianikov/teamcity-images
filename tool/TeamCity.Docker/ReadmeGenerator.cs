@@ -168,7 +168,7 @@ namespace TeamCity.Docker
 
         private string GenerateCommand(Image image)
         {
-            var dockerFilePath = _pathService.Normalize(Path.Combine(_options.TargetPath, image.File.Path));
+            var dockerFilePath = _pathService.Normalize(Path.Combine(_options.TargetPath, image.File.Path, "Dockerfile"));
             var tags = string.Join(" ", image.File.Tags.Select(tag => $"-t {tag}"));
             return $"docker build -f \"{dockerFilePath}\" {tags} \"{_options.ContextPath}\"";
         }

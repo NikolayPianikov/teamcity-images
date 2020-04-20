@@ -1,6 +1,6 @@
 # Default arguments
-ARG jdkWindowsComponent='https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip'
-ARG jreWindowsComponent='https://d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip'
+ARG jdkWindowsComponent='https://corretto.aws/downloads/resources/8.252.09.1/amazon-corretto-8.252.09.1-windows-x64-jdk.zip'
+ARG jreWindowsComponent='https://corretto.aws/downloads/resources/8.252.09.1/amazon-corretto-8.252.09.1-windows-x64-jre.zip'
 ARG nanoserverImage='mcr.microsoft.com/windows/nanoserver:1809'
 ARG powershellImage='mcr.microsoft.com/powershell:nanoserver-1809'
 
@@ -47,8 +47,7 @@ FROM ${nanoserverImage}
 
 ENV ProgramFiles="C:\Program Files" \
     # set a fixed location for the Module analysis cache
-    LOCALAPPDATA="C:\Users\ContainerAdministrator\AppData\Local" \
-    PSModuleAnalysisCachePath="$LOCALAPPDATA\Microsoft\Windows\PowerShell\docker\ModuleAnalysisCache" \
+    PSModuleAnalysisCachePath="%LOCALAPPDATA%\Microsoft\Windows\PowerShell\docker\ModuleAnalysisCache" \
     # Persist %PSCORE% ENV variable for user convenience
     PSCORE="$ProgramFiles\PowerShell\pwsh.exe"
 
