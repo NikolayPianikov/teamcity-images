@@ -616,15 +616,15 @@ object root : BuildType({
 name = "Build All Docker Images"
 dependencies {
 snapshot(AbsoluteId("TC2019_2_BuildDist"))
-{}
+{ onDependencyFailure = FailureAction.IGNORE }
 snapshot(TC2019_2_BuildDist_latest_nanoserver_1903)
-{}
+{ onDependencyFailure = FailureAction.IGNORE }
 snapshot(TC2019_2_BuildDist_latest_nanoserver_1809)
-{}
+{ onDependencyFailure = FailureAction.IGNORE }
 snapshot(TC2019_2_BuildDist_18_04_linux)
-{}
+{ onDependencyFailure = FailureAction.IGNORE }
 snapshot(TC2019_2_BuildDist_latest_nanoserver_1803)
-{}
+{ onDependencyFailure = FailureAction.IGNORE }
 }
 })
 

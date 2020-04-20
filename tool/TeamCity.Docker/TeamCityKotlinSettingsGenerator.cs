@@ -89,12 +89,12 @@ namespace TeamCity.Docker
             lines.Add("dependencies {");
             
             lines.Add($"snapshot(AbsoluteId(\"{_options.TeamCityBuildConfigurationId}\"))");
-            lines.Add("{}");
+            lines.Add("{ onDependencyFailure = FailureAction.IGNORE }");
 
             foreach (var buildType in buildTypes)
             {
                 lines.Add($"snapshot({buildType})");
-                lines.Add("{}");
+                lines.Add("{ onDependencyFailure = FailureAction.IGNORE }");
             }
 
             lines.Add("}");
