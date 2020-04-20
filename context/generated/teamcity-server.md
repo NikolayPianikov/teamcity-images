@@ -26,7 +26,7 @@ Container Platform: linux
 Build commands:
 
 ```
-docker build -f "context/generated/linux/Server/Ubuntu/18.04/Dockerfile" -t 18.04 -t linux "context"
+docker build -f "context/generated/linux/Server/Ubuntu/18.04/Dockerfile" -t teamcity-server:18.04 -t teamcity-server:linux "context"
 ```
 
 Base images:
@@ -60,7 +60,7 @@ Container Platform: windows
 Build commands:
 
 ```
-docker build -f "context/generated/windows/Server/nanoserver/1809/Dockerfile" -t latest-nanoserver-1809 "context"
+docker build -f "context/generated/windows/Server/nanoserver/1809/Dockerfile" -t teamcity-server:latest-nanoserver-1809 "context"
 ```
 
 Base images:
@@ -94,7 +94,7 @@ Container Platform: windows
 Build commands:
 
 ```
-docker build -f "context/generated/windows/Server/nanoserver/1903/Dockerfile" -t latest-nanoserver-1903 "context"
+docker build -f "context/generated/windows/Server/nanoserver/1903/Dockerfile" -t teamcity-server:latest-nanoserver-1903 "context"
 ```
 
 Base images:
@@ -125,7 +125,7 @@ Container Platform: windows
 Build commands:
 
 ```
-docker build -f "context/generated/windows/Server/nanoserver/1803/Dockerfile" -t latest-nanoserver-1803 "context"
+docker build -f "context/generated/windows/Server/nanoserver/1803/Dockerfile" -t teamcity-server:latest-nanoserver-1803 "context"
 ```
 
 Base images:

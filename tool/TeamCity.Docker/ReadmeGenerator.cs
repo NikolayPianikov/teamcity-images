@@ -169,7 +169,7 @@ namespace TeamCity.Docker
         private string GenerateCommand(Image image)
         {
             var dockerFilePath = _pathService.Normalize(Path.Combine(_options.TargetPath, image.File.Path, "Dockerfile"));
-            var tags = string.Join(" ", image.File.Tags.Select(tag => $"-t {tag}"));
+            var tags = string.Join(" ", image.File.Tags.Select(tag => $"-t {image.File.ImageId}:{tag}"));
             return $"docker build -f \"{dockerFilePath}\" {tags} \"{_options.ContextPath}\"";
         }
 
