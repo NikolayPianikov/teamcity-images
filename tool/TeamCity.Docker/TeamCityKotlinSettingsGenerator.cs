@@ -211,11 +211,11 @@ namespace TeamCity.Docker
                     foreach (var tag in image.File.Tags.Select(tag => $"{version.TagPrefix}{tag}"))
                     {
                         yield return "dockerCommand {";
-                        yield return $"name = \"image tag {image.File.ImageId}:{version.BuildIdPrefix}_{tag}\"";
+                        yield return $"name = \"change tag from {image.File.ImageId}:{version.BuildIdPrefix}_{tag} to {version.TagPrefix}{tag}\"";
                         yield return "commandType = other {";
 
                         yield return "subCommand = \"tag\"";
-                        yield return $"commandArgs = \"{image.File.ImageId}:{version.BuildIdPrefix}_{tag} {RepositoryName}{image.File.ImageId}:{tag}\"";
+                        yield return $"commandArgs = \"{image.File.ImageId}:{version.BuildIdPrefix}_{tag} {RepositoryName}{image.File.ImageId}:{version.TagPrefix}{tag}\"";
 
                         yield return "}";
                         yield return "}";
@@ -229,7 +229,7 @@ namespace TeamCity.Docker
             foreach (var image in images)
             {
                 yield return "dockerCommand {";
-                yield return $"name = \"push {image.File.ImageId}:{string.Join(",", image.File.Tags)}\"";
+                yield return $"name = \"push {image.File.ImageId}:{string.Join(",", image.File.Tags.Select(tag => $"{version.TagPrefix}{tag}"))}\"";
                 yield return "commandType = push {";
 
                 yield return "namesAndTags = \"\"\"";
