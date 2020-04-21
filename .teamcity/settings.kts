@@ -148,7 +148,7 @@ dockerRegistryId = "PROJECT_EXT_2307"
 }
 dependencies {
 dependency(AbsoluteId("TC2019_2_BuildDist")) {
-snapshot { }
+snapshot { onDependencyFailure = FailureAction.IGNORE }
 artifacts {
 artifactRules = "TeamCity-*.tar.gz!/**=>context"
 }
@@ -300,7 +300,7 @@ dockerRegistryId = "PROJECT_EXT_2307"
 }
 dependencies {
 dependency(AbsoluteId("TC2019_2_BuildDist")) {
-snapshot { }
+snapshot { onDependencyFailure = FailureAction.IGNORE }
 artifacts {
 artifactRules = "TeamCity-*.tar.gz!/**=>context"
 }
@@ -451,7 +451,7 @@ dockerRegistryId = "PROJECT_EXT_2307"
 }
 dependencies {
 dependency(AbsoluteId("TC2019_2_BuildDist")) {
-snapshot { }
+snapshot { onDependencyFailure = FailureAction.IGNORE }
 artifacts {
 artifactRules = "TeamCity-*.tar.gz!/**=>context"
 }
@@ -603,7 +603,7 @@ dockerRegistryId = "PROJECT_EXT_2307"
 }
 dependencies {
 dependency(AbsoluteId("TC2019_2_BuildDist")) {
-snapshot { }
+snapshot { onDependencyFailure = FailureAction.IGNORE }
 artifacts {
 artifactRules = "TeamCity-*.tar.gz!/**=>context"
 }
