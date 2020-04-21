@@ -26,10 +26,10 @@ namespace TeamCity.Docker
         [Option('d', "dsl", Required = false, HelpText = "Path to directory for teamcity DSL script settings.kts.")]
         public string TeamCityDslPath { get; set; } = string.Empty;
 
-        [Option('b', "build", Required = false, HelpText = "TeamCity build configuration id.")]
-        public string TeamCityBuildConfigurationId { get; set; } = string.Empty;
+        [Option('b', "builds", Separator = ';', Required = false, HelpText = "Semicolon separated TeamCity build configuration ids.")]
+        public IEnumerable<string> TeamCityBuildConfigurationIds { get; set; } = Enumerable.Empty<string>();
 
-        [Option('r', "registry", Required = false, HelpText = "Comma separated TeamCity docker registry id(s).")]
+        [Option('r', "registry", Required = false, HelpText = "TeamCity docker registry id.")]
         public string TeamCityDockerRegistryId { get; set; } = string.Empty;
 
         public string DockerEngineEndpoint => throw new NotImplementedException();

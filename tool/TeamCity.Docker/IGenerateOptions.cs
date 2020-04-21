@@ -1,4 +1,5 @@
-﻿using IoC;
+﻿using System.Collections.Generic;
+using IoC;
 
 namespace TeamCity.Docker
 {
@@ -8,7 +9,7 @@ namespace TeamCity.Docker
 
         [NotNull] string TeamCityDslPath { get; }
 
-        [NotNull] string TeamCityBuildConfigurationId { get; }
+        [NotNull] IEnumerable<string> TeamCityBuildConfigurationIds { get; }
 
         [NotNull] string TeamCityDockerRegistryId { get; }
     }

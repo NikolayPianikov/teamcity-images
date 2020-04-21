@@ -12,6 +12,7 @@ namespace TeamCity.Docker
 {
     internal class TeamCityKotlinSettingsGenerator : IGenerator
     {
+        [NotNull] private readonly string RepositoryName = "%docker.pushRepository%";
         [NotNull] private readonly IGenerateOptions _options;
         [NotNull] private readonly IFactory<IEnumerable<IGraph<IArtifact, Dependency>>, IGraph<IArtifact, Dependency>> _buildGraphsFactory;
         [NotNull] private readonly IPathService _pathService;
@@ -78,53 +79,64 @@ namespace TeamCity.Docker
                     name = $"{name} {++counter}";
                 }
 
-                var id = _options.TeamCityBuildConfigurationId + "_" + name.Replace(' ', '_').Replace('-', '_').Replace('.', '_');
-                lines.AddRange(GenerateBuildType(id, name, path.Select(i => i.Value).OfType<Image>().ToList(), weight));
+                var id = "_" + name.Replace(' ', '_').Replace('-', '_').Replace('.', '_');
+                foreach (var teamCityBuildConfigurationId in _options.TeamCityBuildConfigurationIds)
+                {
+                    lines.AddRange(GenerateBuildType(teamCityBuildConfigurationId, id, name, path.Select(i => i.Value).OfType<Image>().ToList(), weight));
+                }
+
                 buildTypes.Add(id);
                 lines.Add(string.Empty);
             }
 
-            lines.Add("object root : BuildType({");
-            lines.Add("name = \"Build All Docker Images\"");
-            lines.Add("dependencies {");
-            
-            lines.Add($"snapshot(AbsoluteId(\"{_options.TeamCityBuildConfigurationId}\"))");
-            lines.Add("{ onDependencyFailure = FailureAction.IGNORE }");
-
-            foreach (var buildType in buildTypes)
+            foreach (var teamCityBuildConfigurationId in _options.TeamCityBuildConfigurationIds)
             {
-                lines.Add($"snapshot({buildType})");
+                var buildConfigurationIdPrefix = NormalizeName(teamCityBuildConfigurationId);
+                lines.Add($"object {buildConfigurationIdPrefix}_root : BuildType(");
+                lines.Add("{");
+                lines.Add($"name = \"{buildConfigurationIdPrefix} Build All Docker Images\"");
+                lines.Add("dependencies {");
+
+                lines.Add($"snapshot(AbsoluteId(\"{teamCityBuildConfigurationId}\"))");
                 lines.Add("{ onDependencyFailure = FailureAction.IGNORE }");
+
+                foreach (var buildType in buildTypes)
+                {
+                    lines.Add($"snapshot({buildConfigurationIdPrefix}{buildType})");
+                    lines.Add("{ onDependencyFailure = FailureAction.IGNORE }");
+                }
+
+                lines.Add("}");
+                lines.Add("})");
+
+                lines.Add(string.Empty);
+
+                lines.Add("project {");
+                lines.Add("vcsRoot(RemoteTeamcityImages)");
+                foreach (var buildType in buildTypes)
+                {
+                    lines.Add($"buildType({buildConfigurationIdPrefix}{buildType})");
+                }
+
+                lines.Add($"buildType({buildConfigurationIdPrefix}_root)");
+
+                lines.Add("}"); // project
+
+                lines.Add(string.Empty);
             }
-
-            lines.Add("}");
-            lines.Add("})");
-
-            lines.Add(string.Empty);
-
-            lines.Add("project {");
-            lines.Add("vcsRoot(RemoteTeamcityImages)");
-            foreach (var buildType in buildTypes)
-            {
-                lines.Add($"buildType({buildType})");
-            }
-
-            lines.Add("buildType(root)");
-
-            lines.Add("}"); // project
-
-            lines.Add(string.Empty);
 
             lines.Add("object RemoteTeamcityImages : GitVcsRoot({");
             lines.Add("name = \"remote teamcity images\"");
             lines.Add("url = \"https://github.com/NikolayPianikov/teamcity-images.git\"");
             lines.Add("})");
 
-            graph.TryAddNode(new FileArtifact(_pathService.Normalize(Path.Combine(_options.TeamCityDslPath, "settings.kts")), lines), out var dslNode);
+            graph.TryAddNode(new FileArtifact(_pathService.Normalize(Path.Combine(_options.TeamCityDslPath, "settings.kts")), lines), out _);
         }
 
-        private IEnumerable<string> GenerateBuildType(string id, string name, ICollection<Image> images, int weight)
+        private IEnumerable<string> GenerateBuildType(string teamCityBuildConfigurationId, string id, string name, ICollection<Image> images, int weight)
         {
+            var buildConfigurationIdPrefix = NormalizeName(teamCityBuildConfigurationId);
+
             var groups =
                 from image in images
                 group image by image.File.ImageId
@@ -154,7 +166,7 @@ namespace TeamCity.Docker
                 }
             }
 
-            yield return $"object {id} : BuildType({{";
+            yield return $"object {buildConfigurationIdPrefix}{id} : BuildType({{";
             yield return $"name = \"{name}\"";
             yield return $"description  = \"{description}\"";
             yield return "vcs {root(RemoteTeamcityImages)}";
@@ -199,7 +211,7 @@ namespace TeamCity.Docker
                         yield return "commandType = other {";
 
                         yield return "subCommand = \"tag\"";
-                        yield return $"commandArgs = \"{image.File.ImageId}:{tag} %repository%{image.File.ImageId}:{tag}\"";
+                        yield return $"commandArgs = \"{image.File.ImageId}:{tag} {RepositoryName}{image.File.ImageId}:{tag}\"";
 
                         yield return "}";
                         yield return "}";
@@ -219,7 +231,7 @@ namespace TeamCity.Docker
                 yield return "namesAndTags = \"\"\"";
                 foreach (var tag in image.File.Tags)
                 {
-                    yield return $"%repository%{image.File.ImageId}:{tag}";
+                    yield return $"{RepositoryName}{image.File.ImageId}:{tag}";
                 }
 
                 yield return "\"\"\".trimIndent()";
@@ -253,10 +265,10 @@ namespace TeamCity.Docker
 
             yield return "}";
 
-            if (!string.IsNullOrWhiteSpace(_options.TeamCityBuildConfigurationId))
+            if (!string.IsNullOrWhiteSpace(teamCityBuildConfigurationId))
             {
                 yield return "dependencies {";
-                yield return $"dependency(AbsoluteId(\"{_options.TeamCityBuildConfigurationId}\")) {{";
+                yield return $"dependency(AbsoluteId(\"{teamCityBuildConfigurationId}\")) {{";
                 yield return "snapshot { onDependencyFailure = FailureAction.IGNORE }";
                 yield return "artifacts {";
                 yield return $"artifactRules = \"TeamCity-*.tar.gz!/**=>{_pathService.Normalize(_options.ContextPath)}\"";
@@ -268,5 +280,8 @@ namespace TeamCity.Docker
             yield return "})";
             yield return string.Empty;
         }
+
+        private string NormalizeName(string name) =>
+            name.Replace("%", "");
     }
 }
