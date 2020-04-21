@@ -176,7 +176,7 @@ namespace TeamCity.Docker
             // docker build
             foreach (var image in images)
             {
-                var tags = image.File.Tags.Select(tag => version.BuildIdPrefix + tag).ToArray();
+                var tags = image.File.Tags.Select(tag => version.BuildIdPrefix + tag).Distinct().ToArray();
 
                 yield return "dockerCommand {";
                 yield return $"name = \"build {image.File.ImageId}:{string.Join(",", tags)}\"";
@@ -208,7 +208,7 @@ namespace TeamCity.Docker
             {
                 if (image.File.Tags.Any())
                 {
-                    foreach (var tag in image.File.Tags.Concat(version.AdditionalTags))
+                    foreach (var tag in image.File.Tags.Concat(version.AdditionalTags).Distinct())
                     {
                         yield return "dockerCommand {";
                         yield return $"name = \"image tag {version.BuildIdPrefix}{image.File.ImageId}:{tag}\"";
@@ -233,7 +233,7 @@ namespace TeamCity.Docker
                 yield return "commandType = push {";
 
                 yield return "namesAndTags = \"\"\"";
-                foreach (var tag in image.File.Tags.Concat(version.AdditionalTags))
+                foreach (var tag in image.File.Tags.Concat(version.AdditionalTags).Distinct())
                 {
                     yield return $"{RepositoryName}{image.File.ImageId}:{tag}";
                 }
@@ -299,7 +299,7 @@ namespace TeamCity.Docker
 
                 if (AdditionalTags.Any())
                 {
-                    Name = NormalizeName(string.Join("_", AdditionalTags));
+                    Name = NormalizeName(string.Join(" ", AdditionalTags));
                 }
                 else
                 {
