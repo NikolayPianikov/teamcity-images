@@ -6,7 +6,7 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.freeDiskSpace
 version = "2019.2"
 
 object TC2019_2_BuildDist_latest_nanoserver_1903 : BuildType({
-name = "2019.2.4 latest-nanoserver-1903"
+name = "TC2019_2 latest-nanoserver-1903"
 description  = "teamcity-server:latest-nanoserver-1903 teamcity-minimal-agent:latest-nanoserver-1903 teamcity-agent:latest-windowsservercore-1903:latest-nanoserver-1903"
 vcs {root(RemoteTeamcityImages)}
 steps {
@@ -75,26 +75,10 @@ commandArgs = "teamcity-server:TC2019_2_BuildDist_latest-nanoserver-1903 %docker
 }
 
 dockerCommand {
-name = "image tag teamcity-server:TC2019_2_BuildDist_2019.2.4"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-server:TC2019_2_BuildDist_2019.2.4 %docker.pushRepository%teamcity-server:2019.2.4"
-}
-}
-
-dockerCommand {
 name = "image tag teamcity-minimal-agent:TC2019_2_BuildDist_latest-nanoserver-1903"
 commandType = other {
 subCommand = "tag"
 commandArgs = "teamcity-minimal-agent:TC2019_2_BuildDist_latest-nanoserver-1903 %docker.pushRepository%teamcity-minimal-agent:latest-nanoserver-1903"
-}
-}
-
-dockerCommand {
-name = "image tag teamcity-minimal-agent:TC2019_2_BuildDist_2019.2.4"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC2019_2_BuildDist_2019.2.4 %docker.pushRepository%teamcity-minimal-agent:2019.2.4"
 }
 }
 
@@ -107,14 +91,6 @@ commandArgs = "teamcity-agent:TC2019_2_BuildDist_latest-windowsservercore-1903 %
 }
 
 dockerCommand {
-name = "image tag teamcity-agent:TC2019_2_BuildDist_2019.2.4"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-agent:TC2019_2_BuildDist_2019.2.4 %docker.pushRepository%teamcity-agent:2019.2.4"
-}
-}
-
-dockerCommand {
 name = "image tag teamcity-agent:TC2019_2_BuildDist_latest-nanoserver-1903"
 commandType = other {
 subCommand = "tag"
@@ -123,19 +99,10 @@ commandArgs = "teamcity-agent:TC2019_2_BuildDist_latest-nanoserver-1903 %docker.
 }
 
 dockerCommand {
-name = "image tag teamcity-agent:TC2019_2_BuildDist_2019.2.4"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-agent:TC2019_2_BuildDist_2019.2.4 %docker.pushRepository%teamcity-agent:2019.2.4"
-}
-}
-
-dockerCommand {
 name = "push teamcity-server:latest-nanoserver-1903"
 commandType = push {
 namesAndTags = """
 %docker.pushRepository%teamcity-server:latest-nanoserver-1903
-%docker.pushRepository%teamcity-server:2019.2.4
 """.trimIndent()
 }
 }
@@ -145,7 +112,6 @@ name = "push teamcity-minimal-agent:latest-nanoserver-1903"
 commandType = push {
 namesAndTags = """
 %docker.pushRepository%teamcity-minimal-agent:latest-nanoserver-1903
-%docker.pushRepository%teamcity-minimal-agent:2019.2.4
 """.trimIndent()
 }
 }
@@ -155,7 +121,6 @@ name = "push teamcity-agent:latest-windowsservercore-1903"
 commandType = push {
 namesAndTags = """
 %docker.pushRepository%teamcity-agent:latest-windowsservercore-1903
-%docker.pushRepository%teamcity-agent:2019.2.4
 """.trimIndent()
 }
 }
@@ -165,7 +130,6 @@ name = "push teamcity-agent:latest-nanoserver-1903"
 commandType = push {
 namesAndTags = """
 %docker.pushRepository%teamcity-agent:latest-nanoserver-1903
-%docker.pushRepository%teamcity-agent:2019.2.4
 """.trimIndent()
 }
 }
@@ -193,7 +157,7 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 })
 
 object TC_Trunk_BuildDist_latest_nanoserver_1903 : BuildType({
-name = "2020.1.EAP3 latest-nanoserver-1903"
+name = "TC_Trunk latest-nanoserver-1903"
 description  = "teamcity-server:latest-nanoserver-1903 teamcity-minimal-agent:latest-nanoserver-1903 teamcity-agent:latest-windowsservercore-1903:latest-nanoserver-1903"
 vcs {root(RemoteTeamcityImages)}
 steps {
@@ -254,66 +218,34 @@ param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "image tag teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1903"
+name = "image tag teamcity-server:TC_Trunk_BuildDist_EAP"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1903 %docker.pushRepository%teamcity-server:latest-nanoserver-1903"
+commandArgs = "teamcity-server:TC_Trunk_BuildDist_EAP %docker.pushRepository%teamcity-server:EAP"
 }
 }
 
 dockerCommand {
-name = "image tag teamcity-server:TC_Trunk_BuildDist_2020.1.EAP3"
+name = "image tag teamcity-minimal-agent:TC_Trunk_BuildDist_EAP"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC_Trunk_BuildDist_2020.1.EAP3 %docker.pushRepository%teamcity-server:2020.1.EAP3"
+commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_EAP %docker.pushRepository%teamcity-minimal-agent:EAP"
 }
 }
 
 dockerCommand {
-name = "image tag teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1903"
+name = "image tag teamcity-agent:TC_Trunk_BuildDist_EAP"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1903 %docker.pushRepository%teamcity-minimal-agent:latest-nanoserver-1903"
+commandArgs = "teamcity-agent:TC_Trunk_BuildDist_EAP %docker.pushRepository%teamcity-agent:EAP"
 }
 }
 
 dockerCommand {
-name = "image tag teamcity-minimal-agent:TC_Trunk_BuildDist_2020.1.EAP3"
+name = "image tag teamcity-agent:TC_Trunk_BuildDist_EAP"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_2020.1.EAP3 %docker.pushRepository%teamcity-minimal-agent:2020.1.EAP3"
-}
-}
-
-dockerCommand {
-name = "image tag teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1903"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1903 %docker.pushRepository%teamcity-agent:latest-windowsservercore-1903"
-}
-}
-
-dockerCommand {
-name = "image tag teamcity-agent:TC_Trunk_BuildDist_2020.1.EAP3"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_2020.1.EAP3 %docker.pushRepository%teamcity-agent:2020.1.EAP3"
-}
-}
-
-dockerCommand {
-name = "image tag teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1903"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1903 %docker.pushRepository%teamcity-agent:latest-nanoserver-1903"
-}
-}
-
-dockerCommand {
-name = "image tag teamcity-agent:TC_Trunk_BuildDist_2020.1.EAP3"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_2020.1.EAP3 %docker.pushRepository%teamcity-agent:2020.1.EAP3"
+commandArgs = "teamcity-agent:TC_Trunk_BuildDist_EAP %docker.pushRepository%teamcity-agent:EAP"
 }
 }
 
@@ -321,8 +253,7 @@ dockerCommand {
 name = "push teamcity-server:latest-nanoserver-1903"
 commandType = push {
 namesAndTags = """
-%docker.pushRepository%teamcity-server:latest-nanoserver-1903
-%docker.pushRepository%teamcity-server:2020.1.EAP3
+%docker.pushRepository%teamcity-server:EAP
 """.trimIndent()
 }
 }
@@ -331,8 +262,7 @@ dockerCommand {
 name = "push teamcity-minimal-agent:latest-nanoserver-1903"
 commandType = push {
 namesAndTags = """
-%docker.pushRepository%teamcity-minimal-agent:latest-nanoserver-1903
-%docker.pushRepository%teamcity-minimal-agent:2020.1.EAP3
+%docker.pushRepository%teamcity-minimal-agent:EAP
 """.trimIndent()
 }
 }
@@ -341,8 +271,7 @@ dockerCommand {
 name = "push teamcity-agent:latest-windowsservercore-1903"
 commandType = push {
 namesAndTags = """
-%docker.pushRepository%teamcity-agent:latest-windowsservercore-1903
-%docker.pushRepository%teamcity-agent:2020.1.EAP3
+%docker.pushRepository%teamcity-agent:EAP
 """.trimIndent()
 }
 }
@@ -351,8 +280,7 @@ dockerCommand {
 name = "push teamcity-agent:latest-nanoserver-1903"
 commandType = push {
 namesAndTags = """
-%docker.pushRepository%teamcity-agent:latest-nanoserver-1903
-%docker.pushRepository%teamcity-agent:2020.1.EAP3
+%docker.pushRepository%teamcity-agent:EAP
 """.trimIndent()
 }
 }
@@ -381,7 +309,7 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 
 
 object TC2019_2_BuildDist_latest_nanoserver_1809 : BuildType({
-name = "2019.2.4 latest-nanoserver-1809"
+name = "TC2019_2 latest-nanoserver-1809"
 description  = "teamcity-server:latest-nanoserver-1809 teamcity-minimal-agent:latest-nanoserver-1809 teamcity-agent:latest-windowsservercore-1809:latest-nanoserver-1809"
 vcs {root(RemoteTeamcityImages)}
 steps {
@@ -450,26 +378,10 @@ commandArgs = "teamcity-server:TC2019_2_BuildDist_latest-nanoserver-1809 %docker
 }
 
 dockerCommand {
-name = "image tag teamcity-server:TC2019_2_BuildDist_2019.2.4"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-server:TC2019_2_BuildDist_2019.2.4 %docker.pushRepository%teamcity-server:2019.2.4"
-}
-}
-
-dockerCommand {
 name = "image tag teamcity-minimal-agent:TC2019_2_BuildDist_latest-nanoserver-1809"
 commandType = other {
 subCommand = "tag"
 commandArgs = "teamcity-minimal-agent:TC2019_2_BuildDist_latest-nanoserver-1809 %docker.pushRepository%teamcity-minimal-agent:latest-nanoserver-1809"
-}
-}
-
-dockerCommand {
-name = "image tag teamcity-minimal-agent:TC2019_2_BuildDist_2019.2.4"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC2019_2_BuildDist_2019.2.4 %docker.pushRepository%teamcity-minimal-agent:2019.2.4"
 }
 }
 
@@ -482,14 +394,6 @@ commandArgs = "teamcity-agent:TC2019_2_BuildDist_latest-windowsservercore-1809 %
 }
 
 dockerCommand {
-name = "image tag teamcity-agent:TC2019_2_BuildDist_2019.2.4"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-agent:TC2019_2_BuildDist_2019.2.4 %docker.pushRepository%teamcity-agent:2019.2.4"
-}
-}
-
-dockerCommand {
 name = "image tag teamcity-agent:TC2019_2_BuildDist_latest-nanoserver-1809"
 commandType = other {
 subCommand = "tag"
@@ -498,19 +402,10 @@ commandArgs = "teamcity-agent:TC2019_2_BuildDist_latest-nanoserver-1809 %docker.
 }
 
 dockerCommand {
-name = "image tag teamcity-agent:TC2019_2_BuildDist_2019.2.4"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-agent:TC2019_2_BuildDist_2019.2.4 %docker.pushRepository%teamcity-agent:2019.2.4"
-}
-}
-
-dockerCommand {
 name = "push teamcity-server:latest-nanoserver-1809"
 commandType = push {
 namesAndTags = """
 %docker.pushRepository%teamcity-server:latest-nanoserver-1809
-%docker.pushRepository%teamcity-server:2019.2.4
 """.trimIndent()
 }
 }
@@ -520,7 +415,6 @@ name = "push teamcity-minimal-agent:latest-nanoserver-1809"
 commandType = push {
 namesAndTags = """
 %docker.pushRepository%teamcity-minimal-agent:latest-nanoserver-1809
-%docker.pushRepository%teamcity-minimal-agent:2019.2.4
 """.trimIndent()
 }
 }
@@ -530,7 +424,6 @@ name = "push teamcity-agent:latest-windowsservercore-1809"
 commandType = push {
 namesAndTags = """
 %docker.pushRepository%teamcity-agent:latest-windowsservercore-1809
-%docker.pushRepository%teamcity-agent:2019.2.4
 """.trimIndent()
 }
 }
@@ -540,7 +433,6 @@ name = "push teamcity-agent:latest-nanoserver-1809"
 commandType = push {
 namesAndTags = """
 %docker.pushRepository%teamcity-agent:latest-nanoserver-1809
-%docker.pushRepository%teamcity-agent:2019.2.4
 """.trimIndent()
 }
 }
@@ -568,7 +460,7 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 })
 
 object TC_Trunk_BuildDist_latest_nanoserver_1809 : BuildType({
-name = "2020.1.EAP3 latest-nanoserver-1809"
+name = "TC_Trunk latest-nanoserver-1809"
 description  = "teamcity-server:latest-nanoserver-1809 teamcity-minimal-agent:latest-nanoserver-1809 teamcity-agent:latest-windowsservercore-1809:latest-nanoserver-1809"
 vcs {root(RemoteTeamcityImages)}
 steps {
@@ -629,66 +521,34 @@ param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "image tag teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1809"
+name = "image tag teamcity-server:TC_Trunk_BuildDist_EAP"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1809 %docker.pushRepository%teamcity-server:latest-nanoserver-1809"
+commandArgs = "teamcity-server:TC_Trunk_BuildDist_EAP %docker.pushRepository%teamcity-server:EAP"
 }
 }
 
 dockerCommand {
-name = "image tag teamcity-server:TC_Trunk_BuildDist_2020.1.EAP3"
+name = "image tag teamcity-minimal-agent:TC_Trunk_BuildDist_EAP"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC_Trunk_BuildDist_2020.1.EAP3 %docker.pushRepository%teamcity-server:2020.1.EAP3"
+commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_EAP %docker.pushRepository%teamcity-minimal-agent:EAP"
 }
 }
 
 dockerCommand {
-name = "image tag teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1809"
+name = "image tag teamcity-agent:TC_Trunk_BuildDist_EAP"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1809 %docker.pushRepository%teamcity-minimal-agent:latest-nanoserver-1809"
+commandArgs = "teamcity-agent:TC_Trunk_BuildDist_EAP %docker.pushRepository%teamcity-agent:EAP"
 }
 }
 
 dockerCommand {
-name = "image tag teamcity-minimal-agent:TC_Trunk_BuildDist_2020.1.EAP3"
+name = "image tag teamcity-agent:TC_Trunk_BuildDist_EAP"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_2020.1.EAP3 %docker.pushRepository%teamcity-minimal-agent:2020.1.EAP3"
-}
-}
-
-dockerCommand {
-name = "image tag teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1809"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1809 %docker.pushRepository%teamcity-agent:latest-windowsservercore-1809"
-}
-}
-
-dockerCommand {
-name = "image tag teamcity-agent:TC_Trunk_BuildDist_2020.1.EAP3"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_2020.1.EAP3 %docker.pushRepository%teamcity-agent:2020.1.EAP3"
-}
-}
-
-dockerCommand {
-name = "image tag teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1809"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1809 %docker.pushRepository%teamcity-agent:latest-nanoserver-1809"
-}
-}
-
-dockerCommand {
-name = "image tag teamcity-agent:TC_Trunk_BuildDist_2020.1.EAP3"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_2020.1.EAP3 %docker.pushRepository%teamcity-agent:2020.1.EAP3"
+commandArgs = "teamcity-agent:TC_Trunk_BuildDist_EAP %docker.pushRepository%teamcity-agent:EAP"
 }
 }
 
@@ -696,8 +556,7 @@ dockerCommand {
 name = "push teamcity-server:latest-nanoserver-1809"
 commandType = push {
 namesAndTags = """
-%docker.pushRepository%teamcity-server:latest-nanoserver-1809
-%docker.pushRepository%teamcity-server:2020.1.EAP3
+%docker.pushRepository%teamcity-server:EAP
 """.trimIndent()
 }
 }
@@ -706,8 +565,7 @@ dockerCommand {
 name = "push teamcity-minimal-agent:latest-nanoserver-1809"
 commandType = push {
 namesAndTags = """
-%docker.pushRepository%teamcity-minimal-agent:latest-nanoserver-1809
-%docker.pushRepository%teamcity-minimal-agent:2020.1.EAP3
+%docker.pushRepository%teamcity-minimal-agent:EAP
 """.trimIndent()
 }
 }
@@ -716,8 +574,7 @@ dockerCommand {
 name = "push teamcity-agent:latest-windowsservercore-1809"
 commandType = push {
 namesAndTags = """
-%docker.pushRepository%teamcity-agent:latest-windowsservercore-1809
-%docker.pushRepository%teamcity-agent:2020.1.EAP3
+%docker.pushRepository%teamcity-agent:EAP
 """.trimIndent()
 }
 }
@@ -726,8 +583,7 @@ dockerCommand {
 name = "push teamcity-agent:latest-nanoserver-1809"
 commandType = push {
 namesAndTags = """
-%docker.pushRepository%teamcity-agent:latest-nanoserver-1809
-%docker.pushRepository%teamcity-agent:2020.1.EAP3
+%docker.pushRepository%teamcity-agent:EAP
 """.trimIndent()
 }
 }
@@ -756,7 +612,7 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 
 
 object TC2019_2_BuildDist_18_04_linux : BuildType({
-name = "2019.2.4 18.04 linux"
+name = "TC2019_2 18.04 linux"
 description  = "teamcity-server:18.04,linux teamcity-minimal-agent:18.04,linux teamcity-agent:18.04,linux"
 vcs {root(RemoteTeamcityImages)}
 steps {
@@ -822,14 +678,6 @@ commandArgs = "teamcity-server:TC2019_2_BuildDist_linux %docker.pushRepository%t
 }
 
 dockerCommand {
-name = "image tag teamcity-server:TC2019_2_BuildDist_2019.2.4"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-server:TC2019_2_BuildDist_2019.2.4 %docker.pushRepository%teamcity-server:2019.2.4"
-}
-}
-
-dockerCommand {
 name = "image tag teamcity-minimal-agent:TC2019_2_BuildDist_18.04"
 commandType = other {
 subCommand = "tag"
@@ -842,14 +690,6 @@ name = "image tag teamcity-minimal-agent:TC2019_2_BuildDist_linux"
 commandType = other {
 subCommand = "tag"
 commandArgs = "teamcity-minimal-agent:TC2019_2_BuildDist_linux %docker.pushRepository%teamcity-minimal-agent:linux"
-}
-}
-
-dockerCommand {
-name = "image tag teamcity-minimal-agent:TC2019_2_BuildDist_2019.2.4"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC2019_2_BuildDist_2019.2.4 %docker.pushRepository%teamcity-minimal-agent:2019.2.4"
 }
 }
 
@@ -870,20 +710,11 @@ commandArgs = "teamcity-agent:TC2019_2_BuildDist_linux %docker.pushRepository%te
 }
 
 dockerCommand {
-name = "image tag teamcity-agent:TC2019_2_BuildDist_2019.2.4"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-agent:TC2019_2_BuildDist_2019.2.4 %docker.pushRepository%teamcity-agent:2019.2.4"
-}
-}
-
-dockerCommand {
 name = "push teamcity-server:18.04,linux"
 commandType = push {
 namesAndTags = """
 %docker.pushRepository%teamcity-server:18.04
 %docker.pushRepository%teamcity-server:linux
-%docker.pushRepository%teamcity-server:2019.2.4
 """.trimIndent()
 }
 }
@@ -894,7 +725,6 @@ commandType = push {
 namesAndTags = """
 %docker.pushRepository%teamcity-minimal-agent:18.04
 %docker.pushRepository%teamcity-minimal-agent:linux
-%docker.pushRepository%teamcity-minimal-agent:2019.2.4
 """.trimIndent()
 }
 }
@@ -905,7 +735,6 @@ commandType = push {
 namesAndTags = """
 %docker.pushRepository%teamcity-agent:18.04
 %docker.pushRepository%teamcity-agent:linux
-%docker.pushRepository%teamcity-agent:2019.2.4
 """.trimIndent()
 }
 }
@@ -933,7 +762,7 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 })
 
 object TC_Trunk_BuildDist_18_04_linux : BuildType({
-name = "2020.1.EAP3 18.04 linux"
+name = "TC_Trunk 18.04 linux"
 description  = "teamcity-server:18.04,linux teamcity-minimal-agent:18.04,linux teamcity-agent:18.04,linux"
 vcs {root(RemoteTeamcityImages)}
 steps {
@@ -983,74 +812,26 @@ param("dockerImage.platform", "linux")
 }
 
 dockerCommand {
-name = "image tag teamcity-server:TC_Trunk_BuildDist_18.04"
+name = "image tag teamcity-server:TC_Trunk_BuildDist_EAP"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC_Trunk_BuildDist_18.04 %docker.pushRepository%teamcity-server:18.04"
+commandArgs = "teamcity-server:TC_Trunk_BuildDist_EAP %docker.pushRepository%teamcity-server:EAP"
 }
 }
 
 dockerCommand {
-name = "image tag teamcity-server:TC_Trunk_BuildDist_linux"
+name = "image tag teamcity-minimal-agent:TC_Trunk_BuildDist_EAP"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC_Trunk_BuildDist_linux %docker.pushRepository%teamcity-server:linux"
+commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_EAP %docker.pushRepository%teamcity-minimal-agent:EAP"
 }
 }
 
 dockerCommand {
-name = "image tag teamcity-server:TC_Trunk_BuildDist_2020.1.EAP3"
+name = "image tag teamcity-agent:TC_Trunk_BuildDist_EAP"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC_Trunk_BuildDist_2020.1.EAP3 %docker.pushRepository%teamcity-server:2020.1.EAP3"
-}
-}
-
-dockerCommand {
-name = "image tag teamcity-minimal-agent:TC_Trunk_BuildDist_18.04"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_18.04 %docker.pushRepository%teamcity-minimal-agent:18.04"
-}
-}
-
-dockerCommand {
-name = "image tag teamcity-minimal-agent:TC_Trunk_BuildDist_linux"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_linux %docker.pushRepository%teamcity-minimal-agent:linux"
-}
-}
-
-dockerCommand {
-name = "image tag teamcity-minimal-agent:TC_Trunk_BuildDist_2020.1.EAP3"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_2020.1.EAP3 %docker.pushRepository%teamcity-minimal-agent:2020.1.EAP3"
-}
-}
-
-dockerCommand {
-name = "image tag teamcity-agent:TC_Trunk_BuildDist_18.04"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_18.04 %docker.pushRepository%teamcity-agent:18.04"
-}
-}
-
-dockerCommand {
-name = "image tag teamcity-agent:TC_Trunk_BuildDist_linux"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_linux %docker.pushRepository%teamcity-agent:linux"
-}
-}
-
-dockerCommand {
-name = "image tag teamcity-agent:TC_Trunk_BuildDist_2020.1.EAP3"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_2020.1.EAP3 %docker.pushRepository%teamcity-agent:2020.1.EAP3"
+commandArgs = "teamcity-agent:TC_Trunk_BuildDist_EAP %docker.pushRepository%teamcity-agent:EAP"
 }
 }
 
@@ -1058,9 +839,7 @@ dockerCommand {
 name = "push teamcity-server:18.04,linux"
 commandType = push {
 namesAndTags = """
-%docker.pushRepository%teamcity-server:18.04
-%docker.pushRepository%teamcity-server:linux
-%docker.pushRepository%teamcity-server:2020.1.EAP3
+%docker.pushRepository%teamcity-server:EAP
 """.trimIndent()
 }
 }
@@ -1069,9 +848,7 @@ dockerCommand {
 name = "push teamcity-minimal-agent:18.04,linux"
 commandType = push {
 namesAndTags = """
-%docker.pushRepository%teamcity-minimal-agent:18.04
-%docker.pushRepository%teamcity-minimal-agent:linux
-%docker.pushRepository%teamcity-minimal-agent:2020.1.EAP3
+%docker.pushRepository%teamcity-minimal-agent:EAP
 """.trimIndent()
 }
 }
@@ -1080,9 +857,7 @@ dockerCommand {
 name = "push teamcity-agent:18.04,linux"
 commandType = push {
 namesAndTags = """
-%docker.pushRepository%teamcity-agent:18.04
-%docker.pushRepository%teamcity-agent:linux
-%docker.pushRepository%teamcity-agent:2020.1.EAP3
+%docker.pushRepository%teamcity-agent:EAP
 """.trimIndent()
 }
 }
@@ -1111,7 +886,7 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 
 
 object TC2019_2_BuildDist_latest_nanoserver_1803 : BuildType({
-name = "2019.2.4 latest-nanoserver-1803"
+name = "TC2019_2 latest-nanoserver-1803"
 description  = "teamcity-server:latest-nanoserver-1803 teamcity-minimal-agent:latest-nanoserver-1803 teamcity-agent:latest-windowsservercore-1803:latest-nanoserver-1803"
 vcs {root(RemoteTeamcityImages)}
 steps {
@@ -1180,26 +955,10 @@ commandArgs = "teamcity-server:TC2019_2_BuildDist_latest-nanoserver-1803 %docker
 }
 
 dockerCommand {
-name = "image tag teamcity-server:TC2019_2_BuildDist_2019.2.4"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-server:TC2019_2_BuildDist_2019.2.4 %docker.pushRepository%teamcity-server:2019.2.4"
-}
-}
-
-dockerCommand {
 name = "image tag teamcity-minimal-agent:TC2019_2_BuildDist_latest-nanoserver-1803"
 commandType = other {
 subCommand = "tag"
 commandArgs = "teamcity-minimal-agent:TC2019_2_BuildDist_latest-nanoserver-1803 %docker.pushRepository%teamcity-minimal-agent:latest-nanoserver-1803"
-}
-}
-
-dockerCommand {
-name = "image tag teamcity-minimal-agent:TC2019_2_BuildDist_2019.2.4"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC2019_2_BuildDist_2019.2.4 %docker.pushRepository%teamcity-minimal-agent:2019.2.4"
 }
 }
 
@@ -1212,14 +971,6 @@ commandArgs = "teamcity-agent:TC2019_2_BuildDist_latest-windowsservercore-1803 %
 }
 
 dockerCommand {
-name = "image tag teamcity-agent:TC2019_2_BuildDist_2019.2.4"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-agent:TC2019_2_BuildDist_2019.2.4 %docker.pushRepository%teamcity-agent:2019.2.4"
-}
-}
-
-dockerCommand {
 name = "image tag teamcity-agent:TC2019_2_BuildDist_latest-nanoserver-1803"
 commandType = other {
 subCommand = "tag"
@@ -1228,19 +979,10 @@ commandArgs = "teamcity-agent:TC2019_2_BuildDist_latest-nanoserver-1803 %docker.
 }
 
 dockerCommand {
-name = "image tag teamcity-agent:TC2019_2_BuildDist_2019.2.4"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-agent:TC2019_2_BuildDist_2019.2.4 %docker.pushRepository%teamcity-agent:2019.2.4"
-}
-}
-
-dockerCommand {
 name = "push teamcity-server:latest-nanoserver-1803"
 commandType = push {
 namesAndTags = """
 %docker.pushRepository%teamcity-server:latest-nanoserver-1803
-%docker.pushRepository%teamcity-server:2019.2.4
 """.trimIndent()
 }
 }
@@ -1250,7 +992,6 @@ name = "push teamcity-minimal-agent:latest-nanoserver-1803"
 commandType = push {
 namesAndTags = """
 %docker.pushRepository%teamcity-minimal-agent:latest-nanoserver-1803
-%docker.pushRepository%teamcity-minimal-agent:2019.2.4
 """.trimIndent()
 }
 }
@@ -1260,7 +1001,6 @@ name = "push teamcity-agent:latest-windowsservercore-1803"
 commandType = push {
 namesAndTags = """
 %docker.pushRepository%teamcity-agent:latest-windowsservercore-1803
-%docker.pushRepository%teamcity-agent:2019.2.4
 """.trimIndent()
 }
 }
@@ -1270,7 +1010,6 @@ name = "push teamcity-agent:latest-nanoserver-1803"
 commandType = push {
 namesAndTags = """
 %docker.pushRepository%teamcity-agent:latest-nanoserver-1803
-%docker.pushRepository%teamcity-agent:2019.2.4
 """.trimIndent()
 }
 }
@@ -1298,7 +1037,7 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 })
 
 object TC_Trunk_BuildDist_latest_nanoserver_1803 : BuildType({
-name = "2020.1.EAP3 latest-nanoserver-1803"
+name = "TC_Trunk latest-nanoserver-1803"
 description  = "teamcity-server:latest-nanoserver-1803 teamcity-minimal-agent:latest-nanoserver-1803 teamcity-agent:latest-windowsservercore-1803:latest-nanoserver-1803"
 vcs {root(RemoteTeamcityImages)}
 steps {
@@ -1359,66 +1098,34 @@ param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "image tag teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1803"
+name = "image tag teamcity-server:TC_Trunk_BuildDist_EAP"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1803 %docker.pushRepository%teamcity-server:latest-nanoserver-1803"
+commandArgs = "teamcity-server:TC_Trunk_BuildDist_EAP %docker.pushRepository%teamcity-server:EAP"
 }
 }
 
 dockerCommand {
-name = "image tag teamcity-server:TC_Trunk_BuildDist_2020.1.EAP3"
+name = "image tag teamcity-minimal-agent:TC_Trunk_BuildDist_EAP"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC_Trunk_BuildDist_2020.1.EAP3 %docker.pushRepository%teamcity-server:2020.1.EAP3"
+commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_EAP %docker.pushRepository%teamcity-minimal-agent:EAP"
 }
 }
 
 dockerCommand {
-name = "image tag teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1803"
+name = "image tag teamcity-agent:TC_Trunk_BuildDist_EAP"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1803 %docker.pushRepository%teamcity-minimal-agent:latest-nanoserver-1803"
+commandArgs = "teamcity-agent:TC_Trunk_BuildDist_EAP %docker.pushRepository%teamcity-agent:EAP"
 }
 }
 
 dockerCommand {
-name = "image tag teamcity-minimal-agent:TC_Trunk_BuildDist_2020.1.EAP3"
+name = "image tag teamcity-agent:TC_Trunk_BuildDist_EAP"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_2020.1.EAP3 %docker.pushRepository%teamcity-minimal-agent:2020.1.EAP3"
-}
-}
-
-dockerCommand {
-name = "image tag teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1803"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1803 %docker.pushRepository%teamcity-agent:latest-windowsservercore-1803"
-}
-}
-
-dockerCommand {
-name = "image tag teamcity-agent:TC_Trunk_BuildDist_2020.1.EAP3"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_2020.1.EAP3 %docker.pushRepository%teamcity-agent:2020.1.EAP3"
-}
-}
-
-dockerCommand {
-name = "image tag teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1803"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1803 %docker.pushRepository%teamcity-agent:latest-nanoserver-1803"
-}
-}
-
-dockerCommand {
-name = "image tag teamcity-agent:TC_Trunk_BuildDist_2020.1.EAP3"
-commandType = other {
-subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_2020.1.EAP3 %docker.pushRepository%teamcity-agent:2020.1.EAP3"
+commandArgs = "teamcity-agent:TC_Trunk_BuildDist_EAP %docker.pushRepository%teamcity-agent:EAP"
 }
 }
 
@@ -1426,8 +1133,7 @@ dockerCommand {
 name = "push teamcity-server:latest-nanoserver-1803"
 commandType = push {
 namesAndTags = """
-%docker.pushRepository%teamcity-server:latest-nanoserver-1803
-%docker.pushRepository%teamcity-server:2020.1.EAP3
+%docker.pushRepository%teamcity-server:EAP
 """.trimIndent()
 }
 }
@@ -1436,8 +1142,7 @@ dockerCommand {
 name = "push teamcity-minimal-agent:latest-nanoserver-1803"
 commandType = push {
 namesAndTags = """
-%docker.pushRepository%teamcity-minimal-agent:latest-nanoserver-1803
-%docker.pushRepository%teamcity-minimal-agent:2020.1.EAP3
+%docker.pushRepository%teamcity-minimal-agent:EAP
 """.trimIndent()
 }
 }
@@ -1446,8 +1151,7 @@ dockerCommand {
 name = "push teamcity-agent:latest-windowsservercore-1803"
 commandType = push {
 namesAndTags = """
-%docker.pushRepository%teamcity-agent:latest-windowsservercore-1803
-%docker.pushRepository%teamcity-agent:2020.1.EAP3
+%docker.pushRepository%teamcity-agent:EAP
 """.trimIndent()
 }
 }
@@ -1456,8 +1160,7 @@ dockerCommand {
 name = "push teamcity-agent:latest-nanoserver-1803"
 commandType = push {
 namesAndTags = """
-%docker.pushRepository%teamcity-agent:latest-nanoserver-1803
-%docker.pushRepository%teamcity-agent:2020.1.EAP3
+%docker.pushRepository%teamcity-agent:EAP
 """.trimIndent()
 }
 }
@@ -1487,7 +1190,7 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 
 object TC2019_2_BuildDist_root : BuildType(
 {
-name = "2019.2.4 Build All Docker Images"
+name = "TC2019_2 Build All Docker Images"
 dependencies {
 snapshot(AbsoluteId("TC2019_2_BuildDist"))
 { onDependencyFailure = FailureAction.IGNORE }
@@ -1504,7 +1207,7 @@ snapshot(TC2019_2_BuildDist_latest_nanoserver_1803)
 
 object TC_Trunk_BuildDist_root : BuildType(
 {
-name = "2020.1.EAP3 Build All Docker Images"
+name = "TC_Trunk Build All Docker Images"
 dependencies {
 snapshot(AbsoluteId("TC_Trunk_BuildDist"))
 { onDependencyFailure = FailureAction.IGNORE }
