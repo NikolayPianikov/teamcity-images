@@ -218,34 +218,34 @@ param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "change tag from teamcity-server:TC_Trunk_BuildDist_eap-latest-nanoserver-1903 to eap-eap-latest-nanoserver-1903"
+name = "change tag from teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1903 to eap-latest-nanoserver-1903"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC_Trunk_BuildDist_eap-latest-nanoserver-1903 %docker.pushRepository%teamcity-server:eap-eap-latest-nanoserver-1903"
+commandArgs = "teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1903 %docker.pushRepository%teamcity-server:eap-latest-nanoserver-1903"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-minimal-agent:TC_Trunk_BuildDist_eap-latest-nanoserver-1903 to eap-eap-latest-nanoserver-1903"
+name = "change tag from teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1903 to eap-latest-nanoserver-1903"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_eap-latest-nanoserver-1903 %docker.pushRepository%teamcity-minimal-agent:eap-eap-latest-nanoserver-1903"
+commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1903 %docker.pushRepository%teamcity-minimal-agent:eap-latest-nanoserver-1903"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC_Trunk_BuildDist_eap-latest-windowsservercore-1903 to eap-eap-latest-windowsservercore-1903"
+name = "change tag from teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1903 to eap-latest-windowsservercore-1903"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_eap-latest-windowsservercore-1903 %docker.pushRepository%teamcity-agent:eap-eap-latest-windowsservercore-1903"
+commandArgs = "teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1903 %docker.pushRepository%teamcity-agent:eap-latest-windowsservercore-1903"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC_Trunk_BuildDist_eap-latest-nanoserver-1903 to eap-eap-latest-nanoserver-1903"
+name = "change tag from teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1903 to eap-latest-nanoserver-1903"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_eap-latest-nanoserver-1903 %docker.pushRepository%teamcity-agent:eap-eap-latest-nanoserver-1903"
+commandArgs = "teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1903 %docker.pushRepository%teamcity-agent:eap-latest-nanoserver-1903"
 }
 }
 
@@ -521,34 +521,34 @@ param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "change tag from teamcity-server:TC_Trunk_BuildDist_eap-latest-nanoserver-1809 to eap-eap-latest-nanoserver-1809"
+name = "change tag from teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1809 to eap-latest-nanoserver-1809"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC_Trunk_BuildDist_eap-latest-nanoserver-1809 %docker.pushRepository%teamcity-server:eap-eap-latest-nanoserver-1809"
+commandArgs = "teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1809 %docker.pushRepository%teamcity-server:eap-latest-nanoserver-1809"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-minimal-agent:TC_Trunk_BuildDist_eap-latest-nanoserver-1809 to eap-eap-latest-nanoserver-1809"
+name = "change tag from teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1809 to eap-latest-nanoserver-1809"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_eap-latest-nanoserver-1809 %docker.pushRepository%teamcity-minimal-agent:eap-eap-latest-nanoserver-1809"
+commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1809 %docker.pushRepository%teamcity-minimal-agent:eap-latest-nanoserver-1809"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC_Trunk_BuildDist_eap-latest-windowsservercore-1809 to eap-eap-latest-windowsservercore-1809"
+name = "change tag from teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1809 to eap-latest-windowsservercore-1809"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_eap-latest-windowsservercore-1809 %docker.pushRepository%teamcity-agent:eap-eap-latest-windowsservercore-1809"
+commandArgs = "teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1809 %docker.pushRepository%teamcity-agent:eap-latest-windowsservercore-1809"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC_Trunk_BuildDist_eap-latest-nanoserver-1809 to eap-eap-latest-nanoserver-1809"
+name = "change tag from teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1809 to eap-latest-nanoserver-1809"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_eap-latest-nanoserver-1809 %docker.pushRepository%teamcity-agent:eap-eap-latest-nanoserver-1809"
+commandArgs = "teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1809 %docker.pushRepository%teamcity-agent:eap-latest-nanoserver-1809"
 }
 }
 
@@ -812,50 +812,50 @@ param("dockerImage.platform", "linux")
 }
 
 dockerCommand {
-name = "change tag from teamcity-server:TC_Trunk_BuildDist_eap-18.04 to eap-eap-18.04"
+name = "change tag from teamcity-server:TC_Trunk_BuildDist_18.04 to eap-18.04"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC_Trunk_BuildDist_eap-18.04 %docker.pushRepository%teamcity-server:eap-eap-18.04"
+commandArgs = "teamcity-server:TC_Trunk_BuildDist_18.04 %docker.pushRepository%teamcity-server:eap-18.04"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-server:TC_Trunk_BuildDist_eap-linux to eap-eap-linux"
+name = "change tag from teamcity-server:TC_Trunk_BuildDist_linux to eap-linux"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC_Trunk_BuildDist_eap-linux %docker.pushRepository%teamcity-server:eap-eap-linux"
+commandArgs = "teamcity-server:TC_Trunk_BuildDist_linux %docker.pushRepository%teamcity-server:eap-linux"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-minimal-agent:TC_Trunk_BuildDist_eap-18.04 to eap-eap-18.04"
+name = "change tag from teamcity-minimal-agent:TC_Trunk_BuildDist_18.04 to eap-18.04"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_eap-18.04 %docker.pushRepository%teamcity-minimal-agent:eap-eap-18.04"
+commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_18.04 %docker.pushRepository%teamcity-minimal-agent:eap-18.04"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-minimal-agent:TC_Trunk_BuildDist_eap-linux to eap-eap-linux"
+name = "change tag from teamcity-minimal-agent:TC_Trunk_BuildDist_linux to eap-linux"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_eap-linux %docker.pushRepository%teamcity-minimal-agent:eap-eap-linux"
+commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_linux %docker.pushRepository%teamcity-minimal-agent:eap-linux"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC_Trunk_BuildDist_eap-18.04 to eap-eap-18.04"
+name = "change tag from teamcity-agent:TC_Trunk_BuildDist_18.04 to eap-18.04"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_eap-18.04 %docker.pushRepository%teamcity-agent:eap-eap-18.04"
+commandArgs = "teamcity-agent:TC_Trunk_BuildDist_18.04 %docker.pushRepository%teamcity-agent:eap-18.04"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC_Trunk_BuildDist_eap-linux to eap-eap-linux"
+name = "change tag from teamcity-agent:TC_Trunk_BuildDist_linux to eap-linux"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_eap-linux %docker.pushRepository%teamcity-agent:eap-eap-linux"
+commandArgs = "teamcity-agent:TC_Trunk_BuildDist_linux %docker.pushRepository%teamcity-agent:eap-linux"
 }
 }
 
@@ -1125,34 +1125,34 @@ param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "change tag from teamcity-server:TC_Trunk_BuildDist_eap-latest-nanoserver-1803 to eap-eap-latest-nanoserver-1803"
+name = "change tag from teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1803 to eap-latest-nanoserver-1803"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC_Trunk_BuildDist_eap-latest-nanoserver-1803 %docker.pushRepository%teamcity-server:eap-eap-latest-nanoserver-1803"
+commandArgs = "teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1803 %docker.pushRepository%teamcity-server:eap-latest-nanoserver-1803"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-minimal-agent:TC_Trunk_BuildDist_eap-latest-nanoserver-1803 to eap-eap-latest-nanoserver-1803"
+name = "change tag from teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1803 to eap-latest-nanoserver-1803"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_eap-latest-nanoserver-1803 %docker.pushRepository%teamcity-minimal-agent:eap-eap-latest-nanoserver-1803"
+commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1803 %docker.pushRepository%teamcity-minimal-agent:eap-latest-nanoserver-1803"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC_Trunk_BuildDist_eap-latest-windowsservercore-1803 to eap-eap-latest-windowsservercore-1803"
+name = "change tag from teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1803 to eap-latest-windowsservercore-1803"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_eap-latest-windowsservercore-1803 %docker.pushRepository%teamcity-agent:eap-eap-latest-windowsservercore-1803"
+commandArgs = "teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1803 %docker.pushRepository%teamcity-agent:eap-latest-windowsservercore-1803"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC_Trunk_BuildDist_eap-latest-nanoserver-1803 to eap-eap-latest-nanoserver-1803"
+name = "change tag from teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1803 to eap-latest-nanoserver-1803"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_eap-latest-nanoserver-1803 %docker.pushRepository%teamcity-agent:eap-eap-latest-nanoserver-1803"
+commandArgs = "teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1803 %docker.pushRepository%teamcity-agent:eap-latest-nanoserver-1803"
 }
 }
 

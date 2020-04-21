@@ -208,7 +208,7 @@ namespace TeamCity.Docker
             {
                 if (image.File.Tags.Any())
                 {
-                    foreach (var tag in image.File.Tags.Select(tag => $"{version.TagPrefix}{tag}"))
+                    foreach (var tag in image.File.Tags)
                     {
                         yield return "dockerCommand {";
                         yield return $"name = \"change tag from {image.File.ImageId}:{version.BuildIdPrefix}_{tag} to {version.TagPrefix}{tag}\"";
