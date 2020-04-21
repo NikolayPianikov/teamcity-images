@@ -110,20 +110,24 @@ namespace TeamCity.Docker
                 lines.Add("})");
 
                 lines.Add(string.Empty);
+            }
 
-                lines.Add("project {");
-                lines.Add("vcsRoot(RemoteTeamcityImages)");
+            lines.Add("project {");
+            lines.Add("vcsRoot(RemoteTeamcityImages)");
+            foreach (var teamCityBuildConfigurationId in _options.TeamCityBuildConfigurationIds)
+            {
+                var buildConfigurationIdPrefix = NormalizeName(teamCityBuildConfigurationId);
                 foreach (var buildType in buildTypes)
                 {
                     lines.Add($"buildType({buildConfigurationIdPrefix}{buildType})");
                 }
 
                 lines.Add($"buildType({buildConfigurationIdPrefix}_root)");
-
-                lines.Add("}"); // project
-
-                lines.Add(string.Empty);
             }
+
+            lines.Add("}"); // project
+
+            lines.Add(string.Empty);
 
             lines.Add("object RemoteTeamcityImages : GitVcsRoot({");
             lines.Add("name = \"remote teamcity images\"");
@@ -167,7 +171,7 @@ namespace TeamCity.Docker
             }
 
             yield return $"object {buildConfigurationIdPrefix}{id} : BuildType({{";
-            yield return $"name = \"{name}\"";
+            yield return $"name = \"{buildConfigurationIdPrefix} {name}\"";
             yield return $"description  = \"{description}\"";
             yield return "vcs {root(RemoteTeamcityImages)}";
             yield return "steps {";

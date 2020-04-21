@@ -6,7 +6,7 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.freeDiskSpace
 version = "2019.2"
 
 object TC2019_2_BuildDist_latest_nanoserver_1903 : BuildType({
-name = "latest-nanoserver-1903"
+name = "TC2019_2_BuildDist latest-nanoserver-1903"
 description  = "teamcity-server:latest-nanoserver-1903 teamcity-minimal-agent:latest-nanoserver-1903 teamcity-agent:latest-windowsservercore-1903:latest-nanoserver-1903"
 vcs {root(RemoteTeamcityImages)}
 steps {
@@ -157,7 +157,7 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 })
 
 object TC_Trunk_BuildDist_latest_nanoserver_1903 : BuildType({
-name = "latest-nanoserver-1903"
+name = "TC_Trunk_BuildDist latest-nanoserver-1903"
 description  = "teamcity-server:latest-nanoserver-1903 teamcity-minimal-agent:latest-nanoserver-1903 teamcity-agent:latest-windowsservercore-1903:latest-nanoserver-1903"
 vcs {root(RemoteTeamcityImages)}
 steps {
@@ -309,7 +309,7 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 
 
 object TC2019_2_BuildDist_latest_nanoserver_1809 : BuildType({
-name = "latest-nanoserver-1809"
+name = "TC2019_2_BuildDist latest-nanoserver-1809"
 description  = "teamcity-server:latest-nanoserver-1809 teamcity-minimal-agent:latest-nanoserver-1809 teamcity-agent:latest-windowsservercore-1809:latest-nanoserver-1809"
 vcs {root(RemoteTeamcityImages)}
 steps {
@@ -460,7 +460,7 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 })
 
 object TC_Trunk_BuildDist_latest_nanoserver_1809 : BuildType({
-name = "latest-nanoserver-1809"
+name = "TC_Trunk_BuildDist latest-nanoserver-1809"
 description  = "teamcity-server:latest-nanoserver-1809 teamcity-minimal-agent:latest-nanoserver-1809 teamcity-agent:latest-windowsservercore-1809:latest-nanoserver-1809"
 vcs {root(RemoteTeamcityImages)}
 steps {
@@ -612,7 +612,7 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 
 
 object TC2019_2_BuildDist_18_04_linux : BuildType({
-name = "18.04 linux"
+name = "TC2019_2_BuildDist 18.04 linux"
 description  = "teamcity-server:18.04,linux teamcity-minimal-agent:18.04,linux teamcity-agent:18.04,linux"
 vcs {root(RemoteTeamcityImages)}
 steps {
@@ -762,7 +762,7 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 })
 
 object TC_Trunk_BuildDist_18_04_linux : BuildType({
-name = "18.04 linux"
+name = "TC_Trunk_BuildDist 18.04 linux"
 description  = "teamcity-server:18.04,linux teamcity-minimal-agent:18.04,linux teamcity-agent:18.04,linux"
 vcs {root(RemoteTeamcityImages)}
 steps {
@@ -913,7 +913,7 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 
 
 object TC2019_2_BuildDist_latest_nanoserver_1803 : BuildType({
-name = "latest-nanoserver-1803"
+name = "TC2019_2_BuildDist latest-nanoserver-1803"
 description  = "teamcity-server:latest-nanoserver-1803 teamcity-minimal-agent:latest-nanoserver-1803 teamcity-agent:latest-windowsservercore-1803:latest-nanoserver-1803"
 vcs {root(RemoteTeamcityImages)}
 steps {
@@ -1064,7 +1064,7 @@ artifactRules = "TeamCity-*.tar.gz!/**=>context"
 })
 
 object TC_Trunk_BuildDist_latest_nanoserver_1803 : BuildType({
-name = "latest-nanoserver-1803"
+name = "TC_Trunk_BuildDist latest-nanoserver-1803"
 description  = "teamcity-server:latest-nanoserver-1803 teamcity-minimal-agent:latest-nanoserver-1803 teamcity-agent:latest-windowsservercore-1803:latest-nanoserver-1803"
 vcs {root(RemoteTeamcityImages)}
 steps {
@@ -1232,15 +1232,6 @@ snapshot(TC2019_2_BuildDist_latest_nanoserver_1803)
 }
 })
 
-project {
-vcsRoot(RemoteTeamcityImages)
-buildType(TC2019_2_BuildDist_latest_nanoserver_1903)
-buildType(TC2019_2_BuildDist_latest_nanoserver_1809)
-buildType(TC2019_2_BuildDist_18_04_linux)
-buildType(TC2019_2_BuildDist_latest_nanoserver_1803)
-buildType(TC2019_2_BuildDist_root)
-}
-
 object TC_Trunk_BuildDist_root : BuildType(
 {
 name = "TC_Trunk_BuildDist Build All Docker Images"
@@ -1260,6 +1251,11 @@ snapshot(TC_Trunk_BuildDist_latest_nanoserver_1803)
 
 project {
 vcsRoot(RemoteTeamcityImages)
+buildType(TC2019_2_BuildDist_latest_nanoserver_1903)
+buildType(TC2019_2_BuildDist_latest_nanoserver_1809)
+buildType(TC2019_2_BuildDist_18_04_linux)
+buildType(TC2019_2_BuildDist_latest_nanoserver_1803)
+buildType(TC2019_2_BuildDist_root)
 buildType(TC_Trunk_BuildDist_latest_nanoserver_1903)
 buildType(TC_Trunk_BuildDist_latest_nanoserver_1809)
 buildType(TC_Trunk_BuildDist_18_04_linux)
