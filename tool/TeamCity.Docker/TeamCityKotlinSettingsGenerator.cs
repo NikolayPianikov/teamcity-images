@@ -208,7 +208,7 @@ namespace TeamCity.Docker
             {
                 if (image.File.Tags.Any())
                 {
-                    foreach (var tag in version.ReplacementTags.Any() ? version.ReplacementTags : image.File.Tags)
+                    foreach (var tag in image.File.Tags.Select(tag => $"{version.TagPrefix}{tag}"))
                     {
                         yield return "dockerCommand {";
                         yield return $"name = \"image tag {image.File.ImageId}:{version.BuildIdPrefix}_{tag}\"";
@@ -233,7 +233,7 @@ namespace TeamCity.Docker
                 yield return "commandType = push {";
 
                 yield return "namesAndTags = \"\"\"";
-                foreach (var tag in version.ReplacementTags.Any() ? version.ReplacementTags : image.File.Tags)
+                foreach (var tag in image.File.Tags.Select(tag => $"{version.TagPrefix}{tag}"))
                 {
                     yield return $"{RepositoryName}{image.File.ImageId}:{tag}";
                 }
@@ -294,7 +294,7 @@ namespace TeamCity.Docker
             {
                 var vars = build.Split(':', StringSplitOptions.RemoveEmptyEntries);
                 BuildId = vars.Length > 0 ? vars[0] : "";
-                ReplacementTags = vars.Skip(1).ToArray();
+                TagPrefix = vars.Length > 1 ? vars[1] + "-" : "";
                 BuildIdPrefix = NormalizeName(BuildId);
                 Name = BuildIdPrefix.Replace("_BuildDist", "");
             }
@@ -305,7 +305,7 @@ namespace TeamCity.Docker
 
             public string BuildId { get; }
 
-            public IEnumerable<string> ReplacementTags { get; }
+            public string TagPrefix { get; }
         }
     }
 }
