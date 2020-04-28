@@ -11,90 +11,90 @@ description  = "teamcity-server:latest-nanoserver-1903 teamcity-minimal-agent:la
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
-name = "build teamcity-server:TC2019_2_BuildDist_latest-nanoserver-1903"
+name = "build teamcity-server:latest-nanoserver-1903"
 commandType = build {
 source = file {
 path = """context/generated/windows/Server/nanoserver/1903/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-server:TC2019_2_BuildDist_latest-nanoserver-1903
+teamcity-server:latest-nanoserver-1903
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "build teamcity-minimal-agent:TC2019_2_BuildDist_latest-nanoserver-1903"
+name = "build teamcity-minimal-agent:latest-nanoserver-1903"
 commandType = build {
 source = file {
 path = """context/generated/windows/MinimalAgent/nanoserver/1903/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-minimal-agent:TC2019_2_BuildDist_latest-nanoserver-1903
+teamcity-minimal-agent:latest-nanoserver-1903
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "build teamcity-agent:TC2019_2_BuildDist_latest-windowsservercore-1903"
+name = "build teamcity-agent:latest-windowsservercore-1903"
 commandType = build {
 source = file {
 path = """context/generated/windows/Agent/windowsservercore/1903/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-agent:TC2019_2_BuildDist_latest-windowsservercore-1903
+teamcity-agent:latest-windowsservercore-1903
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "build teamcity-agent:TC2019_2_BuildDist_latest-nanoserver-1903"
+name = "build teamcity-agent:latest-nanoserver-1903"
 commandType = build {
 source = file {
 path = """context/generated/windows/Agent/nanoserver/1903/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-agent:TC2019_2_BuildDist_latest-nanoserver-1903
+teamcity-agent:latest-nanoserver-1903
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "change tag from teamcity-server:TC2019_2_BuildDist_latest-nanoserver-1903 to latest-nanoserver-1903"
+name = "change tag from teamcity-server:latest-nanoserver-1903 to latest-nanoserver-1903"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC2019_2_BuildDist_latest-nanoserver-1903 %docker.pushRepository%teamcity-server:latest-nanoserver-1903"
+commandArgs = "teamcity-server:latest-nanoserver-1903 %docker.pushRepository%teamcity-server:latest-nanoserver-1903"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-minimal-agent:TC2019_2_BuildDist_latest-nanoserver-1903 to latest-nanoserver-1903"
+name = "change tag from teamcity-minimal-agent:latest-nanoserver-1903 to latest-nanoserver-1903"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC2019_2_BuildDist_latest-nanoserver-1903 %docker.pushRepository%teamcity-minimal-agent:latest-nanoserver-1903"
+commandArgs = "teamcity-minimal-agent:latest-nanoserver-1903 %docker.pushRepository%teamcity-minimal-agent:latest-nanoserver-1903"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC2019_2_BuildDist_latest-windowsservercore-1903 to latest-windowsservercore-1903"
+name = "change tag from teamcity-agent:latest-windowsservercore-1903 to latest-windowsservercore-1903"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC2019_2_BuildDist_latest-windowsservercore-1903 %docker.pushRepository%teamcity-agent:latest-windowsservercore-1903"
+commandArgs = "teamcity-agent:latest-windowsservercore-1903 %docker.pushRepository%teamcity-agent:latest-windowsservercore-1903"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC2019_2_BuildDist_latest-nanoserver-1903 to latest-nanoserver-1903"
+name = "change tag from teamcity-agent:latest-nanoserver-1903 to latest-nanoserver-1903"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC2019_2_BuildDist_latest-nanoserver-1903 %docker.pushRepository%teamcity-agent:latest-nanoserver-1903"
+commandArgs = "teamcity-agent:latest-nanoserver-1903 %docker.pushRepository%teamcity-agent:latest-nanoserver-1903"
 }
 }
 
@@ -162,90 +162,90 @@ description  = "teamcity-server:latest-nanoserver-1903 teamcity-minimal-agent:la
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
-name = "build teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1903"
+name = "build teamcity-server:latest-nanoserver-1903"
 commandType = build {
 source = file {
 path = """context/generated/windows/Server/nanoserver/1903/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1903
+teamcity-server:latest-nanoserver-1903
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "build teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1903"
+name = "build teamcity-minimal-agent:latest-nanoserver-1903"
 commandType = build {
 source = file {
 path = """context/generated/windows/MinimalAgent/nanoserver/1903/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1903
+teamcity-minimal-agent:latest-nanoserver-1903
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "build teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1903"
+name = "build teamcity-agent:latest-windowsservercore-1903"
 commandType = build {
 source = file {
 path = """context/generated/windows/Agent/windowsservercore/1903/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1903
+teamcity-agent:latest-windowsservercore-1903
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "build teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1903"
+name = "build teamcity-agent:latest-nanoserver-1903"
 commandType = build {
 source = file {
 path = """context/generated/windows/Agent/nanoserver/1903/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1903
+teamcity-agent:latest-nanoserver-1903
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "change tag from teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1903 to eap-latest-nanoserver-1903"
+name = "change tag from teamcity-server:latest-nanoserver-1903 to eap-latest-nanoserver-1903"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1903 %docker.pushRepository%teamcity-server:eap-latest-nanoserver-1903"
+commandArgs = "teamcity-server:latest-nanoserver-1903 %docker.pushRepository%teamcity-server:eap-latest-nanoserver-1903"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1903 to eap-latest-nanoserver-1903"
+name = "change tag from teamcity-minimal-agent:latest-nanoserver-1903 to eap-latest-nanoserver-1903"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1903 %docker.pushRepository%teamcity-minimal-agent:eap-latest-nanoserver-1903"
+commandArgs = "teamcity-minimal-agent:latest-nanoserver-1903 %docker.pushRepository%teamcity-minimal-agent:eap-latest-nanoserver-1903"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1903 to eap-latest-windowsservercore-1903"
+name = "change tag from teamcity-agent:latest-windowsservercore-1903 to eap-latest-windowsservercore-1903"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1903 %docker.pushRepository%teamcity-agent:eap-latest-windowsservercore-1903"
+commandArgs = "teamcity-agent:latest-windowsservercore-1903 %docker.pushRepository%teamcity-agent:eap-latest-windowsservercore-1903"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1903 to eap-latest-nanoserver-1903"
+name = "change tag from teamcity-agent:latest-nanoserver-1903 to eap-latest-nanoserver-1903"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1903 %docker.pushRepository%teamcity-agent:eap-latest-nanoserver-1903"
+commandArgs = "teamcity-agent:latest-nanoserver-1903 %docker.pushRepository%teamcity-agent:eap-latest-nanoserver-1903"
 }
 }
 
@@ -314,90 +314,90 @@ description  = "teamcity-server:latest-nanoserver-1809 teamcity-minimal-agent:la
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
-name = "build teamcity-server:TC2019_2_BuildDist_latest-nanoserver-1809"
+name = "build teamcity-server:latest-nanoserver-1809"
 commandType = build {
 source = file {
 path = """context/generated/windows/Server/nanoserver/1809/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-server:TC2019_2_BuildDist_latest-nanoserver-1809
+teamcity-server:latest-nanoserver-1809
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "build teamcity-minimal-agent:TC2019_2_BuildDist_latest-nanoserver-1809"
+name = "build teamcity-minimal-agent:latest-nanoserver-1809"
 commandType = build {
 source = file {
 path = """context/generated/windows/MinimalAgent/nanoserver/1809/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-minimal-agent:TC2019_2_BuildDist_latest-nanoserver-1809
+teamcity-minimal-agent:latest-nanoserver-1809
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "build teamcity-agent:TC2019_2_BuildDist_latest-windowsservercore-1809"
+name = "build teamcity-agent:latest-windowsservercore-1809"
 commandType = build {
 source = file {
 path = """context/generated/windows/Agent/windowsservercore/1809/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-agent:TC2019_2_BuildDist_latest-windowsservercore-1809
+teamcity-agent:latest-windowsservercore-1809
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "build teamcity-agent:TC2019_2_BuildDist_latest-nanoserver-1809"
+name = "build teamcity-agent:latest-nanoserver-1809"
 commandType = build {
 source = file {
 path = """context/generated/windows/Agent/nanoserver/1809/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-agent:TC2019_2_BuildDist_latest-nanoserver-1809
+teamcity-agent:latest-nanoserver-1809
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "change tag from teamcity-server:TC2019_2_BuildDist_latest-nanoserver-1809 to latest-nanoserver-1809"
+name = "change tag from teamcity-server:latest-nanoserver-1809 to latest-nanoserver-1809"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC2019_2_BuildDist_latest-nanoserver-1809 %docker.pushRepository%teamcity-server:latest-nanoserver-1809"
+commandArgs = "teamcity-server:latest-nanoserver-1809 %docker.pushRepository%teamcity-server:latest-nanoserver-1809"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-minimal-agent:TC2019_2_BuildDist_latest-nanoserver-1809 to latest-nanoserver-1809"
+name = "change tag from teamcity-minimal-agent:latest-nanoserver-1809 to latest-nanoserver-1809"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC2019_2_BuildDist_latest-nanoserver-1809 %docker.pushRepository%teamcity-minimal-agent:latest-nanoserver-1809"
+commandArgs = "teamcity-minimal-agent:latest-nanoserver-1809 %docker.pushRepository%teamcity-minimal-agent:latest-nanoserver-1809"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC2019_2_BuildDist_latest-windowsservercore-1809 to latest-windowsservercore-1809"
+name = "change tag from teamcity-agent:latest-windowsservercore-1809 to latest-windowsservercore-1809"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC2019_2_BuildDist_latest-windowsservercore-1809 %docker.pushRepository%teamcity-agent:latest-windowsservercore-1809"
+commandArgs = "teamcity-agent:latest-windowsservercore-1809 %docker.pushRepository%teamcity-agent:latest-windowsservercore-1809"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC2019_2_BuildDist_latest-nanoserver-1809 to latest-nanoserver-1809"
+name = "change tag from teamcity-agent:latest-nanoserver-1809 to latest-nanoserver-1809"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC2019_2_BuildDist_latest-nanoserver-1809 %docker.pushRepository%teamcity-agent:latest-nanoserver-1809"
+commandArgs = "teamcity-agent:latest-nanoserver-1809 %docker.pushRepository%teamcity-agent:latest-nanoserver-1809"
 }
 }
 
@@ -465,90 +465,90 @@ description  = "teamcity-server:latest-nanoserver-1809 teamcity-minimal-agent:la
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
-name = "build teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1809"
+name = "build teamcity-server:latest-nanoserver-1809"
 commandType = build {
 source = file {
 path = """context/generated/windows/Server/nanoserver/1809/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1809
+teamcity-server:latest-nanoserver-1809
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "build teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1809"
+name = "build teamcity-minimal-agent:latest-nanoserver-1809"
 commandType = build {
 source = file {
 path = """context/generated/windows/MinimalAgent/nanoserver/1809/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1809
+teamcity-minimal-agent:latest-nanoserver-1809
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "build teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1809"
+name = "build teamcity-agent:latest-windowsservercore-1809"
 commandType = build {
 source = file {
 path = """context/generated/windows/Agent/windowsservercore/1809/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1809
+teamcity-agent:latest-windowsservercore-1809
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "build teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1809"
+name = "build teamcity-agent:latest-nanoserver-1809"
 commandType = build {
 source = file {
 path = """context/generated/windows/Agent/nanoserver/1809/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1809
+teamcity-agent:latest-nanoserver-1809
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "change tag from teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1809 to eap-latest-nanoserver-1809"
+name = "change tag from teamcity-server:latest-nanoserver-1809 to eap-latest-nanoserver-1809"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1809 %docker.pushRepository%teamcity-server:eap-latest-nanoserver-1809"
+commandArgs = "teamcity-server:latest-nanoserver-1809 %docker.pushRepository%teamcity-server:eap-latest-nanoserver-1809"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1809 to eap-latest-nanoserver-1809"
+name = "change tag from teamcity-minimal-agent:latest-nanoserver-1809 to eap-latest-nanoserver-1809"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1809 %docker.pushRepository%teamcity-minimal-agent:eap-latest-nanoserver-1809"
+commandArgs = "teamcity-minimal-agent:latest-nanoserver-1809 %docker.pushRepository%teamcity-minimal-agent:eap-latest-nanoserver-1809"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1809 to eap-latest-windowsservercore-1809"
+name = "change tag from teamcity-agent:latest-windowsservercore-1809 to eap-latest-windowsservercore-1809"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1809 %docker.pushRepository%teamcity-agent:eap-latest-windowsservercore-1809"
+commandArgs = "teamcity-agent:latest-windowsservercore-1809 %docker.pushRepository%teamcity-agent:eap-latest-windowsservercore-1809"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1809 to eap-latest-nanoserver-1809"
+name = "change tag from teamcity-agent:latest-nanoserver-1809 to eap-latest-nanoserver-1809"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1809 %docker.pushRepository%teamcity-agent:eap-latest-nanoserver-1809"
+commandArgs = "teamcity-agent:latest-nanoserver-1809 %docker.pushRepository%teamcity-agent:eap-latest-nanoserver-1809"
 }
 }
 
@@ -617,95 +617,95 @@ description  = "teamcity-server:18.04,linux teamcity-minimal-agent:18.04,linux t
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
-name = "build teamcity-server:TC2019_2_BuildDist_18.04,TC2019_2_BuildDist_linux"
+name = "build teamcity-server:18.04,linux"
 commandType = build {
 source = file {
 path = """context/generated/linux/Server/Ubuntu/18.04/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-server:TC2019_2_BuildDist_18.04
-teamcity-server:TC2019_2_BuildDist_linux
+teamcity-server:18.04
+teamcity-server:linux
 """.trimIndent()
 }
 param("dockerImage.platform", "linux")
 }
 
 dockerCommand {
-name = "build teamcity-minimal-agent:TC2019_2_BuildDist_18.04,TC2019_2_BuildDist_linux"
+name = "build teamcity-minimal-agent:18.04,linux"
 commandType = build {
 source = file {
 path = """context/generated/linux/MinimalAgent/Ubuntu/18.04/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-minimal-agent:TC2019_2_BuildDist_18.04
-teamcity-minimal-agent:TC2019_2_BuildDist_linux
+teamcity-minimal-agent:18.04
+teamcity-minimal-agent:linux
 """.trimIndent()
 }
 param("dockerImage.platform", "linux")
 }
 
 dockerCommand {
-name = "build teamcity-agent:TC2019_2_BuildDist_18.04,TC2019_2_BuildDist_linux"
+name = "build teamcity-agent:18.04,linux"
 commandType = build {
 source = file {
 path = """context/generated/linux/Agent/Ubuntu/18.04/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-agent:TC2019_2_BuildDist_18.04
-teamcity-agent:TC2019_2_BuildDist_linux
+teamcity-agent:18.04
+teamcity-agent:linux
 """.trimIndent()
 }
 param("dockerImage.platform", "linux")
 }
 
 dockerCommand {
-name = "change tag from teamcity-server:TC2019_2_BuildDist_18.04 to 18.04"
+name = "change tag from teamcity-server:18.04 to 18.04"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC2019_2_BuildDist_18.04 %docker.pushRepository%teamcity-server:18.04"
+commandArgs = "teamcity-server:18.04 %docker.pushRepository%teamcity-server:18.04"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-server:TC2019_2_BuildDist_linux to linux"
+name = "change tag from teamcity-server:linux to linux"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC2019_2_BuildDist_linux %docker.pushRepository%teamcity-server:linux"
+commandArgs = "teamcity-server:linux %docker.pushRepository%teamcity-server:linux"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-minimal-agent:TC2019_2_BuildDist_18.04 to 18.04"
+name = "change tag from teamcity-minimal-agent:18.04 to 18.04"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC2019_2_BuildDist_18.04 %docker.pushRepository%teamcity-minimal-agent:18.04"
+commandArgs = "teamcity-minimal-agent:18.04 %docker.pushRepository%teamcity-minimal-agent:18.04"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-minimal-agent:TC2019_2_BuildDist_linux to linux"
+name = "change tag from teamcity-minimal-agent:linux to linux"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC2019_2_BuildDist_linux %docker.pushRepository%teamcity-minimal-agent:linux"
+commandArgs = "teamcity-minimal-agent:linux %docker.pushRepository%teamcity-minimal-agent:linux"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC2019_2_BuildDist_18.04 to 18.04"
+name = "change tag from teamcity-agent:18.04 to 18.04"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC2019_2_BuildDist_18.04 %docker.pushRepository%teamcity-agent:18.04"
+commandArgs = "teamcity-agent:18.04 %docker.pushRepository%teamcity-agent:18.04"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC2019_2_BuildDist_linux to linux"
+name = "change tag from teamcity-agent:linux to linux"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC2019_2_BuildDist_linux %docker.pushRepository%teamcity-agent:linux"
+commandArgs = "teamcity-agent:linux %docker.pushRepository%teamcity-agent:linux"
 }
 }
 
@@ -767,95 +767,95 @@ description  = "teamcity-server:18.04,linux teamcity-minimal-agent:18.04,linux t
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
-name = "build teamcity-server:TC_Trunk_BuildDist_18.04,TC_Trunk_BuildDist_linux"
+name = "build teamcity-server:18.04,linux"
 commandType = build {
 source = file {
 path = """context/generated/linux/Server/Ubuntu/18.04/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-server:TC_Trunk_BuildDist_18.04
-teamcity-server:TC_Trunk_BuildDist_linux
+teamcity-server:18.04
+teamcity-server:linux
 """.trimIndent()
 }
 param("dockerImage.platform", "linux")
 }
 
 dockerCommand {
-name = "build teamcity-minimal-agent:TC_Trunk_BuildDist_18.04,TC_Trunk_BuildDist_linux"
+name = "build teamcity-minimal-agent:18.04,linux"
 commandType = build {
 source = file {
 path = """context/generated/linux/MinimalAgent/Ubuntu/18.04/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-minimal-agent:TC_Trunk_BuildDist_18.04
-teamcity-minimal-agent:TC_Trunk_BuildDist_linux
+teamcity-minimal-agent:18.04
+teamcity-minimal-agent:linux
 """.trimIndent()
 }
 param("dockerImage.platform", "linux")
 }
 
 dockerCommand {
-name = "build teamcity-agent:TC_Trunk_BuildDist_18.04,TC_Trunk_BuildDist_linux"
+name = "build teamcity-agent:18.04,linux"
 commandType = build {
 source = file {
 path = """context/generated/linux/Agent/Ubuntu/18.04/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-agent:TC_Trunk_BuildDist_18.04
-teamcity-agent:TC_Trunk_BuildDist_linux
+teamcity-agent:18.04
+teamcity-agent:linux
 """.trimIndent()
 }
 param("dockerImage.platform", "linux")
 }
 
 dockerCommand {
-name = "change tag from teamcity-server:TC_Trunk_BuildDist_18.04 to eap-18.04"
+name = "change tag from teamcity-server:18.04 to eap-18.04"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC_Trunk_BuildDist_18.04 %docker.pushRepository%teamcity-server:eap-18.04"
+commandArgs = "teamcity-server:18.04 %docker.pushRepository%teamcity-server:eap-18.04"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-server:TC_Trunk_BuildDist_linux to eap-linux"
+name = "change tag from teamcity-server:linux to eap-linux"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC_Trunk_BuildDist_linux %docker.pushRepository%teamcity-server:eap-linux"
+commandArgs = "teamcity-server:linux %docker.pushRepository%teamcity-server:eap-linux"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-minimal-agent:TC_Trunk_BuildDist_18.04 to eap-18.04"
+name = "change tag from teamcity-minimal-agent:18.04 to eap-18.04"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_18.04 %docker.pushRepository%teamcity-minimal-agent:eap-18.04"
+commandArgs = "teamcity-minimal-agent:18.04 %docker.pushRepository%teamcity-minimal-agent:eap-18.04"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-minimal-agent:TC_Trunk_BuildDist_linux to eap-linux"
+name = "change tag from teamcity-minimal-agent:linux to eap-linux"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_linux %docker.pushRepository%teamcity-minimal-agent:eap-linux"
+commandArgs = "teamcity-minimal-agent:linux %docker.pushRepository%teamcity-minimal-agent:eap-linux"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC_Trunk_BuildDist_18.04 to eap-18.04"
+name = "change tag from teamcity-agent:18.04 to eap-18.04"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_18.04 %docker.pushRepository%teamcity-agent:eap-18.04"
+commandArgs = "teamcity-agent:18.04 %docker.pushRepository%teamcity-agent:eap-18.04"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC_Trunk_BuildDist_linux to eap-linux"
+name = "change tag from teamcity-agent:linux to eap-linux"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_linux %docker.pushRepository%teamcity-agent:eap-linux"
+commandArgs = "teamcity-agent:linux %docker.pushRepository%teamcity-agent:eap-linux"
 }
 }
 
@@ -918,90 +918,90 @@ description  = "teamcity-server:latest-nanoserver-1803 teamcity-minimal-agent:la
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
-name = "build teamcity-server:TC2019_2_BuildDist_latest-nanoserver-1803"
+name = "build teamcity-server:latest-nanoserver-1803"
 commandType = build {
 source = file {
 path = """context/generated/windows/Server/nanoserver/1803/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-server:TC2019_2_BuildDist_latest-nanoserver-1803
+teamcity-server:latest-nanoserver-1803
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "build teamcity-minimal-agent:TC2019_2_BuildDist_latest-nanoserver-1803"
+name = "build teamcity-minimal-agent:latest-nanoserver-1803"
 commandType = build {
 source = file {
 path = """context/generated/windows/MinimalAgent/nanoserver/1803/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-minimal-agent:TC2019_2_BuildDist_latest-nanoserver-1803
+teamcity-minimal-agent:latest-nanoserver-1803
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "build teamcity-agent:TC2019_2_BuildDist_latest-windowsservercore-1803"
+name = "build teamcity-agent:latest-windowsservercore-1803"
 commandType = build {
 source = file {
 path = """context/generated/windows/Agent/windowsservercore/1803/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-agent:TC2019_2_BuildDist_latest-windowsservercore-1803
+teamcity-agent:latest-windowsservercore-1803
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "build teamcity-agent:TC2019_2_BuildDist_latest-nanoserver-1803"
+name = "build teamcity-agent:latest-nanoserver-1803"
 commandType = build {
 source = file {
 path = """context/generated/windows/Agent/nanoserver/1803/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-agent:TC2019_2_BuildDist_latest-nanoserver-1803
+teamcity-agent:latest-nanoserver-1803
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "change tag from teamcity-server:TC2019_2_BuildDist_latest-nanoserver-1803 to latest-nanoserver-1803"
+name = "change tag from teamcity-server:latest-nanoserver-1803 to latest-nanoserver-1803"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC2019_2_BuildDist_latest-nanoserver-1803 %docker.pushRepository%teamcity-server:latest-nanoserver-1803"
+commandArgs = "teamcity-server:latest-nanoserver-1803 %docker.pushRepository%teamcity-server:latest-nanoserver-1803"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-minimal-agent:TC2019_2_BuildDist_latest-nanoserver-1803 to latest-nanoserver-1803"
+name = "change tag from teamcity-minimal-agent:latest-nanoserver-1803 to latest-nanoserver-1803"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC2019_2_BuildDist_latest-nanoserver-1803 %docker.pushRepository%teamcity-minimal-agent:latest-nanoserver-1803"
+commandArgs = "teamcity-minimal-agent:latest-nanoserver-1803 %docker.pushRepository%teamcity-minimal-agent:latest-nanoserver-1803"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC2019_2_BuildDist_latest-windowsservercore-1803 to latest-windowsservercore-1803"
+name = "change tag from teamcity-agent:latest-windowsservercore-1803 to latest-windowsservercore-1803"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC2019_2_BuildDist_latest-windowsservercore-1803 %docker.pushRepository%teamcity-agent:latest-windowsservercore-1803"
+commandArgs = "teamcity-agent:latest-windowsservercore-1803 %docker.pushRepository%teamcity-agent:latest-windowsservercore-1803"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC2019_2_BuildDist_latest-nanoserver-1803 to latest-nanoserver-1803"
+name = "change tag from teamcity-agent:latest-nanoserver-1803 to latest-nanoserver-1803"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC2019_2_BuildDist_latest-nanoserver-1803 %docker.pushRepository%teamcity-agent:latest-nanoserver-1803"
+commandArgs = "teamcity-agent:latest-nanoserver-1803 %docker.pushRepository%teamcity-agent:latest-nanoserver-1803"
 }
 }
 
@@ -1069,90 +1069,90 @@ description  = "teamcity-server:latest-nanoserver-1803 teamcity-minimal-agent:la
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
-name = "build teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1803"
+name = "build teamcity-server:latest-nanoserver-1803"
 commandType = build {
 source = file {
 path = """context/generated/windows/Server/nanoserver/1803/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1803
+teamcity-server:latest-nanoserver-1803
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "build teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1803"
+name = "build teamcity-minimal-agent:latest-nanoserver-1803"
 commandType = build {
 source = file {
 path = """context/generated/windows/MinimalAgent/nanoserver/1803/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1803
+teamcity-minimal-agent:latest-nanoserver-1803
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "build teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1803"
+name = "build teamcity-agent:latest-windowsservercore-1803"
 commandType = build {
 source = file {
 path = """context/generated/windows/Agent/windowsservercore/1803/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1803
+teamcity-agent:latest-windowsservercore-1803
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "build teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1803"
+name = "build teamcity-agent:latest-nanoserver-1803"
 commandType = build {
 source = file {
 path = """context/generated/windows/Agent/nanoserver/1803/Dockerfile"""
 }
 contextDir = "context"
 namesAndTags = """
-teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1803
+teamcity-agent:latest-nanoserver-1803
 """.trimIndent()
 }
 param("dockerImage.platform", "windows")
 }
 
 dockerCommand {
-name = "change tag from teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1803 to eap-latest-nanoserver-1803"
+name = "change tag from teamcity-server:latest-nanoserver-1803 to eap-latest-nanoserver-1803"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-server:TC_Trunk_BuildDist_latest-nanoserver-1803 %docker.pushRepository%teamcity-server:eap-latest-nanoserver-1803"
+commandArgs = "teamcity-server:latest-nanoserver-1803 %docker.pushRepository%teamcity-server:eap-latest-nanoserver-1803"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1803 to eap-latest-nanoserver-1803"
+name = "change tag from teamcity-minimal-agent:latest-nanoserver-1803 to eap-latest-nanoserver-1803"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-minimal-agent:TC_Trunk_BuildDist_latest-nanoserver-1803 %docker.pushRepository%teamcity-minimal-agent:eap-latest-nanoserver-1803"
+commandArgs = "teamcity-minimal-agent:latest-nanoserver-1803 %docker.pushRepository%teamcity-minimal-agent:eap-latest-nanoserver-1803"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1803 to eap-latest-windowsservercore-1803"
+name = "change tag from teamcity-agent:latest-windowsservercore-1803 to eap-latest-windowsservercore-1803"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_latest-windowsservercore-1803 %docker.pushRepository%teamcity-agent:eap-latest-windowsservercore-1803"
+commandArgs = "teamcity-agent:latest-windowsservercore-1803 %docker.pushRepository%teamcity-agent:eap-latest-windowsservercore-1803"
 }
 }
 
 dockerCommand {
-name = "change tag from teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1803 to eap-latest-nanoserver-1803"
+name = "change tag from teamcity-agent:latest-nanoserver-1803 to eap-latest-nanoserver-1803"
 commandType = other {
 subCommand = "tag"
-commandArgs = "teamcity-agent:TC_Trunk_BuildDist_latest-nanoserver-1803 %docker.pushRepository%teamcity-agent:eap-latest-nanoserver-1803"
+commandArgs = "teamcity-agent:latest-nanoserver-1803 %docker.pushRepository%teamcity-agent:eap-latest-nanoserver-1803"
 }
 }
 
