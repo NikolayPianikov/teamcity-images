@@ -142,7 +142,7 @@ failBuild = true
 }
 dockerSupport {
 loginToRegistry = on {
-dockerRegistryId = "%docker.registryId%"
+dockerRegistryId = "PROJECT_EXT_2307"
 }
 }
 }
@@ -293,7 +293,7 @@ failBuild = true
 }
 dockerSupport {
 loginToRegistry = on {
-dockerRegistryId = "%docker.registryId%"
+dockerRegistryId = "PROJECT_EXT_2307"
 }
 }
 }
@@ -445,7 +445,7 @@ failBuild = true
 }
 dockerSupport {
 loginToRegistry = on {
-dockerRegistryId = "%docker.registryId%"
+dockerRegistryId = "PROJECT_EXT_2307"
 }
 }
 }
@@ -596,7 +596,7 @@ failBuild = true
 }
 dockerSupport {
 loginToRegistry = on {
-dockerRegistryId = "%docker.registryId%"
+dockerRegistryId = "PROJECT_EXT_2307"
 }
 }
 }
@@ -747,7 +747,7 @@ failBuild = true
 }
 dockerSupport {
 loginToRegistry = on {
-dockerRegistryId = "%docker.registryId%"
+dockerRegistryId = "PROJECT_EXT_2307"
 }
 }
 }
@@ -897,7 +897,7 @@ failBuild = true
 }
 dockerSupport {
 loginToRegistry = on {
-dockerRegistryId = "%docker.registryId%"
+dockerRegistryId = "PROJECT_EXT_2307"
 }
 }
 }
@@ -1049,7 +1049,7 @@ failBuild = true
 }
 dockerSupport {
 loginToRegistry = on {
-dockerRegistryId = "%docker.registryId%"
+dockerRegistryId = "PROJECT_EXT_2307"
 }
 }
 }
@@ -1200,7 +1200,7 @@ failBuild = true
 }
 dockerSupport {
 loginToRegistry = on {
-dockerRegistryId = "%docker.registryId%"
+dockerRegistryId = "PROJECT_EXT_2307"
 }
 }
 }
