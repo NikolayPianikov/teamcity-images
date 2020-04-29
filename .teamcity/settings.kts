@@ -11,7 +11,7 @@ description  = "teamcity-server:latest-nanoserver-1903 teamcity-minimal-agent:la
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
-name = "pull mcr.microsoft.com/powershell:nanoserver-1903
+name = "pull mcr.microsoft.com/powershell:nanoserver-1903"
 commandType = other {
 subCommand = "pull"
 commandArgs = "mcr.microsoft.com/powershell:nanoserver-1903"
@@ -19,7 +19,7 @@ commandArgs = "mcr.microsoft.com/powershell:nanoserver-1903"
 }
 
 dockerCommand {
-name = "pull mcr.microsoft.com/windows/nanoserver:1903
+name = "pull mcr.microsoft.com/windows/nanoserver:1903"
 commandType = other {
 subCommand = "pull"
 commandArgs = "mcr.microsoft.com/windows/nanoserver:1903"
@@ -27,7 +27,7 @@ commandArgs = "mcr.microsoft.com/windows/nanoserver:1903"
 }
 
 dockerCommand {
-name = "pull mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1903
+name = "pull mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1903"
 commandType = other {
 subCommand = "pull"
 commandArgs = "mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1903"
@@ -186,7 +186,7 @@ description  = "teamcity-server:latest-nanoserver-1903 teamcity-minimal-agent:la
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
-name = "pull mcr.microsoft.com/powershell:nanoserver-1903
+name = "pull mcr.microsoft.com/powershell:nanoserver-1903"
 commandType = other {
 subCommand = "pull"
 commandArgs = "mcr.microsoft.com/powershell:nanoserver-1903"
@@ -194,7 +194,7 @@ commandArgs = "mcr.microsoft.com/powershell:nanoserver-1903"
 }
 
 dockerCommand {
-name = "pull mcr.microsoft.com/windows/nanoserver:1903
+name = "pull mcr.microsoft.com/windows/nanoserver:1903"
 commandType = other {
 subCommand = "pull"
 commandArgs = "mcr.microsoft.com/windows/nanoserver:1903"
@@ -202,7 +202,7 @@ commandArgs = "mcr.microsoft.com/windows/nanoserver:1903"
 }
 
 dockerCommand {
-name = "pull mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1903
+name = "pull mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1903"
 commandType = other {
 subCommand = "pull"
 commandArgs = "mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1903"
@@ -362,7 +362,7 @@ description  = "teamcity-server:latest-nanoserver-1809 teamcity-minimal-agent:la
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
-name = "pull mcr.microsoft.com/powershell:nanoserver-1809
+name = "pull mcr.microsoft.com/powershell:nanoserver-1809"
 commandType = other {
 subCommand = "pull"
 commandArgs = "mcr.microsoft.com/powershell:nanoserver-1809"
@@ -370,7 +370,7 @@ commandArgs = "mcr.microsoft.com/powershell:nanoserver-1809"
 }
 
 dockerCommand {
-name = "pull mcr.microsoft.com/windows/nanoserver:1809
+name = "pull mcr.microsoft.com/windows/nanoserver:1809"
 commandType = other {
 subCommand = "pull"
 commandArgs = "mcr.microsoft.com/windows/nanoserver:1809"
@@ -378,7 +378,7 @@ commandArgs = "mcr.microsoft.com/windows/nanoserver:1809"
 }
 
 dockerCommand {
-name = "pull mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019
+name = "pull mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019"
 commandType = other {
 subCommand = "pull"
 commandArgs = "mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019"
@@ -537,7 +537,7 @@ description  = "teamcity-server:latest-nanoserver-1809 teamcity-minimal-agent:la
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
-name = "pull mcr.microsoft.com/powershell:nanoserver-1809
+name = "pull mcr.microsoft.com/powershell:nanoserver-1809"
 commandType = other {
 subCommand = "pull"
 commandArgs = "mcr.microsoft.com/powershell:nanoserver-1809"
@@ -545,7 +545,7 @@ commandArgs = "mcr.microsoft.com/powershell:nanoserver-1809"
 }
 
 dockerCommand {
-name = "pull mcr.microsoft.com/windows/nanoserver:1809
+name = "pull mcr.microsoft.com/windows/nanoserver:1809"
 commandType = other {
 subCommand = "pull"
 commandArgs = "mcr.microsoft.com/windows/nanoserver:1809"
@@ -553,7 +553,7 @@ commandArgs = "mcr.microsoft.com/windows/nanoserver:1809"
 }
 
 dockerCommand {
-name = "pull mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019
+name = "pull mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019"
 commandType = other {
 subCommand = "pull"
 commandArgs = "mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019"
@@ -713,7 +713,7 @@ description  = "teamcity-server:18.04,linux teamcity-minimal-agent:18.04,linux t
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
-name = "pull ubuntu:18.04
+name = "pull ubuntu:18.04"
 commandType = other {
 subCommand = "pull"
 commandArgs = "ubuntu:18.04"
@@ -871,7 +871,7 @@ description  = "teamcity-server:18.04,linux teamcity-minimal-agent:18.04,linux t
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
-name = "pull ubuntu:18.04
+name = "pull ubuntu:18.04"
 commandType = other {
 subCommand = "pull"
 commandArgs = "ubuntu:18.04"
@@ -1030,7 +1030,7 @@ description  = "teamcity-server:latest-nanoserver-1803 teamcity-minimal-agent:la
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
-name = "pull mcr.microsoft.com/powershell:nanoserver-1803
+name = "pull mcr.microsoft.com/powershell:nanoserver-1803"
 commandType = other {
 subCommand = "pull"
 commandArgs = "mcr.microsoft.com/powershell:nanoserver-1803"
@@ -1038,7 +1038,7 @@ commandArgs = "mcr.microsoft.com/powershell:nanoserver-1803"
 }
 
 dockerCommand {
-name = "pull mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1803
+name = "pull mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1803"
 commandType = other {
 subCommand = "pull"
 commandArgs = "mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1803"
@@ -1197,7 +1197,7 @@ description  = "teamcity-server:latest-nanoserver-1803 teamcity-minimal-agent:la
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
-name = "pull mcr.microsoft.com/powershell:nanoserver-1803
+name = "pull mcr.microsoft.com/powershell:nanoserver-1803"
 commandType = other {
 subCommand = "pull"
 commandArgs = "mcr.microsoft.com/powershell:nanoserver-1803"
@@ -1205,7 +1205,7 @@ commandArgs = "mcr.microsoft.com/powershell:nanoserver-1803"
 }
 
 dockerCommand {
-name = "pull mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1803
+name = "pull mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1803"
 commandType = other {
 subCommand = "pull"
 commandArgs = "mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1803"

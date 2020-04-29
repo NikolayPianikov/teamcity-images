@@ -181,7 +181,7 @@ namespace TeamCity.Docker
             {
                 //refer.RepoTag
                 yield return "dockerCommand {";
-                yield return $"name = \"pull {refer.RepoTag}";
+                yield return $"name = \"pull {refer.RepoTag}\"";
                 yield return "commandType = other {";
 
                 yield return "subCommand = \"pull\"";
