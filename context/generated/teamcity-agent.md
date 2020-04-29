@@ -56,7 +56,7 @@ The docker image is available on:
 
 Installed components:
 
-- [.NET Core SDK x64 v.3.1.100](https://repo.labs.intellij.net/thirdparty/vm-templates/dotnet-sdk-3.1.201-win-x64.exe)
+- [.NET Core SDK x64 v.3.1.100](https://repo.labs.intellij.net/thirdparty/vm-templates/dotnet-sdk-3.1.201-win-x64.zip)
 - [<img src="/logo/powershell.png" height="18" align="center"> PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 
 Container Platform: windows
@@ -92,7 +92,7 @@ The docker image is available on:
 
 Installed components:
 
-- [.NET Core SDK x64 v.3.1.100](https://repo.labs.intellij.net/thirdparty/vm-templates/dotnet-sdk-3.1.201-win-x64.exe)
+- [.NET Core SDK x64 v.3.1.100](https://repo.labs.intellij.net/thirdparty/vm-templates/dotnet-sdk-3.1.201-win-x64.zip)
 - [<img src="/logo/powershell.png" height="18" align="center"> PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 
 Container Platform: windows
@@ -200,7 +200,7 @@ The docker image is not available and may be created manually.
 Installed components:
 
 - [<img src="/logo/powershell.png" height="18" align="center"> PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
-- [.NET Core SDK x64 v.3.1.100](https://repo.labs.intellij.net/thirdparty/vm-templates/dotnet-sdk-3.1.201-win-x64.exe)
+- [.NET Core SDK x64 v.3.1.100](https://repo.labs.intellij.net/thirdparty/vm-templates/dotnet-sdk-3.1.201-win-x64.zip)
 
 Container Platform: windows
 
