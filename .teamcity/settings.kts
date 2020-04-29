@@ -11,6 +11,30 @@ description  = "teamcity-server:latest-nanoserver-1903 teamcity-minimal-agent:la
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
+name = "pull mcr.microsoft.com/powershell:nanoserver-1903
+commandType = other {
+subCommand = "pull"
+commandArgs = "mcr.microsoft.com/powershell:nanoserver-1903"
+}
+}
+
+dockerCommand {
+name = "pull mcr.microsoft.com/windows/nanoserver:1903
+commandType = other {
+subCommand = "pull"
+commandArgs = "mcr.microsoft.com/windows/nanoserver:1903"
+}
+}
+
+dockerCommand {
+name = "pull mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1903
+commandType = other {
+subCommand = "pull"
+commandArgs = "mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1903"
+}
+}
+
+dockerCommand {
 name = "build teamcity-server:latest-nanoserver-1903"
 commandType = build {
 source = file {
@@ -20,7 +44,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-server:latest-nanoserver-1903
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }
@@ -35,7 +58,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-minimal-agent:latest-nanoserver-1903
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }
@@ -50,7 +72,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-windowsservercore-1903
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }
@@ -65,7 +86,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-nanoserver-1903
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }
@@ -166,6 +186,30 @@ description  = "teamcity-server:latest-nanoserver-1903 teamcity-minimal-agent:la
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
+name = "pull mcr.microsoft.com/powershell:nanoserver-1903
+commandType = other {
+subCommand = "pull"
+commandArgs = "mcr.microsoft.com/powershell:nanoserver-1903"
+}
+}
+
+dockerCommand {
+name = "pull mcr.microsoft.com/windows/nanoserver:1903
+commandType = other {
+subCommand = "pull"
+commandArgs = "mcr.microsoft.com/windows/nanoserver:1903"
+}
+}
+
+dockerCommand {
+name = "pull mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1903
+commandType = other {
+subCommand = "pull"
+commandArgs = "mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1903"
+}
+}
+
+dockerCommand {
 name = "build teamcity-server:latest-nanoserver-1903"
 commandType = build {
 source = file {
@@ -175,7 +219,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-server:latest-nanoserver-1903
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }
@@ -190,7 +233,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-minimal-agent:latest-nanoserver-1903
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }
@@ -205,7 +247,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-windowsservercore-1903
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }
@@ -220,7 +261,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-nanoserver-1903
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }
@@ -322,6 +362,30 @@ description  = "teamcity-server:latest-nanoserver-1809 teamcity-minimal-agent:la
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
+name = "pull mcr.microsoft.com/powershell:nanoserver-1809
+commandType = other {
+subCommand = "pull"
+commandArgs = "mcr.microsoft.com/powershell:nanoserver-1809"
+}
+}
+
+dockerCommand {
+name = "pull mcr.microsoft.com/windows/nanoserver:1809
+commandType = other {
+subCommand = "pull"
+commandArgs = "mcr.microsoft.com/windows/nanoserver:1809"
+}
+}
+
+dockerCommand {
+name = "pull mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019
+commandType = other {
+subCommand = "pull"
+commandArgs = "mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019"
+}
+}
+
+dockerCommand {
 name = "build teamcity-server:latest-nanoserver-1809"
 commandType = build {
 source = file {
@@ -331,7 +395,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-server:latest-nanoserver-1809
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }
@@ -346,7 +409,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-minimal-agent:latest-nanoserver-1809
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }
@@ -361,7 +423,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-windowsservercore-1809
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }
@@ -376,7 +437,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-nanoserver-1809
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }
@@ -477,6 +537,30 @@ description  = "teamcity-server:latest-nanoserver-1809 teamcity-minimal-agent:la
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
+name = "pull mcr.microsoft.com/powershell:nanoserver-1809
+commandType = other {
+subCommand = "pull"
+commandArgs = "mcr.microsoft.com/powershell:nanoserver-1809"
+}
+}
+
+dockerCommand {
+name = "pull mcr.microsoft.com/windows/nanoserver:1809
+commandType = other {
+subCommand = "pull"
+commandArgs = "mcr.microsoft.com/windows/nanoserver:1809"
+}
+}
+
+dockerCommand {
+name = "pull mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019
+commandType = other {
+subCommand = "pull"
+commandArgs = "mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019"
+}
+}
+
+dockerCommand {
 name = "build teamcity-server:latest-nanoserver-1809"
 commandType = build {
 source = file {
@@ -486,7 +570,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-server:latest-nanoserver-1809
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }
@@ -501,7 +584,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-minimal-agent:latest-nanoserver-1809
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }
@@ -516,7 +598,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-windowsservercore-1809
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }
@@ -531,7 +612,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-nanoserver-1809
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }
@@ -633,6 +713,14 @@ description  = "teamcity-server:18.04,linux teamcity-minimal-agent:18.04,linux t
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
+name = "pull ubuntu:18.04
+commandType = other {
+subCommand = "pull"
+commandArgs = "ubuntu:18.04"
+}
+}
+
+dockerCommand {
 name = "build teamcity-server:18.04,linux"
 commandType = build {
 source = file {
@@ -643,7 +731,6 @@ namesAndTags = """
 teamcity-server:18.04
 teamcity-server:linux
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "linux")
 }
@@ -659,7 +746,6 @@ namesAndTags = """
 teamcity-minimal-agent:18.04
 teamcity-minimal-agent:linux
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "linux")
 }
@@ -675,7 +761,6 @@ namesAndTags = """
 teamcity-agent:18.04
 teamcity-agent:linux
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "linux")
 }
@@ -786,6 +871,14 @@ description  = "teamcity-server:18.04,linux teamcity-minimal-agent:18.04,linux t
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
+name = "pull ubuntu:18.04
+commandType = other {
+subCommand = "pull"
+commandArgs = "ubuntu:18.04"
+}
+}
+
+dockerCommand {
 name = "build teamcity-server:18.04,linux"
 commandType = build {
 source = file {
@@ -796,7 +889,6 @@ namesAndTags = """
 teamcity-server:18.04
 teamcity-server:linux
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "linux")
 }
@@ -812,7 +904,6 @@ namesAndTags = """
 teamcity-minimal-agent:18.04
 teamcity-minimal-agent:linux
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "linux")
 }
@@ -828,7 +919,6 @@ namesAndTags = """
 teamcity-agent:18.04
 teamcity-agent:linux
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "linux")
 }
@@ -940,6 +1030,22 @@ description  = "teamcity-server:latest-nanoserver-1803 teamcity-minimal-agent:la
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
+name = "pull mcr.microsoft.com/powershell:nanoserver-1803
+commandType = other {
+subCommand = "pull"
+commandArgs = "mcr.microsoft.com/powershell:nanoserver-1803"
+}
+}
+
+dockerCommand {
+name = "pull mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1803
+commandType = other {
+subCommand = "pull"
+commandArgs = "mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1803"
+}
+}
+
+dockerCommand {
 name = "build teamcity-server:latest-nanoserver-1803"
 commandType = build {
 source = file {
@@ -949,7 +1055,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-server:latest-nanoserver-1803
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }
@@ -964,7 +1069,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-minimal-agent:latest-nanoserver-1803
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }
@@ -979,7 +1083,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-windowsservercore-1803
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }
@@ -994,7 +1097,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-nanoserver-1803
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }
@@ -1095,6 +1197,22 @@ description  = "teamcity-server:latest-nanoserver-1803 teamcity-minimal-agent:la
 vcs {root(RemoteTeamcityImages)}
 steps {
 dockerCommand {
+name = "pull mcr.microsoft.com/powershell:nanoserver-1803
+commandType = other {
+subCommand = "pull"
+commandArgs = "mcr.microsoft.com/powershell:nanoserver-1803"
+}
+}
+
+dockerCommand {
+name = "pull mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1803
+commandType = other {
+subCommand = "pull"
+commandArgs = "mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1803"
+}
+}
+
+dockerCommand {
 name = "build teamcity-server:latest-nanoserver-1803"
 commandType = build {
 source = file {
@@ -1104,7 +1222,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-server:latest-nanoserver-1803
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }
@@ -1119,7 +1236,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-minimal-agent:latest-nanoserver-1803
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }
@@ -1134,7 +1250,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-windowsservercore-1803
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }
@@ -1149,7 +1264,6 @@ contextDir = "context"
 namesAndTags = """
 teamcity-agent:latest-nanoserver-1803
 """.trimIndent()
-commandArgs = "--pull"
 }
 param("dockerImage.platform", "windows")
 }

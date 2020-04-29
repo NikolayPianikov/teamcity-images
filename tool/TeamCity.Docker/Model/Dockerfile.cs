@@ -26,7 +26,7 @@ namespace TeamCity.Docker.Model
             [NotNull] IReadOnlyCollection<string> repositories,
             [NotNull] IReadOnlyCollection<string> comments,
             [NotNull] IReadOnlyCollection<Reference> references,
-            [NotNull] Weight weight,
+            Weight weight,
             [NotNull] IReadOnlyCollection<Line> lines)
         {
             Path = path ?? throw new ArgumentNullException(nameof(path));

@@ -64,8 +64,6 @@ namespace TeamCity.Docker
             var names = new HashSet<string>();
             foreach (var buildGraph in buildGraphs)
             {
-                var path = _buildPathProvider.GetPath(buildGraph).ToList();
-
                 var weight = buildGraph.Nodes
                     .Select(i => i.Value.Weight.Value)
                     .Sum();
@@ -84,7 +82,7 @@ namespace TeamCity.Docker
                 var id = "_" + name.Replace(' ', '_').Replace('-', '_').Replace('.', '_');
                 foreach (var version in versions)
                 {
-                    lines.AddRange(GenerateBuildType(version, id, name, path.Select(i => i.Value).OfType<Image>().ToList(), weight));
+                    lines.AddRange(GenerateBuildType(version, id, name, buildGraph, weight));
                 }
 
                 buildTypes.Add(id);
@@ -137,8 +135,12 @@ namespace TeamCity.Docker
             graph.TryAddNode(new FileArtifact(_pathService.Normalize(Path.Combine(_options.TeamCityDslPath, "settings.kts")), lines), out _);
         }
 
-        private IEnumerable<string> GenerateBuildType(Version version, string id, string name, ICollection<Image> images, int weight)
+        private IEnumerable<string> GenerateBuildType(Version version, string id, string name, IGraph<IArtifact, Dependency> buildGraph, int weight)
         {
+            var path = _buildPathProvider.GetPath(buildGraph).ToList();
+            var images = path.Select(i => i.Value).OfType<Image>().ToList();
+            var refs = path.Select(i => i.Value).OfType<Reference>().ToList();
+
             var groups =
                 from image in images
                 group image by image.File.ImageId
@@ -173,6 +175,24 @@ namespace TeamCity.Docker
             yield return $"description  = \"{description}\"";
             yield return "vcs {root(RemoteTeamcityImages)}";
             yield return "steps {";
+
+            // docker pull
+            foreach (var refer in refs)
+            {
+                //refer.RepoTag
+                yield return "dockerCommand {";
+                yield return $"name = \"pull {refer.RepoTag}";
+                yield return "commandType = other {";
+
+                yield return "subCommand = \"pull\"";
+                yield return $"commandArgs = \"{refer.RepoTag}\"";
+
+                yield return "}";
+                yield return "}";
+
+                yield return string.Empty;
+            }
+
             // docker build
             foreach (var image in images)
             {
@@ -195,7 +215,6 @@ namespace TeamCity.Docker
                 }
 
                 yield return "\"\"\".trimIndent()";
-                yield return "commandArgs = \"--pull\"";
 
                 yield return "}";
                 yield return $"param(\"dockerImage.platform\", \"{image.File.Platform}\")";
