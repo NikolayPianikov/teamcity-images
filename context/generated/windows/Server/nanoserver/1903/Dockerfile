@@ -1,7 +1,7 @@
 # Default arguments
 ARG gitWindowsComponent='http://repo.labs.intellij.net/thirdparty/vm-templates/MinGit-2.19.1-64-bit.zip'
-ARG jdkWindowsComponent='https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jdk.zip'
-ARG jreWindowsComponent='https://repo.labs.intellij.net/cache/https/d3pxv6yz143wms.cloudfront.net/8.232.09.1/amazon-corretto-8.232.09.1-windows-x64-jre.zip'
+ARG jdkWindowsComponent='http://repo.labs.intellij.net/thirdparty/vm-templates/'
+ARG jreWindowsComponent='http://repo.labs.intellij.net/thirdparty/vm-templates/amazon-corretto-8.252.09.2-windows-x64-jre.zip'
 ARG nanoserverImage='mcr.microsoft.com/windows/nanoserver:1903'
 ARG powershellImage='mcr.microsoft.com/powershell:nanoserver-1903'
 ARG windowsBuild='1903'

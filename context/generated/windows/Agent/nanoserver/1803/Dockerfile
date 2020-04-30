@@ -1,5 +1,5 @@
 # Default arguments
-ARG dotnetCoreWindowsComponent='https://repo.labs.intellij.net/thirdparty/vm-templates/dotnet-sdk-3.1.201-win-x64.zip'
+ARG dotnetCoreWindowsComponent='https://repo.labs.intellij.net/thirdparty/vm-templates/amazon-corretto-8.252.09.2-windows-x64-jdk.zip'
 ARG dotnetCoreWindowsComponentVersion='3.1.100'
 ARG powershellImage='mcr.microsoft.com/powershell:nanoserver-1803'
 ARG teamcityWindowsservercoreImage='teamcity-agent:latest-windowsservercore-1803'

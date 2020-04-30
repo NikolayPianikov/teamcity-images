@@ -129,7 +129,7 @@ The docker image is available on:
 Installed components:
 
 - [<img src="/logo/powershell.png" height="18" align="center"> PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
-- [<img align="center" height="18" src="/logo/corretto.png"> JDK Amazon Corretto x64 v.8.232.09.1](https://corretto.aws/downloads/resources/8.252.09.1/amazon-corretto-8.252.09.1-windows-x64-jdk.zip)
+- [<img align="center" height="18" src="/logo/corretto.png"> JDK Amazon Corretto x64 v.8.232.09.1](https://corretto.aws/downloads/resources/8.252.09.2/amazon-corretto-8.252.09.2-windows-x64-jdk.zip)
 - [<img align="center" height="18" src="/logo/git.png"> x64 v.2.19.1](https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip)
 - [<img align="center" height="18" src="/logo/mercurial.png"> Mercurial x64 v.4.7.2](https://bitbucket.org/tortoisehg/files/downloads/mercurial-4.7.2-x64.msi)
 
@@ -166,7 +166,7 @@ The docker image is available on:
 Installed components:
 
 - [<img src="/logo/powershell.png" height="18" align="center"> PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
-- [<img align="center" height="18" src="/logo/corretto.png"> JDK Amazon Corretto x64 v.8.232.09.1](https://corretto.aws/downloads/resources/8.252.09.1/amazon-corretto-8.252.09.1-windows-x64-jdk.zip)
+- [<img align="center" height="18" src="/logo/corretto.png"> JDK Amazon Corretto x64 v.8.232.09.1](https://corretto.aws/downloads/resources/8.252.09.2/amazon-corretto-8.252.09.2-windows-x64-jdk.zip)
 - [<img align="center" height="18" src="/logo/git.png"> x64 v.2.19.1](https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip)
 - [<img align="center" height="18" src="/logo/mercurial.png"> Mercurial x64 v.4.7.2](https://bitbucket.org/tortoisehg/files/downloads/mercurial-4.7.2-x64.msi)
 
@@ -232,7 +232,7 @@ The docker image is not available and may be created manually.
 Installed components:
 
 - [<img src="/logo/powershell.png" height="18" align="center"> PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
-- [<img align="center" height="18" src="/logo/corretto.png"> JDK Amazon Corretto x64 v.8.232.09.1](https://corretto.aws/downloads/resources/8.252.09.1/amazon-corretto-8.252.09.1-windows-x64-jdk.zip)
+- [<img align="center" height="18" src="/logo/corretto.png"> JDK Amazon Corretto x64 v.8.232.09.1](https://corretto.aws/downloads/resources/8.252.09.2/amazon-corretto-8.252.09.2-windows-x64-jdk.zip)
 - [<img align="center" height="18" src="/logo/git.png"> x64 v.2.19.1](https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/MinGit-2.19.1-64-bit.zip)
 - [<img align="center" height="18" src="/logo/mercurial.png"> Mercurial x64 v.4.7.2](https://bitbucket.org/tortoisehg/files/downloads/mercurial-4.7.2-x64.msi)
 
