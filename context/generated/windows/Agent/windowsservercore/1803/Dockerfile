@@ -1,6 +1,6 @@
 # Default arguments
 ARG gitWindowsComponent='http://repo.labs.intellij.net/thirdparty/vm-templates/MinGit-2.19.1-64-bit.zip'
-ARG jdkWindowsComponent='http://repo.labs.intellij.net/thirdparty/vm-templates/'
+ARG jdkWindowsComponent='https://repo.labs.intellij.net/thirdparty/vm-templates/amazon-corretto-8.252.09.2-windows-x64-jdk.zip'
 ARG mercurialWindowsComponent='http://repo.labs.intellij.net/thirdparty/vm-templates/mercurial-4.7.2-x64.msi'
 ARG teamcityMinimalAgentImage='teamcity-minimal-agent:latest-nanoserver-1803'
 ARG windowsservercoreImage='mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1803'

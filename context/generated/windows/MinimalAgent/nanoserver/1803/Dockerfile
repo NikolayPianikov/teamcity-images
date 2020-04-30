@@ -1,5 +1,5 @@
 # Default arguments
-ARG jdkWindowsComponent='http://repo.labs.intellij.net/thirdparty/vm-templates/'
+ARG jdkWindowsComponent='https://repo.labs.intellij.net/thirdparty/vm-templates/amazon-corretto-8.252.09.2-windows-x64-jdk.zip'
 ARG jreWindowsComponent='http://repo.labs.intellij.net/thirdparty/vm-templates/amazon-corretto-8.252.09.2-windows-x64-jre.zip'
 ARG nanoserverImage='mcr.microsoft.com/powershell:nanoserver-1803'
 ARG powershellImage='mcr.microsoft.com/powershell:nanoserver-1803'

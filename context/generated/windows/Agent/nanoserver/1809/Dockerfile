@@ -1,5 +1,5 @@
 # Default arguments
-ARG dotnetCoreWindowsComponent='https://repo.labs.intellij.net/thirdparty/vm-templates/amazon-corretto-8.252.09.2-windows-x64-jdk.zip'
+ARG dotnetCoreWindowsComponent='https://repo.labs.intellij.net/thirdparty/vm-templates/dotnet-sdk-3.1.201-win-x64.zip'
 ARG dotnetCoreWindowsComponentVersion='3.1.100'
 ARG nanoserverImage='mcr.microsoft.com/windows/nanoserver:1809'
 ARG powershellImage='mcr.microsoft.com/powershell:nanoserver-1809'

@@ -56,7 +56,7 @@ The docker image is available on:
 
 Installed components:
 
-- [.NET Core SDK x64 v.3.1.100](https://repo.labs.intellij.net/thirdparty/vm-templates/amazon-corretto-8.252.09.2-windows-x64-jdk.zip)
+- [.NET Core SDK x64 v.3.1.100](https://repo.labs.intellij.net/thirdparty/vm-templates/dotnet-sdk-3.1.201-win-x64.zip)
 - [<img src="/logo/powershell.png" height="18" align="center"> PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 
 Container Platform: windows
@@ -92,7 +92,7 @@ The docker image is available on:
 
 Installed components:
 
-- [.NET Core SDK x64 v.3.1.100](https://repo.labs.intellij.net/thirdparty/vm-templates/amazon-corretto-8.252.09.2-windows-x64-jdk.zip)
+- [.NET Core SDK x64 v.3.1.100](https://repo.labs.intellij.net/thirdparty/vm-templates/dotnet-sdk-3.1.201-win-x64.zip)
 - [<img src="/logo/powershell.png" height="18" align="center"> PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 
 Container Platform: windows
@@ -129,7 +129,7 @@ The docker image is available on:
 Installed components:
 
 - [<img src="/logo/powershell.png" height="18" align="center"> PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
-- [JDK Amazon Corretto x64 v.8.232.09.1](http://repo.labs.intellij.net/thirdparty/vm-templates/)
+- [JDK Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/thirdparty/vm-templates/amazon-corretto-8.252.09.2-windows-x64-jdk.zip)
 - [Git x64 v.2.19.1](http://repo.labs.intellij.net/thirdparty/vm-templates/MinGit-2.19.1-64-bit.zip)
 - [Mercurial x64 v.4.7.2](http://repo.labs.intellij.net/thirdparty/vm-templates/mercurial-4.7.2-x64.msi)
 
@@ -166,7 +166,7 @@ The docker image is available on:
 Installed components:
 
 - [<img src="/logo/powershell.png" height="18" align="center"> PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
-- [JDK Amazon Corretto x64 v.8.232.09.1](http://repo.labs.intellij.net/thirdparty/vm-templates/)
+- [JDK Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/thirdparty/vm-templates/amazon-corretto-8.252.09.2-windows-x64-jdk.zip)
 - [Git x64 v.2.19.1](http://repo.labs.intellij.net/thirdparty/vm-templates/MinGit-2.19.1-64-bit.zip)
 - [Mercurial x64 v.4.7.2](http://repo.labs.intellij.net/thirdparty/vm-templates/mercurial-4.7.2-x64.msi)
 
@@ -200,7 +200,7 @@ The docker image is not available and may be created manually.
 Installed components:
 
 - [<img src="/logo/powershell.png" height="18" align="center"> PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
-- [.NET Core SDK x64 v.3.1.100](https://repo.labs.intellij.net/thirdparty/vm-templates/amazon-corretto-8.252.09.2-windows-x64-jdk.zip)
+- [.NET Core SDK x64 v.3.1.100](https://repo.labs.intellij.net/thirdparty/vm-templates/dotnet-sdk-3.1.201-win-x64.zip)
 
 Container Platform: windows
 
@@ -232,7 +232,7 @@ The docker image is not available and may be created manually.
 Installed components:
 
 - [<img src="/logo/powershell.png" height="18" align="center"> PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
-- [JDK Amazon Corretto x64 v.8.232.09.1](http://repo.labs.intellij.net/thirdparty/vm-templates/)
+- [JDK Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/thirdparty/vm-templates/amazon-corretto-8.252.09.2-windows-x64-jdk.zip)
 - [Git x64 v.2.19.1](http://repo.labs.intellij.net/thirdparty/vm-templates/MinGit-2.19.1-64-bit.zip)
 - [Mercurial x64 v.4.7.2](http://repo.labs.intellij.net/thirdparty/vm-templates/mercurial-4.7.2-x64.msi)
 
