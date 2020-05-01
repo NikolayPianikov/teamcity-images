@@ -69,6 +69,7 @@ RUN chmod +x /welcome.sh /run-server.sh /run-services.sh && sync && \
 
 COPY --chown=tcuser:tcuser TeamCity $TEAMCITY_DIST
 # RUN rm -rf $TEAMCITY_DIST/buildAgent
+RUN echo "docker-ubuntu" > $TEAMCITY_DIST/webapps/ROOT/WEB-INF/DistributionType.txt
 
 VOLUME $TEAMCITY_DATA_PATH \
        $TEAMCITY_LOGS
