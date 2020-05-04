@@ -1,8 +1,9 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.vcs.GitVcsRoot
-import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dockerCommand
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.dockerSupport
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.freeDiskSpace
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.swabra
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dockerCommand
 version = "2019.2"
 
 object TC2019_2_BuildDist_latest_nanoserver_1903 : BuildType({
