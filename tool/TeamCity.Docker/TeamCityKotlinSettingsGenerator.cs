@@ -287,6 +287,8 @@ namespace TeamCity.Docker
                 yield return "}";
             }
 
+            yield return "swabra { }";
+
             yield return "}";
 
             if (!string.IsNullOrWhiteSpace(version.BuildId))

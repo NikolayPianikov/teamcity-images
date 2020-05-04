@@ -169,6 +169,7 @@ loginToRegistry = on {
 dockerRegistryId = "PROJECT_EXT_2307"
 }
 }
+swabra { }
 }
 dependencies {
 dependency(AbsoluteId("TC2019_2_BuildDist")) {
@@ -344,6 +345,7 @@ loginToRegistry = on {
 dockerRegistryId = "PROJECT_EXT_2307"
 }
 }
+swabra { }
 }
 dependencies {
 dependency(AbsoluteId("TC_Trunk_BuildDist")) {
@@ -520,6 +522,7 @@ loginToRegistry = on {
 dockerRegistryId = "PROJECT_EXT_2307"
 }
 }
+swabra { }
 }
 dependencies {
 dependency(AbsoluteId("TC2019_2_BuildDist")) {
@@ -695,6 +698,7 @@ loginToRegistry = on {
 dockerRegistryId = "PROJECT_EXT_2307"
 }
 }
+swabra { }
 }
 dependencies {
 dependency(AbsoluteId("TC_Trunk_BuildDist")) {
@@ -854,6 +858,7 @@ loginToRegistry = on {
 dockerRegistryId = "PROJECT_EXT_2307"
 }
 }
+swabra { }
 }
 dependencies {
 dependency(AbsoluteId("TC2019_2_BuildDist")) {
@@ -1012,6 +1017,7 @@ loginToRegistry = on {
 dockerRegistryId = "PROJECT_EXT_2307"
 }
 }
+swabra { }
 }
 dependencies {
 dependency(AbsoluteId("TC_Trunk_BuildDist")) {
@@ -1180,6 +1186,7 @@ loginToRegistry = on {
 dockerRegistryId = "PROJECT_EXT_2307"
 }
 }
+swabra { }
 }
 dependencies {
 dependency(AbsoluteId("TC2019_2_BuildDist")) {
@@ -1347,6 +1354,7 @@ loginToRegistry = on {
 dockerRegistryId = "PROJECT_EXT_2307"
 }
 }
+swabra { }
 }
 dependencies {
 dependency(AbsoluteId("TC_Trunk_BuildDist")) {
