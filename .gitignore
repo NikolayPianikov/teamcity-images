@@ -4,3 +4,5 @@
 context/TeamCity/
 .teamcity/.idea/
 *.iml
+checks/data/
+checks/logs/

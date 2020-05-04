@@ -79,4 +79,6 @@ VOLUME /var/lib/docker
 COPY run-docker.sh /services/run-docker.sh
 
 # Trigger .NET CLI first run experience by running arbitrary cmd to populate local package cache
-RUN dotnet help
+RUN dotnet help && \
+    sed -i -e 's/\r$//' /services/run-docker.sh
+

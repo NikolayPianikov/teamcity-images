@@ -51,7 +51,7 @@ RUN [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls' ; \
 ARG windowsBuild
 
 COPY TeamCity /TeamCity
-# RUN Remove-Item -Recurse -Force /TeamCity/buildAgent
+RUN Remove-Item -Recurse -Force /TeamCity/buildAgent
 RUN New-Item C:/TeamCity/webapps/ROOT/WEB-INF/DistributionType.txt -type file -force -value "docker-windows-$Env:windowsBuild" | Out-Null
 COPY run-server.ps1 /TeamCity/run-server.ps1
 
@@ -92,7 +92,6 @@ ENV JRE_HOME="C:\Program Files\Java\OpenJDK" \
     TEAMCITY_LOGS="C:\TeamCity\logs" \
     TEAMCITY_DATA_PATH="C:\ProgramData\JetBrains\TeamCity" \
     TEAMCITY_SERVER_MEM_OPTS="-Xmx2g -XX:ReservedCodeCacheSize=350m"
-
 
 EXPOSE 8111
 

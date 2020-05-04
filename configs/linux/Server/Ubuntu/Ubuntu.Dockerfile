@@ -71,11 +71,14 @@ COPY run-server-services.sh /run-services.sh
 RUN chmod +x /welcome.sh /run-server.sh /run-services.sh && sync && \
     groupadd -g 1000 tcuser && \
     useradd -r -u 1000 -g tcuser tcuser && \
-    echo '[ ! -z "$TERM" -a -x /welcome.sh -a -x /welcome.sh ] && /welcome.sh' >> /etc/bash.bashrc
+    echo '[ ! -z "$TERM" -a -x /welcome.sh -a -x /welcome.sh ] && /welcome.sh' >> /etc/bash.bashrc && \
+    sed -i -e 's/\r$//' /welcome.sh && \
+    sed -i -e 's/\r$//' /run-server.sh && \
+    sed -i -e 's/\r$//' /run-services.sh
 
 COPY --chown=tcuser:tcuser TeamCity $TEAMCITY_DIST
-# RUN rm -rf $TEAMCITY_DIST/buildAgent
-RUN echo "docker-ubuntu" > $TEAMCITY_DIST/webapps/ROOT/WEB-INF/DistributionType.txt
+RUN rm -rf $TEAMCITY_DIST/buildAgent && \
+    echo "docker-ubuntu" > $TEAMCITY_DIST/webapps/ROOT/WEB-INF/DistributionType.txt
 
 VOLUME $TEAMCITY_DATA_PATH \
        $TEAMCITY_LOGS

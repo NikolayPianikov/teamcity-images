@@ -57,7 +57,10 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends sudo && \
     useradd -m buildagent && \
     chmod +x /opt/buildagent/bin/*.sh && \
-    chmod +x /run-agent.sh /run-services.sh && sync
+    chmod +x /run-agent.sh /run-services.sh && sync && \
+    sed -i -e 's/\r$//' /run-agent.sh && \
+    sed -i -e 's/\r$//' /run-services.sh
+
 
 CMD ["/run-services.sh"]
 
