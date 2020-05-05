@@ -288,7 +288,9 @@ namespace TeamCity.Docker
                 yield return "}";
             }
 
-            yield return "swabra { }";
+            yield return "swabra {";
+            yield return "forceCleanCheckout = true";
+            yield return "}";
 
             yield return "}";
 
