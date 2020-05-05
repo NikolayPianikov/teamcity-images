@@ -50,7 +50,7 @@ The docker image is available on:
 
 Installed components:
 
-- [JRE Amazon Corretto x64 v.8.232.09.1](http://repo.labs.intellij.net/thirdparty/vm-templates/amazon-corretto-8.252.09.2-windows-x64-jre.zip)
+- [JRE Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/thirdparty/vm-templates/amazon-corretto-8.252.09.2-windows-x64-jre.zip)
 - [JDK Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/thirdparty/vm-templates/amazon-corretto-8.252.09.2-windows-x64-jdk.zip)
 - [<img src="/logo/powershell.png" height="18" align="center"> PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 
@@ -84,7 +84,7 @@ The docker image is available on:
 
 Installed components:
 
-- [JRE Amazon Corretto x64 v.8.232.09.1](http://repo.labs.intellij.net/thirdparty/vm-templates/amazon-corretto-8.252.09.2-windows-x64-jre.zip)
+- [JRE Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/thirdparty/vm-templates/amazon-corretto-8.252.09.2-windows-x64-jre.zip)
 - [JDK Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/thirdparty/vm-templates/amazon-corretto-8.252.09.2-windows-x64-jdk.zip)
 - [<img src="/logo/powershell.png" height="18" align="center"> PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
 
@@ -116,7 +116,7 @@ The docker image is not available and may be created manually.
 Installed components:
 
 - [<img src="/logo/powershell.png" height="18" align="center"> PowerShell](https://github.com/PowerShell/PowerShell#get-powershell)
-- [JRE Amazon Corretto x64 v.8.232.09.1](http://repo.labs.intellij.net/thirdparty/vm-templates/amazon-corretto-8.252.09.2-windows-x64-jre.zip)
+- [JRE Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/thirdparty/vm-templates/amazon-corretto-8.252.09.2-windows-x64-jre.zip)
 - [JDK Amazon Corretto x64 v.8.232.09.1](https://repo.labs.intellij.net/thirdparty/vm-templates/amazon-corretto-8.252.09.2-windows-x64-jdk.zip)
 
 Container Platform: windows
